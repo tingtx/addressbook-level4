@@ -11,6 +11,15 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
+=== Quek Kai Yu
+image::qky.jpg[width="150", align="left"]
+{empty}[https://github.com/kaiyu92[github]] [<<johndoe#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Data Model
+
+'''
+
 === John Doe
 image::damithc.jpg[width="150", align="left"]
 {empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]

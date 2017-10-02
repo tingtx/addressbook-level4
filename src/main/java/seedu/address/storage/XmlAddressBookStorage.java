@@ -75,7 +75,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException{
-        saveAddressBook(addressBook,filePath.substring(0,filePath.indexOf('.'))+"_backup.xml");
+        saveAddressBook(addressBook, filePath.substring(0, filePath.indexOf('.')) + "_backup.xml");
     }
 
 }

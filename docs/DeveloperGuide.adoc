@@ -729,9 +729,83 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |set certain contacts as favourites |access to their information easily
+
+|`* * *` |user |select multiple contacts to delete |clean up address book efficiently
+
+|`* * *` |user |save more than one contact number per contact in my address book |account for multiple phone numbers
+
+|`* * *` |organised user |group contacts manually or automatically |access the information I want easily
+
+|`* * *` |user |see my important events on a calendar view |overview of my schedule for the month
+
+|`* * *` |user |share my contact details with my friends |friends do not need to manually add it in
+
+|`* * *` |user |sort the information on the application |view the information in a ordered manner
+
+|`* * *` |user |add information to the application in a intuitive way |not frustrating
+
+|`* * *` |user |sync my account with other platforms |save the trouble of entering my personal details
+
+|`* * *` |user |access my data over multiple devices |do not have key in my data repeatedly
+
+|`* * *` |user |have my account logged in every time |do not have to remember one additional username and password
+
+|`* * *` |user |set reminders |do not forget what I need to do
+
+|`* * *` |user |export the list of people in my address book |store it on the computer
+
+|`* * *` |user |set events and send the event invites to any person in my contact list |calendars can sync the events
+
+|`* * *` |user |attach personal notes to people in my contact list |take notes about the person for my own reference
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else
+seeing them by accident
+
+|`* *` |user |send mass messages to a group of contacts |plan for meetings, conferences or gatherings
+
+|`* *` |user |see my groupings in a more visual display |see who are also in the group
+
+|`* *` |user |commands to be in the button form |don't have to memorise the command and it is easier to select
+
+|`* *` |user |have meta-data for my contact list |sort them according to different criteria
+
+|`* *` |user |the application should not take up too much space on my device |space for other applications
+
+|`* *` |user |the application should suggest certain fields for autocomplete |do not have to type them
+
+|`* *` |user |easily send emails to my contacts |more convenient to contact my friends
+
+|`* *` |user |update my location |contacts will know where is my current location
+
+|`* *` |user |update my status |contacts will know whether I’m busy
+
+|`* *` |user |view live stories of my friends |stay updated on what’s going on with my friends
+
+|`* *` |user |start a live chat with my friends |get an instant response from them
+
+|`* *` |user |add a profile picture |others will know how I look like
+
+|`* *` |user |change the colour scheme |make it personalized
+
+|`* *` |user |choose to require a password every time the application is opened |application stays secure
+
+|`* *` |user |access the applications quickly |be efficient with  what I do
+
+|`* *` |user |do not have to change applications to access different functionality |not troublesome for me
+
+|`* *` |user |add profiles for my friends |store their photos as well
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |a collage of a person's profile from various social media platforms |snapshot of the person's information
+from various accounts.
+
+|`*` |user |subscribe to different channels |get more information on the outside world
+
+|`*` |user |play music in the background |feel relaxed while using the application
+
+|`*` | elderly user |application to read the contacts out loud |do not need to strain eyes reading the words
 |=======================================================================
 
 {More to be added}
@@ -767,6 +841,78 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Sync Account
+
+*MSS*
+
+1.  User requests to sync account
+2.  TunedIn asks for Facebook ID
+3.  User confirms that the account is of the user's
+4.  TunedIn pulls the data from the Facebook ID using the Graph API
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The Facebook ID does not exist
++
+Use case ends.
+
+* 3a. The given Facebook ID is inaccurate
++
+[none]
+** 3a1. TunedIn shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Logging in
+
+*MSS*
+
+1.  User types in password
+2.  TunedIn checks password accuracy
+3.  TunedIn brings the patient to the home page
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The user has not logged in
++
+[none]
+** 1a1. TunedIn shows an error message.
+** 1a2. TunedIn requests for user to log in.
++
+Use case ends.
+
+* 2a. The password is inaccurate
++
+[none]
+** 2a1. TunedIn shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Setting a contact as favourite
+
+*MSS*
+
+1.  User selects another user as favourite
+2.  TunedIn sets the selected user as favourite for original user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The selected user does not exist
++
+[none]
+** 1a1. TunedIn shows an error message.
++
+Use case resumes at step 1.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +921,8 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be lightweight and not take up too much storage space
+.  Should be easy to use and be designed for cross platform use
 
 {More to be added}
 
@@ -788,6 +936,27 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
+[[app]]
+App
+
+....
+Refers to the TunedIn application
+....
+
+[[user]]
+User
+
+....
+Users of all ages and gender
+....
+
+[[mobile-devices]]
+Mobile Devices
+
+....
+iPhone, Samsung, Huawei, Oppo and other major phone manufacturers.
+....
+
 [[private-contact-detail]]
 Private contact detail
 
@@ -798,16 +967,16 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*Wunderlist*
 
-Author: ...
+Author: 6 Wunderkinder
 
 Pros:
 
-* ...
-* ...
+* Easy to create reminders
+* Works seamlessly across all major devices
+* Easy to collaborate with others
 
 Cons:
 
-* ...
-* ...
+* Easy to be overwhelmed by the huge number of features

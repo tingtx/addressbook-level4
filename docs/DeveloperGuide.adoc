@@ -743,7 +743,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |impatient user |sort the information on the application |view the information in a ordered manner
 
-|`* * *` |user |add information to the application in a intuitive way |not frustrating
+|`* * *` |user |add information to the application in a intuitive way |feel less frustrating
 
 |`* * *` |user |sync my account with other platforms |save the trouble of entering my personal details
 

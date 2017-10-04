@@ -348,3 +348,11 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#tags .labelColleagues {
+    -fx-background-color: salmon !important;
+}
+
+#tags .labelFriends {
+    -fx-background-color: #45ADA8 !important;
+}

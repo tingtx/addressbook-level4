@@ -20,11 +20,12 @@ Responsibilities: Data Model
 
 '''
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Keloysius Mak
+image::makzhk.jpg[width="150", align="left"]
+{empty}[http://zhkphoto.com[homepage]] [https://github.com/keloysiusmak[github]] [<<johndoe#, portfolio>>]
 
-Role: Project Advisor
+Role: Developer +
+Responsibilites : Logic Model
 
 '''
 

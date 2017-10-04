@@ -729,7 +729,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |set certain contacts as favourites |access to their information easily
+|`* * *` |user |set certain contacts as favourites |access their information easily
 
 |`* * *` |user |select multiple contacts to delete |clean up address book efficiently
 
@@ -737,75 +737,79 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |organised user |group contacts manually or automatically |access the information I want easily
 
-|`* * *` |user |see my important events on a calendar view |overview of my schedule for the month
+|`* * *` |user with busy schedules |see my important events on a calendar view |have an overview of my schedule for the month
 
-|`* * *` |user |share my contact details with my friends |friends do not need to manually add it in
+|`* * *` |organized user |share my contact details with my friends |save the contacts without manually keying in the details
 
-|`* * *` |user |sort the information on the application |view the information in a ordered manner
+|`* * *` |impatient user |sort the information on the application |view the information in a ordered manner
 
 |`* * *` |user |add information to the application in a intuitive way |not frustrating
 
 |`* * *` |user |sync my account with other platforms |save the trouble of entering my personal details
 
-|`* * *` |user |access my data over multiple devices |do not have key in my data repeatedly
+|`* * *` |user |access my data over multiple authorized devices |avoid keying my data repeatedly across different platforms
 
-|`* * *` |user |have my account logged in every time |do not have to remember one additional username and password
+|`* * *` |forgetful user |have my account logged in every time I open the app |do not have to remember one additional username and password
 
-|`* * *` |user |set reminders |do not forget what I need to do
+|`* * *` |forgetful user |set reminders |do not forget what I need to do
 
 |`* * *` |user |export the list of people in my address book |store it on the computer
 
-|`* * *` |user |set events and send the event invites to any person in my contact list |calendars can sync the events
+|`* * *` |user |set events and send the event invites to any person in my contact list |sync my calendars with others' on our common events
 
 |`* * *` |user |attach personal notes to people in my contact list |take notes about the person for my own reference
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else
 seeing them by accident
 
-|`* *` |user |send mass messages to a group of contacts |plan for meetings, conferences or gatherings
+|`* *` |user |send mass messages to a group of contacts |plan for meetings, conferences or gatherings with ease
 
-|`* *` |user |see my groupings in a more visual display |see who are also in the group
+|`* *` |user |drag and drop contacts in or out of different groups |not need to key in complex command lines
 
-|`* *` |user |commands to be in the button form |don't have to memorise the command and it is easier to select
+|`* *` |user |view groups of contacts in a more visual display |see who are also in the group
+
+|`* *` |user |view groups of contacts in a more visual display |look for a contact in the group easily
+
+|`* *` |user |commands to be in the button form |avoid memorising the commands and select them more easily
 
 |`* *` |user |have meta-data for my contact list |sort them according to different criteria
 
-|`* *` |user |the application should not take up too much space on my device |space for other applications
+|`* *` |user |the application not to take up too much space on my device |have space for other applications
 
 |`* *` |user |the application should suggest certain fields for autocomplete |do not have to type them
 
-|`* *` |user |easily send emails to my contacts |more convenient to contact my friends
+|`* *` |user |easily send emails to my contacts |conveniently contact my friends
 
-|`* *` |user |update my location |contacts will know where is my current location
+|`* *` |user |update my location |let my contacts know my current location
 
 |`* *` |user |update my status |contacts will know whether I’m busy
 
-|`* *` |user |view live stories of my friends |stay updated on what’s going on with my friends
+|`* *` |user |view live stories of my friends |stay updated on what is going on with my friends
 
 |`* *` |user |start a live chat with my friends |get an instant response from them
 
-|`* *` |user |add a profile picture |others will know how I look like
+|`* *` |user |add a profile picture |let others know how I look like
 
 |`* *` |user |change the colour scheme |make it personalized
 
-|`* *` |user |choose to require a password every time the application is opened |application stays secure
+|`* *` |user |choose not to cache the password after every login |ensure that the application is secure
 
 |`* *` |user |access the applications quickly |be efficient with  what I do
 
-|`* *` |user |do not have to change applications to access different functionality |not troublesome for me
+|`* *` |user |avoid switching between applications for different functionality |avoid troublesome operations for me
 
 |`* *` |user |add profiles for my friends |store their photos as well
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*` |user |a collage of a person's profile from various social media platforms |snapshot of the person's information
+|`*` |user |have a collage of a person's profile from various social media platforms |snapshot of the person's information
 from various accounts.
 
 |`*` |user |subscribe to different channels |get more information on the outside world
 
 |`*` |user |play music in the background |feel relaxed while using the application
 
-|`*` | elderly user |application to read the contacts out loud |do not need to strain eyes reading the words
+|`*` | elderly user |application to read the contacts out loud |avoid straining my eyes reading the words
 |=======================================================================
 
 {More to be added}
@@ -818,7 +822,7 @@ from various accounts.
 [discrete]
 === Use case: Delete person
 
-*MSS*
+*Main Success Scenario*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
@@ -898,8 +902,9 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User selects another user as favourite
-2.  TunedIn sets the selected user as favourite for original user
+1.  User selects a contact as favourite
+2.  TunedIn sets the selected contact as favourite for original user
+3.  Contact is set to the top of the contact list.
 +
 Use case ends.
 

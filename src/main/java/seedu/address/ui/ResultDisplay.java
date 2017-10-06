@@ -38,8 +38,8 @@ public class ResultDisplay extends UiPart<Region> {
         Platform.runLater(() -> displayed.setValue(event.message));
         if (event.isError){
             resultDisplay.getStyleClass().add("error");
-        } else {resultDisplay.getStyleClass().remove("error");
-
+        } else {
+            resultDisplay.getStyleClass().remove("error");
         }
     }
 

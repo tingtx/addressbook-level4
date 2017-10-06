@@ -133,7 +133,6 @@
 
 .anchor-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
-    /* -fx-background-color: derive(antiquewhite, 20%);*/
 }
 
 .pane-with-border {
@@ -348,4 +347,12 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#tags .labelColleagues {
+    -fx-background-color: salmon !important;
+}
+
+#tags .labelFriends {
+    -fx-background-color: #45ADA8 !important;
 }

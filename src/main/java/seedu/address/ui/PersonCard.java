@@ -7,6 +7,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -59,12 +60,23 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            person.getTags().forEach(tag -> tags.getChildren().add(getTag(tag)));
         });
     }
 
+    private Label getTag(Tag tag) {
+        Label labelObject = new Label(tag.tagName);
+        if (tag.tagName.equals("friends")) {
+            labelObject.getStyleClass().add("labelFriends");
+        }
+        if (tag.tagName.equals("colleagues")) {
+            labelObject.getStyleClass().add("labelColleagues");
+        }
+        return labelObject;
+    }
+
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> tags.getChildren().add(getTag(tag)));
     }
 
     @Override

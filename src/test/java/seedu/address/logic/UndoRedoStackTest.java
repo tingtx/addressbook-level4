@@ -237,12 +237,6 @@ public class UndoRedoStackTest {
             return new CommandResult("");
         }
 
-        @Override
-        public static String getCommandWord()() {
-            return null;
-        }
-
-
     }
 
     class DummyUndoableCommand extends UndoableCommand {
@@ -251,9 +245,5 @@ public class UndoRedoStackTest {
             return new CommandResult("");
         }
 
-        @Override
-        public static String getCommandWord()() {
-            return null;
-        }
     }
 }

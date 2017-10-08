@@ -95,7 +95,7 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
-        setAccelerator(viewAliasMenuItem, KeyCombination.valueOf("F2"));
+        setAccelerator(viewAliasMenuItem, KeyCombination.valueOf("F10"));
     }
 
     /**

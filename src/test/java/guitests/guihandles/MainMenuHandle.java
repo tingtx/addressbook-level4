@@ -35,7 +35,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
      * Opens the {@code ViewAliasWindow} using the menu bar in {@code MainWindow}.
      */
     public void openViewAliasWindowUsingMenu() {
-        clickOnMenuItemsSequentially("Alias", "F1");
+        clickOnMenuItemsSequentially("Alias", "F10");
     }
 
     /**
@@ -43,7 +43,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
      * with the menu bar in {@code MainWindow}.
      */
     public void openViewAliasWindowUsingAccelerator() {
-        guiRobot.push(KeyCode.F2);
+        guiRobot.push(KeyCode.F10);
     }
 
     /**

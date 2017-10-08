@@ -16,6 +16,11 @@ public class ViewAliasWindowTest extends AddressBookGuiTest {
 
     @Test
     public void openViewAliasWindow() {
+        
+        //use menu button
+        getMainMenu().openViewAliasWindowUsingMenu();
+        assertViewAliasWindowOpen();
+
         //use accelerator
         getCommandBox().click();
         getMainMenu().openViewAliasWindowUsingAccelerator();
@@ -33,9 +38,6 @@ public class ViewAliasWindowTest extends AddressBookGuiTest {
         getMainMenu().openViewAliasWindowUsingAccelerator();
         assertViewAliasWindowNotOpen();
 
-        //use menu button
-        getMainMenu().openViewAliasWindowUsingMenu();
-        assertViewAliasWindowOpen();
 
         //use command box
         runCommand(ViewAliasCommand.COMMAND_WORD);

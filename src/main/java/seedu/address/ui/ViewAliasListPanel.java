@@ -44,7 +44,6 @@ class ViewAliasListPanel extends UiPart<Region> {
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
     class ViewAliasListViewCell extends ListCell<ViewAliasCard> {
-
         @Override
         protected void updateItem(ViewAliasCard command, boolean empty) {
             super.updateItem(command, empty);

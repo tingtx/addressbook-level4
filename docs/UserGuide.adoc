@@ -257,3 +257,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *View Alias* : `viewalias`

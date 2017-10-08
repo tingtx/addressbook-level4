@@ -136,7 +136,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Command> getCommands() {
+        public ArrayList<ArrayList<String>> getCommands() {
             fail("This method should not be called.");
             return null;
         }

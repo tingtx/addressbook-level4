@@ -32,10 +32,10 @@ public class MainMenuHandle extends NodeHandle<Node> {
 
 
     /**
-     * Opens the {@code ViewAliaspWindow} using the menu bar in {@code MainWindow}.
+     * Opens the {@code ViewAliasWindow} using the menu bar in {@code MainWindow}.
      */
     public void openViewAliasWindowUsingMenu() {
-        clickOnMenuItemsSequentially("Tools", "F1", "F2");
+        clickOnMenuItemsSequentially("Tools", "F2");
     }
 
     /**

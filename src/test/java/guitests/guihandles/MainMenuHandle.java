@@ -35,7 +35,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
      * Opens the {@code ViewAliasWindow} using the menu bar in {@code MainWindow}.
      */
     public void openViewAliasWindowUsingMenu() {
-        clickOnMenuItemsSequentially("Alias", "F2");
+        clickOnMenuItemsSequentially("Alias", "F1");
     }
 
     /**

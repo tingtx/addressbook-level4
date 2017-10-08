@@ -50,6 +50,7 @@ public class ViewAliasWindowTest extends AddressBookGuiTest {
      * Asserts that the view alias window is open, and closes it after checking.
      */
     private void assertViewAliasWindowOpen() {
+        System.out.println(ViewAliasWindowHandle.isWindowPresent());
         assertTrue(ERROR_MESSAGE, ViewAliasWindowHandle.isWindowPresent());
         guiRobot.pauseForHuman();
 

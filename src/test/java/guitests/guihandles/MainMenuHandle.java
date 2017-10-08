@@ -20,6 +20,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
      */
     public void openHelpWindowUsingMenu() {
         clickOnMenuItemsSequentially("Help", "F1");
+        clickOnMenuItemsSequentially("View Alias", "F2");
     }
 
     /**
@@ -28,6 +29,22 @@ public class MainMenuHandle extends NodeHandle<Node> {
      */
     public void openHelpWindowUsingAccelerator() {
         guiRobot.push(KeyCode.F1);
+    }
+
+
+    /**
+     * Opens the {@code ViewAliaspWindow} using the menu bar in {@code MainWindow}.
+     */
+    public void openViewAliasWindowUsingMenu() {
+        clickOnMenuItemsSequentially("View Alias", "F2");
+    }
+
+    /**
+     * Opens the {@code ViewAliasWindow} by pressing the shortcut key associated
+     * with the menu bar in {@code MainWindow}.
+     */
+    public void openViewAliasWindowUsingAccelerator() {
+        guiRobot.push(KeyCode.F2);
     }
 
     /**

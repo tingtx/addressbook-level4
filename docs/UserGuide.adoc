@@ -54,6 +54,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+=== Viewing aliases : `viewalias`
+
+Shows the list of aliases used, as well as protected aliases. +
+Format: `viewalias`
+
 === Adding a person: `add`
 
 Adds a person to the address book +

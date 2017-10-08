@@ -19,7 +19,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
      * Opens the {@code HelpWindow} using the menu bar in {@code MainWindow}.
      */
     public void openHelpWindowUsingMenu() {
-        clickOnMenuItemsSequentially("Tools", "F1");
+        clickOnMenuItemsSequentially("Help", "F1");
     }
 
     /**
@@ -35,7 +35,7 @@ public class MainMenuHandle extends NodeHandle<Node> {
      * Opens the {@code ViewAliasWindow} using the menu bar in {@code MainWindow}.
      */
     public void openViewAliasWindowUsingMenu() {
-        clickOnMenuItemsSequentially("Tools", "F1", "F2");
+        clickOnMenuItemsSequentially("Alias", "F2");
     }
 
     /**

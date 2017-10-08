@@ -6,7 +6,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.logic.Logic;
 
-import seedu.address.logic.commands.Command;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -28,7 +27,7 @@ public class ViewAliasCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label default_alias;
+    private Label defaultAlias;
     @FXML
     private Label alias;
     @FXML
@@ -39,8 +38,8 @@ public class ViewAliasCard extends UiPart<Region> {
         this.command = command;
         id.setText(command);
 
-        default_alias.setText("Default Alias : "+commandWord);
-        alias.setText("Set Alias : "+logic.getAliasForCommand(command));
+        defaultAlias.setText("Default Alias : " + commandWord);
+        alias.setText("Set Alias : " + logic.getAliasForCommand(command));
     }
 
     @Override

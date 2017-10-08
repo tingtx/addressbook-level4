@@ -3,24 +3,14 @@ package seedu.address.ui;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.fxmisc.easybind.EasyBind;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Controller for a help page

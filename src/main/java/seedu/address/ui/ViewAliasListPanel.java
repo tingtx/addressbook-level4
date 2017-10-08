@@ -3,18 +3,17 @@ package seedu.address.ui;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.fxmisc.easybind.EasyBind;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.Command;
 
+/**
+ * Panel containing the list of commands, and their command words and aliases
+ */
 class ViewAliasListPanel extends UiPart<Region> {
     private static final String FXML = "ViewAliasListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ViewAliasListPanel.class);
@@ -30,7 +29,7 @@ class ViewAliasListPanel extends UiPart<Region> {
     private void setCommands(ArrayList<ArrayList<String>> commandList, Logic logic) {
 
         ArrayList<ViewAliasCard> mappedList = new ArrayList<ViewAliasCard>();
-        for(int i = 0; i<commandList.size(); i++) {
+        for (int i = 0; i < commandList.size(); i++) {
             ArrayList<String> command = commandList.get(i);
             ViewAliasCard v = new ViewAliasCard(command.get(0), command.get(1), logic);
             mappedList.add(v);

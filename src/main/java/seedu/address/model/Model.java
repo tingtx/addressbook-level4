@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.Command;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;

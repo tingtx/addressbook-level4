@@ -3,21 +3,34 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import org.fxmisc.easybind.EasyBind;
+
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Person;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.*;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -28,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final ArrayList<ArrayList<String>> viewAliases;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -40,6 +54,51 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+
+
+        ArrayList<ArrayList<String>> commandList = new ArrayList<ArrayList<String>>();
+
+        //Add Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Add", AddCommand.getCommandWord())));
+
+        //Clear Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Clear", ClearCommand.getCommandWord())));
+
+        //Delete Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Delete", DeleteCommand.getCommandWord())));
+
+        //Edit Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Edit", EditCommand.getCommandWord())));
+
+        //Exit Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Exit", ExitCommand.getCommandWord())));
+
+        //Find Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Find", FindCommand.getCommandWord())));
+
+        //Help Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Help", HelpCommand.getCommandWord())));
+
+        //History Command
+        commandList.add(new ArrayList<String>(Arrays.asList("History", HistoryCommand.getCommandWord())));
+
+        //List Command
+        commandList.add(new ArrayList<String>(Arrays.asList("List", ListCommand.getCommandWord())));
+
+        //Redo Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Redo", RedoCommand.getCommandWord())));
+
+        //Select Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
+
+        //Undo Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
+
+        //View Alias Command
+        commandList.add(new ArrayList<String>(Arrays.asList("View Alias", ViewAliasCommand.getCommandWord())));
+
+        viewAliases = commandList;
+
     }
 
     public ModelManager() {
@@ -98,6 +157,15 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    public ArrayList<ArrayList<String>> getCommands() {
+        return viewAliases;
+    }
+
+    @Override
+    public String getAliasForCommand(String commandName) {
+        return "Not set";
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -131,6 +199,18 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
+        HashSet<Tag> tags = new HashSet<>();
+        for (String s : strings) {
+            tags.add(new Tag(s));
+        }
+
+        return tags;
     }
 
 }

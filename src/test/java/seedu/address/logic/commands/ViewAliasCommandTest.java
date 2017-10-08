@@ -15,7 +15,7 @@ public class ViewAliasCommandTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
-    public void execute_help_success() {
+    public void execute_viewalias_success() {
         CommandResult result = new ViewAliasCommand().executeUndoableCommand();
         assertEquals(MESSAGE_SUCCESS, result.feedbackToUser);
     }

@@ -18,4 +18,8 @@ public class ExitCommand extends Command {
         return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT);
     }
 
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

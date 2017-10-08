@@ -67,6 +67,7 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -202,7 +203,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleViewAlias() {
-        ViewAliasWindow viewAliasWindow = new ViewAliasWindow();
+        ViewAliasWindow viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic);
         viewAliasWindow.show();
     }
 

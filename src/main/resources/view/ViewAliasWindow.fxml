@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.web.WebView?>
 
-<StackPane fx:id="viewAliasWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <WebView fx:id="browser" />
+<StackPane fx:id="ViewAliasWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@DarkTheme.css" />
+        <URL value="@Extensions.css" />
+    </stylesheets>
+    <StackPane fx:id="viewAliasListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
 </StackPane>

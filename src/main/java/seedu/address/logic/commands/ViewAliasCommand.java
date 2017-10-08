@@ -34,4 +34,8 @@ public class ViewAliasCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
 
     }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

@@ -136,6 +136,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Command> getCommands() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public String getAliasForCommand(String commandName) {
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }

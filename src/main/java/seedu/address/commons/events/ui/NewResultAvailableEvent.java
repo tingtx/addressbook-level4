@@ -12,9 +12,6 @@ public class NewResultAvailableEvent extends BaseEvent {
 
     public NewResultAvailableEvent(String message) {
         this.message = message;
-        if (message.equals("Unknown Command")){
-            isError = true;
-        }
     }
 
     @Override

@@ -36,7 +36,7 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
-        if (event.isError){
+        if (event.message.equals("Unknown command")){
             resultDisplay.getStyleClass().add("error");
         } else {
             resultDisplay.getStyleClass().remove("error");

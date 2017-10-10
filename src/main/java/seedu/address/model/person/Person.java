@@ -109,10 +109,14 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<Remark> remarkProperty() { return remark; }
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
 
     @Override
-    public Remark getRemark() { return remark.get(); }
+    public Remark getRemark() {
+        return remark.get();
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

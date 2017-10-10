@@ -14,6 +14,9 @@ import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Changes the remark of an existing person in the address book.
+ */
 public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
@@ -35,8 +38,7 @@ public class RemarkCommand extends UndoableCommand {
     private final Remark remark;
 
     /**
-     *
-     * @param index of the person in the filtered person list to edit the remark
+     * @param index  of the person in the filtered person list to edit the remark
      * @param remark of the person
      */
     public RemarkCommand(Index index, Remark remark) {
@@ -71,8 +73,13 @@ public class RemarkCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     *
+     * @param personToEdit
+     * @return the generated message
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if(!remark.value.isEmpty()) {
+        if (!remark.value.isEmpty()) {
             return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
         } else {
             return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
@@ -82,12 +89,12 @@ public class RemarkCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         //short circuit if same object
-        if(other == this) {
+        if (other == this) {
             return true;
         }
 
         //instanceof handles nulls
-        if(!(other instanceof RemarkCommand)) {
+        if (!(other instanceof RemarkCommand)) {
             return false;
         }
 

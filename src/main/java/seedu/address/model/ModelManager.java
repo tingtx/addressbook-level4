@@ -134,6 +134,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void orderList(String parameter){
+        addressBook.orderList(parameter);
+    }
+
+    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

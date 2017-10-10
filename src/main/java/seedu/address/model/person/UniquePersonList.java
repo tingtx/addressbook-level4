@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,6 +84,22 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
         return personFoundAndDeleted;
+    }
+
+    /**
+     * Order the list.
+     */
+    public void orderBy(String parameter){
+        requireNonNull(parameter);
+        if (parameter.toUpperCase().equals("NAME")){
+            internalList.sort(Comparator.comparing(o -> o.getName().fullName));
+            return;
+        }
+
+        if (parameter.toUpperCase().equals("ADDRESS")){
+            internalList.sort(Comparator.comparing(o -> o.getAddress().value));
+            return;
+        }
     }
 
     public void setPersons(UniquePersonList replacement) {

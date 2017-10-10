@@ -103,6 +103,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void orderList(String parameter){
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }

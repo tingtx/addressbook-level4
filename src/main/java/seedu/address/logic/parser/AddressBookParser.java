@@ -49,7 +49,7 @@ public class AddressBookParser {
 
         case OrderCommand.COMMAND_WORD:
         case OrderCommand.COMMAND_ALIAS:
-            return new OrderCommandParser().parse(arguments);
+            return new OrderCommand(arguments);
 
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:

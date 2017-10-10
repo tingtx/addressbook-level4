@@ -34,6 +34,11 @@ public interface Model {
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /**
+     * Order the list based on a parameter
+     */
+    void orderList(String parameter);
+
+    /**
      * Adds the given person
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;

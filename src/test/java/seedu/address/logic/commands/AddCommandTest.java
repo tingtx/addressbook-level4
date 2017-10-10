@@ -136,6 +136,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredListToShowAll() {
+            fail("This method should not be called");
+        }
+
+        @Override
         public ArrayList<ArrayList<String>> getCommands() {
             fail("This method should not be called.");
             return null;

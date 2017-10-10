@@ -34,4 +34,8 @@ public class FindCommand extends Command {
                 || (other instanceof FindCommand // instanceof handles nulls
                 && this.predicate.equals(((FindCommand) other).predicate)); // state check
     }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

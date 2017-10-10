@@ -30,6 +30,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -143,6 +144,16 @@ public class AddressBookParserTest {
         //alias
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_viewalias() throws Exception {
+        assertTrue(parser.parseCommand(ViewAliasCommand.COMMAND_WORD) instanceof ViewAliasCommand);
+        assertTrue(parser.parseCommand(ViewAliasCommand.COMMAND_WORD + " 3") instanceof ViewAliasCommand);
+
+        //alias
+        assertTrue(parser.parseCommand(ViewAliasCommand.COMMAND_ALIAS) instanceof ViewAliasCommand);
+        assertTrue(parser.parseCommand(ViewAliasCommand.COMMAND_ALIAS + " 3") instanceof ViewAliasCommand);
     }
 
     @Test

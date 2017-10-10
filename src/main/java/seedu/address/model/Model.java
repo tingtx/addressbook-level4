@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -56,6 +57,12 @@ public interface Model {
      * Returns an unmodifiable view of the filtered person list
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered person list */
+    ArrayList<ArrayList<String>> getCommands();
+
+    /** Returns the set alias for command, null otherwise */
+    public String getAliasForCommand(String commandName);
 
     /**
      * Updates the filter of the filtered person list to show all persons

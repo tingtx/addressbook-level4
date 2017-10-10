@@ -30,6 +30,22 @@ public class MainMenuHandle extends NodeHandle<Node> {
         guiRobot.push(KeyCode.F1);
     }
 
+
+    /**
+     * Opens the {@code ViewAliasWindow} using the menu bar in {@code MainWindow}.
+     */
+    public void openViewAliasWindowUsingMenu() {
+        clickOnMenuItemsSequentially("Alias", "F10");
+    }
+
+    /**
+     * Opens the {@code ViewAliasWindow} by pressing the shortcut key associated
+     * with the menu bar in {@code MainWindow}.
+     */
+    public void openViewAliasWindowUsingAccelerator() {
+        guiRobot.push(KeyCode.F10);
+    }
+
     /**
      * Clicks on {@code menuItems} in order.
      */

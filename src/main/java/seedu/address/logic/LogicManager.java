@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -48,6 +49,16 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> getCommands() {
+        return model.getCommands();
+    }
+
+    @Override
+    public String getAliasForCommand(String commandName) {
+        return model.getAliasForCommand(commandName);
     }
 
     @Override

@@ -213,4 +213,8 @@ public class EditCommand extends UndoableCommand {
                     && getTags().equals(e.getTags());
         }
     }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

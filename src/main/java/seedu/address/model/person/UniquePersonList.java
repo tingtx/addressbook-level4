@@ -91,12 +91,13 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void orderBy(String parameter) {
         requireNonNull(parameter);
-        if (parameter.toUpperCase().equals("NAME")) {
+        String upperCaseParameter = parameter.toUpperCase().trim();
+        if (upperCaseParameter.equals("NAME")) {
             internalList.sort(Comparator.comparing(o -> o.getName().fullName));
             return;
         }
 
-        if (parameter.toUpperCase().equals("ADDRESS")) {
+        if (upperCaseParameter.equals("ADDRESS")) {
             internalList.sort(Comparator.comparing(o -> o.getAddress().value));
             return;
         }

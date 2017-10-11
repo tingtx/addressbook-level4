@@ -136,6 +136,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void orderList(String parameter) {
         addressBook.orderList(parameter);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 
     @Override

@@ -102,4 +102,8 @@ public class RemarkCommand extends UndoableCommand {
         return index.equals(e.index)
                 && remark.equals(e.remark);
     }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

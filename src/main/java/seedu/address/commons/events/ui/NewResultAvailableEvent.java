@@ -8,9 +8,17 @@ import seedu.address.commons.events.BaseEvent;
 public class NewResultAvailableEvent extends BaseEvent {
 
     public final String message;
+    private boolean isErrorCommand = false;
 
     public NewResultAvailableEvent(String message) {
         this.message = message;
+        if (message.equals("Unknown Command")) {
+            isErrorCommand = true;
+        }
+    }
+
+    public boolean getIsErrorCommand() {
+        return isErrorCommand;
     }
 
     @Override

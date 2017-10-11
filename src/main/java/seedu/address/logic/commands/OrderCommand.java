@@ -2,9 +2,12 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
+/**
+ * Order the list according to a parameter
+ */
 public class OrderCommand extends UndoableCommand {
 
-    public String orderParameter;
+    private String orderParameter;
     public static final String COMMAND_WORD = "order";
     public static final String COMMAND_ALIAS = "o";
 
@@ -23,6 +26,10 @@ public class OrderCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         model.orderList(orderParameter);
         return new CommandResult(MESSAGE_SORT_SUCCESS);
+    }
+
+    public String getOrderParameter() {
+        return orderParameter;
     }
 
     public static String getCommandWord() {

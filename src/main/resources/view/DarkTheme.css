@@ -352,3 +352,12 @@
 #tags .labelFriends {
     -fx-background-color: #45ADA8 !important;
 }
+
+.remarkIcon{
+    -fx-alignment: center;
+    -fx-border-color: none;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: #0080ff;
+    -fx-padding: 1 1 1 1;
+}

@@ -63,7 +63,9 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
-        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+//        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        remark.setOnMouseEntered(event -> PersonNotePopup.popup());
+        remark.setOnMouseExited(event -> PersonNotePopup.closePopup());
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(getTag(tag)));

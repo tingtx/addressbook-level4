@@ -39,7 +39,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Features
+== Commands
 
 ====
 *Command Format*
@@ -58,6 +58,15 @@ Format: `help`
 
 Shows the list of aliases used, as well as protected aliases. +
 Format: `viewalias`
+
+=== Set aliases : `setalias` - Coming in v1.2
+
+Set alias for a particular command. +
+Format: `setalias c/COMMAND n/NEW_ALIAS`
+
+Examples:
+
+* `setalias c/help n/q`
 
 === Adding a person: `add`
 
@@ -249,14 +258,21 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Events - Coming in v1.2
+
+Coming in v1.2
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: How do I see the protected aliases for the commands? +
+*A*: You can type `viewalias` or you can access it from the Menu Bar.
+
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
@@ -270,6 +286,7 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
+* *Order* : `order`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *View Alias* : `viewalias`

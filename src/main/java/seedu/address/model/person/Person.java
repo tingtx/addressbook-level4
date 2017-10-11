@@ -60,7 +60,6 @@ public class Person implements ReadOnlyPerson {
     }
 
 
-
     @Override
     public ObjectProperty<Name> nameProperty() {
         return name;
@@ -113,7 +112,9 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setBirthday(Birthday birthday) { this.birthday.set(requireNonNull(birthday));}
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
 
     @Override
     public ObjectProperty<Birthday> birthdayProperty() {

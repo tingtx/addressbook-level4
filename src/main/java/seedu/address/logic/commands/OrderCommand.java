@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 /**
  * Order the list according to a parameter
@@ -16,6 +17,7 @@ public class OrderCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " NAME";
 
     public static final String MESSAGE_SORT_SUCCESS = "Address Book has been sorted";
+    private static final String MESSAGE_SORT_WRONG_PARAMTER = "The parameter can only be either Name or Address";
 
     private String orderParameter;
 
@@ -25,8 +27,12 @@ public class OrderCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        model.orderList(orderParameter);
-        return new CommandResult(MESSAGE_SORT_SUCCESS);
+        try {
+            model.orderList(orderParameter);
+            return new CommandResult(MESSAGE_SORT_SUCCESS);
+        } catch (UnrecognisedParameterException upe){
+            return new CommandResult(MESSAGE_SORT_WRONG_PARAMTER);
+        }
     }
 
     public String getOrderParameter() {

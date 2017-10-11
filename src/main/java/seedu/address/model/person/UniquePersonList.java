@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -89,7 +90,7 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Order the list.
      */
-    public void orderBy(String parameter) {
+    public void orderBy(String parameter) throws UnrecognisedParameterException {
         requireNonNull(parameter);
         String upperCaseParameter = parameter.toUpperCase().trim();
         if (upperCaseParameter.equals("NAME")) {
@@ -101,6 +102,8 @@ public class UniquePersonList implements Iterable<Person> {
             internalList.sort(Comparator.comparing(o -> o.getAddress().value));
             return;
         }
+
+        throw new UnrecognisedParameterException();
     }
 
     public void setPersons(UniquePersonList replacement) {

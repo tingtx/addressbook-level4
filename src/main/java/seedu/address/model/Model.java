@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -36,7 +37,7 @@ public interface Model {
     /**
      * Order the list based on a parameter
      */
-    void orderList(String parameter);
+    void orderList(String parameter) throws UnrecognisedParameterException;
 
     /**
      * Adds the given person

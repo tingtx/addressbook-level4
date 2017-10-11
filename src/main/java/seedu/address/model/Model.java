@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,6 +35,11 @@ public interface Model {
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /**
+     * Order the list based on a parameter
+     */
+    void orderList(String parameter) throws UnrecognisedParameterException;
+
+    /**
      * Adds the given person
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -58,10 +64,14 @@ public interface Model {
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /**
+     * Returns an unmodifiable view of the filtered person list
+     */
     ArrayList<ArrayList<String>> getCommands();
 
-    /** Returns the set alias for command, null otherwise */
+    /**
+     * Returns the set alias for command, null otherwise
+     */
     public String getAliasForCommand(String commandName);
 
     /**

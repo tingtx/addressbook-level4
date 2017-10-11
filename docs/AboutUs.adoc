@@ -11,17 +11,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== Quek Kai Yu
-image::qky.jpg[width="150", align="left"]
-{empty}[https://github.com/kaiyu92[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data Model
-
-'''
-
 === Keloysius Mak
-image::makzhk.jpg[width="150", align="left"]
+image::keloysiusmak.png[width="150", align="left"]
 {empty}[http://zhkphoto.com[homepage]] [https://github.com/keloysiusmak[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
@@ -29,38 +20,30 @@ Responsibilites : Logic Model
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
+=== Le Quang Quan
+image::quanle1994.png[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Developer +
+Responsibilities: User Interface Model
 
 '''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Quek Kai Yu
+image::kaiyu92.png[width="150", align="left"]
+{empty}[https://github.com/kaiyu92[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Data Model
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Xiang TingTing
+image::tingtx.png[width="150" , align="left"]
+{empty}[https://github.com/tingtx[github]] [<<XiangTingTing, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Storage Model
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer +
-Responsibilities: UI
-
-'''

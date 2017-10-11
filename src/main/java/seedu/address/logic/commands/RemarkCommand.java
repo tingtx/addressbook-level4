@@ -59,7 +59,7 @@ public class RemarkCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), remark, personToEdit.getTags());
+                personToEdit.getAddress(), personToEdit.getBirthday(), remark, personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -74,7 +74,6 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     *
      * @param personToEdit
      * @return the generated message
      */
@@ -102,5 +101,9 @@ public class RemarkCommand extends UndoableCommand {
         RemarkCommand e = (RemarkCommand) other;
         return index.equals(e.index)
                 && remark.equals(e.remark);
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
     }
 }

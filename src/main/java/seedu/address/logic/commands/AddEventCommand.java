@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 
 /**
  * Adds a event to the event book.
@@ -44,7 +45,10 @@ public class AddEventCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try{
-
+            model.addEvent(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateEventException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
     }
 

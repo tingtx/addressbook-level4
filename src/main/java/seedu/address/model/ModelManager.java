@@ -26,7 +26,9 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
@@ -90,8 +92,14 @@ public class ModelManager extends ComponentManager implements Model {
         //List Command
         commandList.add(new ArrayList<String>(Arrays.asList("List", ListCommand.getCommandWord())));
 
+        //Order Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
+
         //Redo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Redo", RedoCommand.getCommandWord())));
+
+        //Remark Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Remark", RemarkCommand.getCommandWord())));
 
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));

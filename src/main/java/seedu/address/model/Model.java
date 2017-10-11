@@ -63,10 +63,14 @@ public interface Model {
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /**
+     * Returns an unmodifiable view of the filtered person list
+     */
     ArrayList<ArrayList<String>> getCommands();
 
-    /** Returns the set alias for command, null otherwise */
+    /**
+     * Returns the set alias for command, null otherwise
+     */
     public String getAliasForCommand(String commandName);
 
     /**

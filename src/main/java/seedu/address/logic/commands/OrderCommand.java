@@ -1,9 +1,6 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.ReadOnlyPerson;
-
-import java.util.List;
 
 public class OrderCommand extends UndoableCommand {
 
@@ -18,7 +15,7 @@ public class OrderCommand extends UndoableCommand {
 
     public static final String MESSAGE_SORT_SUCCESS = "Address Book has been sorted";
 
-    public OrderCommand(String orderParameter){
+    public OrderCommand(String orderParameter) {
         this.orderParameter = orderParameter;
     }
 

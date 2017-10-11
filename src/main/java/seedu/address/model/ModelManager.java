@@ -134,7 +134,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void orderList(String parameter){
+    public synchronized void orderList(String parameter) {
         addressBook.orderList(parameter);
     }
 

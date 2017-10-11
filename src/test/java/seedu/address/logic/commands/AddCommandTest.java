@@ -103,7 +103,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void orderList(String parameter){
+        public void orderList(String parameter) {
             fail("This method should not be called.");
         }
 

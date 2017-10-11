@@ -74,7 +74,6 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     *
      * @param personToEdit
      * @return the generated message
      */

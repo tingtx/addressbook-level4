@@ -851,7 +851,7 @@ Use case resumes at step 2.
 1.  User requests to sync account
 2.  TunedIn asks for Facebook ID
 3.  User confirms that the account is of the user's
-4.  TunedIn pulls the data from the Facebook ID using the Graph API
+4.  TunedIn displays the data pulled from Facebook
 +
 Use case ends.
 

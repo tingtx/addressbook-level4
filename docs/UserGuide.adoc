@@ -99,6 +99,21 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Order persons in Address Book by a parameter: `order`
+
+Order the list of persons according to a specified parameter. +
+Format: `order naME` or `o Address`
+
+****
+* This will change the index of the person in the Address Book, which will affect other commands that use this attribute such as
+`delete` or `select`.
+* The Allowable parameters are `NAME` and `ADDRESS`.
+* The parameter is case-insenstive.
+* This command will only order by only one single parameter.
+* The error messange `"The parameter can only be either Name or Address"` will be displayed if the parameter is not either Name
+or Address.
+****
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +

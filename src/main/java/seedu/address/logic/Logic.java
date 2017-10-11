@@ -27,12 +27,18 @@ public interface Logic {
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    /** Returns an unmodifiable view of the commands available */
+    /**
+     * Returns an unmodifiable view of the commands available
+     */
     ArrayList<ArrayList<String>> getCommands();
 
-    /** Returns the set alias for command, null otherwise */
+    /**
+     * Returns the set alias for command, null otherwise
+     */
     public String getAliasForCommand(String commandName);
 
-    /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
+    /**
+     * Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object
+     */
     ListElementPointer getHistorySnapshot();
 }

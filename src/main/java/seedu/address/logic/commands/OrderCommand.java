@@ -30,7 +30,7 @@ public class OrderCommand extends UndoableCommand {
         try {
             model.orderList(orderParameter);
             return new CommandResult(MESSAGE_SORT_SUCCESS);
-        } catch (UnrecognisedParameterException upe){
+        } catch (UnrecognisedParameterException upe) {
             return new CommandResult(MESSAGE_SORT_WRONG_PARAMTER);
         }
     }

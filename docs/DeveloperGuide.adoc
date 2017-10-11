@@ -725,6 +725,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |user |add remarks for a person |make notes for contacts
+
+|`* * *` |user |set my own alias for commands |remember the commands easily
+
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
@@ -736,6 +740,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |save more than one contact number per contact in my address book |account for multiple phone numbers
 
 |`* * *` |organised user |group contacts manually or automatically |access the information I want easily
+
+|`* * *` |user |save my contacts' birthdays |refer to it easily
+
+|`* * *` |user |sort my contacts |find my contacts alphabetically
+
+|`* * *` |organized user |save events |refer to my events easily
 
 |`* * *` |user with busy schedules |see my important events on a calendar view |have an overview of my schedule for the month
 
@@ -764,11 +774,9 @@ seeing them by accident
 
 |`* *` |user |send mass messages to a group of contacts |plan for meetings, conferences or gatherings with ease
 
-|`* *` |user |drag and drop contacts in or out of different groups |not need to key in complex command lines
+|`* *` |user |manage contacts in different groups |maintain control over my groups
 
 |`* *` |user |view groups of contacts in a more visual display |see who are also in the group
-
-|`* *` |user |view groups of contacts in a more visual display |look for a contact in the group easily
 
 |`* *` |user |commands to be in the button form |avoid memorising the commands and select them more easily
 
@@ -875,7 +883,7 @@ Use case resumes at step 2.
 
 1.  User types in password
 2.  TunedIn checks password accuracy
-3.  TunedIn brings the patient to the home page
+3.  User is brought to the home page
 +
 Use case ends.
 

@@ -9,9 +9,34 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores addressbook or eventbook data in an XML file
  */
 public class XmlFileStorage {
+
+    /**
+     * Saves the given eventbook data to the specified file.
+     */
+    public static void saveDataToFile(File file, XmlSerializableEventBook eventBook)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, eventBook);
+        } catch (JAXBException e) {
+            assert false : "Unexpected exception " + e.getMessage();
+        }
+    }
+
+    /**
+     * Returns event book in the file or an empty event book
+     */
+    public static XmlSerializableEventBook loadEventDataFromSaveFile(File file) throws DataConversionException,
+            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableEventBook.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+
     /**
      * Saves the given addressbook data to the specified file.
      */

@@ -36,6 +36,11 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
+        if (event.getIsErrorCommand()){
+            resultDisplay.getStyleClass().add("error");
+        } else {
+            resultDisplay.getStyleClass().remove("error");
+        }
     }
 
 }

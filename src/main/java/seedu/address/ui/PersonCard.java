@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import javafx.beans.binding.Bindings;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -11,10 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
-
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.security.MessageDigest;
 
 /**
  * An UI component that displays information of a {@code Person}.

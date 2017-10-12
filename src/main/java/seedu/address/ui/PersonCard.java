@@ -76,8 +76,8 @@ public class PersonCard extends UiPart<Region> {
         testRemark.getStyleClass().add("remarkBox");
         remark.setContextMenu(remarkPopup);
         remark.setOnMouseEntered(event ->
-            remarkPopup.show(remark, remark.localToScreen(remark.getBoundsInLocal()).getMinX() +
-                    remark.getWidth() + 4, remark.localToScreen(remark.getBoundsInLocal()).getMinY()));
+            remarkPopup.show(remark, remark.localToScreen(remark.getBoundsInLocal()).getMinX()
+                    + remark.getWidth() + 4, remark.localToScreen(remark.getBoundsInLocal()).getMinY()));
         remark.setOnMouseExited(event -> remarkPopup.hide());
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();

@@ -71,22 +71,18 @@ public class PersonCard extends UiPart<Region> {
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         ContextMenu testContext = new ContextMenu();
         String retrievedRemark = person.remarkProperty().getValue().value;
-        MenuItem testRemark = new MenuItem("Personal Notes: \n" + retrievedRemark);
-        if (!retrievedRemark.isEmpty()) {
-            testContext.getItems().add(testRemark);
+        if (retrievedRemark.isEmpty()) {
+            retrievedRemark = "<Empty>";
         }
-        testContext.setAutoHide(true);
+        MenuItem testRemark = new MenuItem("Personal Notes: \n" + retrievedRemark);
+        testContext.getItems().add(testRemark);
+        testContext.getStyleClass().add("remarkBox");
+        testRemark.getStyleClass().add("remarkBox");
         remark.setContextMenu(testContext);
-        remark.setOnMouseEntered(event -> {
-            if (!testContext.isShowing()) {
-                testContext.show(remark, event.getScreenX(), event.getScreenY());
-            }
-        });
-        remark.setOnMouseExited(event -> {
-            if (testContext.isShowing()) {
-                testContext.hide();
-            }
-        });
+        remark.setOnMouseEntered(event ->
+            testContext.show(remark, remark.localToScreen(remark.getBoundsInLocal()).getMinX() +
+                    remark.getWidth() + 4, remark.localToScreen(remark.getBoundsInLocal()).getMinY()));
+        remark.setOnMouseExited(event -> testContext.hide());
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(getTag(tag)));

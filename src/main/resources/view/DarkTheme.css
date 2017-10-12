@@ -365,3 +365,8 @@
 .remarkIcon:hover{
     -fx-background-color: #00bfbf;
 }
+
+.remarkBox{
+    -fx-background-radius: 0 7 7 7;
+    -fx-border-radius: 0 7 7 7;
+}

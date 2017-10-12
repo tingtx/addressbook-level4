@@ -14,6 +14,7 @@ import seedu.address.model.tag.Tag;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.security.MessageDigest;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -69,20 +70,20 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
-        ContextMenu testContext = new ContextMenu();
+        ContextMenu remarkPopup = new ContextMenu();
         String retrievedRemark = person.remarkProperty().getValue().value;
         if (retrievedRemark.isEmpty()) {
             retrievedRemark = "<Empty>";
         }
         MenuItem testRemark = new MenuItem("Personal Notes: \n" + retrievedRemark);
-        testContext.getItems().add(testRemark);
-        testContext.getStyleClass().add("remarkBox");
+        remarkPopup.getItems().add(testRemark);
+        remarkPopup.getStyleClass().add("remarkBox");
         testRemark.getStyleClass().add("remarkBox");
-        remark.setContextMenu(testContext);
+        remark.setContextMenu(remarkPopup);
         remark.setOnMouseEntered(event ->
-            testContext.show(remark, remark.localToScreen(remark.getBoundsInLocal()).getMinX() +
+            remarkPopup.show(remark, remark.localToScreen(remark.getBoundsInLocal()).getMinX() +
                     remark.getWidth() + 4, remark.localToScreen(remark.getBoundsInLocal()).getMinY()));
-        remark.setOnMouseExited(event -> testContext.hide());
+        remark.setOnMouseExited(event -> remarkPopup.hide());
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(getTag(tag)));

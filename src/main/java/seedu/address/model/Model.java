@@ -9,6 +9,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 
 /**
  * The API of the Model component.
@@ -18,6 +20,7 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<ReadOnlyUser> PREDICATE_SHOW_ALL_USERS = unused -> true;
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -72,7 +75,7 @@ public interface Model {
     /**
      * Returns the set alias for command, null otherwise
      */
-    public String getAliasForCommand(String commandName);
+    String getAliasForCommand(String commandName);
 
     /**
      * Updates the filter of the filtered person list to show all persons
@@ -86,4 +89,11 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException;
+
+    boolean isExistingUser();
+
+    byte[] retrieveDigestFromStorage();
+
+    String retrieveSaltFromStorage(String userId);
 }

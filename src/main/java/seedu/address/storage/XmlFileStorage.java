@@ -36,4 +36,16 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Returns address book in the file or an empty address book
+     */
+    public static XmlSerializableAccount loadAccountsFromSaveFile(File file) throws DataConversionException,
+            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableAccount.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+
 }

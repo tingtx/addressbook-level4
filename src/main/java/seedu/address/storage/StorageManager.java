@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
@@ -22,12 +23,14 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private AccountStorage accountStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage, AccountStorage accountStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.accountStorage = accountStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -84,6 +87,33 @@ public class StorageManager extends ComponentManager implements Storage {
 
     }
 
+    // ================ Account methods ===================================
+    @Override
+    public String getAccountFilePath() {
+        return accountStorage.getAccountFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyAccount> readAccount() {
+        return readAccount(accountStorage.getAccountFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyAccount> readAccount(String filePath) {
+        logger.fine("Attempting to read data from account file: " + filePath);
+        return accountStorage.readAccount(filePath);
+    }
+
+    @Override
+    public void saveAccount(ReadOnlyAccount account) {
+
+    }
+
+    @Override
+    public void saveAccount(ReadOnlyAccount addressBook, String filePath) {
+
+    }
+
 
     @Override
     @Subscribe
@@ -96,4 +126,11 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    public AccountStorage getAccountStorage() {
+        return accountStorage;
+    }
+
+    public void setAccountStorage(AccountStorage accountStorage) {
+        this.accountStorage = accountStorage;
+    }
 }

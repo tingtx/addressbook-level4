@@ -15,29 +15,18 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.OrderCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.logic.commands.*;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -50,18 +39,23 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final ArrayList<ArrayList<String>> viewAliases;
 
+    private final Account account;
+    private final FilteredList<ReadOnlyUser> filteredUsers;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, ReadOnlyAccount account) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs
+                + " and account " + account);
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-
+        this.account = new Account(account);
+        filteredUsers = new FilteredList<>(this.account.getUserList());
 
         ArrayList<ArrayList<String>> commandList = new ArrayList<ArrayList<String>>();
 
@@ -104,8 +98,14 @@ public class ModelManager extends ComponentManager implements Model {
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
 
-        //Undo Command
-        commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
+        //Order Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
+
+        //Lock Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
+
+        //Login Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Log in", LoginCommand.getCommandWord())));
 
         //View Alias Command
         commandList.add(new ArrayList<String>(Arrays.asList("View Alias", ViewAliasCommand.getCommandWord())));
@@ -115,7 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new Account());
     }
 
     @Override
@@ -134,6 +134,13 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateAccountChanged() {
+        raise(new AccountChangedEvent(account));
     }
 
     @Override
@@ -208,6 +215,35 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //===================== Account Operations =========================
+
+    @Override
+    public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
+        account.addUser(user);
+        updateFilteredUserList(PREDICATE_SHOW_ALL_USERS);
+        indicateAccountChanged();
+    }
+
+    private void updateFilteredUserList(Predicate<ReadOnlyUser> predicate) {
+        requireNonNull(predicate);
+        filteredUsers.setPredicate(predicate);
+    }
+
+    @Override
+    public boolean isExistingUser() {
+        return false;
+    }
+
+    @Override
+    public byte[] retrieveDigestFromStorage() {
+        return new byte[0];
+    }
+
+    @Override
+    public String retrieveSaltFromStorage(String userId) {
+        return null;
     }
 
     @Override

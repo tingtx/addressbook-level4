@@ -12,7 +12,7 @@ import static java.util.Objects.requireNonNull;
 public class UniqueUserList {
     private final ObservableList<User> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
-    private final ObservableList<ReadOnlyUser> mappedList = EasyBind.map(internalList, (person) -> person);
+    private final ObservableList<ReadOnlyUser> mappedList = EasyBind.map(internalList, (user) -> user);
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.

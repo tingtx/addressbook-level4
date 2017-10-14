@@ -1,8 +1,10 @@
 package seedu.address.storage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
+import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -31,17 +33,25 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, AccountSt
     void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 
     @Override
-    Optional<ReadOnlyAccount> readAccount();
+    Optional<ReadOnlyAccount> readAccount() throws FileNotFoundException, DataConversionException;
 
     @Override
     String getAccountFilePath();
 
     @Override
-    void saveAccount(ReadOnlyAccount account);
+    void saveAccount(ReadOnlyAccount account) throws IOException;
+
     /**
      * Saves the current version of the Address Book to the hard disk.
      * Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+    /**
+     * Saves the current version of the Account to the hard disk.
+     * Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleAccountChangeEvent(AccountChangedEvent ace);
 }

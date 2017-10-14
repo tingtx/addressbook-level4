@@ -33,6 +33,11 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
+     * Returns the Account
+     */
+    ReadOnlyAccount getAccount();
+
+    /**
      * Deletes the given person.
      */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;

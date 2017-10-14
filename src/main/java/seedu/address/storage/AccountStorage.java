@@ -4,6 +4,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAccount;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Optional;
 
 public interface AccountStorage {
@@ -22,19 +23,19 @@ public interface AccountStorage {
     /**
      * @see #getAccountFilePath()
      */
-    Optional<ReadOnlyAccount> readAccount(String filePath);
+    Optional<ReadOnlyAccount> readAccount(String filePath) throws FileNotFoundException, DataConversionException;
 
     /**
      * Saves the given {@link ReadOnlyAccount} to the storage.
      *
      * @param addressBook cannot be null.
      */
-    void saveAccount(ReadOnlyAccount addressBook);
+    void saveAccount(ReadOnlyAccount addressBook) throws IOException;
 
     /**
      * @see #saveAccount(ReadOnlyAccount)
      */
-    void saveAccount(ReadOnlyAccount addressBook, String filePath);
+    void saveAccount(ReadOnlyAccount addressBook, String filePath) throws IOException;
 
     /**
      * @see #saveAddressBook(ReadOnlyAddressBook)

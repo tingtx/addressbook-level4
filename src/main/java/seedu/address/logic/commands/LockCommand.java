@@ -2,6 +2,12 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.digestUtil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.User;
+import seedu.address.model.user.exceptions.DuplicateUserException;
+
+import java.security.SecureRandom;
+import java.util.Random;
 
 import static java.util.Objects.requireNonNull;
 
@@ -23,14 +29,17 @@ public class LockCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() throws CommandException, DuplicateUserException {
         requireNonNull(model);
         byte[] uIdDigest = new HashDigest().getHashDigest(userId);
         if (model.isExistingUser()){
             return new CommandResult(MESSAGE_EXISTING_USER);
         }
         byte[] pwDigest = new HashDigest().getHashDigest(passwordText);
-        model.persistUserAccount(uIdDigest,pwDigest);
+        final Random r = new SecureRandom();
+        byte[] salt = new byte[32];
+        r.nextBytes(salt);
+        model.persistUserAccount(new User(new String(uIdDigest), new String(salt), new String(pwDigest)));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

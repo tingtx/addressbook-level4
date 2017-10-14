@@ -81,22 +81,29 @@ public class MainApp extends Application {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         Optional<ReadOnlyAccount> accountOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyAccount initialAccount;
         try {
             addressBookOptional = storage.readAddressBook();
             accountOptional = storage.readAccount();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
+            if (!accountOptional.isPresent()){
+                logger.info("Account file not found.");
+            }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialAccount = accountOptional.orElseGet(SampleDataUtil::getEmptyAccount);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialAccount = new Account();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialAccount = new Account();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, userPrefs, initialAccount);
     }
 
     private void initLogging(Config config) {

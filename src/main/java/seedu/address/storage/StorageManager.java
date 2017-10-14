@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -8,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -94,24 +96,25 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyAccount> readAccount() {
+    public Optional<ReadOnlyAccount> readAccount() throws FileNotFoundException, DataConversionException {
         return readAccount(accountStorage.getAccountFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyAccount> readAccount(String filePath) {
+    public Optional<ReadOnlyAccount> readAccount(String filePath) throws FileNotFoundException, DataConversionException {
         logger.fine("Attempting to read data from account file: " + filePath);
         return accountStorage.readAccount(filePath);
     }
 
     @Override
-    public void saveAccount(ReadOnlyAccount account) {
-
+    public void saveAccount(ReadOnlyAccount account) throws IOException {
+        saveAccount(account, accountStorage.getAccountFilePath());
     }
 
     @Override
-    public void saveAccount(ReadOnlyAccount addressBook, String filePath) {
-
+    public void saveAccount(ReadOnlyAccount account, String filePath) throws IOException {
+        logger.fine("Attempting to write to account file: " + filePath);
+        accountStorage.saveAccount(account, filePath);
     }
 
 
@@ -121,6 +124,17 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    @Override
+    @Subscribe
+    public void handleAccountChangeEvent(AccountChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local accounts changed, saving to accounts file"));
+        try {
+            saveAccount(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

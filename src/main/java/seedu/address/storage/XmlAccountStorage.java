@@ -2,10 +2,12 @@ package seedu.address.storage;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAccount;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -31,11 +33,10 @@ public class XmlAccountStorage implements AccountStorage {
 
     @Override
     public String getAccountFilePath() {
-        return null;
+        return filePath;
     }
 
-    @Override
-    public Optional<ReadOnlyAccount> readAccount() throws FileNotFoundException, DataConversionException {
+    public Optional<ReadOnlyAccount> readAccount(String FilePath) throws FileNotFoundException, DataConversionException {
         requireNonNull(filePath);
 
         File accountFile = new File(filePath);
@@ -44,14 +45,14 @@ public class XmlAccountStorage implements AccountStorage {
             return Optional.empty();
         }
 
-        ReadOnlyAccount accountOptional = XmlFileStorage.loadAccountsFromSaveFile(new File(filePath));
+        ReadOnlyAccount accountOptional = XmlFileStorage.loadAccountFromSaveFile(new File(filePath));
 
         return Optional.of(accountOptional);
     }
 
     @Override
-    public Optional<ReadOnlyAccount> readAccount(String filePath) {
-        return null;
+    public Optional<ReadOnlyAccount> readAccount() throws FileNotFoundException, DataConversionException {
+        return readAccount(filePath);
     }
 
     @Override
@@ -60,7 +61,12 @@ public class XmlAccountStorage implements AccountStorage {
     }
 
     @Override
-    public void saveAccount(ReadOnlyAccount addressBook, String filePath) {
+    public void saveAccount(ReadOnlyAccount account, String filePath) throws IOException {
+        requireNonNull(account);
+        requireNonNull(filePath);
 
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        XmlFileStorage.saveAccountToFile(file, new XmlSerializableAccount(account));
     }
 }

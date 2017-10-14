@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
@@ -59,6 +61,10 @@ public class SampleDataUtil {
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
+    }
+
+    public static ReadOnlyAccount getEmptyAccount() {
+        return new Account();
     }
 
     /**

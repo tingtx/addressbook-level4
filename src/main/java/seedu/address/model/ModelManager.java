@@ -40,7 +40,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final ArrayList<ArrayList<String>> viewAliases;
 
     private final Account account;
-    private final FilteredList<ReadOnlyUser> filteredUsers;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -55,7 +54,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.account = new Account(account);
-        filteredUsers = new FilteredList<>(this.account.getUserList());
 
         ArrayList<ArrayList<String>> commandList = new ArrayList<ArrayList<String>>();
 
@@ -127,6 +125,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public ReadOnlyAccount getAccount() {
+        return account;
     }
 
     /**
@@ -222,13 +225,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
         account.addUser(user);
-        updateFilteredUserList(PREDICATE_SHOW_ALL_USERS);
         indicateAccountChanged();
-    }
-
-    private void updateFilteredUserList(Predicate<ReadOnlyUser> predicate) {
-        requireNonNull(predicate);
-        filteredUsers.setPredicate(predicate);
     }
 
     @Override

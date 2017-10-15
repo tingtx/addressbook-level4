@@ -26,7 +26,7 @@ public class XmlSerializableAccount implements ReadOnlyAccount {
     }
 
     public XmlSerializableAccount(){
-        this.users = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     public XmlSerializableAccount(ReadOnlyAccount src){

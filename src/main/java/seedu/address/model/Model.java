@@ -96,8 +96,6 @@ public interface Model {
 
     void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException;
 
-    boolean isExistingUser();
-
     byte[] retrieveDigestFromStorage();
 
     String retrieveSaltFromStorage(String userId);

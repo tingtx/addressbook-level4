@@ -1,5 +1,7 @@
 package seedu.address.model.user;
 
+import java.util.Objects;
+
 public class User implements ReadOnlyUser {
     private String userId;
     private String salt;
@@ -46,5 +48,12 @@ public class User implements ReadOnlyUser {
     @Override
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReadOnlyUser // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyUser) other));
     }
 }

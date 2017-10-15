@@ -14,6 +14,13 @@ public class XmlAdaptedUser {
     private String password;
 
     /**
+     * Constructs an XmlAdaptedUser.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedUser() {
+    }
+
+    /**
      * Converts a given User into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson

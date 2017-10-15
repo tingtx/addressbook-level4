@@ -229,11 +229,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean isExistingUser() {
-        return false;
-    }
-
-    @Override
     public byte[] retrieveDigestFromStorage() {
         return new byte[0];
     }

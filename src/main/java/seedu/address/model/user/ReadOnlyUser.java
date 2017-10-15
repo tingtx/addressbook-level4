@@ -20,4 +20,13 @@ public interface ReadOnlyUser {
     default boolean isCorrectPassword(String userId, String password){
         return this.getUserId().equals(userId) && this.getPassword().equals(password);
     }
+
+    /**
+     * Returns true if both have the same state. (interfaces cannot override .equals)
+     */
+    default boolean isSameStateAs(ReadOnlyUser other) {
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getUserId().equals(this.getUserId())); // state checks here onwards
+    }
 }

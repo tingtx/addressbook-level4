@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.digestUtil.HashDigest;
+import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.user.ReadOnlyUser;
+
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
@@ -13,19 +13,22 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
+/**
+ * Create an account
+ */
 public class LockCommand extends Command {
     public static final String COMMAND_WORD = "lock";
     public static final String COMMAND_ALIAS = "lo";
-    private static final String MESSAGE_EXISTING_USER = "User already exists";
-    private static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your password";
     public static final Object MESSAGE_USAGE = COMMAND_WORD + ": Locks the current address book with a user account. "
             + "Parameters: "
             + PREFIX_USERID + "USER ID "
             + PREFIX_PASSWORD + "PASSWORD";
+    private static final String MESSAGE_EXISTING_USER = "User already exists";
+    private static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your password";
     private String userId;
     private String passwordText;
 
-    public LockCommand (String userId, String passwordText){
+    public LockCommand(String userId, String passwordText) {
         this.userId = userId;
         this.passwordText = passwordText;
     }
@@ -57,7 +60,7 @@ public class LockCommand extends Command {
 
     private String getHexFormat(byte[] byteStream) {
         StringBuffer hexString = new StringBuffer();
-        for (int i=0;i<byteStream.length;i++) {
+        for (int i = 0; i < byteStream.length; i++) {
             hexString.append(Integer.toHexString(0xFF & byteStream[i]));
         }
         return hexString.toString();

@@ -1,9 +1,12 @@
-package seedu.address.logic.commands.digestUtil;
+package seedu.address.logic.commands.digestutil;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Converts a string to a SHA-256 Hash Digest.
+ */
 public class HashDigest {
     /**
      * Return the hash digest of {@code text}. Used for creating accounts and validating log-ins.

@@ -5,10 +5,6 @@ import static java.util.Objects.requireNonNull;
 import javafx.scene.image.Image;
 import seedu.address.MainApp;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * A container for App specific utility functions
  */

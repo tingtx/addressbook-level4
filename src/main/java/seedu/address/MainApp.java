@@ -1,9 +1,12 @@
 package seedu.address;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Application;
 import javafx.application.Platform;
+
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -12,6 +15,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 
@@ -32,6 +36,7 @@ import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAccountStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 

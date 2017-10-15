@@ -3,6 +3,9 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyAccount;
 
+/**
+ * Indicates the Account in the model has changed
+ */
 public class AccountChangedEvent extends BaseEvent {
 
     public final ReadOnlyAccount data;

@@ -6,7 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 
@@ -27,6 +29,9 @@ public class SetAliasCommand extends Command {
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
     public SetAliasCommand(String command, String alias) {
+        if (command == null || alias == null) {
+            throw new NullPointerException();
+        }
         commandAdd = command;
         toAdd = alias;
     }

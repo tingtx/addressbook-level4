@@ -257,7 +257,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
+    public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException{
         try {
             this.userPref.setAlias(commandName, alias);
         } catch (DuplicateAliasException e) {

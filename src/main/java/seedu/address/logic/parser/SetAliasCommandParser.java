@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
 
@@ -26,18 +28,29 @@ public class SetAliasCommandParser implements Parser<SetAliasCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_COMMAND, PREFIX_ALIAS);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_ALIAS)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_ALIAS, PREFIX_COMMAND)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetAliasCommand.MESSAGE_USAGE));
         }
 
-        try {
-            String command = ParserUtil.parseCommand(argMultimap.getValue(PREFIX_COMMAND)).get();
-            String alias  = ParserUtil.parseAlias(argMultimap.getValue(PREFIX_ALIAS)).get();
 
-            return new SetAliasCommand(command, alias);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+        String command = ParserUtil.parseCommand(argMultimap.getValue(PREFIX_COMMAND)).get();
+        String alias  = ParserUtil.parseAlias(argMultimap.getValue(PREFIX_ALIAS)).get();
+
+        if (!(command.equals("add") || command.equals("clear") || command.equals("delete") || command.equals("edit") || command.equals("exit"
+               ) || command.equals("find") || command.equals("help") || command.equals("history") || command.equals("list"
+               ) || command.equals("order") || command.equals("redo") || command.equals("remark") || command.equals("select"
+               ) || command.equals("undo") || command.equals("viewalias") || command.equals("setalias"))) {
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+
+        if ((alias.equals("add") || alias.equals("clear") || alias.equals("delete") || alias.equals("edit") || alias.equals("exit"
+        ) || alias.equals("find") || alias.equals("help") || alias.equals("history") || alias.equals("list"
+        ) || alias.equals("order") || alias.equals("redo") || alias.equals("remark") || alias.equals("select"
+        ) || alias.equals("undo") || alias.equals("viewalias") || alias.equals("setalias"))) {
+            throw new ParseException(MESSAGE_DUPLICATE_ALIAS);
+        }
+
+        return new SetAliasCommand(command, alias);
     }
 
     /**

@@ -4,15 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Objects;
-import java.util.Set;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.logic.commands.Command;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person in the address book.
@@ -20,6 +14,8 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Alias implements Serializable {
 
+    public static final String MESSAGE_ALIAS_CONSTRAINTS =
+            "Aliases should only contain alphanumeric characters and spaces, and it should not be blank";
     private String aliasCommand;
     private String aliasString;
 
@@ -33,9 +29,16 @@ public class Alias implements Serializable {
     }
 
     public Alias(String aliasCommand, String aliasString) {
-        requireAllNonNull(aliasCommand, aliasString);
-        this.aliasCommand = aliasCommand;
-        this.aliasString = aliasString;
+        try {
+            requireAllNonNull(aliasCommand, aliasString);
+            if (!(aliasCommand instanceof String && aliasString instanceof String)) {
+                throw new IllegalValueException(MESSAGE_ALIAS_CONSTRAINTS);
+            }
+            this.aliasCommand = aliasCommand;
+            this.aliasString = aliasString;
+        } catch (IllegalValueException e) {
+            ;
+        }
     }
 
     public void setAlias(String alias) {
@@ -44,6 +47,10 @@ public class Alias implements Serializable {
 
     public String getAlias() {
         return aliasString;
+    }
+
+    public String getCommand() {
+        return aliasCommand;
     }
 
     @Override

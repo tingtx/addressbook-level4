@@ -42,6 +42,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -224,7 +225,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(ReadOnlyPerson toAdd) {
+    private void assertCommandSuccess(ReadOnlyPerson toAdd) throws IllegalValueException {
         assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
     }
 
@@ -234,7 +235,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      *
      * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
      */
-    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
+    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) throws IllegalValueException {
         Model expectedModel = getModel();
         try {
             expectedModel.addPerson(toAdd);
@@ -253,7 +254,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      *
      * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
      */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage)
+            throws IllegalValueException {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
@@ -271,7 +273,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
+    private void assertCommandFailure(String command, String expectedResultMessage) throws IllegalValueException {
         Model expectedModel = getModel();
 
         executeCommand(command);

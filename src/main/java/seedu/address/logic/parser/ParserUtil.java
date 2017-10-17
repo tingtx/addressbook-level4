@@ -92,14 +92,14 @@ public class ParserUtil {
     /**
      * Parses a {@code String command} into an {@code String}.
      */
-    public static Optional<String> parseCommand(Optional<String> command) throws IllegalValueException {
+    public static Optional<String> parseCommand(Optional<String> command) {
         return command.isPresent() ? Optional.of(command.get()) : Optional.empty();
     }
 
     /**
      * Parses a {@code String alias} into an {@code String}.
      */
-    public static Optional<String> parseAlias(Optional<String> alias) throws IllegalValueException {
+    public static Optional<String> parseAlias(Optional<String> alias) {
         return alias.isPresent() ? Optional.of(alias.get()) : Optional.empty();
     }
 

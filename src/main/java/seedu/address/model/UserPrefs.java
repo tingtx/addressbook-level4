@@ -1,13 +1,9 @@
 package seedu.address.model;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 
@@ -62,7 +58,7 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
+    public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException{
         try {
             aliasSettings.setAlias(command, alias);
         } catch (DuplicateAliasException e) {

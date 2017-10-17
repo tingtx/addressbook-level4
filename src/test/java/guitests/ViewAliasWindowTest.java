@@ -40,10 +40,6 @@ public class ViewAliasWindowTest extends AddressBookGuiTest {
         //use command box
         runCommand(ViewAliasCommand.COMMAND_WORD);
         assertViewAliasWindowOpen();
-
-        //use command box
-        runCommand(ViewAliasCommand.COMMAND_ALIAS);
-        assertViewAliasWindowOpen();
     }
 
     /**

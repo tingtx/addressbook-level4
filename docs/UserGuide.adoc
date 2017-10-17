@@ -59,14 +59,19 @@ Format: `help`
 Shows the list of aliases used, as well as protected aliases. +
 Format: `viewalias`
 
-=== Set aliases : `setalias` - Coming in v1.2
+=== Set aliases : `setalias`
 
 Set alias for a particular command. +
-Format: `setalias c/COMMAND n/NEW_ALIAS`
+Format: `setalias c/COMMAND al/NEW_ALIAS`
 
 Examples:
 
-* `setalias c/help n/q`
+* `setalias c/help al/h`
+
+****
+* Note that protected aliases cannot be set as aliases. Refer to the Alias Window (F10) to see the list of protected
+aliases
+****
 
 === Adding a person: `add`
 

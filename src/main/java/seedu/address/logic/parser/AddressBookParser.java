@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.commons.core.AliasSettings;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -24,12 +25,18 @@ import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
 
 /**
  * Parses user input.
  */
 public class AddressBookParser {
 
+    private static UserPrefs userPrefs;
+
+    public AddressBookParser(UserPrefs userPref) {
+        this.userPrefs = userPref;
+    }
     /**
      * Used for initial separation of command word and args.
      */
@@ -50,70 +57,74 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-        case AddCommand.COMMAND_ALIAS:
+        AliasSettings aliasSettings = userPrefs.getAliasSettings();
+
+        if (commandWord.equals(AddCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getAddCommand().getAlias())) {
             return new AddCommandParser().parse(arguments);
-
-        case EditCommand.COMMAND_WORD:
-        case EditCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(EditCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getEditCommand().getAlias())) {
             return new EditCommandParser().parse(arguments);
-
-        case SelectCommand.COMMAND_WORD:
-        case SelectCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(SelectCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getSelectCommand().getAlias())) {
             return new SelectCommandParser().parse(arguments);
-
-        case OrderCommand.COMMAND_WORD:
-        case OrderCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(OrderCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getOrderCommand().getAlias())) {
             return new OrderCommand(arguments);
-
-        case DeleteCommand.COMMAND_WORD:
-        case DeleteCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(DeleteCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getDeleteCommand().getAlias())) {
             return new DeleteCommandParser().parse(arguments);
-
-        case ClearCommand.COMMAND_WORD:
-        case ClearCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(ClearCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getClearCommand().getAlias())) {
             return new ClearCommand();
-
-        case FindCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(FindCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getFindCommand().getAlias())) {
             return new FindCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-        case ListCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(ListCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getListCommand().getAlias())) {
             return new ListCommand();
-
-        case ViewAliasCommand.COMMAND_WORD:
-        case ViewAliasCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(ViewAliasCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getViewAliasCommand().getAlias())) {
             return new ViewAliasCommand();
-
-        case SetAliasCommand.COMMAND_WORD:
+        }
+        else if (commandWord.equals(SetAliasCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getSetAliasCommand().getAlias())) {
             return new SetAliasCommandParser().parse(arguments);
-
-        case HistoryCommand.COMMAND_WORD:
-        case HistoryCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(HistoryCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getHistoryCommand().getAlias())) {
             return new HistoryCommand();
-
-        case RemarkCommand.COMMAND_WORD:
-        case RemarkCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(RemarkCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getRemarkCommand().getAlias())) {
             return new RemarkCommandParser().parse(arguments);
-
-        case ExitCommand.COMMAND_WORD:
+        }
+        else if (commandWord.equals(ExitCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getExitCommand().getAlias())) {
             return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
+        }
+        else if (commandWord.equals(HelpCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getHelpCommand().getAlias())) {
             return new HelpCommand();
-
-        case UndoCommand.COMMAND_WORD:
-        case UndoCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(UndoCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getUndoCommand().getAlias())) {
             return new UndoCommand();
-
-        case RedoCommand.COMMAND_WORD:
-        case RedoCommand.COMMAND_ALIAS:
+        }
+        else if (commandWord.equals(RedoCommand.COMMAND_WORD) ||
+                commandWord.equals(aliasSettings.getRedoCommand().getAlias())) {
             return new RedoCommand();
-
-        default:
+        }
+        else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }

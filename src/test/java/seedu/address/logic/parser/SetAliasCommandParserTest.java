@@ -16,9 +16,6 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_VALUE
 import org.junit.Test;
 
 import seedu.address.logic.commands.SetAliasCommand;
-import seedu.address.model.alias.Alias;
-import seedu.address.testutil.AliasBuilder;
-import seedu.address.testutil.PersonBuilder;
 
 public class SetAliasCommandParserTest {
     private SetAliasCommandParser parser = new SetAliasCommandParser();

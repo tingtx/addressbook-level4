@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.Command;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -85,5 +87,12 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Updates the alias of the given function with the given {@code alias}.
+     *
+     * @throws NullPointerException if {@code alias} is null.
+     */
+    void setAlias(Command command, String alias) throws DuplicateAliasException;
 
 }

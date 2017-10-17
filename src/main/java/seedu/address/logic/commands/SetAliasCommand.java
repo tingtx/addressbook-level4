@@ -21,6 +21,14 @@ public class SetAliasCommand extends UndoableCommand {
     private final Command commandAdd;
     private final String toAdd;
 
+    /**
+     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     */
+    public SetAliasCommand(Command command, String alias) {
+        commandAdd = command;
+        toAdd = alias;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);

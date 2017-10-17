@@ -89,6 +89,20 @@ public class ParserUtil {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
+    /**
+     * Parses a {@code String command} into an {@code String}.
+     */
+    public static Optional<String> parseCommand(Optional<String> command) {
+        return command.isPresent() ? Optional.of(command.get()) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String alias} into an {@code String}.
+     */
+    public static Optional<String> parseAlias(Optional<String> alias) {
+        return alias.isPresent() ? Optional.of(alias.get()) : Optional.empty();
+    }
+
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

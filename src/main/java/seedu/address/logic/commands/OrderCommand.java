@@ -9,7 +9,6 @@ import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 public class OrderCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "order";
-    public static final String COMMAND_ALIAS = "o";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Order the Address Book based on a parameter. "
             + "This will affect the indices of persons and the commands using this number, e.g. delete command.\n"

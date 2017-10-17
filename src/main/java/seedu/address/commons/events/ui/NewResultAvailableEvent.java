@@ -10,6 +10,7 @@ public class NewResultAvailableEvent extends BaseEvent {
     public final String message;
     private boolean isErrorCommand = false;
 
+    /* Used to populate the Alias window */
     public NewResultAvailableEvent(String message) {
         this.message = message;
         if (message.equals("Unknown command")) {

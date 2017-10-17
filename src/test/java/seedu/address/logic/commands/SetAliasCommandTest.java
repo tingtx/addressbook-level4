@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,78 +19,88 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.AliasBuilder;
 
-public class AddCommandTest {
+public class SetAliasCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullCommandAndAlias_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new SetAliasCommand(null, null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_aliasAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingAliasSet modelStub = new ModelStubAcceptingAliasSet();
+        Alias validAlias = new AliasBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getSetAliasCommand(validAlias, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(SetAliasCommand.MESSAGE_SUCCESS, validAlias), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validAlias), modelStub.aliases);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_throwsDuplicateAliasException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateAliasException();
+        Alias validAlias = new AliasBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(MESSAGE_DUPLICATE_ALIAS);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getSetAliasCommand(validAlias, modelStub).execute();
+    }
+
+    @Test
+    public void execute_throwsUnknownCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingUnknownCommandException();
+        Alias validAlias = new AliasBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
+
+        getSetAliasCommand(validAlias, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        SetAliasCommand addAliceAlias = new SetAliasCommand("first", "alice");
+        SetAliasCommand addBobAlias = new SetAliasCommand("first", "bob");
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addAliceAlias.equals(addAliceAlias));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        SetAliasCommand addAliceAliasCopy = new SetAliasCommand("first", "alice");
+        assertTrue(addAliceAlias.equals(addAliceAliasCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addAliceAlias.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addAliceAlias.equals(null));
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different alias -> returns false
+        assertFalse(addAliceAlias.equals(addBobAlias));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new SetAliasCommand with the details of the given alias.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private SetAliasCommand getSetAliasCommand(Alias alias, Model model) {
+        SetAliasCommand command = new SetAliasCommand(alias.getCommand(), alias.getAlias());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -162,40 +174,40 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setAlias(String command, String alias) {
-            fail("This method should not be called.");
+        public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
+
         }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicateAliasException when trying to add a person.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
+    private class ModelStubThrowingDuplicateAliasException extends ModelStub {
 
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public void setAlias(String command, String alias) throws DuplicateAliasException {
+            throw new DuplicateAliasException(MESSAGE_DUPLICATE_ALIAS);
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always throw a UnknownCommandException when trying to add a person.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubThrowingUnknownCommandException extends ModelStub {
 
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
+        public void setAlias(String command, String alias) throws UnknownCommandException {
+            throw new UnknownCommandException(MESSAGE_UNKNOWN_COMMAND);
         }
+    }
+
+    /**
+     * A Model stub that always accept the alias being set.
+     */
+    private class ModelStubAcceptingAliasSet extends ModelStub {
+        final ArrayList<Alias> aliases = new ArrayList<>();
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public void setAlias(String command, String name) {
+            aliases.add(new Alias(command, name));
         }
     }
 

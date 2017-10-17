@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TunedIn - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -59,14 +59,56 @@ Format: `help`
 Shows the list of aliases used, as well as protected aliases. +
 Format: `viewalias`
 
-=== Set aliases : `setalias` - Coming in v1.2
+=== Set aliases : `setalias`
 
 Set alias for a particular command. +
-Format: `setalias c/COMMAND n/NEW_ALIAS`
+Format: `setalias c/COMMAND al/NEW_ALIAS`
 
 Examples:
 
-* `setalias c/help n/q`
+* `setalias c/help al/h`
+
+****
+* Note that protected aliases cannot be set as aliases. Refer to the Alias Window (F10) to see the list of protected
+aliases
+****
+
+=== Set theme : `settheme` - Coming in V2.0
+
+Set theme for the TunedIn Application. +
+Format: `settheme x/THEME_NAME`
+
+Examples:
+
+* `settheme x/AUTUMN`
+
+=== Login : `login` - Coming in V2.0
+
+Logs in to the TunedIn Application. +
+Format: `login u/USER_NAME pw/PASSWORD`
+
+Examples:
+
+* `login u/KELOYSIUS pw/SPECIAL1PASS`
+
+=== SYNC : `sync` - Coming in V2.0
+
+Sync the TunedIn application to your cloud TunedInLive account. +
+Format: `sync`
+
+=== Change Password : `changepassword` - Coming in V2.0
+
+Changes the account password. +
+Format: `changepassword pw/OLD_PASSWORD pwn/NEW_PASSWORD`
+
+Examples:
+
+* `changepassword pw/SPECIAL1PASS pw/SPECIAL2PASS`
+
+=== Logout : `logout` - Coming in V2.0
+
+Logs out of the address book. +
+Format: `logout`
 
 === Adding a person: `add`
 
@@ -211,6 +253,18 @@ Format: `history` or `h`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+=== Events : `events` - Coming in V2.0
+
+Coming in V2.0
+
+=== Export : `export` - Coming in V2.0
+
+Exports the TunedIn application for use on another computer.
+
+=== Connect with social media : `connect` - Coming in V2.0
+
+Coming in V2.0
 
 // tag::undoredo[]
 === Undoing previous command : `undo`

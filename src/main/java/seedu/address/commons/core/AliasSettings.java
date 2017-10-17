@@ -1,8 +1,12 @@
 package seedu.address.commons.core;
 
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 
 import seedu.address.logic.commands.AddCommand;
@@ -21,6 +25,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 
 /**
  * A Serializable class that contains the Alias settings.
@@ -43,25 +48,42 @@ public class AliasSettings implements Serializable {
     private Alias setAliasCommand;
     private Alias undoCommand;
     private Alias viewAliasCommand;
+    private HashSet<String> usedAliases;
 
 
     public AliasSettings() {
         this.addCommand = new Alias(AddCommand.getCommandWord(), "add");
+        usedAliases.add("add");
         this.clearCommand = new Alias(ClearCommand.getCommandWord(), "clear");
+        usedAliases.add("clear");
         this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), "delete");
+        usedAliases.add("delete");
         this.editCommand = new Alias(EditCommand.getCommandWord(), "edit");
+        usedAliases.add("edit");
         this.exitCommand = new Alias(ExitCommand.getCommandWord(), "exit");
+        usedAliases.add("exit");
         this.findCommand = new Alias(FindCommand.getCommandWord(), "find");
+        usedAliases.add("find");
         this.helpCommand = new Alias(HelpCommand.getCommandWord(), "help");
+        usedAliases.add("help");
         this.historyCommand = new Alias(HistoryCommand.getCommandWord(), "history");
+        usedAliases.add("history");
         this.listCommand = new Alias(ListCommand.getCommandWord(), "list");
+        usedAliases.add("list");
         this.orderCommand = new Alias(OrderCommand.getCommandWord(), "order");
+        usedAliases.add("order");
         this.redoCommand = new Alias(RedoCommand.getCommandWord(), "redo");
+        usedAliases.add("redo");
         this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), "remark");
+        usedAliases.add("remark");
         this.selectCommand = new Alias(SelectCommand.getCommandWord(), "select");
+        usedAliases.add("select");
         this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), "setalias");
+        usedAliases.add("setalias");
         this.undoCommand = new Alias(UndoCommand.getCommandWord(), "undo");
+        usedAliases.add("undo");
         this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), "viewalias");
+        usedAliases.add("viewalias");
     }
 
     public AliasSettings(String addCommand, String clearCommand, String deleteCommand, String editCommand,
@@ -151,40 +173,57 @@ public class AliasSettings implements Serializable {
         return viewAliasCommand;
     }
 
-    public void setAlias(String command, String alias) {
-        switch(alias) {
-            case("add"):
-                this.addCommand = new Alias(AddCommand.getCommandWord(), alias);
-            case "clear":
-                this.clearCommand = new Alias(ClearCommand.getCommandWord(), alias);
-            case "delete":
-                this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), alias);
-            case "edit":
-                this.editCommand = new Alias(EditCommand.getCommandWord(), alias);
-            case "exit":
-                this.exitCommand = new Alias(ExitCommand.getCommandWord(), alias);
-            case "find":
-                this.findCommand = new Alias(FindCommand.getCommandWord(), alias);
-            case "help":
-                this.helpCommand = new Alias(HelpCommand.getCommandWord(), alias);
-            case "history":
-                this.historyCommand = new Alias(HistoryCommand.getCommandWord(), alias);
-            case "list":
-                this.listCommand = new Alias(ListCommand.getCommandWord(), alias);
-            case "order":
-                this.orderCommand = new Alias(OrderCommand.getCommandWord(), alias);
-            case "redo":
-                this.redoCommand = new Alias(RedoCommand.getCommandWord(), alias);
-            case "remark":
-                this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), alias);
-            case "select":
-                this.selectCommand = new Alias(SelectCommand.getCommandWord(), alias);
-            case "setalias":
-                this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), alias);
-            case "undo":
-                this.undoCommand = new Alias(UndoCommand.getCommandWord(), alias);
-            case "viewalias":
-                this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), alias);
+    public void setAlias(String command, String alias) throws UnknownCommandException {
+        if (command.equals(AddCommand.getCommandWord())) {
+            this.addCommand = new Alias(AddCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(ClearCommand.getCommandWord())) {
+            this.clearCommand = new Alias(ClearCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(DeleteCommand.getCommandWord())) {
+            this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(EditCommand.getCommandWord())) {
+            this.editCommand = new Alias(EditCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(ExitCommand.getCommandWord())) {
+            this.exitCommand = new Alias(ExitCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(FindCommand.getCommandWord())) {
+            this.findCommand = new Alias(FindCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(HelpCommand.getCommandWord())) {
+            this.helpCommand = new Alias(HelpCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(HistoryCommand.getCommandWord())) {
+            this.historyCommand = new Alias(HistoryCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(ListCommand.getCommandWord())) {
+            this.listCommand = new Alias(ListCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(OrderCommand.getCommandWord())) {
+            this.orderCommand = new Alias(OrderCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(RedoCommand.getCommandWord())) {
+            this.redoCommand = new Alias(RedoCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(RemarkCommand.getCommandWord())) {
+            this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(SelectCommand.getCommandWord())) {
+            this.selectCommand = new Alias(SelectCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(SetAliasCommand.getCommandWord())) {
+            this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(UndoCommand.getCommandWord())) {
+            this.undoCommand = new Alias(UndoCommand.getCommandWord(), alias);
+        }
+        else if (command.equals(ViewAliasCommand.getCommandWord())) {
+            this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), alias);
+        }
+        else {
+            throw new UnknownCommandException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
     @Override

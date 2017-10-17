@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -34,7 +35,9 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -196,13 +199,69 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public String getAliasForCommand(String commandName) {
-        return "Not set";
+    public String getAliasForCommand(String command) {
+        AliasSettings aliasSettings = userPref.getAliasSettings();
+
+        if (command.equals(AddCommand.getCommandWord())) {
+            return aliasSettings.getAddCommand().getAlias();
+        }
+        else if (command.equals(ClearCommand.getCommandWord())) {
+            return aliasSettings.getClearCommand().getAlias();
+        }
+        else if (command.equals(DeleteCommand.getCommandWord())) {
+            return aliasSettings.getDeleteCommand().getAlias();
+        }
+        else if (command.equals(EditCommand.getCommandWord())) {
+            return aliasSettings.getEditCommand().getAlias();
+        }
+        else if (command.equals(ExitCommand.getCommandWord())) {
+            return aliasSettings.getExitCommand().getAlias();
+        }
+        else if (command.equals(FindCommand.getCommandWord())) {
+            return aliasSettings.getFindCommand().getAlias();
+        }
+        else if (command.equals(HelpCommand.getCommandWord())) {
+            return aliasSettings.getHelpCommand().getAlias();
+        }
+        else if (command.equals(HistoryCommand.getCommandWord())) {
+            return aliasSettings.getHistoryCommand().getAlias();
+        }
+        else if (command.equals(ListCommand.getCommandWord())) {
+            return aliasSettings.getListCommand().getAlias();
+        }
+        else if (command.equals(OrderCommand.getCommandWord())) {
+            return aliasSettings.getOrderCommand().getAlias();
+        }
+        else if (command.equals(RedoCommand.getCommandWord())) {
+            return aliasSettings.getRedoCommand().getAlias();
+        }
+        else if (command.equals(RemarkCommand.getCommandWord())) {
+            return aliasSettings.getRemarkCommand().getAlias();
+        }
+        else if (command.equals(SelectCommand.getCommandWord())) {
+            return aliasSettings.getSelectCommand().getAlias();
+        }
+        else if (command.equals(SetAliasCommand.getCommandWord())) {
+            return aliasSettings.getSetAliasCommand().getAlias();
+        }
+        else if (command.equals(UndoCommand.getCommandWord())) {
+            return aliasSettings.getUndoCommand().getAlias();
+        }
+        else if (command.equals(ViewAliasCommand.getCommandWord())) {
+            return aliasSettings.getViewAliasCommand().getAlias();
+        }
+        else {
+            return "Not Set";
+        }
     }
 
     @Override
-    public void setAlias(String commandName, String alias) {
-        this.userPref.setAlias(commandName, alias);
+    public void setAlias(String commandName, String alias) throws UnknownCommandException {
+        try {
+            this.userPref.setAlias(commandName, alias);
+        } catch (UnknownCommandException e) {
+            throw e;
+        }
     }
 
     //=========== Filtered Person List Accessors =============================================================

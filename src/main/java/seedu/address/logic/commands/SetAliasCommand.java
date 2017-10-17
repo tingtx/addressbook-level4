@@ -3,11 +3,13 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 
-public class SetAliasCommand extends UndoableCommand {
+public class SetAliasCommand extends Command {
     public static final String COMMAND_WORD = "setalias";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets an alias for a command. "
@@ -30,11 +32,13 @@ public class SetAliasCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.setAlias(commandAdd, toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (UnknownCommandException e) {
+            throw new CommandException(MESSAGE_UNKNOWN_COMMAND);
         } catch (DuplicateAliasException e) {
             throw new CommandException(MESSAGE_DUPLICATE_ALIAS);
         }

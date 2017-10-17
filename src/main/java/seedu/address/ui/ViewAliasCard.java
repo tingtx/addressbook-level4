@@ -39,7 +39,7 @@ public class ViewAliasCard extends UiPart<Region> {
         id.setText(command);
 
         defaultAlias.setText("Default Alias : " + commandWord);
-        alias.setText("Set Alias : " + logic.getAliasForCommand(command));
+        alias.setText("Set Alias : " + logic.getAliasForCommand(commandWord));
     }
 
     @Override

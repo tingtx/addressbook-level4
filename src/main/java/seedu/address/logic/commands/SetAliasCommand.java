@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
 public class SetAliasCommand extends UndoableCommand {
@@ -18,13 +17,13 @@ public class SetAliasCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "Alias has been set.";
     public static final String MESSAGE_DUPLICATE_ALIAS = "This alias has already been set for another command.";
 
-    private final Command commandAdd;
+    private final String commandAdd;
     private final String toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
-    public SetAliasCommand(Command command, String alias) {
+    public SetAliasCommand(String command, String alias) {
         commandAdd = command;
         toAdd = alias;
     }

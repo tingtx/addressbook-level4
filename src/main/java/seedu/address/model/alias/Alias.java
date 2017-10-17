@@ -19,13 +19,13 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Alias {
 
-    private ObjectProperty<Command> aliasCommand;
+    private ObjectProperty<String> aliasCommand;
     private ObjectProperty<String> aliasString;
 
     /**
      * Every field must be present and not null.
      */
-    public Alias(Command command, String alias) {
+    public Alias(String command, String alias) {
         requireAllNonNull(command, alias);
         this.aliasCommand = new SimpleObjectProperty<>(command);
         this.aliasString = new SimpleObjectProperty<>(alias);

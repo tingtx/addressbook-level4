@@ -19,6 +19,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -30,14 +31,19 @@ import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.model.alias.Alias;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -49,6 +55,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final ArrayList<ArrayList<String>> viewAliases;
+    private UserPrefs userPref;
+    private Storage userStorage;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -60,6 +68,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.userPref = userPrefs;
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
 
 
@@ -103,6 +112,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
+
+        //Set Alias Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Set Alias", SetAliasCommand.getCommandWord())));
 
         //Undo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
@@ -186,6 +198,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public String getAliasForCommand(String commandName) {
         return "Not set";
+    }
+
+    @Override
+    public void setAlias(String commandName, String alias) {
+        this.userPref.setAlias(commandName, alias);
     }
 
     //=========== Filtered Person List Accessors =============================================================

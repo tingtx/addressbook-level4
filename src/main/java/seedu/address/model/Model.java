@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.Command;
+import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -93,6 +94,6 @@ public interface Model {
      *
      * @throws NullPointerException if {@code alias} is null.
      */
-    void setAlias(Command command, String alias) throws DuplicateAliasException;
+    void setAlias(String command, String alias) throws DuplicateAliasException;
 
 }

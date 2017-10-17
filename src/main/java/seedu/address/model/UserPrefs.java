@@ -1,8 +1,12 @@
 package seedu.address.model;
 
+import java.util.HashMap;
 import java.util.Objects;
 
+import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.commands.Command;
+import seedu.address.model.alias.Alias;
 
 /**
  * Represents User's preferences.
@@ -12,6 +16,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private AliasSettings aliasSettings;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -43,6 +48,10 @@ public class UserPrefs {
 
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+    public void setAlias(String command, String alias) {
+        this.aliasSettings.setAlias(command, alias);
     }
 
     @Override

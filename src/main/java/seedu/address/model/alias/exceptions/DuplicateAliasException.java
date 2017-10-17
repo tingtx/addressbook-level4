@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.DuplicateDataException;
  * Signals that the operation will result in duplicate Person objects.
  */
 public class DuplicateAliasException extends DuplicateDataException {
-    public DuplicateAliasException() {
-        super("Operation would result in duplicate aliases");
+    public DuplicateAliasException(String e) {
+        super(e);
     }
 }

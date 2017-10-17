@@ -37,6 +37,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.alias.Alias;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -256,9 +257,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setAlias(String commandName, String alias) throws UnknownCommandException {
+    public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
         try {
             this.userPref.setAlias(commandName, alias);
+        } catch (DuplicateAliasException e) {
+            throw e;
         } catch (UnknownCommandException e) {
             throw e;
         }

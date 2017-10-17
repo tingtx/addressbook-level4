@@ -1,12 +1,12 @@
 package seedu.address.commons.core;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.Alias;
 
 import seedu.address.logic.commands.AddCommand;
@@ -25,6 +25,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 
 /**
@@ -52,6 +53,7 @@ public class AliasSettings implements Serializable {
 
 
     public AliasSettings() {
+        usedAliases = new HashSet<String>();
         this.addCommand = new Alias(AddCommand.getCommandWord(), "add");
         usedAliases.add("add");
         this.clearCommand = new Alias(ClearCommand.getCommandWord(), "clear");
@@ -92,21 +94,37 @@ public class AliasSettings implements Serializable {
                          String remarkCommand, String selectCommand, String setAliasCommand, String undoCommand,
                          String viewAliasCommand) {
         this.addCommand = new Alias(AddCommand.getCommandWord(), addCommand);
+        usedAliases.add(addCommand);
         this.clearCommand = new Alias(ClearCommand.getCommandWord(), clearCommand);
+        usedAliases.add(clearCommand);
         this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), deleteCommand);
+        usedAliases.add(deleteCommand);
         this.editCommand = new Alias(EditCommand.getCommandWord(), editCommand);
+        usedAliases.add(editCommand);
         this.exitCommand = new Alias(ExitCommand.getCommandWord(), exitCommand);
+        usedAliases.add(exitCommand);
         this.findCommand = new Alias(FindCommand.getCommandWord(), findCommand);
+        usedAliases.add(findCommand);
         this.helpCommand = new Alias(HelpCommand.getCommandWord(), helpCommand);
+        usedAliases.add(helpCommand);
         this.historyCommand = new Alias(HistoryCommand.getCommandWord(), historyCommand);
+        usedAliases.add(historyCommand);
         this.listCommand = new Alias(ListCommand.getCommandWord(), listCommand);
+        usedAliases.add(listCommand);
         this.orderCommand = new Alias(OrderCommand.getCommandWord(), orderCommand);
+        usedAliases.add(orderCommand);
         this.redoCommand = new Alias(RedoCommand.getCommandWord(), redoCommand);
+        usedAliases.add(redoCommand);
         this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), remarkCommand);
+        usedAliases.add(remarkCommand);
         this.selectCommand = new Alias(SelectCommand.getCommandWord(), selectCommand);
+        usedAliases.add(selectCommand);
         this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), setAliasCommand);
+        usedAliases.add(setAliasCommand);
         this.undoCommand = new Alias(UndoCommand.getCommandWord(), undoCommand);
+        usedAliases.add(undoCommand);
         this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), viewAliasCommand);
+        usedAliases.add(viewAliasCommand);
     }
 
     public Alias getAddCommand() {
@@ -173,53 +191,87 @@ public class AliasSettings implements Serializable {
         return viewAliasCommand;
     }
 
-    public void setAlias(String command, String alias) throws UnknownCommandException {
-        if (command.equals(AddCommand.getCommandWord())) {
+    public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
+        if (usedAliases.contains(alias)) {
+            throw new DuplicateAliasException(MESSAGE_DUPLICATE_ALIAS);
+        }
+        else if (command.equals(AddCommand.getCommandWord())) {
+            usedAliases.remove(this.addCommand.getAlias());
+            usedAliases.add(alias);
             this.addCommand = new Alias(AddCommand.getCommandWord(), alias);
         }
         else if (command.equals(ClearCommand.getCommandWord())) {
+            usedAliases.remove(this.clearCommand.getAlias());
+            usedAliases.add(alias);
             this.clearCommand = new Alias(ClearCommand.getCommandWord(), alias);
         }
         else if (command.equals(DeleteCommand.getCommandWord())) {
+            usedAliases.remove(this.deleteCommand.getAlias());
+            usedAliases.add(alias);
             this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), alias);
         }
         else if (command.equals(EditCommand.getCommandWord())) {
+            usedAliases.remove(this.editCommand.getAlias());
             this.editCommand = new Alias(EditCommand.getCommandWord(), alias);
         }
         else if (command.equals(ExitCommand.getCommandWord())) {
+            usedAliases.remove(this.exitCommand.getAlias());
+            usedAliases.add(alias);
             this.exitCommand = new Alias(ExitCommand.getCommandWord(), alias);
         }
         else if (command.equals(FindCommand.getCommandWord())) {
+            usedAliases.remove(this.findCommand.getAlias());
+            usedAliases.add(alias);
             this.findCommand = new Alias(FindCommand.getCommandWord(), alias);
         }
         else if (command.equals(HelpCommand.getCommandWord())) {
+            usedAliases.remove(this.helpCommand.getAlias());
+            usedAliases.add(alias);
             this.helpCommand = new Alias(HelpCommand.getCommandWord(), alias);
         }
         else if (command.equals(HistoryCommand.getCommandWord())) {
+            usedAliases.remove(this.historyCommand.getAlias());
+            usedAliases.add(alias);
             this.historyCommand = new Alias(HistoryCommand.getCommandWord(), alias);
         }
         else if (command.equals(ListCommand.getCommandWord())) {
+            usedAliases.remove(this.listCommand.getAlias());
+            usedAliases.add(alias);
             this.listCommand = new Alias(ListCommand.getCommandWord(), alias);
         }
         else if (command.equals(OrderCommand.getCommandWord())) {
+            usedAliases.remove(this.orderCommand.getAlias());
+            usedAliases.add(alias);
             this.orderCommand = new Alias(OrderCommand.getCommandWord(), alias);
         }
         else if (command.equals(RedoCommand.getCommandWord())) {
+            usedAliases.remove(this.redoCommand.getAlias());
+            usedAliases.add(alias);
             this.redoCommand = new Alias(RedoCommand.getCommandWord(), alias);
         }
         else if (command.equals(RemarkCommand.getCommandWord())) {
+            usedAliases.remove(this.remarkCommand.getAlias());
+            usedAliases.add(alias);
             this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), alias);
         }
         else if (command.equals(SelectCommand.getCommandWord())) {
+            usedAliases.remove(this.selectCommand.getAlias());
+            usedAliases.add(alias);
             this.selectCommand = new Alias(SelectCommand.getCommandWord(), alias);
         }
         else if (command.equals(SetAliasCommand.getCommandWord())) {
+            usedAliases.remove(this.setAliasCommand.getAlias());
+            usedAliases.add(alias);
             this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), alias);
         }
         else if (command.equals(UndoCommand.getCommandWord())) {
+            usedAliases.remove(this.undoCommand.getAlias());
+            usedAliases.add(alias);
             this.undoCommand = new Alias(UndoCommand.getCommandWord(), alias);
         }
         else if (command.equals(ViewAliasCommand.getCommandWord())) {
+            usedAliases.remove(this.viewAliasCommand.getAlias());
+            usedAliases.add(alias);
             this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), alias);
         }
         else {

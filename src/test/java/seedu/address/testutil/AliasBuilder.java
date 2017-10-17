@@ -1,8 +1,6 @@
 package seedu.address.testutil;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.alias.Alias;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Alias objects.

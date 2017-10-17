@@ -58,7 +58,7 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException{
+    public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
         try {
             aliasSettings.setAlias(command, alias);
         } catch (DuplicateAliasException e) {

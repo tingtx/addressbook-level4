@@ -1,14 +1,11 @@
 package seedu.address.commons.core;
 
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.alias.Alias;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -26,8 +23,11 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+
+import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
+
 
 /**
  * A Serializable class that contains the Alias settings.

@@ -20,7 +20,6 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -35,8 +34,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.alias.Alias;
+
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.person.Person;
@@ -45,9 +43,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
-import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
-import seedu.address.storage.StorageManager;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -69,7 +65,7 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with TunedIn: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
         this.userPref = userPrefs;
@@ -205,59 +201,43 @@ public class ModelManager extends ComponentManager implements Model {
 
         if (command.equals(AddCommand.getCommandWord())) {
             return aliasSettings.getAddCommand().getAlias();
-        }
-        else if (command.equals(ClearCommand.getCommandWord())) {
+        } else if (command.equals(ClearCommand.getCommandWord())) {
             return aliasSettings.getClearCommand().getAlias();
-        }
-        else if (command.equals(DeleteCommand.getCommandWord())) {
+        } else if (command.equals(DeleteCommand.getCommandWord())) {
             return aliasSettings.getDeleteCommand().getAlias();
-        }
-        else if (command.equals(EditCommand.getCommandWord())) {
+        } else if (command.equals(EditCommand.getCommandWord())) {
             return aliasSettings.getEditCommand().getAlias();
-        }
-        else if (command.equals(ExitCommand.getCommandWord())) {
+        } else if (command.equals(ExitCommand.getCommandWord())) {
             return aliasSettings.getExitCommand().getAlias();
-        }
-        else if (command.equals(FindCommand.getCommandWord())) {
+        } else if (command.equals(FindCommand.getCommandWord())) {
             return aliasSettings.getFindCommand().getAlias();
-        }
-        else if (command.equals(HelpCommand.getCommandWord())) {
+        } else if (command.equals(HelpCommand.getCommandWord())) {
             return aliasSettings.getHelpCommand().getAlias();
-        }
-        else if (command.equals(HistoryCommand.getCommandWord())) {
+        } else if (command.equals(HistoryCommand.getCommandWord())) {
             return aliasSettings.getHistoryCommand().getAlias();
-        }
-        else if (command.equals(ListCommand.getCommandWord())) {
+        } else if (command.equals(ListCommand.getCommandWord())) {
             return aliasSettings.getListCommand().getAlias();
-        }
-        else if (command.equals(OrderCommand.getCommandWord())) {
+        } else if (command.equals(OrderCommand.getCommandWord())) {
             return aliasSettings.getOrderCommand().getAlias();
-        }
-        else if (command.equals(RedoCommand.getCommandWord())) {
+        } else if (command.equals(RedoCommand.getCommandWord())) {
             return aliasSettings.getRedoCommand().getAlias();
-        }
-        else if (command.equals(RemarkCommand.getCommandWord())) {
+        } else if (command.equals(RemarkCommand.getCommandWord())) {
             return aliasSettings.getRemarkCommand().getAlias();
-        }
-        else if (command.equals(SelectCommand.getCommandWord())) {
+        } else if (command.equals(SelectCommand.getCommandWord())) {
             return aliasSettings.getSelectCommand().getAlias();
-        }
-        else if (command.equals(SetAliasCommand.getCommandWord())) {
+        } else if (command.equals(SetAliasCommand.getCommandWord())) {
             return aliasSettings.getSetAliasCommand().getAlias();
-        }
-        else if (command.equals(UndoCommand.getCommandWord())) {
+        } else if (command.equals(UndoCommand.getCommandWord())) {
             return aliasSettings.getUndoCommand().getAlias();
-        }
-        else if (command.equals(ViewAliasCommand.getCommandWord())) {
+        } else if (command.equals(ViewAliasCommand.getCommandWord())) {
             return aliasSettings.getViewAliasCommand().getAlias();
-        }
-        else {
+        } else {
             return "Not Set";
         }
     }
 
     @Override
-    public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException{
+    public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
         try {
             this.userPref.setAlias(commandName, alias);
         } catch (DuplicateAliasException e) {

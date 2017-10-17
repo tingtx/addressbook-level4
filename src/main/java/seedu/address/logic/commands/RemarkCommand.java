@@ -97,9 +97,9 @@ public class RemarkCommand extends UndoableCommand {
         }
 
         //state check
-        RemarkCommand e = (RemarkCommand) other;
-        return index.equals(e.index)
-                && remark.equals(e.remark);
+        RemarkCommand newRemark = (RemarkCommand) other;
+        return index.equals(newRemark.index)
+                && remark.equals(newRemark.remark);
     }
 
     public static String getCommandWord() {

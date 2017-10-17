@@ -1,12 +1,11 @@
 package seedu.address.logic.commands;
-import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +14,6 @@ import java.util.function.Predicate;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import com.sun.org.apache.bcel.internal.generic.DUP;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;

@@ -18,12 +18,13 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
 
-    public UndoableCommandTest() throws IllegalValueException{}
-
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final DummyCommand dummyCommand = new DummyCommand(model);
 
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    public UndoableCommandTest() throws IllegalValueException{}
+
 
     @Test
     public void executeUndo() throws Exception {

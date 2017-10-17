@@ -1,17 +1,18 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_VALUE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_VALUE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_COMMAND;
+
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
 

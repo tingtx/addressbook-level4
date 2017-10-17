@@ -14,16 +14,21 @@ import seedu.address.model.alias.Alias;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
+    private AliasSettings aliasSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
-    private AliasSettings aliasSettings;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
+        this.setAliasSettings();
     }
 
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
+    }
+
+    public AliasSettings getAliasSettings() {
+        return aliasSettings == null ? new AliasSettings() : aliasSettings;
     }
 
     public void updateLastUsedGuiSetting(GuiSettings guiSettings) {
@@ -32,6 +37,10 @@ public class UserPrefs {
 
     public void setGuiSettings(double width, double height, int x, int y) {
         guiSettings = new GuiSettings(width, height, x, y);
+    }
+
+    public void setAliasSettings() {
+        aliasSettings = new AliasSettings();
     }
 
     public String getAddressBookFilePath() {
@@ -51,7 +60,7 @@ public class UserPrefs {
     }
 
     public void setAlias(String command, String alias) {
-        this.aliasSettings.setAlias(command, alias);
+        aliasSettings.setAlias(command, alias);
     }
 
     @Override

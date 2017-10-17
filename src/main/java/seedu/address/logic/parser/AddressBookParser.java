@@ -88,6 +88,9 @@ public class AddressBookParser {
         case ViewAliasCommand.COMMAND_ALIAS:
             return new ViewAliasCommand();
 
+        case SetAliasCommand.COMMAND_WORD:
+            return new SetAliasCommandParser().parse(arguments);
+
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();

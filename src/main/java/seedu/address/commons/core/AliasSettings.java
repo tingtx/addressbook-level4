@@ -1,10 +1,8 @@
 package seedu.address.commons.core;
 
-import java.awt.Point;
 import java.io.Serializable;
 import java.util.Objects;
 
-import seedu.address.logic.commands.Command;
 import seedu.address.model.alias.Alias;
 
 import seedu.address.logic.commands.AddCommand;
@@ -25,12 +23,11 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 
 /**
- * A Serializable class that contains the GUI settings.
+ * A Serializable class that contains the Alias settings.
  */
 public class AliasSettings implements Serializable {
 
     private Alias addCommand;
-
     private Alias clearCommand;
     private Alias deleteCommand;
     private Alias editCommand;
@@ -49,43 +46,45 @@ public class AliasSettings implements Serializable {
 
 
     public AliasSettings() {
-        this.addCommand = new Alias(AddCommand.getCommandWord(), null);
-        this.clearCommand = new Alias(ClearCommand.getCommandWord(), null);
-        this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), null);
-        this.editCommand = new Alias(EditCommand.getCommandWord(), null);
-        this.exitCommand = new Alias(ExitCommand.getCommandWord(), null);
-        this.findCommand = new Alias(FindCommand.getCommandWord(), null);
-        this.helpCommand = new Alias(HelpCommand.getCommandWord(), null);
-        this.historyCommand = new Alias(HistoryCommand.getCommandWord(), null);
-        this.listCommand = new Alias(ListCommand.getCommandWord(), null);
-        this.orderCommand = new Alias(OrderCommand.getCommandWord(), null);
-        this.redoCommand = new Alias(RedoCommand.getCommandWord(), null);
-        this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), null);
-        this.selectCommand = new Alias(SelectCommand.getCommandWord(), null);
-        this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), null);
-        this.undoCommand = new Alias(UndoCommand.getCommandWord(), null);
-        this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), null);
+        this.addCommand = new Alias(AddCommand.getCommandWord(), "add");
+        this.clearCommand = new Alias(ClearCommand.getCommandWord(), "clear");
+        this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), "delete");
+        this.editCommand = new Alias(EditCommand.getCommandWord(), "edit");
+        this.exitCommand = new Alias(ExitCommand.getCommandWord(), "exit");
+        this.findCommand = new Alias(FindCommand.getCommandWord(), "find");
+        this.helpCommand = new Alias(HelpCommand.getCommandWord(), "help");
+        this.historyCommand = new Alias(HistoryCommand.getCommandWord(), "history");
+        this.listCommand = new Alias(ListCommand.getCommandWord(), "list");
+        this.orderCommand = new Alias(OrderCommand.getCommandWord(), "order");
+        this.redoCommand = new Alias(RedoCommand.getCommandWord(), "redo");
+        this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), "remark");
+        this.selectCommand = new Alias(SelectCommand.getCommandWord(), "select");
+        this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), "setalias");
+        this.undoCommand = new Alias(UndoCommand.getCommandWord(), "undo");
+        this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), "viewalias");
     }
 
-    public AliasSettings(String add, String clear, String delete, String edit, String exit, String find, String help,
-                         String history, String list, String order, String redo, String remark, String select,
-                         String setAlias, String undo, String viewAlias) {
-        this.addCommand = new Alias(AddCommand.getCommandWord(), add);
-        this.clearCommand = new Alias(ClearCommand.getCommandWord(), clear);
-        this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), delete);
-        this.editCommand = new Alias(EditCommand.getCommandWord(), edit);
-        this.exitCommand = new Alias(ExitCommand.getCommandWord(), exit);
-        this.findCommand = new Alias(FindCommand.getCommandWord(), find);
-        this.helpCommand = new Alias(HelpCommand.getCommandWord(), help);
-        this.historyCommand = new Alias(HistoryCommand.getCommandWord(), history);
-        this.listCommand = new Alias(ListCommand.getCommandWord(), list);
-        this.orderCommand = new Alias(OrderCommand.getCommandWord(), order);
-        this.redoCommand = new Alias(RedoCommand.getCommandWord(), redo);
-        this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), remark);
-        this.selectCommand = new Alias(SelectCommand.getCommandWord(), select);
-        this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), setAlias);
-        this.undoCommand = new Alias(UndoCommand.getCommandWord(), undo);
-        this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), viewAlias);
+    public AliasSettings(String addCommand, String clearCommand, String deleteCommand, String editCommand,
+                         String exitCommand, String findCommand, String helpCommand,
+                         String historyCommand, String listCommand, String orderCommand, String redoCommand,
+                         String remarkCommand, String selectCommand, String setAliasCommand, String undoCommand,
+                         String viewAliasCommand) {
+        this.addCommand = new Alias(AddCommand.getCommandWord(), addCommand);
+        this.clearCommand = new Alias(ClearCommand.getCommandWord(), clearCommand);
+        this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), deleteCommand);
+        this.editCommand = new Alias(EditCommand.getCommandWord(), editCommand);
+        this.exitCommand = new Alias(ExitCommand.getCommandWord(), exitCommand);
+        this.findCommand = new Alias(FindCommand.getCommandWord(), findCommand);
+        this.helpCommand = new Alias(HelpCommand.getCommandWord(), helpCommand);
+        this.historyCommand = new Alias(HistoryCommand.getCommandWord(), historyCommand);
+        this.listCommand = new Alias(ListCommand.getCommandWord(), listCommand);
+        this.orderCommand = new Alias(OrderCommand.getCommandWord(), orderCommand);
+        this.redoCommand = new Alias(RedoCommand.getCommandWord(), redoCommand);
+        this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), remarkCommand);
+        this.selectCommand = new Alias(SelectCommand.getCommandWord(), selectCommand);
+        this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), setAliasCommand);
+        this.undoCommand = new Alias(UndoCommand.getCommandWord(), undoCommand);
+        this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), viewAliasCommand);
     }
 
     public Alias getAddCommand() {

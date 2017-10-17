@@ -2,16 +2,17 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 
 public class SetAliasCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "setalias";
-    public static final String COMMAND_ALIAS = "a";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets an alias for a command. "
             + "Parameters: "
+            + PREFIX_COMMAND + "COMMAND "
             + PREFIX_ALIAS + "ALIAS";
 
     public static final String MESSAGE_SUCCESS = "Alias has been set.";

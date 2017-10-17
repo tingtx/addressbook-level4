@@ -3,6 +3,7 @@ package seedu.address.model.alias;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -17,26 +18,32 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Alias {
+public class Alias implements Serializable {
 
-    private ObjectProperty<String> aliasCommand;
-    private ObjectProperty<String> aliasString;
+    private String aliasCommand;
+    private String aliasString;
 
     /**
      * Every field must be present and not null.
      */
-    public Alias(String command, String alias) {
-        requireAllNonNull(command, alias);
-        this.aliasCommand = new SimpleObjectProperty<>(command);
-        this.aliasString = new SimpleObjectProperty<>(alias);
+
+    public Alias() {
+        this.aliasCommand = null;
+        this.aliasString = null;
+    }
+
+    public Alias(String aliasCommand, String aliasString) {
+        requireAllNonNull(aliasCommand, aliasString);
+        this.aliasCommand = aliasCommand;
+        this.aliasString = aliasString;
     }
 
     public void setAlias(String alias) {
-        this.aliasString.set(requireNonNull(alias));
+        this.aliasString = (requireNonNull(alias));
     }
 
     public String getAlias() {
-        return aliasString.get();
+        return aliasString;
     }
 
     @Override

@@ -21,11 +21,20 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+        if (trimmedArgs.charAt(0) == 'n'){
+            NameContainsKeywordsPredicate.setPredicateType('n');
+        } else if (trimmedArgs.charAt(0) == 'a'){
+            NameContainsKeywordsPredicate.setPredicateType('a');
+        } else {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
+        trimmedArgs = trimmedArgs.substring(2);
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));

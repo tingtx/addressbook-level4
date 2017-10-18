@@ -10,15 +10,27 @@ import seedu.address.commons.util.StringUtil;
  */
 public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
+    private static char predicateType;
 
     public NameContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
+    public static void setPredicateType(char predicateType) {
+        NameContainsKeywordsPredicate.predicateType = predicateType;
+    }
+
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        if (predicateType == 'n') {
+            return keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        }
+        if (predicateType == 'a') {
+            return keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
+        }
+        return false;
     }
 
     @Override

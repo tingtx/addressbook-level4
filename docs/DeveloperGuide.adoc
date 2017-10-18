@@ -255,14 +255,14 @@ if (commandWord.equals(AddCommand.COMMAND_WORD)
         || commandWord.equals(aliasSettings.getAddCommand().getAlias())) {
     return new AddCommandParser().parse(arguments);
 }
-----   
+----
 
 [source,java]
 ----
 if (commandWord.equals(AddCommand.COMMAND_WORD)) {
     return new AddCommandParser().parse(arguments);
 }
-----   
+----
 
 Suppose that the user has just launched the application. The `AliasSettings` will initialize with the default aliases.
 

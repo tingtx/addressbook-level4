@@ -306,10 +306,6 @@ Format: `history` or `h`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Events : `events` - Coming in V2.0
-
-Coming in V2.0
-
 === Export : `export` - Coming in V2.0
 
 Exports the TunedIn application for use on another computer.

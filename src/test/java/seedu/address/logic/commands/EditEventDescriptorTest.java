@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DATETIME_DEEPAV
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_DEEPAVALI;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_SPECTRA;
 
 import org.junit.Test;
 
@@ -19,7 +18,8 @@ public class EditEventDescriptorTest {
     @Test
     public void equals() {
         // same values -> returns true
-        EditEventCommand.EditEventDescriptor descriptorWithSameValues = new EditEventCommand.EditEventDescriptor(DESC_SPECTRA);
+        EditEventCommand.EditEventDescriptor descriptorWithSameValues =
+                new EditEventCommand.EditEventDescriptor(DESC_SPECTRA);
         assertTrue(DESC_SPECTRA.equals(descriptorWithSameValues));
 
         // same object -> returns true
@@ -35,11 +35,13 @@ public class EditEventDescriptorTest {
         assertFalse(DESC_SPECTRA.equals(DESC_DEEPAVALI));
 
         // different title -> returns false
-        EditEventCommand.EditEventDescriptor editedSpectra = new EditEventDescriptorBuilder(DESC_SPECTRA).withTitle(VALID_TITLE_DEEPAVALI).build();
+        EditEventCommand.EditEventDescriptor editedSpectra =
+                new EditEventDescriptorBuilder(DESC_SPECTRA).withTitle(VALID_TITLE_DEEPAVALI).build();
         assertFalse(DESC_SPECTRA.equals(editedSpectra));
 
         // different description -> returns false
-        editedSpectra = new EditEventDescriptorBuilder(DESC_SPECTRA).withDescription(VALID_DESCRIPTION_DEEPAVALI).build();
+        editedSpectra =
+                new EditEventDescriptorBuilder(DESC_SPECTRA).withDescription(VALID_DESCRIPTION_DEEPAVALI).build();
         assertFalse(DESC_SPECTRA.equals(editedSpectra));
 
         // different email -> returns false

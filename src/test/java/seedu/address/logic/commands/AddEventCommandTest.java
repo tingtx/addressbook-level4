@@ -1,12 +1,10 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -16,7 +14,6 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -45,27 +42,27 @@ public class AddEventCommandTest {
         new AddEventCommand(null);
     }
 
-//    @Test
-//    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
-//        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
-//        Event validEvent = new EventBuilder().build();
-//
-//        CommandResult commandResult = getAddEventCommandForEvent(validEvent, modelStub).execute();
-//
-//        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
-//        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
-//    }
+    /*@Test
+    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
+        Event validEvent = new EventBuilder().build();
 
-//    @Test
-//    public void execute_duplicateEvent_throwsCommandException() throws Exception {
-//        AddEventCommandTest.ModelStub modelStub = new AddEventCommandTest.ModelStubThrowingDuplicateEventException();
-//        Event validEvent = new EventBuilder().build();
-//
-//        thrown.expect(CommandException.class);
-//        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
-//
-//        getAddEventCommandForEvent(validEvent, modelStub).execute();
-//    }
+        CommandResult commandResult = getAddEventCommandForEvent(validEvent, modelStub).execute();
+
+        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
+    }*/
+
+    /*@Test
+    public void execute_duplicateEvent_throwsCommandException() throws Exception {
+        AddEventCommandTest.ModelStub modelStub = new AddEventCommandTest.ModelStubThrowingDuplicateEventException();
+        Event validEvent = new EventBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
+
+        getAddEventCommandForEvent(validEvent, modelStub).execute();
+    }*/
 
     @Test
     public void equals() {
@@ -190,7 +187,8 @@ public class AddEventCommandTest {
         }
 
         @Override
-        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException, EventNotFoundException {
+        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
+                EventNotFoundException {
             fail("This method should not be called.");
         }
 

@@ -15,7 +15,8 @@ public class DatetimeTest {
 
         // valid datetime
         assertTrue(Datetime.isValidDatetime("123456789")); // numbers only
-        assertTrue(Datetime.isValidDatetime("This is a testing event to test to accept long location")); // long description
+        assertTrue(Datetime
+                .isValidDatetime("This is a testing event to test to accept long location")); // long description
         assertTrue(Datetime.isValidDatetime("Hello World with Test")); // with capital letters
         assertTrue(Datetime.isValidDatetime("5top Test")); // alphanumeric characters
     }

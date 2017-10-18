@@ -16,7 +16,8 @@ public class DescriptionTest {
         // valid description
         assertTrue(Description.isValidDescription("IT Fair 2017 with many offers")); // alphabets only
         assertTrue(Description.isValidDescription("123456789")); // numbers only
-        assertTrue(Description.isValidDescription("This is a testing event to test to accept long description")); // long description
+        assertTrue(Description.isValidDescription(
+                "This is a testing event to test to accept long description")); // long description
         assertTrue(Description.isValidDescription("Hello World with Test")); // with capital letters
         assertTrue(Description.isValidDescription("5top Test")); // alphanumeric characters
     }

@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -20,7 +19,6 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
@@ -217,7 +215,8 @@ public class GeneralBookParserTest {
 
         //alias
         assertTrue(parser.parseCommand(aliasSettings.getRedoCommand().getAlias()) instanceof RedoCommand);
-        assertTrue(parser.parseCommand(aliasSettings.getRedoCommand().getAlias() + " 1") instanceof RedoCommand);
+        assertTrue(parser
+                .parseCommand(aliasSettings.getRedoCommand().getAlias() + " 1") instanceof RedoCommand);
     }
 
     @Test
@@ -227,7 +226,8 @@ public class GeneralBookParserTest {
 
         //alias
         assertTrue(parser.parseCommand(aliasSettings.getUndoCommand().getAlias()) instanceof UndoCommand);
-        assertTrue(parser.parseCommand(aliasSettings.getUndoCommand().getAlias() + " 3") instanceof UndoCommand);
+        assertTrue(parser
+                .parseCommand(aliasSettings.getUndoCommand().getAlias() + " 3") instanceof UndoCommand);
     }
 
     @Test
@@ -244,12 +244,12 @@ public class GeneralBookParserTest {
         parser.parseCommand("unknownCommand");
     }
 
-//    @Test
-//    public void parseCommand_addEvent() throws Exception {
-//        Event event = new EventBuilder().build();
-//        AddEventCommand command = (AddEventCommand) parser.parseCommand(EveUtil.getAddEventCommand(event));
-//        assertEquals(new AddEventCommand(event), command);
-//    }
+    /*@Test
+    public void parseCommand_addEvent() throws Exception {
+        Event event = new EventBuilder().build();
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(EveUtil.getAddEventCommand(event));
+        assertEquals(new AddEventCommand(event), command);
+    }*/
 
     @Test
     public void parseCommand_deleteEvent() throws Exception {

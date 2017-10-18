@@ -14,13 +14,17 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 public class TypicalEvents {
 
     public static final ReadOnlyEvent SPECTRA = new EventBuilder().withTitle("Spectra")
-            .withDescription("Light and water show").withLocation("Marina Bay Sands").withDatetime("01-09-2017 1900").build();
+            .withDescription("Light and water show").withLocation("Marina Bay Sands")
+            .withDatetime("01-09-2017 1900").build();
     public static final ReadOnlyEvent DEEPAVALI = new EventBuilder().withTitle("Deepavali")
-            .withDescription("Deepavali Celebrations 2017").withLocation("Little India").withDatetime("12-11-2017 1900").build();
+            .withDescription("Deepavali Celebrations 2017").withLocation("Little India")
+            .withDatetime("12-11-2017 1900").build();
     public static final ReadOnlyEvent HENNA = new EventBuilder().withTitle("Henna")
-            .withDescription("Henna Workshop").withLocation("Orchard Gateway").withDatetime("18-10-2017 1500").build();
+            .withDescription("Henna Workshop").withLocation("Orchard Gateway")
+            .withDatetime("18-10-2017 1500").build();
     public static final ReadOnlyEvent WINE = new EventBuilder().withTitle("Wine Fest")
-            .withDescription("Singapore Wine Fiesta 2017").withLocation("Clifford Square").withDatetime("26-10-2017 1500").build();
+            .withDescription("Singapore Wine Fiesta 2017").withLocation("Clifford Square")
+            .withDatetime("26-10-2017 1500").build();
 
     // Manually added
     public static final ReadOnlyEvent NETWORK = new EventBuilder().withTitle("Network Talk")

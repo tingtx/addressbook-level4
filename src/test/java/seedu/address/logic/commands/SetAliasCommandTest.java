@@ -198,7 +198,8 @@ public class SetAliasCommandTest {
         }
 
         @Override
-        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException, EventNotFoundException {
+        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
+                EventNotFoundException {
 
         }
 

@@ -4,8 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_SPECTRA;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_DEEPAVALI;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -26,10 +24,8 @@ import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.testutil.EditEventDescriptorBuilder;
-import seedu.address.testutil.EventBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditEventCommand.
@@ -38,40 +34,43 @@ public class EditEventCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
 
-//    @Test
-//    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-//        Event editedEvent = new EventBuilder().build();
-//        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(editedEvent).build();
-//        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT, descriptor);
-//
-//        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
-//
-//        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new EventBook(model.getEventBook()), new UserPrefs());
-//        expectedModel.updateEvent(model.getFilteredEventList().get(0), editedEvent);
-//
-//        assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
-//    }
+    /*@Test
+    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Event editedEvent = new EventBuilder().build();
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(editedEvent).build();
+        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT, descriptor);
 
-//    @Test
-//    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-//        Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
-//        ReadOnlyEvent lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
-//
-//        EventBuilder eventInList = new EventBuilder(lastEvent);
-//        Event editedEvent = eventInList.withTitle(VALID_TITLE_DEEPAVALI).withDescription(VALID_DESCRIPTION_DEEPAVALI)
-//                .withLocation(VALID_LOCATION_DEEPAVALI).build();
-//
-//        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_DEEPAVALI)
-//                .withDescription(VALID_DESCRIPTION_DEEPAVALI).withLocation(VALID_LOCATION_DEEPAVALI).build();
-//        EditEventCommand editEventCommand = prepareCommand(indexLastEvent, descriptor);
-//
-//        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
-//
-//        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new EventBook(model.getEventBook()), new UserPrefs());
-//        expectedModel.updateEvent(lastEvent, editedEvent);
-//
-//        assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
-//    }
+        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+        new EventBook(model.getEventBook()), new UserPrefs());
+        expectedModel.updateEvent(model.getFilteredEventList().get(0), editedEvent);
+
+        assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
+    }*/
+
+    /*@Test
+    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
+        ReadOnlyEvent lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
+
+        EventBuilder eventInList = new EventBuilder(lastEvent);
+        Event editedEvent = eventInList.withTitle(VALID_TITLE_DEEPAVALI).withDescription(VALID_DESCRIPTION_DEEPAVALI)
+                .withLocation(VALID_LOCATION_DEEPAVALI).build();
+
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder()
+                .withTitle(VALID_TITLE_DEEPAVALI)
+                .withDescription(VALID_DESCRIPTION_DEEPAVALI).withLocation(VALID_LOCATION_DEEPAVALI).build();
+        EditEventCommand editEventCommand = prepareCommand(indexLastEvent, descriptor);
+
+        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+        new EventBook(model.getEventBook()), new UserPrefs());
+        expectedModel.updateEvent(lastEvent, editedEvent);
+
+        assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
+    }*/
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
@@ -80,57 +79,60 @@ public class EditEventCommandTest {
 
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new EventBook(model.getEventBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new EventBook(model.getEventBook()), new UserPrefs());
 
         assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
     }
 
-//    @Test
-//    public void execute_filteredList_success() throws Exception {
-//        showFirstEventOnly(model);
-//
-//        ReadOnlyEvent eventInFilteredList = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
-//        Event editedEvent = new EventBuilder(eventInFilteredList).withTitle(VALID_TITLE_DEEPAVALI).build();
-//        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT,
-//                new EditEventDescriptorBuilder().withTitle(VALID_TITLE_DEEPAVALI).build());
-//
-//        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
-//
-//        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new EventBook(model.getEventBook()), new UserPrefs());
-//        expectedModel.updateEvent(model.getFilteredEventList().get(0), editedEvent);
-//
-//        assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
-//    }
+    /*@Test
+    public void execute_filteredList_success() throws Exception {
+        showFirstEventOnly(model);
 
-//    @Test
-//    public void execute_duplicateEventUnfilteredList_failure() {
-//        Event firstEvent = new Event(model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased()));
-//        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(firstEvent).build();
-//        EditEventCommand editEventCommand = prepareCommand(INDEX_SECOND_EVENT, descriptor);
-//
-//        assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_DUPLICATE_EVENT);
-//    }
+        ReadOnlyEvent eventInFilteredList = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
+        Event editedEvent = new EventBuilder(eventInFilteredList).withTitle(VALID_TITLE_DEEPAVALI).build();
+        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT,
+                new EditEventDescriptorBuilder().withTitle(VALID_TITLE_DEEPAVALI).build());
 
-//    @Test
-//    public void execute_duplicateEventFilteredList_failure() {
-//        showFirstEventOnly(model);
-//
-//        // edit event in filtered list into a duplicate in event book
-//        ReadOnlyEvent eventInList = model.getEventBook().getEventList().get(INDEX_SECOND_EVENT.getZeroBased());
-//        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT,
-//                new EditEventDescriptorBuilder(eventInList).build());
-//
-//        assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_DUPLICATE_EVENT);
-//    }
+        String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
 
-//    @Test
-//    public void execute_invalidEventIndexUnfilteredList_failure() {
-//        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
-//        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_DEEPAVALI).build();
-//        EditEventCommand editEventCommand = prepareCommand(outOfBoundIndex, descriptor);
-//
-//        assertCommandFailure(editEventCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-//    }
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new EventBook(model.getEventBook()), new UserPrefs());
+        expectedModel.updateEvent(model.getFilteredEventList().get(0), editedEvent);
+
+        assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
+    }*/
+
+    /*@Test
+    public void execute_duplicateEventUnfilteredList_failure() {
+        Event firstEvent = new Event(model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased()));
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(firstEvent).build();
+        EditEventCommand editEventCommand = prepareCommand(INDEX_SECOND_EVENT, descriptor);
+
+        assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_DUPLICATE_EVENT);
+    }*/
+
+    /*@Test
+    public void execute_duplicateEventFilteredList_failure() {
+        showFirstEventOnly(model);
+
+        // edit event in filtered list into a duplicate in event book
+        ReadOnlyEvent eventInList = model.getEventBook().getEventList().get(INDEX_SECOND_EVENT.getZeroBased());
+        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT,
+                new EditEventDescriptorBuilder(eventInList).build());
+
+        assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_DUPLICATE_EVENT);
+    }*/
+
+    /*@Test
+    public void execute_invalidEventIndexUnfilteredList_failure() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder()
+                .withTitle(VALID_TITLE_DEEPAVALI).build();
+        EditEventCommand editEventCommand = prepareCommand(outOfBoundIndex, descriptor);
+
+        assertCommandFailure(editEventCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }*/
 
     /**
      * Edit filtered list where index is larger than size of filtered list,

@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -39,11 +38,11 @@ public class AddEventCommandIntegrationTest {
                 String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), expectedModel);
     }
 
-//    @Test
-//    public void execute_duplicateEvent_throwsCommandException() {
-//        Event eventInList = new Event(model.getEventBook().getEventList().get(0));
-//        assertCommandFailure(prepareCommand(eventInList, model), model, AddEventCommand.MESSAGE_DUPLICATE_EVENT);
-//    }
+    /*@Test
+    public void execute_duplicateEvent_throwsCommandException() {
+        Event eventInList = new Event(model.getEventBook().getEventList().get(0));
+        assertCommandFailure(prepareCommand(eventInList, model), model, AddEventCommand.MESSAGE_DUPLICATE_EVENT);
+    }*/
 
     /**
      * Generates a new {@code AddEventCommand} which upon execution, adds {@code event} into the {@code model}.

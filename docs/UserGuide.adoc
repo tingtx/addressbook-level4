@@ -150,7 +150,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Remarking a person : `Remark`
+=== Remarking a person : `Remark` - Coming in v1.2
 
 Remarks an existing person in the address book. +
 Format: `remark INDEX r/REMARK` or

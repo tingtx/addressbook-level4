@@ -72,7 +72,7 @@ public class AddressBookParser {
             return new SelectCommandParser().parse(arguments);
         } else if (commandWord.equals(OrderCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getOrderCommand().getAlias())) {
-            return new OrderCommand(arguments);
+            return new OrderCommandParser().parse(arguments);
         } else if (commandWord.equals(DeleteCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getDeleteCommand().getAlias())) {
             return new DeleteCommandParser().parse(arguments);

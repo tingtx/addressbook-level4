@@ -9,7 +9,7 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
 public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
-    private static char predicateType;
+    private static char predicateType = 'n';
     private final List<String> keywords;
 
     public NameContainsKeywordsPredicate(List<String> keywords) {

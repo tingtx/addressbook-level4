@@ -31,7 +31,6 @@ public class EventBook implements ReadOnlyEventBook {
     }
 
     public EventBook() {
-
     }
 
     /**
@@ -39,7 +38,7 @@ public class EventBook implements ReadOnlyEventBook {
      */
     public EventBook(ReadOnlyEventBook toBeCopied) {
         this();
-
+        resetData(toBeCopied);
     }
 
     //// list overwrite operations

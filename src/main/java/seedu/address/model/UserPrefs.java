@@ -53,6 +53,8 @@ public class UserPrefs {
 
     public String getEventBookName() { return eventBookName; }
 
+    public void setEventBookName(String eventBookName) { this.eventBookName = eventBookName; }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

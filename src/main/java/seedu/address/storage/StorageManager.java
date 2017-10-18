@@ -9,9 +9,11 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -21,12 +23,15 @@ public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
+    private EventBookStorage eventBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, EventBookStorage eventBookStorage,
+                          UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
+        this.eventBookStorage = eventBookStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -91,6 +96,52 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    // ================ EventBook methods ==============================
+
+    @Override
+    public String getEventBookFilePath() {
+        return eventBookStorage.getEventBookFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyEventBook> readEventBook() throws DataConversionException, IOException {
+        return readEventBook(eventBookStorage.getEventBookFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyEventBook> readEventBook(String filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return eventBookStorage.readEventBook(filePath);
+    }
+
+    @Override
+    public void saveEventBook(ReadOnlyEventBook eventBook) throws IOException {
+        saveEventBook(eventBook, eventBookStorage.getEventBookFilePath());
+    }
+
+    @Override
+    public void saveEventBook(ReadOnlyEventBook eventBook, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        eventBookStorage.saveEventBook(eventBook, filePath);
+    }
+
+    @Override
+    public void backupEventBook(ReadOnlyEventBook eventBook) throws IOException {
+        String filePath = getEventBookFilePath().substring(0, getEventBookFilePath().indexOf('.')) + "_backup.xml";
+        eventBookStorage.saveEventBook(eventBook, filePath);
+    }
+
+    @Override
+    @Subscribe
+    public void handleEventBookChangedEvent(EventBookChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveEventBook(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

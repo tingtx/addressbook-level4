@@ -67,7 +67,7 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /**
-     * Returns an unmodifiable view of the filtered person list
+     * Returns a list of commands.
      */
     ArrayList<ArrayList<String>> getCommands();
 

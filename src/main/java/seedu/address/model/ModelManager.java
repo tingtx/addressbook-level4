@@ -41,8 +41,8 @@ import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -73,8 +73,8 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(addressBook, eventBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + ", event book: " + eventBook +
-                " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + ", event book: " + eventBook
+                + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
         this.eventBook = new EventBook(eventBook);

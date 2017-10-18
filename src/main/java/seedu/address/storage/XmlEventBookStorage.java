@@ -13,6 +13,9 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyEventBook;
 
+/**
+ * A class to access TunedIn EventBook data stored as an xml file on the hard disk.
+ */
 public class XmlEventBookStorage implements EventBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlEventBookStorage.class);

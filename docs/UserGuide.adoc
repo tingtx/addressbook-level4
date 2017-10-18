@@ -186,11 +186,12 @@ or Address.
 
 === Locating persons by name: `find`
 
-Finds persons by names or addresses that contain any of the given keywords. +
+Finds persons by names, addresses, or any fields that contain any of the given keywords. +
 Format: `find <attribute>/KEYWORD [MORE_KEYWORDS]` or `f <attribute>/KEYWORD [MORE_KEYWORDS]`
 
 ****
-* `<attribute>` refers to either `n`, standing for name, or `a`, standing for address. This is case-sensitive.
+* `<attribute>` refers to either `n`, standing for name, `a`, standing for address, or `m`, standing for mixed fields,
+or finding in any text field. This is case-sensitive.
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
@@ -200,10 +201,10 @@ Format: `find <attribute>/KEYWORD [MORE_KEYWORDS]` or `f <attribute>/KEYWORD [MO
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `f Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find m/bernice quick 12-09-1998` +
+Returns any person having `bernice`, `quick`, or `12-09-1998` in any of the text fields.
 
 === Deleting a person : `delete`
 

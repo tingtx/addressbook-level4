@@ -30,6 +30,10 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
             return keywords.stream()
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword));
         }
+        if (predicateType == 'm') {
+            return (keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAsText(), keyword)));
+        }
         return false;
     }
 

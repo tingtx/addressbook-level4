@@ -365,7 +365,8 @@ e.g. `find James Jake`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
-* *Order* : `order`
+* *Order* : `order PARAMETER [MORE PARAMETERS]` +
+e.g `order name address`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *View Alias* : `viewalias`

@@ -74,7 +74,8 @@ public class EditEventCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT, new EditEventCommand.EditEventDescriptor());
+        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT,
+                new EditEventCommand.EditEventDescriptor());
         ReadOnlyEvent editedEvent = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
 
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);

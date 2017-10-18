@@ -102,18 +102,14 @@ public class StorageManagerTest {
         }
     }
 
-    //@Test
-    //public void eventBookReadSave() throws Exception {
-        /*
-         * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link XmlEventBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlEventBookStorageTest} class.
-         */
-    //    EventBook original = getTypicalEventBook();
-    //    storageManager.saveEventBook(original);
-    //    ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
-    //    assertEquals(original, new EventBook(retrieved));
-    //}
+    /*@Test
+    public void eventBookReadSave() throws Exception {
+
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+        assertEquals(original, new EventBook(retrieved));
+    }*/
 
     @Test
     public void getEventBookFilePath() {

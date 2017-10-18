@@ -20,39 +20,48 @@ public class AddEventCommandParserTest {
 
     /*@Test
     public void parse_allFieldsPresent_success() {
-        Event expectedEvent = new EventBuilder().withTitle(VALID_TITLE_DEEPAVALI).withDescription(VALID_DESCRIPTION_DEEPAVALI)
+        Event expectedEvent = new EventBuilder().withTitle(VALID_TITLE_DEEPAVALI)
+                .withDescription(VALID_DESCRIPTION_DEEPAVALI)
                 .withLocation(VALID_LOCATION_DEEPAVALI).withDatetime(VALID_DATETIME_DEEPAVALI).build();
 
         // multiple titles - last title accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_SPECTRA + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
+        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_SPECTRA + TITLE_DESC_DEEPAVALI
+                + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
         // [alias] multiple titles - last title accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_SPECTRA + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
+        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_SPECTRA + TITLE_DESC_DEEPAVALI
+                + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
         // multiple description - last description accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_SPECTRA + DESCRIPTION_DESC_DEEPAVALI
+        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_SPECTRA
+                + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
         // [alias] multiple description - last description accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_SPECTRA + DESCRIPTION_DESC_DEEPAVALI
+        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_SPECTRA
+                + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
         // multiple locations - last location accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI + LOCATION_DESC_SPECTRA
+        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
+                + LOCATION_DESC_SPECTRA
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
         // [alias] multiple locations - last location accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI + LOCATION_DESC_SPECTRA
+        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
+                + LOCATION_DESC_SPECTRA
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
         // multiple datetime - last datetime accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI + LOCATION_DESC_DEEPAVALI
+        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
+                + LOCATION_DESC_DEEPAVALI
                 + DATETIME_DESC_SPECTRA + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
         // [alias] multiple datetime - last datetime accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI + LOCATION_DESC_DEEPAVALI
+        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
+                + LOCATION_DESC_DEEPAVALI
                 + DATETIME_DESC_SPECTRA + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
     }*/
 

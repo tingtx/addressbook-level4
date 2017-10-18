@@ -150,7 +150,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Remarking a person : `Remark`
+=== Remarking a person : `Remark` - Coming in v1.1
 
 Remarks an existing person in the address book. +
 Format: `remark INDEX r/REMARK` or
@@ -247,6 +247,54 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `s 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Adding an event: `addevent`
+
+Adds an event to the event book +
+Format: `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME` or
+`ae et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME`
+
+Examples:
+
+* `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13/10/17 2359`
+* `ae et/Basketball Competition ed/Tournament el/UTSH edt/26-10-2017 0800`
+
+=== Editing an event : `editevent`
+
+Edits an existing event in the event book. +
+Format: `editevent INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]...` or
+`ee INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]...`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Examples:
+
+* `editevent 1 ed/Buy one get one free edt/13-10-2017 0900` +
+Edits the description and datetime of the 1st event to be `Buy one get one free` and `13-10-2017 0900` respectively.
+* `ee 2 et/2018 iPhone 11 Release` +
+Edits the title of the 2nd event to be `2018 iPhone 11 Release`.
+
+=== Deleting an event : `deleteevent`
+
+Deletes the specified event from the event book. +
+Format: `deleteevent INDEX` or `de INDEX`
+
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `deleteevent 2` +
+Deletes the 2nd event in the event book.
+* `de 1` +
+Deletes the 1st event in the event book.
 
 === Listing entered commands : `history`
 
@@ -364,6 +412,12 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Add Event* : `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME` +
+e.g. `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13/10/17 2359`
+* *Edit Event* : `editevent INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]...` +
+e.g. `editevent 1 ed/Buy one get one free edt/13-10-2017 0900`
+* *Delete Event* : `deleteevent INDEX` +
+e.g. `deleteevent 3`
 * *History* : `history`
 * *Order* : `order PARAMETER [MORE PARAMETERS]` +
 e.g `order name address`

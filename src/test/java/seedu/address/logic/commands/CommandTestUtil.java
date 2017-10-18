@@ -6,10 +6,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +21,15 @@ import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.TitleContainsKeywordsPredicate;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -76,6 +85,27 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
+    public static final String VALID_TITLE_SPECTRA = "Spectra Show";
+    public static final String VALID_TITLE_DEEPAVALI = "Deepavali Celebration";
+    public static final String VALID_DESCRIPTION_SPECTRA = "Water Show";
+    public static final String VALID_DESCRIPTION_DEEPAVALI = "Celebrating Deepavali 2017";
+    public static final String VALID_LOCATION_SPECTRA = "Marina square";
+    public static final String VALID_LOCATION_DEEPAVALI = "India";
+    public static final String VALID_DATETIME_SPECTRA = "20-09-2017 1913";
+    public static final String VALID_DATETIME_DEEPAVALI = "12-12-2017 1920";
+
+    public static final String TITLE_DESC_SPECTRA = " " + PREFIX_TITLE + VALID_TITLE_SPECTRA;
+    public static final String TITLE_DESC_DEEPAVALI = " " + PREFIX_TITLE + VALID_TITLE_DEEPAVALI;
+    public static final String DESCRIPTION_DESC_SPECTRA = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_SPECTRA;
+    public static final String DESCRIPTION_DESC_DEEPAVALI = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_DEEPAVALI;
+    public static final String LOCATION_DESC_SPECTRA = " " + PREFIX_LOCATION + VALID_LOCATION_SPECTRA;
+    public static final String LOCATION_DESC_DEEPAVALI = " " + PREFIX_LOCATION + VALID_LOCATION_DEEPAVALI;
+    public static final String DATETIME_DESC_SPECTRA = " " + PREFIX_DATETIME + VALID_DATETIME_SPECTRA;
+    public static final String DATETIME_DESC_DEEPAVALI = " " + PREFIX_DATETIME + VALID_DATETIME_DEEPAVALI;
+
+    public static final EditEventCommand.EditEventDescriptor DESC_SPECTRA;
+    public static final EditEventCommand.EditEventDescriptor DESC_DEEPAVALI;
+
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
@@ -83,6 +113,13 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        DESC_SPECTRA = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SPECTRA)
+                .withDescription(VALID_DESCRIPTION_SPECTRA).withLocation(VALID_LOCATION_SPECTRA)
+                .withDatetime(VALID_DATETIME_SPECTRA).build();
+        DESC_DEEPAVALI = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_DEEPAVALI)
+                .withDescription(VALID_DESCRIPTION_DEEPAVALI).withLocation(VALID_LOCATION_DEEPAVALI)
+                .withDatetime(VALID_DATETIME_DEEPAVALI).build();
     }
 
     /**
@@ -113,6 +150,9 @@ public class CommandTestUtil {
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
         List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
 
+        EventBook expectedEventBook = new EventBook(actualModel.getEventBook());
+        List<ReadOnlyEvent> expectedEventFilteredList = new ArrayList<>(actualModel.getFilteredEventList());
+
         try {
             command.execute();
             fail("The expected CommandException was not thrown.");
@@ -120,6 +160,8 @@ public class CommandTestUtil {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            //assertEquals(expectedEventBook, actualModel.getEventBook());
+            assertEquals(expectedEventFilteredList, actualModel.getFilteredEventList());
         }
     }
 
@@ -143,6 +185,28 @@ public class CommandTestUtil {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first event in the {@code model}'s event book.
+     */
+    public static void showFirstEventOnly(Model model) {
+        ReadOnlyEvent event = model.getEventBook().getEventList().get(0);
+        model.updateFilteredEventList(new TitleContainsKeywordsPredicate(Arrays.asList(event.getTitle().value)));
+
+        assert model.getFilteredEventList().size() == 1;
+    }
+
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstEvent(Model model) {
+        ReadOnlyEvent firstEvent = model.getFilteredEventList().get(0);
+        try {
+            model.deleteEvent(firstEvent);
+        } catch (EventNotFoundException enfe) {
+            throw new AssertionError("Event in filtered list must exist in model.", enfe);
         }
     }
 }

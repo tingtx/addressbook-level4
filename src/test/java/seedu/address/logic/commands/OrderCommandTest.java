@@ -4,6 +4,7 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
@@ -41,8 +42,8 @@ public class OrderCommandTest {
         secondParameter = "ADDRESS";
         thirdParameter = "TAG";
 
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs());
 
     }
 
@@ -51,7 +52,7 @@ public class OrderCommandTest {
     public void execute_listIsOrdered_showsEverything() {
         OrderCommand command = prepareCommand(firstParameter);
         assertCommandSuccess(command, model, OrderCommand.MESSAGE_SORT_SUCCESS
-                        + firstParameter, expectedModel);
+                + firstParameter, expectedModel);
     }
 
     @Test
@@ -116,7 +117,7 @@ public class OrderCommandTest {
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>
-     ** - the command feedback is equal to {@code expectedMessage}<br>
+     * * - the command feedback is equal to {@code expectedMessage}<br>
      * - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      */
     private void assertOrderSuccess(OrderCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {

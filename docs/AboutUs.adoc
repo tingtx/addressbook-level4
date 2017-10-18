@@ -4,63 +4,46 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+TunedIn was developed by the team below, building upon the great work done by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== Quek Kai Yu
-image::qky.jpg[width="150", align="left"]
-{empty}[https://github.com/kaiyu92[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data Model
-
-'''
-
 === Keloysius Mak
-image::makzhk.jpg[width="150", align="left"]
-{empty}[http://zhkphoto.com[homepage]] [https://github.com/keloysiusmak[github]] [<<johndoe#, portfolio>>]
+image::keloysiusmak.png[width="150", align="left"]
+{empty}[http://zhkphoto.com[homepage]] [https://github.com/keloysiusmak[github]]
 
 Role: Developer +
 Responsibilites : Logic Model
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Le Quang Quan
+image::quanle1994.png[width="150", align="left"]
+{empty}[http://github.com/lejolly[github]]
+//[<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: User Interface Model
 
 '''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Quek Kai Yu
+image::kaiyu92.png[width="150", align="left"]
+{empty}[https://github.com/kaiyu92[github]]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Data Model
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Xiang TingTing
+image::tingtx.png[width="150" , align="left"]
+{empty}[https://github.com/tingtx[github]] [<<XiangTingTing#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Storage Model
 
 '''
+
+

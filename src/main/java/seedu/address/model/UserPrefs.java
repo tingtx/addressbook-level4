@@ -2,7 +2,10 @@ package seedu.address.model;
 
 import java.util.Objects;
 
+import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 
 /**
  * Represents User's preferences.
@@ -10,6 +13,7 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
+    private AliasSettings aliasSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
     private String eventBookFilePath = "data/eventbook.xml";
@@ -17,10 +21,15 @@ public class UserPrefs {
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
+        this.setAliasSettings();
     }
 
     public GuiSettings getGuiSettings() {
         return guiSettings == null ? new GuiSettings() : guiSettings;
+    }
+
+    public AliasSettings getAliasSettings() {
+        return aliasSettings == null ? new AliasSettings() : aliasSettings;
     }
 
     public void updateLastUsedGuiSetting(GuiSettings guiSettings) {
@@ -29,6 +38,10 @@ public class UserPrefs {
 
     public void setGuiSettings(double width, double height, int x, int y) {
         guiSettings = new GuiSettings(width, height, x, y);
+    }
+
+    public void setAliasSettings() {
+        aliasSettings = new AliasSettings();
     }
 
     public String getAddressBookFilePath() {
@@ -54,6 +67,16 @@ public class UserPrefs {
     public String getEventBookName() { return eventBookName; }
 
     public void setEventBookName(String eventBookName) { this.eventBookName = eventBookName; }
+
+    public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
+        try {
+            aliasSettings.setAlias(command, alias);
+        } catch (DuplicateAliasException e) {
+            throw new DuplicateAliasException(e.getMessage());
+        } catch (UnknownCommandException e) {
+            throw new UnknownCommandException(e.getMessage());
+        }
+    }
 
     @Override
     public boolean equals(Object other) {

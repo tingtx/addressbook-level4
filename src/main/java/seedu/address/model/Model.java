@@ -7,9 +7,12 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,6 +41,11 @@ public interface Model {
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /**
+     * Order the list based on a parameter
+     */
+    void orderList(String parameter) throws UnrecognisedParameterException;
+
+    /**
      * Adds the given person
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -62,10 +70,14 @@ public interface Model {
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /**
+     * Returns a list of commands.
+     */
     ArrayList<ArrayList<String>> getCommands();
 
-    /** Returns the set alias for command, null otherwise */
+    /**
+     * Returns the set alias for command, null otherwise
+     */
     public String getAliasForCommand(String commandName);
 
     /**
@@ -129,4 +141,11 @@ public interface Model {
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
     //===================================================================================================
+    /**
+     * Updates the alias of the given function with the given {@code alias}.
+     *
+     * @throws NullPointerException if {@code alias} is null.
+     */
+    void setAlias(String command, String alias) throws UnknownCommandException, DuplicateAliasException;
+
 }

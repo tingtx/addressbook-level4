@@ -33,13 +33,13 @@ public class ViewAliasCard extends UiPart<Region> {
     @FXML
     private Label id;
 
-    public ViewAliasCard(String command, String commandWord, Logic logic) {
+    public ViewAliasCard(String command, String commandWord, Logic logic)  {
         super(FXML);
         this.command = command;
         id.setText(command);
 
         defaultAlias.setText("Default Alias : " + commandWord);
-        alias.setText("Set Alias : " + logic.getAliasForCommand(command));
+        alias.setText("Set Alias : " + logic.getAliasForCommand(commandWord));
     }
 
     @Override

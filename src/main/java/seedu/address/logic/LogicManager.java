@@ -9,11 +9,11 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.GeneralBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -27,10 +27,10 @@ public class LogicManager extends ComponentManager implements Logic {
     private final GeneralBookParser generalBookParser;
     private final UndoRedoStack undoRedoStack;
 
-    public LogicManager(Model model) {
+    public LogicManager(Model model, UserPrefs userprefs) {
         this.model = model;
         this.history = new CommandHistory();
-        this.generalBookParser = new GeneralBookParser();
+        this.generalBookParser = new GeneralBookParser(userprefs);
         this.undoRedoStack = new UndoRedoStack();
     }
 

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -22,24 +23,33 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.Storage;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -53,6 +63,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
     private final ArrayList<ArrayList<String>> viewAliases;
+    private UserPrefs userPref;
+    private Storage userStorage;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -66,6 +78,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.eventBook = new EventBook(eventBook);
+        this.userPref = userPrefs;
+
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.eventBook.getEventList());
 
@@ -98,11 +112,20 @@ public class ModelManager extends ComponentManager implements Model {
         //List Command
         commandList.add(new ArrayList<String>(Arrays.asList("List", ListCommand.getCommandWord())));
 
+        //Order Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
+
         //Redo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Redo", RedoCommand.getCommandWord())));
 
+        //Remark Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Remark", RemarkCommand.getCommandWord())));
+
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
+
+        //Set Alias Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Set Alias", SetAliasCommand.getCommandWord())));
 
         //Undo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
@@ -204,6 +227,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void orderList(String parameter) throws UnrecognisedParameterException {
+        addressBook.orderList(parameter);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -238,8 +268,61 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public String getAliasForCommand(String commandName) {
-        return "Not set";
+    public String getAliasForCommand(String command) {
+        AliasSettings aliasSettings = userPref.getAliasSettings();
+
+        if (command.equals(AddCommand.getCommandWord())) {
+            return aliasSettings.getAddCommand().getAlias();
+        } else if (command.equals(ClearCommand.getCommandWord())) {
+            return aliasSettings.getClearCommand().getAlias();
+        } else if (command.equals(DeleteCommand.getCommandWord())) {
+            return aliasSettings.getDeleteCommand().getAlias();
+        } else if (command.equals(EditCommand.getCommandWord())) {
+            return aliasSettings.getEditCommand().getAlias();
+        } else if (command.equals(ExitCommand.getCommandWord())) {
+            return aliasSettings.getExitCommand().getAlias();
+        } else if (command.equals(FindCommand.getCommandWord())) {
+            return aliasSettings.getFindCommand().getAlias();
+        } else if (command.equals(HelpCommand.getCommandWord())) {
+            return aliasSettings.getHelpCommand().getAlias();
+        } else if (command.equals(HistoryCommand.getCommandWord())) {
+            return aliasSettings.getHistoryCommand().getAlias();
+        } else if (command.equals(ListCommand.getCommandWord())) {
+            return aliasSettings.getListCommand().getAlias();
+        } else if (command.equals(OrderCommand.getCommandWord())) {
+            return aliasSettings.getOrderCommand().getAlias();
+        } else if (command.equals(RedoCommand.getCommandWord())) {
+            return aliasSettings.getRedoCommand().getAlias();
+        } else if (command.equals(RemarkCommand.getCommandWord())) {
+            return aliasSettings.getRemarkCommand().getAlias();
+        } else if (command.equals(SelectCommand.getCommandWord())) {
+            return aliasSettings.getSelectCommand().getAlias();
+        } else if (command.equals(SetAliasCommand.getCommandWord())) {
+            return aliasSettings.getSetAliasCommand().getAlias();
+        } else if (command.equals(UndoCommand.getCommandWord())) {
+            return aliasSettings.getUndoCommand().getAlias();
+        } else if (command.equals(ViewAliasCommand.getCommandWord())) {
+            return aliasSettings.getViewAliasCommand().getAlias();
+        } else if (command.equals(AddEventCommand.getCommandWord())) {
+            return aliasSettings.getAddEventCommand().getAlias();
+        } else if (command.equals(DeleteEventCommand.getCommandWord())) {
+            return aliasSettings.getDeleteEventCommand().getAlias();
+        } else if (command.equals(EditEventCommand.getCommandWord())) {
+            return aliasSettings.getEditEventCommand().getAlias();
+        } else {
+            return "Not Set";
+        }
+    }
+
+    @Override
+    public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
+        try {
+            this.userPref.setAlias(commandName, alias);
+        } catch (DuplicateAliasException e) {
+            throw e;
+        } catch (UnknownCommandException e) {
+            throw e;
+        }
     }
 
     //=========== Filtered Person List Accessors =============================================================

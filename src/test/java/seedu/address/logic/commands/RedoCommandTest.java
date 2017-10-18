@@ -25,8 +25,11 @@ public class RedoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
+
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+
+    public RedoCommandTest() {};
 
     @Before
     public void setUp() {

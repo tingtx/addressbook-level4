@@ -20,7 +20,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
-    public static final String COMMAND_ALIAS = "rk";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the person identified "
             + "by the index number used in the last person listing. "
@@ -59,7 +58,7 @@ public class RemarkCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), remark, personToEdit.getTags());
+                personToEdit.getAddress(), personToEdit.getBirthday(), remark, personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -74,7 +73,6 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     *
      * @param personToEdit
      * @return the generated message
      */
@@ -99,8 +97,12 @@ public class RemarkCommand extends UndoableCommand {
         }
 
         //state check
-        RemarkCommand e = (RemarkCommand) other;
-        return index.equals(e.index)
-                && remark.equals(e.remark);
+        RemarkCommand newRemark = (RemarkCommand) other;
+        return index.equals(newRemark.index)
+                && remark.equals(newRemark.remark);
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
     }
 }

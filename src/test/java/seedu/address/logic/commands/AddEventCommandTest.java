@@ -21,6 +21,8 @@ import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
@@ -28,6 +30,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EventBuilder;
 
@@ -123,6 +126,11 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void orderList(String parameter) throws UnrecognisedParameterException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -195,6 +203,11 @@ public class AddEventCommandTest {
         @Override
         public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
             fail("This method should not be called");
+        }
+
+        @Override
+        public void setAlias(String command, String alias) throws UnknownCommandException, DuplicateAliasException {
+
         }
     }
 

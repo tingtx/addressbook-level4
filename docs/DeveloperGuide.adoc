@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= TunedIn - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -217,6 +217,105 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+=== Alias mechanism
+
+The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute teh command calls.
+
+`AliasSettings` only deals with `Alias` and `HashSet`.
+
+The following diagram shows the inheritance diagram for `AliasSettings`:
+
+image::AliasClassDiagram.png[width="800"]
+
+As you can see from the diagram, `AliasSettings` stores the custom set aliases for the various commands, and for efficiency, we also store the list of all protected aliases in a HashSet. This `AliasSettings` is then loaded into the TunedIn application, which is then passed into the AddressBookParser, when determining which commands to execute.
+
+The implementation of the constructor for the Alias class is shown below in greater detail. `AliasSettings` stores individually the `Alias` object for every programmed function. As you can see, Alias requires the two inputs to be a `String`. The first input, `aliasCommand`, stores the default alias for the commands, while the second input stores the custom set alias for the particular command. It is precisely because of this reason that all the default aliases for the commands are set henceforth as protected aliases and cannot be set as an alias for a particular command.
+
+[source,java]
+----
+public Alias(String aliasCommand, String aliasString) {
+    try {
+        requireAllNonNull(aliasCommand, aliasString);
+        if (!(aliasCommand instanceof String && aliasString instanceof String)) {
+            throw new IllegalValueException(MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        this.aliasCommand = aliasCommand;
+        this.aliasString = aliasString;
+    } catch (IllegalValueException e) {
+        ;
+    }
+}
+----
+
+When AliasSettings are loaded into the AddressBookParser, it is easy to control whether custom aliases are allowed for a particular function. The first shows how a custom alias can be allowed for a particular command, while the second showing the same function, with the alias capabilities removed, allowing only the default alias :
+[source,java]
+----
+if (commandWord.equals(AddCommand.COMMAND_WORD)
+        || commandWord.equals(aliasSettings.getAddCommand().getAlias())) {
+    return new AddCommandParser().parse(arguments);
+}
+----
+
+[source,java]
+----
+if (commandWord.equals(AddCommand.COMMAND_WORD)) {
+    return new AddCommandParser().parse(arguments);
+}
+----
+
+Suppose that the user has just launched the application. The `AliasSettings` will initialize with the default aliases.
+
+The user executes a new `setalias` command by calling `setalias c\help al\h`, to set the alias for `help` to 'h'. The private `Alias` helpCommand variable will be replaced with a new `Alias` object, initialized with the values of 'help' and 'h'. Because help is a protected alias, it will not be removed from the HashSet, which is then used later to detect for duplicate aliases.
+
+image::ReplacingHelpDiagram.png[width="800"]
+
+The user executes another `setalias` command by calling `setalias c\help al\z`, to set the alias for `help` to 'z'. The private `Alias` helpCommand variable will be replaced again with a new `Alias` object, initialized with the values of 'help' and 'z'. Because the previously set alias, h, is not a protected alias in the HashSet, it will be replaced with h
+
+image::ReplacingHelpDiagram2.png[width="800"]
+
+When setting a new alias by calling `setalias c\help al\x` for example, the proposed new alias is checked within the HashSet for any conflicts. If it exists within the HashSet, no new Alias object will be created.
+
+image::FailedReplacingDiagram.png[width="800"]
+
+The following sequence diagram shows how the setalias operation works:
+
+image::SetAliasSequenceDiagram.png[width="800"]
+
+The following activity diagram summarize what happens inside the `AliasSettings` when a user executes a new command:
+
+image::SetAliasActivityDiagram.png[width="200"]
+
+==== Design Considerations
+
+**Aspect:** Looking for duplicates of Aliases +
+**Alternative 1 (current choice):** Store the list of all used aliases in a HashSet +
+**Pros:** Checking whether an alias exists in a HashSet is fast. +
+**Cons:** The list stores the same data as the Alias objects, so it takes up marginally more space +
+**Alternative 2:** Iterate individually through all the Aliases +
+**Pros:** Does not require the creation of additional data structures to store the aliases +
+**Cons:** Manually iterating through the list of `Alias` objects will take a long time.
+
+---
+
+**Aspect:** Viewing of currently set aliases +
+**Alternative 1 (current choice):** Opens the list of currently set alias in a new window +
+**Pros:** Much clearer to see which alias belongs to which command. +
+**Cons:** Requires a couple more clicks to view the alias data, and subsequently a couple more clicks to resume regular TunedIn application usage. +
+**Alternative 2:** Shows the list of currently set aliases in the current display window. +
+**Pros:** Data is obtained instantly. +
+**Cons:** It is hard to display in a presentable way the list of currently set aliases in textual format.
+
+---
+
+**Aspect:** Data structure to support the AliasSettings +
+**Alternative 1 (current choice):** Use the same preferences.json file used to store GuiSettings +
+**Pros:** Easy to port settings to another computer. Reduces the risk of file corruption or accidental file deletion. +
+**Cons:** Potential to corrupt GuiSettings if AliasSettings are improperly stored. +
+**Alternative 2:** Create a separate json file to store `AliasSettings` +
+**Pros:** It is a lot clearer to see whether the AliasSettings are stored, and also any corruption of it will not affect the rest of the preferences. +
+**Cons:** Creates a separate file for alias settings which could be grouped under the umbrella of preferences. +
+// end::setalias[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -725,6 +824,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |user |add remarks for a person |make notes for contacts
+
+|`* * *` |user |set my own alias for commands |remember the commands easily
+
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
@@ -737,11 +840,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |organised user |group contacts manually or automatically |access the information I want easily
 
+|`* * *` |user |save my contacts' birthdays |refer to it easily
+
+|`* * *` |organized user |save events |refer to my events easily
+
 |`* * *` |user with busy schedules |see my important events on a calendar view |have an overview of my schedule for the month
 
 |`* * *` |organized user |share my contact details with my friends |save the contacts without manually keying in the details
 
-|`* * *` |impatient user |sort the information on the application |view the information in a ordered manner
+|`* * *` |impatient user |sort the information of the contacts |view the information in an ordered manner
 
 |`* * *` |user |add information to the application in a intuitive way |feel less frustrating
 
@@ -764,11 +871,9 @@ seeing them by accident
 
 |`* *` |user |send mass messages to a group of contacts |plan for meetings, conferences or gatherings with ease
 
-|`* *` |user |drag and drop contacts in or out of different groups |not need to key in complex command lines
+|`* *` |user |manage contacts in different groups |maintain control over my groups
 
 |`* *` |user |view groups of contacts in a more visual display |see who are also in the group
-
-|`* *` |user |view groups of contacts in a more visual display |look for a contact in the group easily
 
 |`* *` |user |commands to be in the button form |avoid memorising the commands and select them more easily
 
@@ -800,7 +905,7 @@ seeing them by accident
 
 |`* *` |user |add profiles for my friends |store their photos as well
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |have a collage of a person's profile from various social media platforms |snapshot of the person's information
 from various accounts.
@@ -816,7 +921,7 @@ from various accounts.
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `TunedIn AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -851,7 +956,7 @@ Use case resumes at step 2.
 1.  User requests to sync account
 2.  TunedIn asks for Facebook ID
 3.  User confirms that the account is of the user's
-4.  TunedIn pulls the data from the Facebook ID using the Graph API
+4.  TunedIn displays the data pulled from Facebook
 +
 Use case ends.
 
@@ -875,7 +980,7 @@ Use case resumes at step 2.
 
 1.  User types in password
 2.  TunedIn checks password accuracy
-3.  TunedIn brings the patient to the home page
+3.  User is brought to the home page
 +
 Use case ends.
 
@@ -934,6 +1039,11 @@ Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+[[Alias]]
+
+....
+A shorthand for users to execute Command Line Instructions
 ....
 
 [[app]]

@@ -89,32 +89,16 @@ public class AddEventCommandParserTest {
         assertParseFailure(parser, AddEventCommand.COMMAND_WORD + VALID_TITLE_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, expectedMessage);
 
-        // [alias] missing title prefix
-        assertParseFailure(parser, AddEventCommand.COMMAND_ALIAS + VALID_TITLE_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
-                + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, expectedMessage);
-
         // missing description prefix
         assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + VALID_DESCRIPTION_DEEPAVALI
-                + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, expectedMessage);
-
-        // [alias] missing description prefix
-        assertParseFailure(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + VALID_DESCRIPTION_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, expectedMessage);
 
         // missing location prefix
         assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
                 + VALID_LOCATION_DEEPAVALI + DATETIME_DESC_DEEPAVALI, expectedMessage);
 
-        // [alias] missing location prefix
-        assertParseFailure(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
-                + VALID_LOCATION_DEEPAVALI + DATETIME_DESC_DEEPAVALI, expectedMessage);
-
         // missing datetime prefix
         assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
-                + LOCATION_DESC_DEEPAVALI + VALID_DATETIME_DEEPAVALI, expectedMessage);
-
-        // [alias] missing datetime prefix
-        assertParseFailure(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + VALID_DATETIME_DEEPAVALI, expectedMessage);
     }
 

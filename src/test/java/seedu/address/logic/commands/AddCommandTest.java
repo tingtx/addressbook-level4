@@ -107,6 +107,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void orderList(String parameter) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -195,6 +200,9 @@ public class AddCommandTest {
         @Override
         public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
 
+        }
+        public void setAlias(String command, String alias) {
+            fail("This method should not be called.");
         }
     }
 

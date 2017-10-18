@@ -29,7 +29,6 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 public class EditEventCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editevent";
-    public static final String COMMAND_ALIAS = "ee";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the event identified "
             + "by the index number used in the last event listing. "

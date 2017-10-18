@@ -171,17 +171,21 @@ Remove the remark of the 1st person.
 
 === Order persons in Address Book by a parameter: `order`
 
-Order the list of persons according to a specified parameter. +
-Format: `order naME` or `o Address`
+Order the list of persons according to a specified parameter. Parameters are case insensitive. +
+Format: `order PARAMETER [MORE_PARAMETER]` or `o PARAMETER [MORE_PARAMETER]`
 
 ****
-* This will change the index of the person in the Address Book, which will affect other commands that use this attribute such as
+* The allowable parameters are `NAME`, `ADDRESS` and 'TAG'.
+* The parameter is case insensitive. e.g 'naMe' will match 'NAME'
+* Only full word will be matched. e.g. 'addr' will not match 'Address'
+* To order by multiple parameters, each parameter should be separated by a single space.
+* The order of the parameter is important. e.g 'name address' will order the list by name
+then by address.
+* To order the list by three parameters, the order of the parameters can only be 'name address tag'.
+* The command change the index of the person in the Address Book,
+which will affect other commands that use this attribute such as
 `delete` or `select`.
-* The Allowable parameters are `NAME` and `ADDRESS`.
-* The parameter is case-insenstive.
-* This command will only order by only one single parameter.
-* The error messange `"The parameter can only be either Name or Address"` will be displayed if the parameter is not either Name
-or Address.
+
 ****
 
 === Locating persons by name: `find`

@@ -4,6 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents a Event's Datetime in the event book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDatetime(String)}
+ */
 public class Datetime {
 
     public static final String MESSAGE_DATETIME_CONSTRAINTS =

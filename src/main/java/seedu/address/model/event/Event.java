@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import sun.security.krb5.internal.crypto.Des;
 
 /**
  * Represents a Event in the event book.

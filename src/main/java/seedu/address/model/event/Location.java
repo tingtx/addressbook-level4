@@ -4,6 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents a Event's Location in the event book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidLocation(String)}
+ */
 public class Location {
 
     public static final String MESSAGE_LOCATION_CONSTRAINTS =

@@ -100,40 +100,40 @@ public class UniquePersonList implements Iterable<Person> {
                 .compareToIgnoreCase(b.getTags().toString());
 
         switch (parameter) {
-            case "NAME":
-                internalList.sort(orderByName);
-                break;
+        case "NAME":
+            internalList.sort(orderByName);
+            break;
 
-            case "ADDRESS":
-                internalList.sort(orderByAddress);
-                break;
+        case "ADDRESS":
+            internalList.sort(orderByAddress);
+            break;
 
-            case "TAG":
-                internalList.sort(orderByTag);
-                break;
+        case "TAG":
+            internalList.sort(orderByTag);
+            break;
 
-            case "NAME ADDRESS":
-                internalList.sort(orderByName.thenComparing(orderByAddress));
-                break;
+        case "NAME ADDRESS":
+            internalList.sort(orderByName.thenComparing(orderByAddress));
+            break;
 
-            case "ADDRESS NAME":
-                internalList.sort(orderByName.thenComparing(orderByTag));
-                break;
+        case "ADDRESS NAME":
+            internalList.sort(orderByName.thenComparing(orderByTag));
+            break;
 
-            case "TAG NAME":
-                internalList.sort(orderByTag.thenComparing(orderByName));
-                break;
+        case "TAG NAME":
+            internalList.sort(orderByTag.thenComparing(orderByName));
+            break;
 
-            case "NAME TAG":
-                internalList.sort(orderByName.thenComparing(orderByTag));
-                break;
+        case "NAME TAG":
+            internalList.sort(orderByName.thenComparing(orderByTag));
+            break;
 
-            case "NAME ADDRESS TAG":
-                internalList.sort(orderByName.thenComparing(orderByAddress).thenComparing(orderByTag));
-                break;
+        case "NAME ADDRESS TAG":
+            internalList.sort(orderByName.thenComparing(orderByAddress).thenComparing(orderByTag));
+            break;
 
-            default:
-                throw new UnrecognisedParameterException();
+        default:
+            throw new UnrecognisedParameterException();
         }
 
 

@@ -38,11 +38,11 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -140,63 +140,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     }
 
-    /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
-     */
-//    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
-//        super();
-//        requireAllNonNull(addressBook, userPrefs);
-//
-//        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
-//
-//        this.addressBook = new AddressBook(addressBook);
-//        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-//
-//
-//        ArrayList<ArrayList<String>> commandList = new ArrayList<ArrayList<String>>();
-//
-//        //Add Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Add", AddCommand.getCommandWord())));
-//
-//        //Clear Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Clear", ClearCommand.getCommandWord())));
-//
-//        //Delete Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Delete", DeleteCommand.getCommandWord())));
-//
-//        //Edit Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Edit", EditCommand.getCommandWord())));
-//
-//        //Exit Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Exit", ExitCommand.getCommandWord())));
-//
-//        //Find Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Find", FindCommand.getCommandWord())));
-//
-//        //Help Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Help", HelpCommand.getCommandWord())));
-//
-//        //History Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("History", HistoryCommand.getCommandWord())));
-//
-//        //List Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("List", ListCommand.getCommandWord())));
-//
-//        //Redo Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Redo", RedoCommand.getCommandWord())));
-//
-//        //Select Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
-//
-//        //Undo Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
-//
-//        //View Alias Command
-//        commandList.add(new ArrayList<String>(Arrays.asList("View Alias", ViewAliasCommand.getCommandWord())));
-//
-//        viewAliases = commandList;
-//
-//    }
     public ModelManager() {
         this(new AddressBook(), new EventBook(), new UserPrefs());
     }

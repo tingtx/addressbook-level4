@@ -54,12 +54,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Viewing aliases : `viewalias`
+=== Viewing aliases : `viewalias` - Since V1.1
 
 Shows the list of aliases used, as well as protected aliases. +
 Format: `viewalias`
 
-=== Set aliases : `setalias`
+=== Set aliases : `setalias` - Since V1.2
 
 Set alias for a particular command. +
 Format: `setalias c/COMMAND al/NEW_ALIAS`

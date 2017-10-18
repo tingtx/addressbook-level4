@@ -68,7 +68,8 @@ public class AddEventCommandParserTest {
     /*@Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Event expectedEvent = new EventBuilder().withTitle(VALID_TITLE_SPECTRA).withDescription(VALID_DESCRIPTION_SPECTRA)
+        Event expectedEvent = new EventBuilder().withTitle(VALID_TITLE_SPECTRA)
+                .withDescription(VALID_DESCRIPTION_SPECTRA)
                 .withLocation(VALID_LOCATION_SPECTRA).withDatetime(VALID_DATETIME_SPECTRA).build();
         // command word
         assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_SPECTRA + DESCRIPTION_DESC_SPECTRA

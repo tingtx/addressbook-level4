@@ -109,9 +109,9 @@ public class DeleteEventCommandTest {
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-//    private void showNoEvent(Model model) {
-//        model.updateFilteredEventList(p -> false);
-//
-//        assert model.getFilteredEventList().isEmpty();
-//    }
+    /*private void showNoEvent(Model model) {
+        model.updateFilteredEventList(p -> false);
+
+        assert model.getFilteredEventList().isEmpty();
+    }*/
 }

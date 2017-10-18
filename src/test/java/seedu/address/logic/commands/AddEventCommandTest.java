@@ -76,7 +76,7 @@ public class AddEventCommandTest {
 
         // same values -> returns true
         AddEventCommand addTest1CommandCopy = new AddEventCommand(test1);
-//        assertTrue(addTest1Command.equals(addTest1CommandCopy));
+        //assertTrue(addTest1Command.equals(addTest1CommandCopy));
 
         // different types -> returns false
         assertFalse(addTest1Command.equals(1));

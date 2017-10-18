@@ -6,7 +6,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.EventBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
 

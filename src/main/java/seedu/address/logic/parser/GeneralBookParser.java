@@ -38,7 +38,9 @@ public class GeneralBookParser {
     private static UserPrefs userPrefs;
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    public GeneralBookParser(UserPrefs userPref) { this.userPrefs = userPref; }
+    public GeneralBookParser(UserPrefs userPref) {
+        this.userPrefs = userPref;
+    }
 
     /**
      * Used for initial separation of command word and args.

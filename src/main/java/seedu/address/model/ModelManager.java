@@ -73,7 +73,7 @@ public class ModelManager extends ComponentManager implements Model {
         super();
         requireAllNonNull(addressBook, eventBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + ", event book: " +  eventBook +
+        logger.fine("Initializing with address book: " + addressBook + ", event book: " + eventBook +
                 " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
@@ -197,7 +197,6 @@ public class ModelManager extends ComponentManager implements Model {
 //        viewAliases = commandList;
 //
 //    }
-
     public ModelManager() {
         this(new AddressBook(), new EventBook(), new UserPrefs());
     }

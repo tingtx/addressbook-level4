@@ -123,7 +123,7 @@ public interface Model {
      * Replaces the given event {@code target} with {@code editedEvent}.
      *
      * @throws DuplicateEventException if updating the event's details causes the person to be equivalent to
-     *                                  another existing event in the list.
+     *                                 another existing event in the list.
      * @throws EventNotFoundException  if {@code target} could not be found in the list.
      */
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
@@ -141,6 +141,7 @@ public interface Model {
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
     //===================================================================================================
+
     /**
      * Updates the alias of the given function with the given {@code alias}.
      *

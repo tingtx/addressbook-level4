@@ -52,7 +52,7 @@ public class OrderCommandTest {
     public void execute_listIsOrdered_showsEverything() {
         OrderCommand command = prepareCommand(firstParameter);
         assertCommandSuccess(command, model, OrderCommand.MESSAGE_SORT_SUCCESS
-                        + firstParameter, expectedModel);
+                + firstParameter, expectedModel);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class OrderCommandTest {
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>
-     ** - the command feedback is equal to {@code expectedMessage}<br>
+     * * - the command feedback is equal to {@code expectedMessage}<br>
      * - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      */
     private void assertOrderSuccess(OrderCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {

@@ -60,13 +60,21 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    public String getEventBookFilePath() { return eventBookFilePath; }
+    public String getEventBookFilePath() {
+        return eventBookFilePath;
+    }
 
-    public void setEventBookFilePath(String eventBookFilePath) { this.eventBookFilePath = eventBookFilePath; }
+    public void setEventBookFilePath(String eventBookFilePath) {
+        this.eventBookFilePath = eventBookFilePath;
+    }
 
-    public String getEventBookName() { return eventBookName; }
+    public String getEventBookName() {
+        return eventBookName;
+    }
 
-    public void setEventBookName(String eventBookName) { this.eventBookName = eventBookName; }
+    public void setEventBookName(String eventBookName) {
+        this.eventBookName = eventBookName;
+    }
 
     public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
         try {

@@ -21,7 +21,7 @@ public class Datetime {
      *
      * @throws IllegalValueException if given datetime string is invalid.
      */
-    public Datetime(String datetime) throws IllegalValueException{
+    public Datetime(String datetime) throws IllegalValueException {
         requireNonNull(datetime);
         if (!isValidDatetime(datetime)) {
             throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINTS);

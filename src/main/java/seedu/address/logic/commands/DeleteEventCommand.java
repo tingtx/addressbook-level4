@@ -24,7 +24,9 @@ public class DeleteEventCommand extends UndoableCommand {
 
     private final Index targetIndex;
 
-    public DeleteEventCommand(Index targetIndex) { this.targetIndex = targetIndex; }
+    public DeleteEventCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {

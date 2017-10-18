@@ -29,7 +29,10 @@ public class RedoCommandTest {
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
 
-    public RedoCommandTest() {};
+    public RedoCommandTest() {
+    }
+
+    ;
 
     @Before
     public void setUp() {

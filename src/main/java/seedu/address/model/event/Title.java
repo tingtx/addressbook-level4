@@ -25,7 +25,7 @@ public class Title {
      *
      * @throws IllegalValueException if given title string is invalid.
      */
-    public Title(String title) throws IllegalValueException{
+    public Title(String title) throws IllegalValueException {
         requireNonNull(title);
         if (!isValidTitle(title)) {
             throw new IllegalValueException(MESSAGE_TITLE_CONSTRAINTS);

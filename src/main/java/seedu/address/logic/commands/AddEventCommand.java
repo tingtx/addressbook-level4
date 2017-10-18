@@ -23,7 +23,7 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_TITLE + "NAME "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
             + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_DATETIME+ "DATETIME\n"
+            + PREFIX_DATETIME + "DATETIME\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + "Halloween Horror Night "
             + PREFIX_DESCRIPTION + "Horrifying night "
@@ -38,12 +38,14 @@ public class AddEventCommand extends UndoableCommand {
     /**
      * Creates an AddEventCommand to add the specified {@code ReadOnlyEvent}
      */
-    public AddEventCommand(ReadOnlyEvent event) { toAdd = new Event(event); }
+    public AddEventCommand(ReadOnlyEvent event) {
+        toAdd = new Event(event);
+    }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        try{
+        try {
             model.addEvent(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateEventException e) {
@@ -58,5 +60,7 @@ public class AddEventCommand extends UndoableCommand {
                 && toAdd.equals(((AddEventCommand) other).toAdd));
     }
 
-    public static String getCommandWord() { return COMMAND_WORD; }
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 }

@@ -201,6 +201,7 @@ public class AddCommandTest {
         public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
 
         }
+
         public void setAlias(String command, String alias) {
             fail("This method should not be called.");
         }

@@ -40,7 +40,7 @@ public class XmlEventBookStorage implements EventBookStorage {
 
         File eventBookFile = new File(filePath);
 
-        if(!eventBookFile.exists()) {
+        if (!eventBookFile.exists()) {
             logger.info("EventBook file " + eventBookFile + " not found");
             return Optional.empty();
         }

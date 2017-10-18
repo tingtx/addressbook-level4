@@ -21,7 +21,7 @@ public class Location {
      *
      * @throws IllegalValueException if given location string is invalid.
      */
-    public Location(String location) throws IllegalValueException{
+    public Location(String location) throws IllegalValueException {
         requireNonNull(location);
         if (!isValidLocation(location)) {
             throw new IllegalValueException(MESSAGE_LOCATION_CONSTRAINTS);

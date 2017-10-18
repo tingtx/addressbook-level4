@@ -32,7 +32,7 @@ public class SetAliasCommandParser implements Parser<SetAliasCommand> {
 
 
         String command = ParserUtil.parseCommand(argMultimap.getValue(PREFIX_COMMAND)).get();
-        String alias  = ParserUtil.parseAlias(argMultimap.getValue(PREFIX_ALIAS)).get();
+        String alias = ParserUtil.parseAlias(argMultimap.getValue(PREFIX_ALIAS)).get();
 
         if (!(command.equals("add") || command.equals("clear") || command.equals("delete") || command.equals("edit")
                 || command.equals("exit") || command.equals("find") || command.equals("help")

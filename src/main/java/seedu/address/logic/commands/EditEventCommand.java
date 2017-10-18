@@ -50,7 +50,7 @@ public class EditEventCommand extends UndoableCommand {
     private final EditEventDescriptor editEventDescriptor;
 
     /**
-     * @param index                of the event in the filtered event list to edit
+     * @param index               of the event in the filtered event list to edit
      * @param editEventDescriptor details to edit the event with
      */
     public EditEventCommand(Index index, EditEventDescriptor editEventDescriptor) {
@@ -88,7 +88,7 @@ public class EditEventCommand extends UndoableCommand {
      * edited with {@code editEventDescriptor}.
      */
     private static Event createEditedEvent(ReadOnlyEvent eventToEdit,
-                                             EditEventDescriptor editEventDescriptor) {
+                                           EditEventDescriptor editEventDescriptor) {
         assert eventToEdit != null;
 
         Title updatedTitle = editEventDescriptor.getTitle().orElse(eventToEdit.getTitle());

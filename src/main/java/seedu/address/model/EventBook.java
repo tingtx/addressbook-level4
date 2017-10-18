@@ -19,14 +19,14 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 public class EventBook implements ReadOnlyEventBook {
 
     private final UniqueEventList events;
+
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */
-    {
+     */ {
         events = new UniqueEventList();
     }
 
@@ -75,7 +75,7 @@ public class EventBook implements ReadOnlyEventBook {
      * Replaces the given event {@code target} in the list with {@code editedReadOnlyEvent}.
      *
      * @throws DuplicateEventException if updating the event's details causes the event to be equivalent to
-     *                                  another existing person in the list.
+     *                                 another existing person in the list.
      * @throws EventNotFoundException  if {@code target} could not be found in the list.
      */
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)

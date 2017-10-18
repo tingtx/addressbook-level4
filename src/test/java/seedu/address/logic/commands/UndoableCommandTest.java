@@ -25,7 +25,8 @@ public class UndoableCommandTest {
 
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
 
-    public UndoableCommandTest() throws IllegalValueException{}
+    public UndoableCommandTest() throws IllegalValueException {
+    }
 
 
     @Test

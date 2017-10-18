@@ -211,11 +211,17 @@ public class AliasSettings implements Serializable {
         return viewAliasCommand;
     }
 
-    public Alias getAddEventCommand() { return addEventCommand; }
+    public Alias getAddEventCommand() {
+        return addEventCommand;
+    }
 
-    public Alias getDeleteEventCommand() { return deleteEventCommand; }
+    public Alias getDeleteEventCommand() {
+        return deleteEventCommand;
+    }
 
-    public Alias getEditEventCommand() { return editEventCommand; }
+    public Alias getEditEventCommand() {
+        return editEventCommand;
+    }
 
     public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
         if (usedAliases.contains(alias)) {
@@ -319,7 +325,7 @@ public class AliasSettings implements Serializable {
             if (!this.addEventCommand.getAlias().equals("addevent")) {
                 usedAliases.remove(this.addEventCommand.getAlias());
             }
-        } else if (command.equals(DeleteEventCommand.getCommandWord())){
+        } else if (command.equals(DeleteEventCommand.getCommandWord())) {
             if (!this.deleteEventCommand.getAlias().equals("deleteevent")) {
                 usedAliases.remove(this.deleteEventCommand.getAlias());
             }
@@ -331,6 +337,7 @@ public class AliasSettings implements Serializable {
             throw new UnknownCommandException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

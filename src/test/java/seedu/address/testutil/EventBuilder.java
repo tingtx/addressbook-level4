@@ -87,5 +87,7 @@ public class EventBuilder {
         return this;
     }
 
-    public Event build() { return this.event; }
+    public Event build() {
+        return this.event;
+    }
 }

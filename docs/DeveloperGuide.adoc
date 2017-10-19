@@ -518,6 +518,50 @@ The following activity diagram summarize what happens inside the `Person` when a
 
 image::ReplacingRemarkActivityDiagram.png[width="200"]
 
+==== Find From All Text Fields Mechanism
+
+The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
+only search for the contact by the name. However, with this mechanism, a user can find texts in the contact's name,
+address, or mixed fields which principally mean all the text fields such as name, address, birthday, phone number and
+remarks *EXCEPT* for tag names.
+
+This leads to the change in the command's syntax. Here is the new syntax: `find <ATTRIBUTE>/KEYWORD [MORE KEYWORDS]`.
+Here, `<ATTRIBUTE>` can either be `n`, `a` or `m`.
+
+The change the format of the command leads to the changes in the FindCommandParser.parse() method:
+
+[source, java]
+----
+    public FindCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+        if (trimmedArgs.charAt(0) == 'n') {
+            NameContainsKeywordsPredicate.setPredicateType('n');
+        } else if (trimmedArgs.charAt(0) == 'a') {
+            NameContainsKeywordsPredicate.setPredicateType('a');
+        } else if (trimmedArgs.charAt(0) == 'm') {
+            NameContainsKeywordsPredicate.setPredicateType('m');
+        } else {
+            throw new ParseException (
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        trimmedArgs = trimmedArgs.substring(2).trim();
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+    }
+----
+
+The code shows how the command is being processed based on the attribute character. Namely, if the attribute is n, the
+find will look for keywords in the name. If the attribute is a, the command will find in the address. Lastly, if the
+attribute is m, the command will find in all text fields.
+
+In the future, this feature can be developed into a best-matched result based on different fields.
+
 ==== Design Considerations
 
 **Aspect:** Implementation of Remark +

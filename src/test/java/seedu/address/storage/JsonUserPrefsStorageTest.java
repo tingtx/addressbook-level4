@@ -86,7 +86,10 @@ public class JsonUserPrefsStorageTest {
         userPrefs.setGuiSettings(1000, 500, 300, 100);
         userPrefs.setAddressBookFilePath("addressbook.xml");
         userPrefs.setAddressBookName("TypicalAddressBookName");
+        userPrefs.setEventBookFilePath("eventbook.xml");
+        userPrefs.setEventBookName("TypicalEventBookName");
         userPrefs.setAliasSettings();
+
         return userPrefs;
     }
 

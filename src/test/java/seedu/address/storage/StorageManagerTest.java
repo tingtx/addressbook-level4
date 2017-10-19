@@ -13,9 +13,12 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -31,8 +34,9 @@ public class StorageManagerTest {
     @Before
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
+        XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getTempFilePath("eb"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(addressBookStorage, eventBookStorage, userPrefsStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -76,6 +80,7 @@ public class StorageManagerTest {
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
+                new XmlEventBookStorageExceptionThrowingStub("dummy"),
                 new JsonUserPrefsStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
@@ -97,5 +102,43 @@ public class StorageManagerTest {
         }
     }
 
+    /*@Test
+    public void eventBookReadSave() throws Exception {
 
+        EventBook original = getTypicalEventBook();
+        storageManager.saveEventBook(original);
+        ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
+        assertEquals(original, new EventBook(retrieved));
+    }*/
+
+    @Test
+    public void getEventBookFilePath() {
+        assertNotNull(storageManager.getEventBookFilePath());
+    }
+
+    @Test
+    public void handleEventBookChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
+                new XmlEventBookStorageExceptionThrowingStub("dummy"),
+                new JsonUserPrefsStorage("dummy"));
+        storage.handleEventBookChangedEvent(new EventBookChangedEvent(new EventBook()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+
+    /**
+     * A Stub class to throw an exception when the save method is called
+     */
+    class XmlEventBookStorageExceptionThrowingStub extends XmlEventBookStorage {
+
+        public XmlEventBookStorageExceptionThrowingStub(String filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveEventBook(ReadOnlyEventBook eventBook, String filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
 }

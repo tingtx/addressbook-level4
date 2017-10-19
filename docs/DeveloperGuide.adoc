@@ -842,8 +842,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |save my contacts' birthdays |refer to it easily
 
-|`* * *` |user |sort my contacts |find my contacts alphabetically
-
 |`* * *` |organized user |save events |refer to my events easily
 
 |`* * *` |user with busy schedules |see my important events on a calendar view |have an overview of my schedule for the month

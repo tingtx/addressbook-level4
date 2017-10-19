@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@DarkTheme.css"/>
@@ -46,7 +48,17 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <TabPane VBox.vgrow="ALWAYS">
+                <tabs>
+                    <Tab text="Contacts">
+                        <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                    </Tab>
+                    <Tab text="Events">
+                        <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                    </Tab>
+                </tabs>
+            </TabPane>
+
         </VBox>
 
         <StackPane fx:id="browserPlaceholder" prefWidth="340">

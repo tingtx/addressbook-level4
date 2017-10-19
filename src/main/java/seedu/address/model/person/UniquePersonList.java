@@ -92,18 +92,51 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void orderBy(String parameter) throws UnrecognisedParameterException {
         requireNonNull(parameter);
-        String upperCaseParameter = parameter.toUpperCase().trim();
-        if (upperCaseParameter.equals("NAME")) {
-            internalList.sort(Comparator.comparing(o -> o.getName().fullName));
-            return;
+        Comparator<Person> orderByName = (Person a, Person b) -> a.getName().toString()
+                .compareToIgnoreCase(b.getName().toString());
+        Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
+                .compareToIgnoreCase(b.getAddress().toString());
+        Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
+                .compareToIgnoreCase(b.getTags().toString());
+
+        switch (parameter) {
+        case "NAME":
+            internalList.sort(orderByName);
+            break;
+
+        case "ADDRESS":
+            internalList.sort(orderByAddress);
+            break;
+
+        case "TAG":
+            internalList.sort(orderByTag);
+            break;
+
+        case "NAME ADDRESS":
+            internalList.sort(orderByName.thenComparing(orderByAddress));
+            break;
+
+        case "ADDRESS NAME":
+            internalList.sort(orderByName.thenComparing(orderByTag));
+            break;
+
+        case "TAG NAME":
+            internalList.sort(orderByTag.thenComparing(orderByName));
+            break;
+
+        case "NAME TAG":
+            internalList.sort(orderByName.thenComparing(orderByTag));
+            break;
+
+        case "NAME ADDRESS TAG":
+            internalList.sort(orderByName.thenComparing(orderByAddress).thenComparing(orderByTag));
+            break;
+
+        default:
+            throw new UnrecognisedParameterException();
         }
 
-        if (upperCaseParameter.equals("ADDRESS")) {
-            internalList.sort(Comparator.comparing(o -> o.getAddress().value));
-            return;
-        }
 
-        throw new UnrecognisedParameterException();
     }
 
     public void setPersons(UniquePersonList replacement) {

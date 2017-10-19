@@ -127,13 +127,12 @@ Examples:
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list` or `l`
+Format: `list`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` or
-`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -147,14 +146,13 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `e 2 n/Betsy Crower t/` +
+* `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 === Remarking a person : `Remark` - Since V1.1
 
 Remarks an existing person in the address book. +
-Format: `remark INDEX r/REMARK` or
-`rk INDEX r/REMARK`
+Format: `remark INDEX r/REMARK`
 
 ****
 * Remarks the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -166,7 +164,7 @@ Examples:
 
 * `remark 1 r/Likes to swim.` +
 Edits the remark of the 1st person to be `Likes to swim`.
-* `rk 1 r/` +
+* `remark 1 r/` +
 Remove the remark of the 1st person.
 
 === Order persons in Address Book by a parameter: `order`
@@ -190,8 +188,8 @@ which will affect other commands that use this attribute such as
 
 === Locating persons by name: `find`
 
-Finds persons by names, addresses, or any fields that contain any of the given keywords. +
-Format: `find <attribute>/KEYWORD [MORE_KEYWORDS]` or `f <attribute>/KEYWORD [MORE_KEYWORDS]`
+Finds persons whose names contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * `<attribute>` refers to either `n`, standing for name, `a`, standing for address, or `m`, standing for mixed fields,
@@ -207,13 +205,13 @@ Examples:
 
 * `find n/John` +
 Returns `john` and `John Doe`
-* `find m/bernice quick 12-09-1998` +
-Returns any person having `bernice`, `quick`, or `12-09-1998` in any of the text fields.
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX` or `d INDEX`
+Format: `delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -227,13 +225,13 @@ Examples:
 `delete 2` +
 Deletes the 2nd person in the address book.
 * `find Betsy` +
-`d 1` +
+`delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX` or `s INDEX`
+Format: `select INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -247,25 +245,23 @@ Examples:
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`s 1` +
+`select 1` +
 Selects the 1st person in the results of the `find` command.
 
 === Adding an event: `addevent` - Since V1.2
 
 Adds an event to the event book +
-Format: `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME` or
-`ae et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME`
+Format: `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME`
 
 Examples:
 
-* `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13/10/17 2359`
-* `ae et/Basketball Competition ed/Tournament el/UTSH edt/26-10-2017 0800`
+* `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13-10-17 2359`
+* `addevent et/Basketball Competition ed/Tournament el/UTSH edt/26-10-2017 0800`
 
 === Editing an event : `editevent` - Since V1.2
 
 Edits an existing event in the event book. +
-Format: `editevent INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]...` or
-`ee INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]...`
+Format: `editevent INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]...`
 
 ****
 * Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -277,13 +273,13 @@ Examples:
 
 * `editevent 1 ed/Buy one get one free edt/13-10-2017 0900` +
 Edits the description and datetime of the 1st event to be `Buy one get one free` and `13-10-2017 0900` respectively.
-* `ee 2 et/2018 iPhone 11 Release` +
+* `editevent 2 et/2018 iPhone 11 Release` +
 Edits the title of the 2nd event to be `2018 iPhone 11 Release`.
 
 === Deleting an event : `deleteevent` - Since V1.2
 
 Deletes the specified event from the event book. +
-Format: `deleteevent INDEX` or `de INDEX`
+Format: `deleteevent INDEX`
 
 ****
 * Deletes the event at the specified `INDEX`.
@@ -295,13 +291,13 @@ Examples:
 
 * `deleteevent 2` +
 Deletes the 2nd event in the event book.
-* `de 1` +
+* `deleteevent 1` +
 Deletes the 1st event in the event book.
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` or `h`
+Format: `history`
 
 [NOTE]
 ====
@@ -320,7 +316,7 @@ Coming in V2.0
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` or `u`
+Format: `undo`
 
 [NOTE]
 ====
@@ -335,7 +331,7 @@ Examples:
 
 * `select 1` +
 `list` +
-`u` +
+`undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
@@ -346,7 +342,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo` or `r`
+Format: `redo`
 
 Examples:
 
@@ -355,7 +351,7 @@ Examples:
 `redo` (reapplies the `delete 1` command) +
 
 * `delete 1` +
-`r` +
+`redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
@@ -369,7 +365,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear` or `c`
+Format: `clear`
 
 === Exiting the program : `exit`
 

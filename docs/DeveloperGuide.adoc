@@ -444,6 +444,64 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Remark mechanism
+
+The remark mechanism is facilitated by `Person`, which resides inside `Addressbook`. It supports adding a custom remark to individual contact
+by utilizing the CLI commands in the Tunedln application.
+
+`Person` only deals with `Name`, `Phone`, `Email`, `Address`, `Birthday`, `Remark`, and `Tags`.
+
+The following diagram shows the inheritance diagram for `Person`:
+
+image::RemarkClassDiagram.png[width="800"]
+
+As you can see from the diagram, Person stores the remark as an attribute. This Person object is then stored in the
+UniquePersonList, which resides in the AddressBook.
+
+The implementation of the constructor Remark class is shown below in greater detail. Each person in the UnqiuePersonList will have
+either an empty or textual remark. As you can see from the implementation, Remark require one String input. This input
+will be provided by the user (which is also owner of the Addressbook), and it will override the existing Remark value (*Note: Empty String is also allowed).
+Note that this technique of abstraction allows us to further expand Remark into different smaller class to display
+out a more detailed Remark (E.g. let's take Address class for instance, it could consists of Block, Street, UnitNo, Postal).
+
+[source, java]
+----
+  public Remark(String remark) {
+        requireNonNull(remark);
+        this.value = remark;
+    }
+----
+
+The implementation of storing Remark into a Person object is shown below:
+
+[source, java]
+----
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        this.remark = new SimpleObjectProperty<>(remark);
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+----
+
+Suppose that the user has just launched the application. Assuming a valid addressbook xml file exists (with numerous person data in it),
+the UniquePersonList will start storing a list of Person object with correspondence to the xml file. Each person will either have a textual or empty remark.
+
+The user executes an `edit` Command by calling `edit 1 r/1st try`, to set the 1st person's
+remark to "1st try" in the address book. The existing Remark value will be replaced by the user input "1st try" and
+the 1st Person's object will be updated, since the Remark object is referencing to the 1st Person's remark attribute.
+
+image::ReplacingRemarkDiagram.png[width="800"]
+
+As the user continues to use the program, another edit command is called and the user want
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

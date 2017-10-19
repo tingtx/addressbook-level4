@@ -133,9 +133,6 @@ public class ModelManager extends ComponentManager implements Model {
         //View Alias Command
         commandList.add(new ArrayList<String>(Arrays.asList("View Alias", ViewAliasCommand.getCommandWord())));
 
-        //Add Event Command
-        commandList.add(new ArrayList<String>(Arrays.asList("addevent", AddEventCommand.getCommandWord())));
-
         viewAliases = commandList;
 
     }

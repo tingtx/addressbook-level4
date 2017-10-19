@@ -500,7 +500,44 @@ the 1st Person's object will be updated, since the Remark object is referencing 
 
 image::ReplacingRemarkDiagram.png[width="800"]
 
-As the user continues to use the program, another edit command is called and the user want
+The user executes another edit command by calling `edit 1 r/2nd try`, to replace the remark initial value which is
+"1st try" to "2nd try".
+
+image::ReplacingRemarkDiagram2.png[width="800"]
+
+[NOTE]
+If the edit command fails its execution due to unacceptable syntax, the person's remark will not be replaced.
+
+The following sequence diagram shows how the edit remark operation works:
+
+image::ReplacingRemarkSequence.png[width="800"]
+
+The following activity diagram summarize what happens inside the `Person` when a user executes a new command:
+
+image::ReplacingRemarkActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of Remark
+**Alternative 1 (current choice): Replace the existing Person object with an edited
+Person object.
+Pros: Neat and Clearer abstractions to be displayed in class diagram.
+Cons: Tedious, as the implementation could have be simpler by assigning String as Remark attribute.
+**Alternative 2: Let String be the attribute for Remark
+Pros: Easy to implement.
+Cons: Harder to understand the flow of the implementation.
+
+---
+
+**Aspect:** Viewing of Remark
+**Alternative 1 (current choice): Only one remark is able to store for one contact
+Pros: Easy to implement.
+Cons: User is unable to keep more than 1 remark.
+**Alternative 2: Data structure to support multiple remark
+Pros: User is given the choice to overwrite or save a new remark.
+Cons: Harder to implement.
+
+---
 
 === Logging
 

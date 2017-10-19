@@ -508,34 +508,36 @@ image::ReplacingRemarkDiagram2.png[width="800"]
 [NOTE]
 If the edit command fails its execution due to unacceptable syntax, the person's remark will not be replaced.
 
+
 The following sequence diagram shows how the edit remark operation works:
 
 image::ReplacingRemarkSequence.png[width="800"]
 
+
 The following activity diagram summarize what happens inside the `Person` when a user executes a new command:
 
-image::ReplacingRemarkActivityDiagram.png[width="800"]
+image::ReplacingRemarkActivityDiagram.png[width="200"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of Remark
-**Alternative 1 (current choice): Replace the existing Person object with an edited
-Person object.
-Pros: Neat and Clearer abstractions to be displayed in class diagram.
-Cons: Tedious, as the implementation could have be simpler by assigning String as Remark attribute.
-**Alternative 2: Let String be the attribute for Remark
-Pros: Easy to implement.
-Cons: Harder to understand the flow of the implementation.
+**Aspect:** Implementation of Remark +
+**Alternative 1 (current choice):** Replace the existing Person object with an edited
+Person object. +
+**Pros:** Neat and Clearer abstractions to be displayed in class diagram. +
+**Cons:** Tedious, as the implementation could have be simpler by assigning String as Remark attribute. +
+**Alternative 2:** Let String be the attribute for Remark +
+**Pros:** Easy to implement. +
+**Cons:** Harder to understand the flow of the implementation.
 
 ---
 
 **Aspect:** Viewing of Remark
-**Alternative 1 (current choice): Only one remark is able to store for one contact
-Pros: Easy to implement.
-Cons: User is unable to keep more than 1 remark.
-**Alternative 2: Data structure to support multiple remark
-Pros: User is given the choice to overwrite or save a new remark.
-Cons: Harder to implement.
+**Alternative 1 (current choice):** Only one remark is able to store for one contact. +
+**Pros:** Easy to implement. +
+**Cons:** User is unable to keep more than 1 remark. +
+**Alternative 2:** Data structure to support multiple remark. +
+**Pros:** User is given the choice to overwrite or save a new remark. +
+**Cons:** Harder to implement.
 
 ---
 

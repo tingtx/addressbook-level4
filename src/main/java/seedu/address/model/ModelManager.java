@@ -17,11 +17,15 @@ import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -34,9 +38,11 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
-
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -53,7 +59,9 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final EventBook eventBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyEvent> filteredEvents;
     private final ArrayList<ArrayList<String>> viewAliases;
     private UserPrefs userPref;
     private Storage userStorage;
@@ -61,16 +69,19 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyEventBook eventBook, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, eventBook, userPrefs);
 
-        logger.fine("Initializing with TunedIn: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + ", event book: " + eventBook
+                + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.eventBook = new EventBook(eventBook);
         this.userPref = userPrefs;
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
 
+        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredEvents = new FilteredList<>(this.eventBook.getEventList());
 
         ArrayList<ArrayList<String>> commandList = new ArrayList<ArrayList<String>>();
 
@@ -122,12 +133,15 @@ public class ModelManager extends ComponentManager implements Model {
         //View Alias Command
         commandList.add(new ArrayList<String>(Arrays.asList("View Alias", ViewAliasCommand.getCommandWord())));
 
+        //Add Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("addevent", AddEventCommand.getCommandWord())));
+
         viewAliases = commandList;
 
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new EventBook(), new UserPrefs());
     }
 
     @Override
@@ -231,6 +245,12 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getUndoCommand().getAlias();
         } else if (command.equals(ViewAliasCommand.getCommandWord())) {
             return aliasSettings.getViewAliasCommand().getAlias();
+        } else if (command.equals(AddEventCommand.getCommandWord())) {
+            return aliasSettings.getAddEventCommand().getAlias();
+        } else if (command.equals(DeleteEventCommand.getCommandWord())) {
+            return aliasSettings.getDeleteEventCommand().getAlias();
+        } else if (command.equals(EditEventCommand.getCommandWord())) {
+            return aliasSettings.getEditEventCommand().getAlias();
         } else {
             return "Not Set";
         }
@@ -267,6 +287,59 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+    //========================================================================================================
+
+    @Override
+    public void resetEventData(ReadOnlyEventBook newData) {
+        eventBook.resetData(newData);
+        indicateEventBookChanged();
+    }
+
+    @Override
+    public ReadOnlyEventBook getEventBook() {
+        return eventBook;
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateEventBookChanged() {
+        raise(new EventBookChangedEvent(eventBook));
+    }
+
+    @Override
+    public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+        eventBook.removeEvent(target);
+        indicateEventBookChanged();
+    }
+
+    @Override
+    public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+        eventBook.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateEventBookChanged();
+    }
+
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(target, editedEvent);
+
+        eventBook.updateEvent(target, editedEvent);
+        indicateEventBookChanged();
+    }
+
+    //=========== Filtered Event List Accessors =============================================================
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
     }
 
     @Override

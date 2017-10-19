@@ -39,7 +39,7 @@ Responsibilities: Data Model
 
 === Xiang TingTing
 image::tingtx.png[width="150" , align="left"]
-{empty}[https://github.com/tingtx[github]] [<<XiangTingTing, portfolio>>]
+{empty}[https://github.com/tingtx[github]] [<<XiangTingTing#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage Model

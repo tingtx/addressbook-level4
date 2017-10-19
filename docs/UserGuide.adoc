@@ -192,6 +192,8 @@ Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
+* `<attribute>` refers to either `n`, standing for name, `a`, standing for address, or `m`, standing for mixed fields,
+or finding in any text field. This is case-sensitive.
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
@@ -201,7 +203,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`

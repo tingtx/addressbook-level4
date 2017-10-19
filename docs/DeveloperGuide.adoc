@@ -943,7 +943,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |organized user |share my contact details with my friends |save the contacts without manually keying in the details
 
-|`* * *` |impatient user |sort the information of the contacts |view the information in an ordered manner
+|`* * *` |forgetful user |apply search keywords on all text fields of a contact |find my contacts from all text fields
+and not just their names.
+
+|`* * *` |impatient user |sort the information on the application |view the information in a ordered manner
 
 |`* * *` |user |add information to the application in a intuitive way |feel less frustrating
 

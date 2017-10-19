@@ -6,16 +6,18 @@ import java.util.Optional;
 
 import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.UserPrefs;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, UserPrefsStorage, AccountStorage {
+public interface Storage extends AddressBookStorage, EventBookStorage, UserPrefsStorage, AccountStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -54,4 +56,20 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, AccountSt
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAccountChangeEvent(AccountChangedEvent ace);
+
+    @Override
+    String getEventBookFilePath();
+
+    @Override
+    Optional<ReadOnlyEventBook> readEventBook() throws DataConversionException, IOException;
+
+    @Override
+    void saveEventBook(ReadOnlyEventBook eventBook) throws IOException;
+
+    /**
+     * Saves the current version of the Event Book to the hard disk.
+     * Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleEventBookChangedEvent(EventBookChangedEvent ebce);
 }

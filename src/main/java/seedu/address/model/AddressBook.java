@@ -44,7 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an TunedIn Address Book using the Persons and Tags in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -69,7 +69,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(newData.getPersonList());
         } catch (DuplicatePersonException e) {
-            assert false : "AddressBooks should not have duplicate persons";
+            assert false : "TunedIn AddressBooks should not have duplicate persons";
         }
 
         setTags(new HashSet<>(newData.getTagList()));

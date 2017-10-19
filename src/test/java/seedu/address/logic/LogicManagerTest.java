@@ -23,7 +23,7 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model);
+    private Logic logic = new LogicManager(model, new UserPrefs());
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
@@ -86,7 +86,7 @@ public class LogicManagerTest {
      * @see #assertCommandBehavior(Class, String, String, Model)
      */
     private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs());
         assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel);
     }
 

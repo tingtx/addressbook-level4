@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= TunedIn - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -218,6 +218,105 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Alias mechanism
+
+The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute teh command calls.
+
+`AliasSettings` only deals with `Alias` and `HashSet`.
+
+The following diagram shows the inheritance diagram for `AliasSettings`:
+
+image::AliasClassDiagram.png[width="800"]
+
+As you can see from the diagram, `AliasSettings` stores the custom set aliases for the various commands, and for efficiency, we also store the list of all protected aliases in a HashSet. This `AliasSettings` is then loaded into the TunedIn application, which is then passed into the AddressBookParser, when determining which commands to execute.
+
+The implementation of the constructor for the Alias class is shown below in greater detail. `AliasSettings` stores individually the `Alias` object for every programmed function. As you can see, Alias requires the two inputs to be a `String`. The first input, `aliasCommand`, stores the default alias for the commands, while the second input stores the custom set alias for the particular command. It is precisely because of this reason that all the default aliases for the commands are set henceforth as protected aliases and cannot be set as an alias for a particular command.
+
+[source,java]
+----
+public Alias(String aliasCommand, String aliasString) {
+    try {
+        requireAllNonNull(aliasCommand, aliasString);
+        if (!(aliasCommand instanceof String && aliasString instanceof String)) {
+            throw new IllegalValueException(MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        this.aliasCommand = aliasCommand;
+        this.aliasString = aliasString;
+    } catch (IllegalValueException e) {
+        ;
+    }
+}
+----
+
+When AliasSettings are loaded into the AddressBookParser, it is easy to control whether custom aliases are allowed for a particular function. The first shows how a custom alias can be allowed for a particular command, while the second showing the same function, with the alias capabilities removed, allowing only the default alias :
+[source,java]
+----
+if (commandWord.equals(AddCommand.COMMAND_WORD)
+        || commandWord.equals(aliasSettings.getAddCommand().getAlias())) {
+    return new AddCommandParser().parse(arguments);
+}
+----
+
+[source,java]
+----
+if (commandWord.equals(AddCommand.COMMAND_WORD)) {
+    return new AddCommandParser().parse(arguments);
+}
+----
+
+Suppose that the user has just launched the application. The `AliasSettings` will initialize with the default aliases.
+
+The user executes a new `setalias` command by calling `setalias c\help al\h`, to set the alias for `help` to 'h'. The private `Alias` helpCommand variable will be replaced with a new `Alias` object, initialized with the values of 'help' and 'h'. Because help is a protected alias, it will not be removed from the HashSet, which is then used later to detect for duplicate aliases.
+
+image::ReplacingHelpDiagram.png[width="800"]
+
+The user executes another `setalias` command by calling `setalias c\help al\z`, to set the alias for `help` to 'z'. The private `Alias` helpCommand variable will be replaced again with a new `Alias` object, initialized with the values of 'help' and 'z'. Because the previously set alias, h, is not a protected alias in the HashSet, it will be replaced with h
+
+image::ReplacingHelpDiagram2.png[width="800"]
+
+When setting a new alias by calling `setalias c\help al\x` for example, the proposed new alias is checked within the HashSet for any conflicts. If it exists within the HashSet, no new Alias object will be created.
+
+image::FailedReplacingDiagram.png[width="800"]
+
+The following sequence diagram shows how the setalias operation works:
+
+image::SetAliasSequenceDiagram.png[width="800"]
+
+The following activity diagram summarize what happens inside the `AliasSettings` when a user executes a new command:
+
+image::SetAliasActivityDiagram.png[width="200"]
+
+==== Design Considerations
+
+**Aspect:** Looking for duplicates of Aliases +
+**Alternative 1 (current choice):** Store the list of all used aliases in a HashSet +
+**Pros:** Checking whether an alias exists in a HashSet is fast. +
+**Cons:** The list stores the same data as the Alias objects, so it takes up marginally more space +
+**Alternative 2:** Iterate individually through all the Aliases +
+**Pros:** Does not require the creation of additional data structures to store the aliases +
+**Cons:** Manually iterating through the list of `Alias` objects will take a long time.
+
+---
+
+**Aspect:** Viewing of currently set aliases +
+**Alternative 1 (current choice):** Opens the list of currently set alias in a new window +
+**Pros:** Much clearer to see which alias belongs to which command. +
+**Cons:** Requires a couple more clicks to view the alias data, and subsequently a couple more clicks to resume regular TunedIn application usage. +
+**Alternative 2:** Shows the list of currently set aliases in the current display window. +
+**Pros:** Data is obtained instantly. +
+**Cons:** It is hard to display in a presentable way the list of currently set aliases in textual format.
+
+---
+
+**Aspect:** Data structure to support the AliasSettings +
+**Alternative 1 (current choice):** Use the same preferences.json file used to store GuiSettings +
+**Pros:** Easy to port settings to another computer. Reduces the risk of file corruption or accidental file deletion. +
+**Cons:** Potential to corrupt GuiSettings if AliasSettings are improperly stored. +
+**Alternative 2:** Create a separate json file to store `AliasSettings` +
+**Pros:** It is a lot clearer to see whether the AliasSettings are stored, and also any corruption of it will not affect the rest of the preferences. +
+**Cons:** Creates a separate file for alias settings which could be grouped under the umbrella of preferences. +
+// end::setalias[]
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -344,6 +443,147 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== Remark mechanism
+
+The remark mechanism is facilitated by `Person`, which resides inside `Addressbook`. It supports adding a custom remark to individual contact
+by utilizing the CLI commands in the Tunedln application.
+
+`Person` only deals with `Name`, `Phone`, `Email`, `Address`, `Birthday`, `Remark`, and `Tags`.
+
+The following diagram shows the inheritance diagram for `Person`:
+
+image::RemarkClassDiagram.png[width="800"]
+
+As you can see from the diagram, Person stores the remark as an attribute. This Person object is then stored in the
+UniquePersonList, which resides in the AddressBook.
+
+The implementation of the constructor Remark class is shown below in greater detail. Each person in the UnqiuePersonList will have
+either an empty or textual remark. As you can see from the implementation, Remark require one String input. This input
+will be provided by the user (which is also owner of the Addressbook), and it will override the existing Remark value (*Note: Empty String is also allowed).
+Note that this technique of abstraction allows us to further expand Remark into different smaller class to display
+out a more detailed Remark (E.g. let's take Address class for instance, it could consists of Block, Street, UnitNo, Postal).
+
+[source, java]
+----
+  public Remark(String remark) {
+        requireNonNull(remark);
+        this.value = remark;
+    }
+----
+
+The implementation of storing Remark into a Person object is shown below:
+
+[source, java]
+----
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        this.remark = new SimpleObjectProperty<>(remark);
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+----
+
+Suppose that the user has just launched the application. Assuming a valid addressbook xml file exists (with numerous person data in it),
+the UniquePersonList will start storing a list of Person object with correspondence to the xml file. Each person will either have a textual or empty remark.
+
+The user executes an `edit` Command by calling `edit 1 r/1st try`, to set the 1st person's
+remark to "1st try" in the address book. The existing Remark value will be replaced by the user input "1st try" and
+the 1st Person's object will be updated, since the Remark object is referencing to the 1st Person's remark attribute.
+
+image::ReplacingRemarkDiagram.png[width="800"]
+
+The user executes another edit command by calling `edit 1 r/2nd try`, to replace the remark initial value which is
+"1st try" to "2nd try".
+
+image::ReplacingRemarkDiagram2.png[width="800"]
+
+[NOTE]
+If the edit command fails its execution due to unacceptable syntax, the person's remark will not be replaced.
+
+
+The following sequence diagram shows how the edit remark operation works:
+
+image::ReplacingRemarkSequence.png[width="800"]
+
+
+The following activity diagram summarize what happens inside the `Person` when a user executes a new command:
+
+image::ReplacingRemarkActivityDiagram.png[width="200"]
+
+==== Find From All Text Fields Mechanism
+
+The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
+only search for the contact by the name. However, with this mechanism, a user can find texts in the contact's name,
+address, or mixed fields which principally mean all the text fields such as name, address, birthday, phone number and
+remarks *EXCEPT* for tag names.
+
+This leads to the change in the command's syntax. Here is the new syntax: `find <ATTRIBUTE>/KEYWORD [MORE KEYWORDS]`.
+Here, `<ATTRIBUTE>` can either be `n`, `a` or `m`.
+
+The change the format of the command leads to the changes in the FindCommandParser.parse() method:
+
+[source, java]
+----
+    public FindCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+        if (trimmedArgs.charAt(0) == 'n') {
+            NameContainsKeywordsPredicate.setPredicateType('n');
+        } else if (trimmedArgs.charAt(0) == 'a') {
+            NameContainsKeywordsPredicate.setPredicateType('a');
+        } else if (trimmedArgs.charAt(0) == 'm') {
+            NameContainsKeywordsPredicate.setPredicateType('m');
+        } else {
+            throw new ParseException (
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        trimmedArgs = trimmedArgs.substring(2).trim();
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+    }
+----
+
+The code shows how the command is being processed based on the attribute character. Namely, if the attribute is n, the
+find will look for keywords in the name. If the attribute is a, the command will find in the address. Lastly, if the
+attribute is m, the command will find in all text fields.
+
+In the future, this feature can be developed into a best-matched result based on different fields.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Remark +
+**Alternative 1 (current choice):** Replace the existing Person object with an edited
+Person object. +
+**Pros:** Neat and Clearer abstractions to be displayed in class diagram. +
+**Cons:** Tedious, as the implementation could have be simpler by assigning String as Remark attribute. +
+**Alternative 2:** Let String be the attribute for Remark +
+**Pros:** Easy to implement. +
+**Cons:** Harder to understand the flow of the implementation.
+
+---
+
+**Aspect:** Viewing of Remark
+**Alternative 1 (current choice):** Only one remark is able to store for one contact. +
+**Pros:** Easy to implement. +
+**Cons:** User is unable to keep more than 1 remark. +
+**Alternative 2:** Data structure to support multiple remark. +
+**Pros:** User is given the choice to overwrite or save a new remark. +
+**Cons:** Harder to implement.
+
+---
 
 === Logging
 
@@ -743,13 +983,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |save my contacts' birthdays |refer to it easily
 
-|`* * *` |user |sort my contacts |find my contacts alphabetically
-
 |`* * *` |organized user |save events |refer to my events easily
 
 |`* * *` |user with busy schedules |see my important events on a calendar view |have an overview of my schedule for the month
 
 |`* * *` |organized user |share my contact details with my friends |save the contacts without manually keying in the details
+
+|`* * *` |forgetful user |apply search keywords on all text fields of a contact |find my contacts from all text fields
+and not just their names.
 
 |`* * *` |impatient user |sort the information on the application |view the information in a ordered manner
 
@@ -808,7 +1049,7 @@ seeing them by accident
 
 |`* *` |user |add profiles for my friends |store their photos as well
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |have a collage of a person's profile from various social media platforms |snapshot of the person's information
 from various accounts.
@@ -824,7 +1065,7 @@ from various accounts.
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `TunedIn AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -942,6 +1183,11 @@ Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+[[Alias]]
+
+....
+A shorthand for users to execute Command Line Instructions
 ....
 
 [[app]]

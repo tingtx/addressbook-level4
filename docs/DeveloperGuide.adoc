@@ -444,6 +444,101 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Remark mechanism
+
+The remark mechanism is facilitated by `Person`, which resides inside `Addressbook`. It supports adding a custom remark to individual contact
+by utilizing the CLI commands in the Tunedln application.
+
+`Person` only deals with `Name`, `Phone`, `Email`, `Address`, `Birthday`, `Remark`, and `Tags`.
+
+The following diagram shows the inheritance diagram for `Person`:
+
+image::RemarkClassDiagram.png[width="800"]
+
+As you can see from the diagram, Person stores the remark as an attribute. This Person object is then stored in the
+UniquePersonList, which resides in the AddressBook.
+
+The implementation of the constructor Remark class is shown below in greater detail. Each person in the UnqiuePersonList will have
+either an empty or textual remark. As you can see from the implementation, Remark require one String input. This input
+will be provided by the user (which is also owner of the Addressbook), and it will override the existing Remark value (*Note: Empty String is also allowed).
+Note that this technique of abstraction allows us to further expand Remark into different smaller class to display
+out a more detailed Remark (E.g. let's take Address class for instance, it could consists of Block, Street, UnitNo, Postal).
+
+[source, java]
+----
+  public Remark(String remark) {
+        requireNonNull(remark);
+        this.value = remark;
+    }
+----
+
+The implementation of storing Remark into a Person object is shown below:
+
+[source, java]
+----
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        this.remark = new SimpleObjectProperty<>(remark);
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+----
+
+Suppose that the user has just launched the application. Assuming a valid addressbook xml file exists (with numerous person data in it),
+the UniquePersonList will start storing a list of Person object with correspondence to the xml file. Each person will either have a textual or empty remark.
+
+The user executes an `edit` Command by calling `edit 1 r/1st try`, to set the 1st person's
+remark to "1st try" in the address book. The existing Remark value will be replaced by the user input "1st try" and
+the 1st Person's object will be updated, since the Remark object is referencing to the 1st Person's remark attribute.
+
+image::ReplacingRemarkDiagram.png[width="800"]
+
+The user executes another edit command by calling `edit 1 r/2nd try`, to replace the remark initial value which is
+"1st try" to "2nd try".
+
+image::ReplacingRemarkDiagram2.png[width="800"]
+
+[NOTE]
+If the edit command fails its execution due to unacceptable syntax, the person's remark will not be replaced.
+
+The following sequence diagram shows how the edit remark operation works:
+
+image::ReplacingRemarkSequence.png[width="800"]
+
+The following activity diagram summarize what happens inside the `Person` when a user executes a new command:
+
+image::ReplacingRemarkActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of Remark
+**Alternative 1 (current choice): Replace the existing Person object with an edited
+Person object.
+Pros: Neat and Clearer abstractions to be displayed in class diagram.
+Cons: Tedious, as the implementation could have be simpler by assigning String as Remark attribute.
+**Alternative 2: Let String be the attribute for Remark
+Pros: Easy to implement.
+Cons: Harder to understand the flow of the implementation.
+
+---
+
+**Aspect:** Viewing of Remark
+**Alternative 1 (current choice): Only one remark is able to store for one contact
+Pros: Easy to implement.
+Cons: User is unable to keep more than 1 remark.
+**Alternative 2: Data structure to support multiple remark
+Pros: User is given the choice to overwrite or save a new remark.
+Cons: Harder to implement.
+
+---
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

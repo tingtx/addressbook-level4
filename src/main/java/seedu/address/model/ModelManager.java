@@ -88,14 +88,23 @@ public class ModelManager extends ComponentManager implements Model {
         //Add Command
         commandList.add(new ArrayList<String>(Arrays.asList("Add", AddCommand.getCommandWord())));
 
+        //Add Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Add Event", AddEventCommand.getCommandWord())));
+
         //Clear Command
         commandList.add(new ArrayList<String>(Arrays.asList("Clear", ClearCommand.getCommandWord())));
 
         //Delete Command
         commandList.add(new ArrayList<String>(Arrays.asList("Delete", DeleteCommand.getCommandWord())));
 
+        //Delete Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Delete Event", DeleteEventCommand.getCommandWord())));
+
         //Edit Command
         commandList.add(new ArrayList<String>(Arrays.asList("Edit", EditCommand.getCommandWord())));
+
+        //Edit Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Edit Event", EditEventCommand.getCommandWord())));
 
         //Exit Command
         commandList.add(new ArrayList<String>(Arrays.asList("Exit", ExitCommand.getCommandWord())));

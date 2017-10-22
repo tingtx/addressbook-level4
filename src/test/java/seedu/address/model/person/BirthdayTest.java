@@ -8,8 +8,7 @@ import org.junit.Test;
 public class BirthdayTest {
     @Test
     public void isValidBirthday() {
-        // invalid phone numbers
-        assertFalse(Birthday.isValidBirthday("")); // empty string
+        // invalid Birthday
         assertFalse(Birthday.isValidBirthday(" ")); // spaces only
         assertFalse(Birthday.isValidBirthday("bi-rt-hday")); // non-numeric
         assertFalse(Birthday.isValidBirthday("bi-10-1994")); // non-numeric
@@ -23,7 +22,8 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("12/12/1996")); // '/' invalid
 
 
-        // valid phone numbers
+        // valid Birthday
         assertTrue(Birthday.isValidBirthday("12-12-1994")); // exact dd-mm-yyyy format
+        assertTrue(Birthday.isValidBirthday(""));
     }
 }

@@ -19,6 +19,7 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -55,6 +56,10 @@ public class TypicalPersons {
             .withEmail("stefan@example.com").withAddress("little india").withBirthday("09-09-1984").build();
     public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").withBirthday("09-06-1980").build();
+    public static final ReadOnlyPerson JON = new PersonBuilder().withName("Jon Mueller").withPhone("8482211")
+            .withEmail("").withAddress("westwood ave").withBirthday("09-06-1980").build();
+    public static final ReadOnlyPerson Ken = new PersonBuilder().withName("Ken Mu").withPhone("81123332")
+            .withEmail("ken@example.com").withAddress("westwood ave").withBirthday("").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

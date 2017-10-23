@@ -48,7 +48,6 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
-        id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
     }

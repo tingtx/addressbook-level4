@@ -13,7 +13,7 @@ public class NewResultAvailableEvent extends BaseEvent {
     /* Used to populate the Alias window */
     public NewResultAvailableEvent(String message) {
         this.message = message;
-        if (message.equals("Unknown command") || message.substring(0, 7).equals("Invalid")) {
+        if (message.equals("Unknown command") || (message.length() >= 8 && message.substring(0, 7).equals("Invalid"))) {
             isErrorCommand = true;
         }
     }

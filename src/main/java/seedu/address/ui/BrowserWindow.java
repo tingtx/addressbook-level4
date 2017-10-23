@@ -71,4 +71,8 @@ public class BrowserWindow extends UiPart<Region> {
         logger.fine("Showing help page about the application.");
         dialogStage.showAndWait();
     }
+
+    public void close() {
+        dialogStage.close();
+    }
 }

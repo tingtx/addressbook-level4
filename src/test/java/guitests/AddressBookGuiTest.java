@@ -9,7 +9,7 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.BrowserWindowHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -77,10 +77,6 @@ public abstract class AddressBookGuiTest {
 
     protected MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
-    }
-
-    protected BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
     }
 
     protected StatusBarFooterHandle getStatusBarFooter() {

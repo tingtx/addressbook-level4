@@ -220,7 +220,7 @@ This section describes some noteworthy details on how certain features are imple
 
 === Alias mechanism
 
-The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute teh command calls.
+The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute the command calls.
 
 `AliasSettings` only deals with `Alias` and `HashSet`.
 
@@ -443,6 +443,15 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== Theme mechanism - Coming in V1.4
+
+The Theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
+of custom preset themes for the TunedIn application.
+
+---
+
+Themes will persist even after closing the app, allowing the user to use the application the way he desires.
 
 === Remark mechanism
 

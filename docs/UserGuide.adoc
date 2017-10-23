@@ -73,7 +73,7 @@ Examples:
 aliases
 ****
 
-=== Set theme : `settheme` - Coming in V2.0
+=== Set theme : `settheme` - Coming in V1.3
 
 Set theme for the TunedIn Application. +
 Format: `settheme x/THEME_NAME`
@@ -91,7 +91,7 @@ Examples:
 
 * `login u/KELOYSIUS pw/SPECIAL1PASS`
 
-=== SYNC : `sync` - Coming in V2.0
+=== Sync : `sync` - Coming in V2.0
 
 Sync the TunedIn application to your cloud TunedInLive account. +
 Format: `sync`
@@ -230,7 +230,8 @@ Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the person identified by the index number used in the last person listing, and opens in a separate window a
+google search for the person. +
 Format: `select INDEX`
 
 ****
@@ -376,10 +377,6 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-== Events - Coming in v1.2
-
-Coming in v1.2
 
 == FAQ
 

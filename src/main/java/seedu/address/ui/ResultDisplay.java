@@ -35,12 +35,11 @@ public class ResultDisplay extends UiPart<Region> {
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> displayed.setValue(event.message));
+        resultDisplay.getStyleClass().remove("error");
         if (event.getIsErrorCommand()) {
             resultDisplay.getStyleClass().add("error");
-        } else {
-            resultDisplay.getStyleClass().remove("error");
         }
+        Platform.runLater(() -> displayed.setValue(event.message));
     }
 
 }

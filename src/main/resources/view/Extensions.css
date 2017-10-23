@@ -1,6 +1,6 @@
 
 .error {
-    -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+    -fx-text-fill: #ff6961 !important; /* The error class should always override the default text-fill style */
 }
 
 .list-cell:empty {
@@ -10,10 +10,6 @@
 }
 
 .tag-selector {
-    -fx-border-width: 1;
-    -fx-border-color: white;
-    -fx-border-radius: 3;
-    -fx-background-radius: 3;
 }
 
 .tooltip-text {
@@ -29,26 +25,25 @@
 }
 
 .tab {
-    -fx-background-insets: 0 1 0 1, 0, 0;
 }
 
 .tab-pane .tab {
-    -fx-background-color: #e6e6e6;
+    -fx-background-color: rgba(255,255,255,0.4);
 
 }
 
 .tab-pane .tab:selected {
-    -fx-background-color: #3c3c3c;
+    -fx-background-color: rgba(255,255,255,0.8);
 }
 
 .tab .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: #828282;
+    -fx-text-fill: #fff;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
 }
 
 .tab:selected .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: #96b946;
+    -fx-text-fill: #444;
 }

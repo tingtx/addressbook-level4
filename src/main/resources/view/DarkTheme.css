@@ -114,14 +114,15 @@
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
 }
 
 .list-cell .label {
     -fx-background-color: transparent;
     background-color: transparent;
     -fx-text-fill: #777;
+}
+.list-cell:filled:selected .label {
+    -fx-text-fill: #FFF;
 }
 
 .cell_big_label {
@@ -153,7 +154,7 @@
 .result-display {
     -fx-background-color: transparent !important;
     background-color: transparent !important;
-    -fx-font-size: 13pt;
+    -fx-font-size: 11pt;
     -fx-text-fill: white;
 }
 
@@ -241,11 +242,6 @@
 }
 
 .button:focused {
-    -fx-border-color: white, white;
-    -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
-    -fx-border-radius: 0, 0;
-    -fx-border-insets: 1 1 1 1, 0;
 }
 
 .button:disabled, .button:default:disabled {
@@ -293,12 +289,12 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: rgba(255,255,255,0.2);
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
+    -fx-background-color: rgba(255,255,255,0.4);
+    -fx-background-insets: 5;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
@@ -332,22 +328,13 @@
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-border-insets: 0;
+    -fx-border-radius: 50px;
     -fx-border-width: 1px;
     -fx-border-color: #FFF;
-    -fx-border-radius: 50px;
     -fx-font-family: "Avenir";
     -fx-font-size: 12pt;
     -fx-text-fill: white;
     -fx-padding: 8px 16px;
-}
-
-#browser {
-    -fx-opacity: 0;
-    opacity: 0;
-}
-#browser.selected {
-    -fx-opacity: 1;
-    opacity: 1;
 }
 
 #filterField, #personListPanel, #personWebpage {
@@ -379,12 +366,13 @@
 #tags {
     -fx-hgap: 7;
     -fx-vgap: 3;
+    -fx-padding: 5px 0;
 }
 
 #tags .label {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
-    -fx-padding: 1 3 1 3;
+    -fx-padding: 2px 5px;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;

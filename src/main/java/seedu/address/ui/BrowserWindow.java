@@ -45,7 +45,8 @@ public class BrowserWindow extends UiPart<Region> {
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+        dialogStage.setMinHeight(400);
+        dialogStage.setMinWidth(600);
         FxViewUtil.setStageIcon(dialogStage, ICON);
     }
 

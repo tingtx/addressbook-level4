@@ -20,6 +20,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
@@ -121,6 +122,9 @@ public class GeneralBookParser {
         } else if (commandWord.equals(EditEventCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getEditEventCommand().getAlias())) {
             return new EditEventCommandParser().parse(arguments);
+        } else if (commandWord.equals(ListEventCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getListEventCommand().getAlias())) {
+            return new ListEventCommand();
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

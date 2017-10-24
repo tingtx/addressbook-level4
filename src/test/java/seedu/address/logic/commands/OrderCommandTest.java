@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -22,11 +23,16 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author tingtx
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for {@code OrderCommand}.
+ */
 public class OrderCommandTest {
 
     private Model model;
@@ -35,12 +41,14 @@ public class OrderCommandTest {
     private String firstParameter;
     private String secondParameter;
     private String thirdParameter;
+    private String fourthParameter;
 
     @Before
     public void setUp() {
         firstParameter = "NAME";
         secondParameter = "ADDRESS";
-        thirdParameter = "TAG";
+        thirdParameter = "BIRTHDAY";
+        fourthParameter = "TAG";
 
         model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs());
@@ -51,45 +59,64 @@ public class OrderCommandTest {
     @Test
     public void execute_listIsOrdered_showsEverything() {
         OrderCommand command = prepareCommand(firstParameter);
-        assertCommandSuccess(command, model, OrderCommand.MESSAGE_SORT_SUCCESS
+        assertCommandSuccess(command, model, OrderCommand.MESSAGE_ORDER_SUCCESS
                 + firstParameter, expectedModel);
     }
 
     @Test
-    public void execute_zeroParameter_listNotSorted() {
+    public void execute_invalidParameter_throwsCommandException() {
         OrderCommand command = prepareCommand(" ");
-        assertOrderSuccess(command, OrderCommand.MESSAGE_SORT_WRONG_PARAMETER,
-                Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        assertCommandFailure(command, model, OrderCommand.MESSAGE_ORDER_WRONG_PARAMETER);
+
+        command = prepareCommand("EMAIL");
+        assertCommandFailure(command, model, OrderCommand.MESSAGE_ORDER_WRONG_PARAMETER);
+
     }
 
     @Test
-    public void execute_nameParameter_listSorted() {
+    public void execute_nameParameter_listSorted_success() throws CommandException {
         OrderCommand command = prepareCommand(firstParameter);
-        assertOrderSuccess(command, OrderCommand.MESSAGE_SORT_SUCCESS + firstParameter,
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + firstParameter,
                 Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
 
     @Test
-    public void execute_addressParameter_listSorted() {
+    public void execute_addressParameter_listSorted_success() throws CommandException{
         OrderCommand command = prepareCommand(secondParameter);
-        assertOrderSuccess(command, OrderCommand.MESSAGE_SORT_SUCCESS + secondParameter,
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + secondParameter,
                 Arrays.asList(DANIEL, ALICE, BENSON, GEORGE, FIONA, ELLE, CARL));
     }
 
     @Test
-    public void execute_tagParameter_listSorted() {
+    public void execute_birthdayParameter_listSorted_success() throws CommandException{
         OrderCommand command = prepareCommand(thirdParameter);
-        assertOrderSuccess(command, OrderCommand.MESSAGE_SORT_SUCCESS + thirdParameter,
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + thirdParameter,
+                Arrays.asList(GEORGE, ALICE, CARL, DANIEL, BENSON, FIONA, ELLE));
+    }
+
+
+    @Test
+    public void execute_tagParameter_listSorted_success() throws CommandException {
+        OrderCommand command = prepareCommand(fourthParameter);
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + fourthParameter,
                 Arrays.asList(ALICE, CARL, DANIEL, ELLE, FIONA, GEORGE, BENSON));
     }
 
     @Test
+    public void execute_birthdayTagParameter_listSorted_success() throws CommandException {
+        OrderCommand command = prepareCommand(thirdParameter.concat(" "+fourthParameter));
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + thirdParameter + " "
+                        + fourthParameter,
+                Arrays.asList(GEORGE, ALICE, CARL, DANIEL, FIONA, BENSON, ELLE));
+    }
+
+    @Test
     public void equals() {
-        final OrderCommand standardCommand = new OrderCommand(firstParameter + " " + secondParameter);
+        final OrderCommand standardCommand = new OrderCommand(thirdParameter + " " + firstParameter);
 
         // save values -> returns true
-        OrderCommand commandWithSameValues = new OrderCommand("NAME ADDRESS");
+        OrderCommand commandWithSameValues = new OrderCommand("BIRTHDAY NAME");
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -102,10 +129,10 @@ public class OrderCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different parameter -> returns false
-        assertFalse(standardCommand.equals(new OrderCommand(firstParameter + " " + thirdParameter)));
+        assertFalse(standardCommand.equals(new OrderCommand(fourthParameter + " " + thirdParameter)));
 
         //different order of parameter -> return false
-        assertFalse(standardCommand.equals(new OrderCommand(secondParameter + " " + firstParameter)));
+        assertFalse(standardCommand.equals(new OrderCommand(firstParameter + " " + thirdParameter)));
 
     }
 
@@ -120,7 +147,8 @@ public class OrderCommandTest {
      * * - the command feedback is equal to {@code expectedMessage}<br>
      * - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      */
-    private void assertOrderSuccess(OrderCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertOrderSuccess(OrderCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList)
+            throws CommandException {
         CommandResult commandResult = command.executeUndoableCommand();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);

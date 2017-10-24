@@ -1,5 +1,8 @@
 package seedu.address.model.person;
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
@@ -87,15 +90,16 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    //@@author tingtx
     /**
      * Order the list.
      */
     public void orderBy(String parameter) throws UnrecognisedParameterException {
-        requireNonNull(parameter);
         Comparator<Person> orderByName = (Person a, Person b) -> a.getName().toString()
                 .compareToIgnoreCase(b.getName().toString());
         Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
                 .compareToIgnoreCase(b.getAddress().toString());
+        Comparator<Person>orderByBirthday = comparing(a->a.getBirthday().getReformatDate(),nullsLast(naturalOrder()));
         Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
                 .compareToIgnoreCase(b.getTags().toString());
 
@@ -106,6 +110,10 @@ public class UniquePersonList implements Iterable<Person> {
 
         case "ADDRESS":
             internalList.sort(orderByAddress);
+            break;
+
+        case "BIRTHDAY":
+            internalList.sort(orderByBirthday);
             break;
 
         case "TAG":
@@ -128,16 +136,36 @@ public class UniquePersonList implements Iterable<Person> {
             internalList.sort(orderByName.thenComparing(orderByTag));
             break;
 
-        case "NAME ADDRESS TAG":
-            internalList.sort(orderByName.thenComparing(orderByAddress).thenComparing(orderByTag));
+        case "NAME BIRTHDAY":
+            internalList.sort(orderByName.thenComparing(orderByBirthday));
+            break;
+
+        case "BIRTHDAY NAME":
+            internalList.sort(orderByBirthday.thenComparing(orderByName));
+            break;
+
+        case "ADDRESS BIRTHDAY":
+            internalList.sort(orderByAddress.thenComparing(orderByBirthday));
+            break;
+
+        case "BIRTHDAY ADDRESS":
+            internalList.sort(orderByBirthday.thenComparing(orderByAddress));
+            break;
+
+        case "BIRTHDAY TAG":
+            internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
+            break;
+
+        case "TAG BIRTHDAY":
+            internalList.sort(orderByTag.thenComparing(orderByBirthday));
             break;
 
         default:
             throw new UnrecognisedParameterException();
         }
 
-
     }
+    //@@ author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);

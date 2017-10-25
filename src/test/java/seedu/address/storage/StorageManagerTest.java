@@ -3,6 +3,7 @@ package seedu.address.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
@@ -102,14 +103,14 @@ public class StorageManagerTest {
         }
     }
 
-    /*@Test
+    @Test
     public void eventBookReadSave() throws Exception {
 
         EventBook original = getTypicalEventBook();
         storageManager.saveEventBook(original);
         ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
-        assertEquals(original, new EventBook(retrieved));
-    }*/
+        assertEquals(original.toString().trim(), new EventBook(retrieved).toString().trim());
+    }
 
     @Test
     public void getEventBookFilePath() {

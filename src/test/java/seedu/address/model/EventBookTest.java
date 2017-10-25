@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static junit.framework.TestCase.assertEquals;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -31,12 +32,12 @@ public class EventBookTest {
         eventBook.resetData(null);
     }
 
-    /*@Test
+    @Test
     public void resetData_withValidReadOnlyEventBook_replacesData() {
         EventBook newData = getTypicalEventBook();
         eventBook.resetData(newData);
-        assertEquals(newData, eventBook);
-    }*/
+        assertEquals(newData.toString(), eventBook.toString());
+    }
 
     /*@Test
     public void resetData_withDuplicateEvents_throwsAssertionError() {

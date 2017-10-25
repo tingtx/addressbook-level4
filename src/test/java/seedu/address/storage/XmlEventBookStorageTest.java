@@ -1,6 +1,10 @@
 package seedu.address.storage;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalEvents.NETWORK;
+import static seedu.address.testutil.TypicalEvents.SECURITY;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 
 import java.io.IOException;
 
@@ -13,6 +17,8 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.EventBook;
 import seedu.address.model.ReadOnlyEventBook;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
 
 public class XmlEventBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil
@@ -56,7 +62,7 @@ public class XmlEventBookStorageTest {
          */
     }
 
-    /*@Test
+    @Test
     public void readAndSaveEventBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempEventBook.xml";
         EventBook original = getTypicalEventBook();
@@ -65,22 +71,23 @@ public class XmlEventBookStorageTest {
         //Save in new file and read back
         xmlEventBookStorage.saveEventBook(original, filePath);
         ReadOnlyEventBook readBack = xmlEventBookStorage.readEventBook(filePath).get();
-        assertEquals(original, new EventBook(readBack));
+        assertEquals(original.toString(), new EventBook(readBack).toString());
 
         //Modify data, overwrite exiting file, and read back
         original.addEvent(new Event(NETWORK));
-        original.removeEvent(new Event(SPECTRA));
+        ReadOnlyEvent eventToRemoved = original.getEventList().get(0);
+        original.removeEvent(eventToRemoved);
         xmlEventBookStorage.saveEventBook(original, filePath);
         readBack = xmlEventBookStorage.readEventBook(filePath).get();
-        assertEquals(original, new EventBook(readBack));
+        assertEquals(original.toString(), new EventBook(readBack).toString());
 
         //Save and read without specifying file path
         original.addEvent(new Event(SECURITY));
         xmlEventBookStorage.saveEventBook(original); //file path not specified
         readBack = xmlEventBookStorage.readEventBook().get(); //file path not specified
-        assertEquals(original, new EventBook(readBack));
+        assertEquals(original.toString(), new EventBook(readBack).toString());
 
-    }*/
+    }
 
     @Test
     public void saveEventBook_nullAddressBook_throwsNullPointerException() {

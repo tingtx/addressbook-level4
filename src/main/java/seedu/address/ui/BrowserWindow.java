@@ -1,9 +1,6 @@
 package seedu.address.ui;
 
-import java.net.URL;
 import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -12,9 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -26,7 +21,7 @@ public class BrowserWindow extends UiPart<Region> {
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     private static final String ICON = "/images/help_icon.png";
-    private static final String TITLE= "Google Search";
+    private static final String TITLE = "Google Search";
 
     private static final String FXML = "BrowserWindow.fxml";
 
@@ -50,11 +45,17 @@ public class BrowserWindow extends UiPart<Region> {
         FxViewUtil.setStageIcon(dialogStage, ICON);
     }
 
+    /**
+     * Loads a person page with a ReadOnlyPerson
+     */
     public void loadPersonPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    /**
+     * Loads a page.
+     */
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }

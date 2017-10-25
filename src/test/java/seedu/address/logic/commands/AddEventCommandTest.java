@@ -204,6 +204,11 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void orderEventList(String parameter) throws UnrecognisedParameterException {
+
+        }
+
+        @Override
         public void setAlias(String command, String alias) throws UnknownCommandException, DuplicateAliasException {
 
         }

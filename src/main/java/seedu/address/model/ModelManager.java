@@ -33,6 +33,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.OrderCommand;
+import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -127,6 +128,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         //Order Command
         commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
+
+        //OrderEvent Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Order Event", OrderEventCommand.getCommandWord())));
 
         //Redo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Redo", RedoCommand.getCommandWord())));
@@ -261,6 +265,10 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getDeleteEventCommand().getAlias();
         } else if (command.equals(EditEventCommand.getCommandWord())) {
             return aliasSettings.getEditEventCommand().getAlias();
+        } else if (command.equals(ListEventCommand.getCommandWord())) {
+            return aliasSettings.getListEventCommand().getAlias();
+        } else if (command.equals(OrderEventCommand.getCommandWord())) {
+            return aliasSettings.getOrderEventCommand().getAlias();
         } else {
             return "Not Set";
         }
@@ -350,6 +358,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
+    }
+
+    @Override
+    public void orderEventList(String parameter) throws UnrecognisedParameterException {
+        eventBook.orderList(parameter);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 
     @Override

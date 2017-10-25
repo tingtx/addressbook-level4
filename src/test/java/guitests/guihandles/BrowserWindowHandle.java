@@ -4,14 +4,14 @@ import java.net.URL;
 
 import guitests.GuiRobot;
 import javafx.concurrent.Worker;
-import javafx.scene.Node;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 /**
- * A handler for the {@code BrowserPanel} of the UI.
+ * A handler for the {@code BrowserWindow} of the UI.
  */
-public class BrowserPanelHandle extends NodeHandle<Node> {
+public class BrowserWindowHandle extends StageHandle {
 
     public static final String BROWSER_ID = "#browser";
 
@@ -19,8 +19,8 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
 
     private URL lastRememberedUrl;
 
-    public BrowserPanelHandle(Node browserPanelNode) {
-        super(browserPanelNode);
+    public BrowserWindowHandle(Stage browserWindowStage) {
+        super(browserWindowStage);
 
         WebView webView = getChildNode(BROWSER_ID);
         WebEngine engine = webView.getEngine();

@@ -39,8 +39,8 @@ public class EventCard extends UiPart<Region> {
 
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
         super(FXML);
-        this.event = event;
         id.setText(displayedIndex + ". ");
+        this.event = event;
         bindListeners(event);
     }
 

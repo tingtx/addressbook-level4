@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= TunedIn
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -15,13 +15,12 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* This is TunedIn, a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a Java application intended for users to have a cohesive environment to store information and relevant information in the form of a personal planner.
 * It is *written in OOP fashion*, built on *SE-EDU's addressbook-level4*.
 * What's different from https://github.com/se-edu/addressbook-level4[level 4]:
-** New functions: *viewalias*, *remark*, *order*
-** Modifications to existing functions: adding of a birthday field to *add*
-** Enhancements for the user interface: new pop-up window to view default commands and their custom set alias(coming in v1.2)
+** New functions: *viewalias*, *remark*, *order*, *setalias*
+** Enhancements for the user interface: a new way to customize and set custom themes(coming in v1.3)
 
 == Site Map
 

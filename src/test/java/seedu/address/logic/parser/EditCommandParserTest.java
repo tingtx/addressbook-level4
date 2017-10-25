@@ -165,6 +165,12 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
+        //email with no input
+        userInput = targetIndex.getOneBased() + " e/";
+        descriptor = new EditPersonDescriptorBuilder().withEmail("").build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
         // address
         userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
@@ -174,6 +180,12 @@ public class EditCommandParserTest {
         //birthday
         userInput = targetIndex.getOneBased() + BIRTHDAY_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withBirthday(VALID_BIRTHDAY_AMY).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        //birthday with no input
+        userInput = targetIndex.getOneBased() + " b/";
+        descriptor = new EditPersonDescriptorBuilder().withBirthday("").build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 

@@ -180,7 +180,7 @@ Format: `order PARAMETER [MORE_PARAMETER]` or `o PARAMETER [MORE_PARAMETER]`
 * To order by multiple parameters, each parameter should be separated by a single space.
 * The order of the parameter is important. e.g 'tag address' will order the list by tag
 then by address.
-* The vommand can only take in a maximum of `two` parameters.
+* The command can only take in a maximum of `two` parameters.
 * The command change the index of the person in the Address Book,
 which will affect other commands that use this attribute such as
 `delete` or `select`.

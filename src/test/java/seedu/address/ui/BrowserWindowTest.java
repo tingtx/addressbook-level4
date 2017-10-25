@@ -29,4 +29,18 @@ public class BrowserWindowTest extends GuiUnitTest {
         FxToolkit.showStage();
         browserWindowHandle = new BrowserWindowHandle(browserWindowStage);
     }
+
+    @Test
+    public void display() throws Exception {
+
+        PersonCard aliceCard = new PersonCard(ALICE, 1);
+        // associated web page of a person
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(aliceCard);
+        browserWindow.loadPersonPage(ALICE);
+        URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
+                + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
+
+        waitUntilBrowserLoaded(browserWindowHandle);
+        assertEquals(expectedPersonUrl, browserWindowHandle.getLoadedUrl());
+    }
 }

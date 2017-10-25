@@ -2,6 +2,7 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -101,6 +103,38 @@ public class UniqueEventList implements Iterable<Event> {
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * Order the list.
+     */
+    public void orderBy(String parameter) throws UnrecognisedParameterException {
+        requireNonNull(parameter);
+        Comparator<Event> orderByName = (Event a, Event b) -> a.getTitle().toString()
+                .compareToIgnoreCase(b.getTitle().toString());
+        Comparator<Event> orderByAddress = (Event a, Event b) -> a.getLocation().toString()
+                .compareToIgnoreCase(b.getLocation().toString());
+        Comparator<Event> orderByTag = (Event a, Event b) -> a.getDatetime().toString()
+                .compareToIgnoreCase(b.getDatetime().toString());
+
+        switch (parameter) {
+        case "TITLE":
+            internalList.sort(orderByName);
+            break;
+
+        case "LOCATION":
+            internalList.sort(orderByAddress);
+            break;
+
+        case "DATETIME":
+            internalList.sort(orderByTag);
+            break;
+
+        default:
+            throw new UnrecognisedParameterException();
+        }
+
+
     }
 
     @Override

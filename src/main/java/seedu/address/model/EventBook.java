@@ -11,6 +11,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 /**
  * Wraps all data at the event-book level
@@ -98,6 +99,13 @@ public class EventBook implements ReadOnlyEventBook {
         } else {
             throw new EventNotFoundException();
         }
+    }
+
+    /**
+     * Order list of all events in the event Book based on the parameter.
+     */
+    public void orderList(String parameter) throws UnrecognisedParameterException {
+        events.orderBy(parameter);
     }
 
     //// util methods

@@ -7,7 +7,7 @@ import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new DeleteCommand object
+ * Parses input arguments and creates a new OrderCommand object
  */
 public class OrderCommandParser implements Parser<OrderCommand> {
     /**

@@ -68,6 +68,9 @@ public class BrowserWindow extends UiPart<Region> {
     }
 
 
+    /**
+     * Shows the browser panel.
+     */
     public void show() {
         logger.fine("Showing help page about the application.");
         dialogStage.showAndWait();

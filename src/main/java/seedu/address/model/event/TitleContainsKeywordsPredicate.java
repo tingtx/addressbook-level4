@@ -9,16 +9,29 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code ReadOnlyEvent}'s {@code Title} matches any of the keywords given.
  */
 public class TitleContainsKeywordsPredicate implements Predicate<ReadOnlyEvent> {
+    private static String predicateType = "et";
     private final List<String> keywords;
 
     public TitleContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
+    public static void setPredicateType(String predicateType) {
+        TitleContainsKeywordsPredicate.predicateType = predicateType;
+    }
+
     @Override
     public boolean test(ReadOnlyEvent event) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getTitle().value, keyword));
+        if (predicateType.equals("et")) {
+            return keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getTitle().value, keyword));
+        }
+        if (predicateType.equals("ed")) {
+            return keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getDescription().value, keyword));
+        }
+
+        return false;
     }
 
     @Override

@@ -37,11 +37,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
-    private Label email;
-    @FXML
-    private Label birthday;
-    @FXML
     private Label remark;
+    @FXML
+    private FlowPane optionalFields;
     @FXML
     private FlowPane tags;
 
@@ -49,6 +47,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        initOptionalFields(person);
         initTags(person);
         bindListeners(person);
     }
@@ -61,13 +60,27 @@ public class PersonCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(getTag(tag)));
         });
+    }
+
+    private Label getOptionalField(String optionalField) {
+        return new Label(optionalField);
+    }
+
+    private void initOptionalFields(ReadOnlyPerson person) {
+        if(!person.getBirthday().value.isEmpty()){
+            optionalFields.getChildren().add(getOptionalField(person.getBirthday().value));
+        }
+        if(!person.getEmail().value.isEmpty()){
+            optionalFields.getChildren().add(getOptionalField(person.getEmail().value));
+        }
+        if(!person.getGroup().value.isEmpty()){
+            optionalFields.getChildren().add(getOptionalField(person.getGroup().value));
+        }
     }
 
     private Label getTag(Tag tag) {

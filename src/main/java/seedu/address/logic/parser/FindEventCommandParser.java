@@ -29,6 +29,8 @@ public class FindEventCommandParser implements Parser<FindEventCommand> {
             TitleContainsKeywordsPredicate.setPredicateType("et");
         } else if (trimmedArgs.substring(0, 2).equals("ed")) {
             TitleContainsKeywordsPredicate.setPredicateType("ed");
+        } else if (trimmedArgs.substring(0, 2).equals("em")) {
+            TitleContainsKeywordsPredicate.setPredicateType("em");
         } else {
             throw new ParseException (
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));

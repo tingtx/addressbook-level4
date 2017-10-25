@@ -31,6 +31,11 @@ public class TitleContainsKeywordsPredicate implements Predicate<ReadOnlyEvent> 
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getDescription().value, keyword));
         }
 
+        if (predicateType.equals("em")) {
+            return (keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getAsText(), keyword)));
+        }
+
         return false;
     }
 

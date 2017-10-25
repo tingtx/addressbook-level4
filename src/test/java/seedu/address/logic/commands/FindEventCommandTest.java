@@ -89,7 +89,8 @@ public class FindEventCommandTest {
      * - the {@code FilteredList<ReadOnlyEvent>} is equal to {@code expectedList}<br>
      * - the {@code EventBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindEventCommand command, String expectedMessage, List<ReadOnlyEvent> expectedList) {
+    private void assertCommandSuccess(FindEventCommand command, String expectedMessage,
+                                      List<ReadOnlyEvent> expectedList) {
         EventBook expectedEventBook = new EventBook(model.getEventBook());
         CommandResult commandResult = command.execute();
 

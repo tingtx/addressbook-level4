@@ -32,7 +32,15 @@ public class Birthday {
      * Returns true if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        return test.isEmpty() || test.matches(BIRTHDAY_VALIDATION_REGEX);
+    }
+
+    public String getReformatDate() {
+        if (value.isEmpty()) {
+            return null;
+        }
+        return new StringBuilder().append(value.substring(6, 10)).append(value.substring(3, 5))
+                .append(value.substring(0, 2)).toString();
     }
 
     @Override

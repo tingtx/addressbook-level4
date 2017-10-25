@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstEventOnly;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
@@ -17,6 +19,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteEventCommand}.
@@ -25,7 +28,7 @@ public class DeleteEventCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
 
-    /*@Test
+    @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyEvent eventToDelete = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
         DeleteEventCommand deleteEventCommand = prepareCommand(INDEX_FIRST_EVENT);
@@ -33,10 +36,12 @@ public class DeleteEventCommandTest {
         String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs());
-        expectedModel.deleteEvent(eventToDelete);
+        ReadOnlyEvent expectedEventToDelete = expectedModel.getFilteredEventList()
+                .get(INDEX_FIRST_EVENT.getZeroBased());
+        expectedModel.deleteEvent(expectedEventToDelete);
 
         assertCommandSuccess(deleteEventCommand, model, expectedMessage, expectedModel);
-    }*/
+    }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
@@ -46,7 +51,7 @@ public class DeleteEventCommandTest {
         assertCommandFailure(deleteEventCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
-    /*@Test
+    @Test
     public void execute_validIndexFilteredList_success() throws Exception {
         showFirstEventOnly(model);
 
@@ -56,13 +61,15 @@ public class DeleteEventCommandTest {
         String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs());
-        expectedModel.deleteEvent(eventToDelete);
+        ReadOnlyEvent expectedEventToDelete = expectedModel.getFilteredEventList()
+                .get(INDEX_FIRST_EVENT.getZeroBased());
+        expectedModel.deleteEvent(expectedEventToDelete);
         showNoEvent(expectedModel);
 
         assertCommandSuccess(deleteEventCommand, model, expectedMessage, expectedModel);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showFirstEventOnly(model);
 
@@ -72,8 +79,8 @@ public class DeleteEventCommandTest {
 
         DeleteEventCommand deleteEventCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteEventCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }*/
+        assertCommandFailure(deleteEventCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+    }
 
     @Test
     public void equals() {
@@ -109,9 +116,9 @@ public class DeleteEventCommandTest {
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-    /*private void showNoEvent(Model model) {
+    private void showNoEvent(Model model) {
         model.updateFilteredEventList(p -> false);
 
         assert model.getFilteredEventList().isEmpty();
-    }*/
+    }
 }

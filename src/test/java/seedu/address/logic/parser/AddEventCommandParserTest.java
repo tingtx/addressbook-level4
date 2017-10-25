@@ -75,9 +75,6 @@ public class AddEventCommandParserTest {
         assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_SPECTRA + DESCRIPTION_DESC_SPECTRA
                 + LOCATION_DESC_SPECTRA + DATETIME_DESC_SPECTRA, new AddEventCommand(expectedEvent));
 
-        // alias
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_SPECTRA + DESCRIPTION_DESC_SPECTRA
-                + LOCATION_DESC_SPECTRA + DATETIME_DESC_SPECTRA, new AddEventCommand(expectedEvent));
     }*/
 
     @Test

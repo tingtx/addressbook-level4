@@ -28,6 +28,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -113,6 +114,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         //Find Command
         commandList.add(new ArrayList<String>(Arrays.asList("Find", FindCommand.getCommandWord())));
+
+        //Find Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Find Event", FindEventCommand.getCommandWord())));
 
         //Help Command
         commandList.add(new ArrayList<String>(Arrays.asList("Help", HelpCommand.getCommandWord())));
@@ -269,6 +273,8 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getListEventCommand().getAlias();
         } else if (command.equals(OrderEventCommand.getCommandWord())) {
             return aliasSettings.getOrderEventCommand().getAlias();
+        } else if (command.equals(FindEventCommand.getCommandWord())) {
+            return aliasSettings.getFindEventCommand().getAlias();
         } else {
             return "Not Set";
         }

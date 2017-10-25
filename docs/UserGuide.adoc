@@ -295,6 +295,46 @@ Deletes the 2nd event in the event book.
 * `deleteevent 1` +
 Deletes the 1st event in the event book.
 
+=== Order events in Event Book by a parameter: `orderevent` - Since V1.3
+
+Order the list of events according to a specified parameter. Parameters are case insensitive. +
+Format: `orderevent PARAMETER [MORE_PARAMETER]`
+
+****
+* The allowable parameters are `TITLE`, `LOCATION` and 'DATETIME'.
+* The parameter is case insensitive. e.g 'tiTle' will match 'TITLE'
+* Only full word will be matched. e.g. 'locat' will not match 'LOCATION'
+* To order by multiple parameters, each parameter should be separated by a single space.
+* The command change the index of the event in the Event Book,
+which will affect other commands that use this attribute such as
+`deleteevent` or `selectevent`.
+****
+
+Examples:
+
+* `orderevent TITLE` +
+Returns event list sorted by title
+* `orderevent LOCATION` +
+Returns event list sorted by location
+
+=== Locating persons by name: `findevent` - Since V1.3
+
+Finds events whose titles contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* `<attribute>` refers to either `et`, standing for title, `ed`, standing for description, or `em`, standing for mixed fields,
+or finding in any text field. This is case-sensitive.
+* The search is case insensitive. e.g `sentosa` will match `Sentosa`
+* The order of the keywords does not matter. e.g. `Universal Sentosa` will match `Sentosa Universal`
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `Sentosa Fun` will return `Sentosa Universal`
+****
+
+Examples:
+
+* `findevent et/Basketball` +
+Returns `Basketball Competition`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -409,6 +449,10 @@ e.g. `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13/10/17 235
 e.g. `editevent 1 ed/Buy one get one free edt/13-10-2017 0900`
 * *Delete Event* : `deleteevent INDEX` +
 e.g. `deleteevent 3`
+* *Order Event* : `orderevent PARAMETER [MORE_PARAMETER]` +
+e.g. `orderevent TITLE`
+* * Find Event * : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `findevent et/Basketball`
 * *History* : `history`
 * *Order* : `order PARAMETER [MORE PARAMETERS]` +
 e.g `order name address`

@@ -26,10 +26,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
 
-    static String command;
-    static Model expectedModel;
-    static ReadOnlyPerson deletedPerson;
-    static String expectedResultMessage;
+    private static String command;
+    private static Model expectedModel;
+    private static ReadOnlyPerson deletedPerson;
+    private static String expectedResultMessage;
 
     @Test
     public void delete() {

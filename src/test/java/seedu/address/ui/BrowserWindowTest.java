@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_SUFFIX;
@@ -15,7 +14,6 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.BrowserWindowHandle;
 import javafx.stage.Stage;
-import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 public class BrowserWindowTest extends GuiUnitTest {
@@ -35,9 +33,9 @@ public class BrowserWindowTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
 
-        PersonCard AliceCard = new PersonCard(ALICE, 1);
+        PersonCard aliceCard = new PersonCard(ALICE, 1);
         // associated web page of a person
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(AliceCard);
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(aliceCard);
         browserWindow.loadPersonPage(ALICE);
         URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
                 + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);

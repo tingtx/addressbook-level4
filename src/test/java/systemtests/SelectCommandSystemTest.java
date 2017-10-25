@@ -9,7 +9,6 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import org.junit.Test;
-import org.testfx.api.FxToolkit;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
@@ -17,13 +16,11 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.ui.BrowserWindow;
-import seedu.address.ui.HelpWindow;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
-    static String command;
-    static Index personCount;
-    static Index middleIndex;
+    private static String command;
+    private static Index personCount;
+    private static Index middleIndex;
     @Test
     public void select1() {
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces

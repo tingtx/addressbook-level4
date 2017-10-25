@@ -36,11 +36,11 @@ public class Birthday {
     }
 
     public String getReformatDate() {
-        if(value.isEmpty()){
+        if (value.isEmpty()) {
             return null;
         }
-        return new StringBuilder().append(value.substring(6,10)).append(value.substring(3,5))
-                .append(value.substring(0,2)).toString();
+        return new StringBuilder().append(value.substring(6, 10)).append(value.substring(3, 5))
+                .append(value.substring(0, 2)).toString();
     }
 
     @Override

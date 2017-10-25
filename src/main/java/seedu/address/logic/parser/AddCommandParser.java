@@ -50,10 +50,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
 
-            Email email = arePrefixesPresent(argMultimap, PREFIX_EMAIL)?
-                    ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get() : new Email("");
-            Birthday birthday = arePrefixesPresent(argMultimap, PREFIX_BIRTHDAY)?
-                    ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get() : new Birthday("");
+            Email email = arePrefixesPresent(argMultimap, PREFIX_EMAIL)
+                    ? ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get() : new Email("");
+            Birthday birthday = arePrefixesPresent(argMultimap, PREFIX_BIRTHDAY)
+                    ? ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get() : new Birthday("");
 
             Remark remark = new Remark("");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));

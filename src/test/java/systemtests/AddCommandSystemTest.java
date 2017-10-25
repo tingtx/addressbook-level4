@@ -38,8 +38,8 @@ import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.JON;
+import static seedu.address.testutil.TypicalPersons.KEN;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
-import static seedu.address.testutil.TypicalPersons.Ken;
 
 import org.junit.Test;
 
@@ -162,7 +162,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(JON);
 
         /* Case : add a person , missing birthday -> added */
-        assertCommandSuccess(Ken);
+        assertCommandSuccess(KEN);
 
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);

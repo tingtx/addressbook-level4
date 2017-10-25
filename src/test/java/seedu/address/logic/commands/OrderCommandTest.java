@@ -74,7 +74,7 @@ public class OrderCommandTest {
     }
 
     @Test
-    public void execute_nameParameter_listSorted_success() throws CommandException {
+    public void execute_nameParameter_orderSuccess() throws CommandException {
         OrderCommand command = prepareCommand(firstParameter);
         assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + firstParameter,
                 Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
@@ -82,14 +82,14 @@ public class OrderCommandTest {
 
 
     @Test
-    public void execute_addressParameter_listSorted_success() throws CommandException{
+    public void execute_addressParameter_orderSuccess() throws CommandException {
         OrderCommand command = prepareCommand(secondParameter);
         assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + secondParameter,
                 Arrays.asList(DANIEL, ALICE, BENSON, GEORGE, FIONA, ELLE, CARL));
     }
 
     @Test
-    public void execute_birthdayParameter_listSorted_success() throws CommandException{
+    public void execute_birthdayParameter_orderSuccess() throws CommandException {
         OrderCommand command = prepareCommand(thirdParameter);
         assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + thirdParameter,
                 Arrays.asList(GEORGE, ALICE, CARL, DANIEL, BENSON, FIONA, ELLE));
@@ -97,15 +97,15 @@ public class OrderCommandTest {
 
 
     @Test
-    public void execute_tagParameter_listSorted_success() throws CommandException {
+    public void execute_tagParameter_orderSuccess() throws CommandException {
         OrderCommand command = prepareCommand(fourthParameter);
         assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + fourthParameter,
                 Arrays.asList(ALICE, CARL, DANIEL, ELLE, FIONA, GEORGE, BENSON));
     }
 
     @Test
-    public void execute_birthdayTagParameter_listSorted_success() throws CommandException {
-        OrderCommand command = prepareCommand(thirdParameter.concat(" "+fourthParameter));
+    public void execute_birthdayTagParameter_orderSuccess() throws CommandException {
+        OrderCommand command = prepareCommand(thirdParameter.concat(" " + fourthParameter));
         assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + thirdParameter + " "
                         + fourthParameter,
                 Arrays.asList(GEORGE, ALICE, CARL, DANIEL, FIONA, BENSON, ELLE));

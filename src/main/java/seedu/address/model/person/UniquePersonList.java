@@ -99,7 +99,7 @@ public class UniquePersonList implements Iterable<Person> {
                 .compareToIgnoreCase(b.getName().toString());
         Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
                 .compareToIgnoreCase(b.getAddress().toString());
-        Comparator<Person>orderByBirthday = comparing(a->a.getBirthday().getReformatDate(),nullsLast(naturalOrder()));
+        Comparator<Person>orderByBirthday = comparing(a->a.getBirthday().getReformatDate(), nullsLast(naturalOrder()));
         Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
                 .compareToIgnoreCase(b.getTags().toString());
 

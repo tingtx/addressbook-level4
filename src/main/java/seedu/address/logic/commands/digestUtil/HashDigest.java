@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.digestutil;
+package seedu.address.logic.commands.digestUtil;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

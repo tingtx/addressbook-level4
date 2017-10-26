@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.digestutil.HashDigest;
+import seedu.address.logic.commands.digestUtil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 import java.util.Arrays;

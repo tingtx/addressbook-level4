@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.digestutil.HashDigest;
+import seedu.address.logic.commands.digestUtil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.user.User;
@@ -45,7 +45,7 @@ public class LockCommand extends Command {
         final Random r = new SecureRandom();
         r.nextBytes(salt);
         String saltText = new String(salt);
-        byte[] pwDigest = new seedu.address.logic.commands.digestutil.HashDigest().getHashDigest(saltText + passwordText);
+        byte[] pwDigest = new seedu.address.logic.commands.digestUtil.HashDigest().getHashDigest(saltText + passwordText);
 
         String hexUidDigest = getHexFormat(uIdDigest);
         String hexSalt = getHexFormat(salt);

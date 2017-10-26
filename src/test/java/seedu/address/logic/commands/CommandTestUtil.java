@@ -160,7 +160,7 @@ public class CommandTestUtil {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
-            //assertEquals(expectedEventBook, actualModel.getEventBook());
+            assertEquals(expectedEventBook.toString(), actualModel.getEventBook().toString());
             assertEquals(expectedEventFilteredList, actualModel.getFilteredEventList());
         }
     }

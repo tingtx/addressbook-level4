@@ -444,14 +444,70 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Order(Sort) mechanism
+The order mechanism is facilitated by the `orderBy` method, which resides inside the `UniquePersonList > Person > Addressbook`. It supports
+the ordering(sorting) of the contact list by utilizing the CLI commands in the TunedIn application. +
+
+`OrderCommand` supports
+undoing and redoing of command and inherit from the `UndoableCommands`. The following diagram shows the inheritance
+diagram for the command: //insert diagram +
+
+The implementation of the `order` command is as shown : //insert code +
+
+As you can see from the implementation, the command requires user inputs in the form of 'String' as the paramater/s
+to order. The inputs are restricted by the fields of `Person` which includes `Name`, `Address`,
+`Tag` and `Birthday`. The command is able to order by a maximum of two parameters. It will order the list by
+the first parameter follow by the second parameter.
+
+The implementation of the ordering mechanism is shown below: //insert code +
+
+As you can see, 4 `Comparator` object are constructed for each valid parameter to compare the list of contacts
+and order according to natural order. +
+
+[NOTE]
+`Birthday` is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format. +
+This is achieved by reformatting the
+ `Birthday' string as shown: //insert code
+ +
+
+Suppose that the user has just launched the application and no previous `order` command has been called. The contacts will
+be listed according to the default ordering, in order of the order a particular contact is added (Last contact added will appear as the last in the list).
+
+
+The user executes an `order` command by typing `order name`, to view the list of contacts ordered in alphabetical order
+based on the `Name` field of a person. With valid input the list of contacts will be ordered accordingly and
+the ordered list will be shown.
+
+The user executes another command by typing `order tag name` to order the list by `Tag` first then `Name` of the person.
+
+[NOTE]
+If the order command fails its execution due to invalid order parameter, the list of contact will
+not be ordered.
+
+The following sequence diagram shows how the order operation works: //insert sequence diagram.
+
+
 === Theme mechanism - Coming in V1.4
 
-The Theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
+The theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
 of custom preset themes for the TunedIn application.
 
 ---
 
 Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+
+=== Group mechanism - Coming in V1.4
+
+The group mechanism will be facilitated by the `Person', which resides inside 'Addressbook'. It supports
+grouping contacts into user defined group by utilizing the CLI commands in the TunedIn application.
+
+`list` command will be enhanced with group feature, allowing user to list contacts of a specified group.
+
+=== Event mechanism - Coming in V1.4
+
+The event mechanism will facilitated by `EventBook`, which resides inside `ModelManager`. It supports the additional
+feature of event management, which allows the user to add, edit, delete, or find event.
+
 
 === Remark mechanism
 

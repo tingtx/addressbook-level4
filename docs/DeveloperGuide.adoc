@@ -503,6 +503,12 @@ grouping contacts into user defined group by utilizing the CLI commands in the T
 
 `list` command will be enhanced with group feature, allowing user to list contacts of a specified group.
 
+=== Event mechanism - Coming in V1.4
+
+The event mechanism will facilitated by `EventBook`, which resides inside `ModelManager`. It supports the additional
+feature of event management, which allows the user to add, edit, delete, or find event.
+
+
 === Remark mechanism
 
 The remark mechanism is facilitated by `Person`, which resides inside `Addressbook`. It supports adding a custom remark to individual contact

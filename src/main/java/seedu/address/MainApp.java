@@ -114,34 +114,28 @@ public class MainApp extends Application {
         try {
             addressBookOptional = storage.readAddressBook();
             accountOptional = storage.readAccount();
+            eventBookOptional = storage.readEventBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
             if (!accountOptional.isPresent()) {
                 logger.info("Account file not found.");
             }
+            if (!eventBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample EventBook");
+            }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
             initialAccount = accountOptional.orElseGet(SampleDataUtil::getEmptyAccount);
+            initialEventData = eventBookOptional.orElseGet(SampleDataUtil::getSampleEventBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
             initialAccount = new Account();
+            initialEventData = new EventBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
             initialAccount = new Account();
-        }
-        try {
-            eventBookOptional = storage.readEventBook();
-            if (!eventBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample EventBook");
-            }
-            initialEventData = eventBookOptional.orElseGet(SampleDataUtil::getSampleEventBook);
-        } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty EventBook");
-            initialEventData = new EventBook();
-        } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty EventBook");
             initialEventData = new EventBook();
         }
         return new ModelManager(initialData, initialEventData, userPrefs, initialAccount);

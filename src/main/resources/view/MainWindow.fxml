@@ -45,7 +45,7 @@
             <padding>
                 <Insets top="10" right="26" bottom="10" left="10"/>
             </padding>
-            <TabPane VBox.vgrow="ALWAYS">
+            <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
                 <tabs>
                     <Tab text="Contacts">
                         <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>

@@ -33,12 +33,9 @@ import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-<<<<<<< HEAD
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.LoginCommand;
-=======
 import seedu.address.logic.commands.ListEventCommand;
->>>>>>> master
 import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;

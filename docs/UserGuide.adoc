@@ -205,7 +205,7 @@ Deletes the 2nd event in the event book.
 * `deleteevent 1` +
 Deletes the 1st event in the event book.
 
-=== Locating persons by name: `findevent` - Since V1.3
+=== Finding Event : `findevent` - Since V1.3
 
 Finds events whose titles contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`

@@ -28,11 +28,11 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
-    private String email;
-    @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
     private String birthday;
+    @XmlElement(required = true)
+    private String email;
     @XmlElement(required = true)
     private String remark;
 
@@ -55,9 +55,9 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
-        email = source.getEmail().value;
         address = source.getAddress().value;
         birthday = source.getBirthday().value;
+        email = source.getEmail().value;
         remark = source.getRemark().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -77,9 +77,9 @@ public class XmlAdaptedPerson {
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
-        final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Birthday birthday = new Birthday(this.birthday);
+        final Email email = new Email(this.email);
         final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, birthday, remark, tags);

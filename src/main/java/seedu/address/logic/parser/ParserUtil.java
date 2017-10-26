@@ -90,6 +90,7 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 

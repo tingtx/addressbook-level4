@@ -150,6 +150,11 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
+
+    /**
+     * Order the event list based on a parameter
+     */
+    void orderEventList(String parameter) throws UnrecognisedParameterException;
     //===================================================================================================
 
     /**

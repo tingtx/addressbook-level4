@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -220,7 +220,7 @@ This section describes some noteworthy details on how certain features are imple
 
 === Alias mechanism
 
-The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute teh command calls.
+The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute the command calls.
 
 `AliasSettings` only deals with `Alias` and `HashSet`.
 
@@ -443,6 +443,15 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== Theme mechanism - Coming in V1.4
+
+The Theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
+of custom preset themes for the TunedIn application.
+
+---
+
+Themes will persist even after closing the app, allowing the user to use the application the way he desires.
 
 === Remark mechanism
 

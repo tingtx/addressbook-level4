@@ -26,15 +26,20 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
 
+    private static String command;
+    private static Model expectedModel;
+    private static ReadOnlyPerson deletedPerson;
+    private static String expectedResultMessage;
+
     @Test
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
-        Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
-        ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        expectedModel = getModel();
+        command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
+        deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: delete the last person in the list -> deleted */
@@ -73,18 +78,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        /* --------------------- Performing delete operation while a person card is selected ------------------------ */
+    }
 
-        /* Case: delete the selected person -> person list panel selects the person before the deleted person */
-        showAllPersons();
-        expectedModel = getModel();
-        Index selectedIndex = getLastIndex(expectedModel);
-        Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectPerson(selectedIndex);
-        command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        deletedPerson = removePerson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
+    @Test
+    public void delete3() {
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 

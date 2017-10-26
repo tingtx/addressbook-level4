@@ -31,6 +31,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AliasBuilder;
 
@@ -210,6 +211,11 @@ public class SetAliasCommandTest {
 
         @Override
         public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+
+        }
+
+        @Override
+        public void orderEventList(String parameter) throws UnrecognisedParameterException {
 
         }
 

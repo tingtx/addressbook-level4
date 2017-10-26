@@ -29,14 +29,6 @@ public class ViewAliasWindowTest extends AddressBookGuiTest {
         getMainMenu().openViewAliasWindowUsingAccelerator();
         assertViewAliasWindowOpen();
 
-        getPersonListPanel().click();
-        getMainMenu().openViewAliasWindowUsingAccelerator();
-        assertViewAliasWindowOpen();
-
-        getBrowserPanel().click();
-        getMainMenu().openViewAliasWindowUsingAccelerator();
-        assertViewAliasWindowNotOpen();
-
         //use command box
         runCommand(ViewAliasCommand.COMMAND_WORD);
         assertViewAliasWindowOpen();

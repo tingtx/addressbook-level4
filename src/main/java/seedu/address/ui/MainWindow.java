@@ -18,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ViewAliasRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -41,7 +42,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private BrowserWindow browserWindow;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
     private Config config;
@@ -137,8 +138,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserWindow = new BrowserWindow();
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -216,6 +216,18 @@ public class MainWindow extends UiPart<Region> {
         viewAliasWindow.show();
     }
 
+    /**
+     * Opens a browser window showing a google search for the person.
+     */
+    @FXML
+    public void handleWeb(PersonPanelSelectionChangedEvent event) {
+        BrowserWindow browserWindow = new BrowserWindow();
+        browserWindow.loadPersonPage(event.getNewSelection().person);
+        browserWindow.show();
+    }
+
+
+
 
     void show() {
         primaryStage.show();
@@ -234,7 +246,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        browserWindow.freeResources();
     }
 
     @Subscribe
@@ -247,5 +259,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowViewAliasEvent(ViewAliasRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleViewAlias();
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleWeb(event);
     }
 }

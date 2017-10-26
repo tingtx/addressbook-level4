@@ -29,12 +29,18 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+<<<<<<< HEAD
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.LoginCommand;
+=======
+import seedu.address.logic.commands.ListEventCommand;
+>>>>>>> master
 import seedu.address.logic.commands.OrderCommand;
+import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -120,6 +126,9 @@ public class ModelManager extends ComponentManager implements Model {
         //Find Command
         commandList.add(new ArrayList<String>(Arrays.asList("Find", FindCommand.getCommandWord())));
 
+        //Find Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Find Event", FindEventCommand.getCommandWord())));
+
         //Help Command
         commandList.add(new ArrayList<String>(Arrays.asList("Help", HelpCommand.getCommandWord())));
 
@@ -129,8 +138,14 @@ public class ModelManager extends ComponentManager implements Model {
         //List Command
         commandList.add(new ArrayList<String>(Arrays.asList("List", ListCommand.getCommandWord())));
 
+        //List Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("List Event", ListEventCommand.getCommandWord())));
+
         //Order Command
         commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
+
+        //OrderEvent Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Order Event", OrderEventCommand.getCommandWord())));
 
         //Redo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Redo", RedoCommand.getCommandWord())));
@@ -286,6 +301,12 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getDeleteEventCommand().getAlias();
         } else if (command.equals(EditEventCommand.getCommandWord())) {
             return aliasSettings.getEditEventCommand().getAlias();
+        } else if (command.equals(ListEventCommand.getCommandWord())) {
+            return aliasSettings.getListEventCommand().getAlias();
+        } else if (command.equals(OrderEventCommand.getCommandWord())) {
+            return aliasSettings.getOrderEventCommand().getAlias();
+        } else if (command.equals(FindEventCommand.getCommandWord())) {
+            return aliasSettings.getFindEventCommand().getAlias();
         } else {
             return "Not Set";
         }
@@ -393,6 +414,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public String retrieveSaltFromStorage(String userId) {
         return null;
+    }
+
+    @Override
+    public void orderEventList(String parameter) throws UnrecognisedParameterException {
+        eventBook.orderList(parameter);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 
     @Override

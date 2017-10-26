@@ -77,7 +77,7 @@ public class OrderEventCommandTest {
     public void execute_datetimeParameter_listSorted() {
         OrderEventCommand command = prepareCommand(thirdParameter);
         assertOrderSuccess(command, OrderEventCommand.MESSAGE_SORT_SUCCESS + thirdParameter,
-                Arrays.asList(SPECTRA, DEEPAVALI, HENNA, WINE));
+                Arrays.asList(DEEPAVALI, WINE, HENNA, SPECTRA));
     }
 
     @Test

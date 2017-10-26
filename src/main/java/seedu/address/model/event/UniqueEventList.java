@@ -2,7 +2,10 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -110,24 +113,37 @@ public class UniqueEventList implements Iterable<Event> {
      */
     public void orderBy(String parameter) throws UnrecognisedParameterException {
         requireNonNull(parameter);
-        Comparator<Event> orderByName = (Event a, Event b) -> a.getTitle().toString()
+        Comparator<Event> orderByTitle = (Event a, Event b) -> a.getTitle().toString()
                 .compareToIgnoreCase(b.getTitle().toString());
-        Comparator<Event> orderByAddress = (Event a, Event b) -> a.getLocation().toString()
+        Comparator<Event> orderByLocation = (Event a, Event b) -> a.getLocation().toString()
                 .compareToIgnoreCase(b.getLocation().toString());
-        Comparator<Event> orderByTag = (Event a, Event b) -> a.getDatetime().toString()
-                .compareToIgnoreCase(b.getDatetime().toString());
+        Comparator<Event> orderByDatetime = (Event a, Event b) -> {
+
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy hhmm");
+            try {
+                Date datetime1 = formatDate.parse(a.getDatetime().value);
+                Date datetime2 = formatDate.parse(b.getDatetime().value);
+
+                return datetime2.compareTo(datetime1);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return 0;
+
+        };
 
         switch (parameter) {
         case "TITLE":
-            internalList.sort(orderByName);
+            internalList.sort(orderByTitle);
             break;
 
         case "LOCATION":
-            internalList.sort(orderByAddress);
+            internalList.sort(orderByLocation);
             break;
 
         case "DATETIME":
-            internalList.sort(orderByTag);
+            internalList.sort(orderByDatetime);
             break;
 
         default:

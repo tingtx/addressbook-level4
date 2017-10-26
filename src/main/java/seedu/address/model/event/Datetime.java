@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Datetime {
 
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
-            "Event datetime should only contain dd-mm-yyyy ";
+            "Event datetime should only contain dd-mm-yyyy hhmm";
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.

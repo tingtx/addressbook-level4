@@ -262,13 +262,13 @@ Order the list of persons according to a specified parameter. Parameters are cas
 Format: `order PARAMETER [MORE_PARAMETER]` or `o PARAMETER [MORE_PARAMETER]`
 
 ****
-* The allowable parameters are `NAME`, `ADDRESS` and 'TAG'.
-* The parameter is case insensitive. e.g 'naMe' will match 'NAME'
+* The allowable parameters are `NAME`, `ADDRESS`, `BIRTHDAY` and 'TAG'.
+* The parameter is case insensitive. e.g 'NaMe' will match 'NAME'
 * Only full word will be matched. e.g. 'addr' will not match 'Address'
 * To order by multiple parameters, each parameter should be separated by a single space.
-* The order of the parameter is important. e.g 'name address' will order the list by name
+* The order of the parameter is important. e.g 'tag address' will order the list by tag
 then by address.
-* To order the list by three parameters, the order of the parameters can only be 'name address tag'.
+* The command can only take in a maximum of `two` parameters.
 * The command change the index of the person in the Address Book,
 which will affect other commands that use this attribute such as
 `delete` or `select`.

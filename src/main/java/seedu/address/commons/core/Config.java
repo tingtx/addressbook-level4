@@ -14,6 +14,7 @@ public class Config {
     private String appTitle = "TunedIn Desktop Application";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
+    private String theme = "summer";
 
     public String getAppTitle() {
         return appTitle;
@@ -39,6 +40,14 @@ public class Config {
         this.userPrefsFilePath = userPrefsFilePath;
     }
 
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -52,12 +61,13 @@ public class Config {
 
         return Objects.equals(appTitle, o.appTitle)
                 && Objects.equals(logLevel, o.logLevel)
-                && Objects.equals(userPrefsFilePath, o.userPrefsFilePath);
+                && Objects.equals(userPrefsFilePath, o.userPrefsFilePath)
+                && Objects.equals(theme, o.theme);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(appTitle, logLevel, userPrefsFilePath);
+        return Objects.hash(appTitle, logLevel, userPrefsFilePath, theme);
     }
 
     @Override
@@ -65,8 +75,8 @@ public class Config {
         StringBuilder sb = new StringBuilder();
         sb.append("App title : " + appTitle);
         sb.append("\nCurrent log level : " + logLevel);
-        sb.append("\nPreference file Location : " + userPrefsFilePath);
+        sb.append("\nPreference File Location : " + userPrefsFilePath);
+        sb.append("\nTheme : " + theme);
         return sb.toString();
     }
-
 }

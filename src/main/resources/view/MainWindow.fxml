@@ -45,12 +45,12 @@
             <padding>
                 <Insets top="10" right="26" bottom="10" left="10"/>
             </padding>
-            <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
                 <tabs>
-                    <Tab text="Contacts">
+                    <Tab fx:id="contactTab" text="Contacts">
                         <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                     </Tab>
-                    <Tab text="Events">
+                    <Tab fx:id="eventTab" text="Events">
                         <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
                     </Tab>
                 </tabs>

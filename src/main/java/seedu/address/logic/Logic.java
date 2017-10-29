@@ -3,6 +3,7 @@ package seedu.address.logic;
 import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.TabPane;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -47,4 +48,9 @@ public interface Logic {
      * Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object
      */
     ListElementPointer getHistorySnapshot();
+
+    /**
+     * Passing the UI Object TabPane
+     */
+    void setTabPane(TabPane tabPane);
 }

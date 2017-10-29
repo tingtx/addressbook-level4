@@ -127,7 +127,7 @@ public class CommandTestUtil {
     /**
      * Executes the given {@code command}, confirms that <br>
      * - the result message matches {@code expectedMessage} <br>
-     * - the {@code actualModel} matches {@code expectedModel}
+     * - the {@code actualConfig} matches {@code expectedConfig}
      */
     public static void assertConfigCommandSuccess(Command command, Config actualConfig, String expectedMessage,
                                                   Config expectedConfig) {
@@ -140,6 +140,11 @@ public class CommandTestUtil {
         }
     }
 
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - the result message matches {@code expectedMessage} <br>
+     * - the {@code actualConfig} does not match {@code expectedConfig}
+     */
     public static void assertConfigDiffCommandSuccess(Command command, Config actualConfig, String expectedMessage,
                                                   Config expectedConfig) {
         try {

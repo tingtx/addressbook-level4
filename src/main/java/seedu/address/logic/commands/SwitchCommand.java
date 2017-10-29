@@ -26,7 +26,7 @@ public class SwitchCommand extends Command {
     public CommandResult execute() throws CommandException {
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         int selectedIndex = selectionModel.getSelectedIndex();
-        if(selectedIndex == 0) {
+        if (selectedIndex == 0) {
             selectedIndex = 1;
         } else {
             selectedIndex = 0;

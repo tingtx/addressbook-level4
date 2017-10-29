@@ -387,6 +387,32 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Selecting an event : `selectevent` - Since V1.4
+
+Selects the event identified by the index number used in the last event listing. +
+Format: `selectevent INDEX`
+
+****
+* Selects the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `listevent` +
+`selectevent 2` +
+Selects the 2nd event in the event book.
+* `findevent basketball` +
+`selectevent 1` +
+Selects the 1st event in the results of the `findevent` command.
+
+=== Switch Tab : `switch` - Since V1.4
+
+Switch to either `contacts` or `events` tab panel. +
+Format: `switch`
+
+
 === Set aliases : `setalias` - Since V1.2
 
 Set alias for a particular command. +
@@ -497,6 +523,10 @@ e.g `order name address`
 e.g. `remark 2 r/Likes to play.`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Select Event* : `selectevent INDEX` +
+e.g.`selectevent 2`
+* *Switch* : `switch` +
+e.g.`switch`
 * *Set Alias* : `setalias` +
 e.g.`setalias c\help al\h`
 * *Set Theme* : `settheme` +

@@ -38,7 +38,9 @@ import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
@@ -145,8 +147,14 @@ public class ModelManager extends ComponentManager implements Model {
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
 
+        //Select Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Select Event", SelectEventCommand.getCommandWord())));
+
         //Set Alias Command
         commandList.add(new ArrayList<String>(Arrays.asList("Set Alias", SetAliasCommand.getCommandWord())));
+
+        //Switch Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Switch", SwitchCommand.getCommandWord())));
 
         //Undo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
@@ -275,6 +283,10 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getOrderEventCommand().getAlias();
         } else if (command.equals(FindEventCommand.getCommandWord())) {
             return aliasSettings.getFindEventCommand().getAlias();
+        } else if (command.equals(SwitchCommand.getCommandWord())) {
+            return aliasSettings.getSwitchCommand().getAlias();
+        } else if (command.equals(SelectEventCommand.getCommandWord())) {
+            return aliasSettings.getSelectEventCommand().getAlias();
         } else {
             return "Not Set";
         }

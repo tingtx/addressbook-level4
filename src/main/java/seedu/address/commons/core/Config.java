@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import seedu.address.MainApp;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.ui.MainWindow;
 
 /**
  * Config values used by the app
@@ -17,13 +16,13 @@ public class Config {
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
-    public static final String DEFAULT_CONFIG_FILE = "config.json";
-
     // Config values customizable through config file
     private String appTitle = "TunedIn Desktop Application";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
     private String theme = "summer";
+
+    public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     public String getAppTitle() {
         return appTitle;

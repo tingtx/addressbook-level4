@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ChangedThemeEvent;
-import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Sets a theme for the TunedIn Application
@@ -17,8 +16,8 @@ public class SetThemeCommand extends UndoableCommand {
             + "Parameters: THEME ('summer', 'spring', 'autumn' or 'winter')\n"
             + "Example: " + COMMAND_WORD + " spring";
 
-    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes will be shown when " +
-            "you restart the application";
+    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes will be shown when "
+            + "you restart the application";
 
     private final String theme;
 
@@ -35,7 +34,7 @@ public class SetThemeCommand extends UndoableCommand {
         if (!((this.theme.equals("summer"))
                 || (this.theme.equals("spring"))
                 || (this.theme.equals("winter"))
-                || (this.theme.equals("autumn")))){
+                || (this.theme.equals("autumn")))) {
             return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
         }
         config.setTheme(this.theme);

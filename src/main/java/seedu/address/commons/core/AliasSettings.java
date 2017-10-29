@@ -398,8 +398,7 @@ public class AliasSettings implements Serializable {
             if (!this.setThemeCommand.getAlias().equals("settheme")) {
                 usedAliases.remove(this.setThemeCommand.getAlias());
             }
-        }
-        else if (command.equals(SwitchCommand.getCommandWord())) {
+        } else if (command.equals(SwitchCommand.getCommandWord())) {
             if (!this.switchCommand.getAlias().equals("switch")) {
                 usedAliases.remove(this.switchCommand.getAlias());
             }

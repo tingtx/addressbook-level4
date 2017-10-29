@@ -1,12 +1,21 @@
 package seedu.address.commons.core;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import seedu.address.MainApp;
+import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.StringUtil;
+import seedu.address.ui.MainWindow;
 
 /**
  * Config values used by the app
  */
 public class Config {
+
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     public static final String DEFAULT_CONFIG_FILE = "config.json";
 
@@ -46,6 +55,11 @@ public class Config {
 
     public void setTheme(String theme) {
         this.theme = theme;
+        try {
+            ConfigUtil.saveConfig(this, DEFAULT_CONFIG_FILE);
+        } catch (IOException e) {
+            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
+        }
     }
 
     @Override

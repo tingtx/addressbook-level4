@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -19,7 +20,7 @@ public class HistoryCommandTest {
         Model model = new ModelManager();
         history = new CommandHistory();
         historyCommand = new HistoryCommand();
-        historyCommand.setData(model, history, new UndoRedoStack());
+        historyCommand.setData(model, history, new UndoRedoStack(), new Config());
     }
 
     @Test

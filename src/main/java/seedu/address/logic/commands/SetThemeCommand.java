@@ -17,21 +17,26 @@ public class SetThemeCommand extends UndoableCommand {
             + "Parameters: THEME ('summer', 'spring', 'autumn' or 'winter')\n"
             + "Example: " + COMMAND_WORD + " spring";
 
-    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s";
+    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes will be shown when " +
+            "you restart the application";
 
     private final String theme;
+
+    public SetThemeCommand() {
+        this.theme = "summer";
+    }
 
     public SetThemeCommand(String setTheme) {
         this.theme = setTheme;
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() {
         if (!((this.theme.equals("summer"))
                 || (this.theme.equals("spring"))
                 || (this.theme.equals("winter"))
                 || (this.theme.equals("autumn")))){
-            throw new CommandException(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
+            return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
         }
         config.setTheme(this.theme);
         EventsCenter.getInstance().post(new ChangedThemeEvent(this.theme));

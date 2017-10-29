@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -109,7 +110,7 @@ public class DeleteEventCommandTest {
      */
     private DeleteEventCommand prepareCommand(Index index) {
         DeleteEventCommand deleteEventCommand = new DeleteEventCommand(index);
-        deleteEventCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        deleteEventCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return deleteEventCommand;
     }
 

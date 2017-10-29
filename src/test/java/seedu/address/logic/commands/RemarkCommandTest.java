@@ -14,6 +14,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -137,7 +138,7 @@ public class RemarkCommandTest {
      */
     private RemarkCommand prepareCommand(Index index, String remark) {
         RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
-        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return remarkCommand;
     }
 }

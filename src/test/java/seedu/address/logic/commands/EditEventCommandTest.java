@@ -17,6 +17,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -187,7 +188,7 @@ public class EditEventCommandTest {
      */
     private EditEventCommand prepareCommand(Index index, EditEventCommand.EditEventDescriptor descriptor) {
         EditEventCommand editEventCommand = new EditEventCommand(index, descriptor);
-        editEventCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        editEventCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return editEventCommand;
     }
 }

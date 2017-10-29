@@ -10,11 +10,34 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/PhaseBT14A2/main
+:repoURL: https://github.com/CS2103AUG2017-T14-B2/main
 
 By: `The TunedIn Team`      Since: `Sep 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+
+Welcome to TunedIn, a free-to-use application that brings to you the power of a full-fledged command line personal
+organizer, bundled together with a user-friendly interface that keeps all of your information easily accessible and
+at your fingertips.
+
+With TunedIn, we keep things simple yet efficient for you, so you can focus on the things you love.
+
+TunedIn is a free-to-use application. If you paid for this software, contact the seller immediately and request for a
+refund.
+
+== The TunedIn Way
+
+We believe in the freedom of information, and the value of aesthetics. TunedIn is a reflection of what we believe
+strongly in, echoed strongly by our firm intention to keep the application free-to-use. In our development, we put a
+heavy emphasis on our design pedagogy, and we recognize that aesthetics are just as important as functionality. No
+cohesive application functions well without a unified design structure, which is why we allowed for maximum
+customizability in our application as much as possible.
+
+We continue to strive and innovate to bring TunedIn to the next level, in a harmonious and non-invasive way to
+complement our daily lives. Feedback is always welcome at hello@tunedinapp.com, we'd be happy to hear how we can
+improve TunedIn.
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -38,8 +61,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
+.  Having troubles? Drop us an email at help@tunedinapp.com and we'll get back to you as soon as possible.
 
 == Commands
+
+TunedIn is a Command Line Application (CLI), and we have no plans to do otherwise. Operations are carried out on
+TunedIn using Commands, which can be keyed in in the command field. We have a variety of commands on TunedIn, we have
+listed all of them, and how they are used below. We are constantly striving to expand this list of commands, feel free
+to contact us if you have any suggestions for commands.
 
 ====
 *Command Format*
@@ -416,21 +445,25 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous Address Book folder.
 
 *Q*: How do I see the protected aliases for the commands? +
 *A*: You can type `viewalias` or you can access it from the Menu Bar.
 
 *Q*: Can I set my own background? +
-*A*: Not at the moment, this is coming in a later stage
+*A*: No, but you can choose from a wide range of backgrounds that we offer.
+
+*Q*: Will the application move away from a CLI interface?? +
+*A*: No, we have no plans to do so. This is a design principle which we've decided on at the start of the development,
+and we have no plans to change it away.
+
+*Q*: How do I save the data? +
+*A*: Address book data are saved in the hard disk automatically after any command that changes the data. There is no
+need to save manually.
 
 *Q*: Is this application free to use? +
 *A*: Yes, the application is free to use, and will remain this way.

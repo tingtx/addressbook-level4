@@ -1,4 +1,66 @@
-//@@author keloysiusmak
+# keloysiusmak
+###### /java/seedu/address/ui/ViewAliasWindowTest.java
+``` java
+package seedu.address.ui;
+
+import org.junit.Before;
+import org.testfx.api.FxToolkit;
+
+import guitests.guihandles.ViewAliasWindowHandle;
+import javafx.stage.Stage;
+import seedu.address.logic.Logic;
+
+public class ViewAliasWindowTest extends GuiUnitTest {
+
+    private ViewAliasWindow viewAliasWindow;
+    private ViewAliasWindowHandle viewAliasWindowHandle;
+
+    @Before
+    public void setUp(Logic logic) throws Exception {
+
+        guiRobot.interact(() -> viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic));
+        Stage helpWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(viewAliasWindow.getRoot().getScene()));
+        FxToolkit.showStage();
+        viewAliasWindowHandle = new ViewAliasWindowHandle(helpWindowStage);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/CommandTestUtil.java
+``` java
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - the result message matches {@code expectedMessage} <br>
+     * - the {@code actualConfig} matches {@code expectedConfig}
+     */
+    public static void assertConfigCommandSuccess(Command command, Config actualConfig, String expectedMessage,
+                                                  Config expectedConfig) {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertEquals(expectedConfig, actualConfig);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
+     * Executes the given {@code command}, confirms that <br>
+     * - the result message matches {@code expectedMessage} <br>
+     * - the {@code actualConfig} does not match {@code expectedConfig}
+     */
+    public static void assertConfigDiffCommandSuccess(Command command, Config actualConfig, String expectedMessage,
+                                                  Config expectedConfig) {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertNotEquals(expectedConfig, actualConfig);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+```
+###### /java/seedu/address/logic/commands/SetAliasCommandTest.java
+``` java
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -260,3 +322,68 @@ public class SetAliasCommandTest {
     }
 
 }
+```
+###### /java/seedu/address/logic/commands/SetThemeCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static seedu.address.logic.commands.CommandTestUtil.assertConfigCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.assertConfigDiffCommandSuccess;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.commons.core.Config;
+import seedu.address.commons.core.Messages;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ */
+public class SetThemeCommandTest {
+
+    private Config config;
+    private Config expectedConfig;
+    private SetThemeCommand setThemeCommand;
+    private SetThemeCommand setThemeCommand2;
+    private SetThemeCommand setThemeCommand3;
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
+
+    @Before
+    public void setUp() {
+        config = new Config();
+        expectedConfig = new Config();
+
+        setThemeCommand = new SetThemeCommand();
+        setThemeCommand.setData(model, new CommandHistory(), new UndoRedoStack(), config);
+        setThemeCommand2 = new SetThemeCommand("nonsense");
+        setThemeCommand2.setData(model, new CommandHistory(), new UndoRedoStack(), config);
+        setThemeCommand3 = new SetThemeCommand("winter");
+        setThemeCommand3.setData(model, new CommandHistory(), new UndoRedoStack(), config);
+    }
+
+    @Test
+    public void execute_defaultTheme() {
+        assertConfigCommandSuccess(setThemeCommand, config,
+                String.format(SetThemeCommand.MESSAGE_CHANGED_THEME_SUCCESS, "summer"), expectedConfig);
+    }
+
+    @Test
+    public void execute_nonsenseTheme() {
+        assertConfigCommandSuccess(setThemeCommand2, config,
+                String.format(Messages.MESSAGE_WRONG_THEME, "nonsense"), expectedConfig);
+    }
+
+    @Test
+    public void execute_winterTheme() throws Exception {
+        assertConfigDiffCommandSuccess(setThemeCommand3, config,
+                String.format(SetThemeCommand.MESSAGE_CHANGED_THEME_SUCCESS, "winter"), expectedConfig);
+    }
+}
+```

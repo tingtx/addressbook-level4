@@ -28,12 +28,6 @@ public class RedoCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
-    @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
-        this.model = model;
-        this.undoRedoStack = undoRedoStack;
-    }
-
     public static String getCommandWord() {
         return COMMAND_WORD;
     }

@@ -30,12 +30,6 @@ public class HistoryCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, String.join("\n", previousCommands)));
     }
 
-    @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
-        requireNonNull(history);
-        this.history = history;
-    }
-
     public static String getCommandWord() {
         return COMMAND_WORD;
     }

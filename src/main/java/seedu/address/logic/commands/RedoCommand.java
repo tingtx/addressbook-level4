@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -26,6 +27,12 @@ public class RedoCommand extends Command {
 
         undoRedoStack.popRedo().redo();
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Config config) {
+        this.model = model;
+        this.undoRedoStack = undoRedoStack;
     }
 
     public static String getCommandWord() {

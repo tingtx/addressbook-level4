@@ -14,7 +14,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::keloysiusmak.png[width="150", align="left"]
 {empty}[http://zhkphoto.com[homepage]] [https://github.com/keloysiusmak[github]]
 
-Role: Developer +
+Role: Team Lead, Documentation, Developer, Deliverables and Deadlines +
 Responsibilites : Logic Model
 
 '''
@@ -24,7 +24,7 @@ image::quanle1994.png[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]]
 //[<<johndoe#, portfolio>>]
 
-Role: Developer +
+Role: Developer, Functionality Planner, Code Quality, Integration  +
 Responsibilities: User Interface Model
 
 '''
@@ -32,7 +32,7 @@ Responsibilities: User Interface Model
 image::kaiyu92.png[width="150", align="left"]
 {empty}[https://github.com/kaiyu92[github]]
 
-Role: Developer +
+Role: Developer, GitHub Manager, Code Quality +
 Responsibilities: Data Model
 
 '''
@@ -41,9 +41,12 @@ Responsibilities: Data Model
 image::tingtx.png[width="150" , align="left"]
 {empty}[https://github.com/tingtx[github]] [<<XiangTingTing#, portfolio>>]
 
-Role: Developer +
+Role: Developer, Integration, Testing +
 Responsibilities: Storage Model
 
 '''
 
+== Growing the Team
+We are always looking to grow the team. If you like what we do, and would love to go on an adventure with
+us, do drop us an email at adventures@tunedinapp.com.
 

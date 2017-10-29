@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -136,7 +137,7 @@ public class SelectCommandTest {
      */
     private SelectCommand prepareCommand(Index index) {
         SelectCommand selectCommand = new SelectCommand(index);
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return selectCommand;
     }
 }

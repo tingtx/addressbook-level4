@@ -95,6 +95,8 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
+        getRoot().setStyle("-fx-background-image: url('" + image + "'); ");
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 

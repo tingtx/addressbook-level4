@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.EventBook;
@@ -79,7 +80,7 @@ public class FindEventCommandTest {
     private FindEventCommand prepareCommand(String userInput) {
         FindEventCommand command =
                 new FindEventCommand(new TitleContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return command;
     }
 

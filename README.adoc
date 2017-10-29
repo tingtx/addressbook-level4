@@ -15,6 +15,30 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
+ifdef::env-github[]
+image::docs/images/Ui2.png[width="600"]
+endif::[]
+
+ifndef::env-github[]
+image::images/Ui2.png[width="600"]
+endif::[]
+
+ifdef::env-github[]
+image::docs/images/Ui3.png[width="600"]
+endif::[]
+
+ifndef::env-github[]
+image::images/Ui3.png[width="600"]
+endif::[]
+
+ifdef::env-github[]
+image::docs/images/Ui4.png[width="600"]
+endif::[]
+
+ifndef::env-github[]
+image::images/Ui4.png[width="600"]
+endif::[]
+
 * Welcome to TunedIn, a free-to-use application that brings to you the power of a full-fledged command line personal
 organizer, bundled together with a user-friendly interface that keeps all of your information easily accessible and
 at your fingertips.
@@ -24,6 +48,12 @@ information in the form of a personal planner.
 * It is *written in OOP fashion*.
 * What's new in v1.4:
 ** New functions: *settheme*
+
+== Who should use TunedIn
+
+* TunedIn is designed for less technologically inclined users to harness the power of a CLI organizer without a steep
+learning curve.
+* That said, TunedIn has functionality suitable for more advanced users as well.
 
 == Site Map
 

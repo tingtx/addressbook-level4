@@ -17,6 +17,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -104,7 +105,7 @@ public class OrderEventCommandTest {
 
     private OrderEventCommand prepareCommand(String parameter) {
         OrderEventCommand orderEventCommand = new OrderEventCommand(parameter);
-        orderEventCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        orderEventCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return orderEventCommand;
     }
 

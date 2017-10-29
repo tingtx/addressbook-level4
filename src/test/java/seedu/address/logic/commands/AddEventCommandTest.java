@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.EventBook;
@@ -93,7 +94,7 @@ public class AddEventCommandTest {
      */
     private AddEventCommand getAddEventCommandForEvent(Event event, Model model) {
         AddEventCommand command = new AddEventCommand(event);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return command;
     }
 

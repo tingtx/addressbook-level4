@@ -21,6 +21,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -138,7 +139,7 @@ public class OrderCommandTest {
 
     private OrderCommand prepareCommand(String parameter) {
         OrderCommand orderCommand = new OrderCommand(parameter);
-        orderCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        orderCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return orderCommand;
     }
 

@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -106,7 +107,7 @@ public class SetAliasCommandTest {
      */
     private SetAliasCommand getSetAliasCommand(Alias alias, Model model) {
         SetAliasCommand command = new SetAliasCommand(alias.getCommand(), alias.getAlias());
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return command;
     }
 

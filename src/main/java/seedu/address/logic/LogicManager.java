@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.TabPane;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
@@ -35,6 +36,11 @@ public class LogicManager extends ComponentManager implements Logic {
         this.history = new CommandHistory();
         this.generalBookParser = new GeneralBookParser(userprefs);
         this.undoRedoStack = new UndoRedoStack();
+    }
+
+    @Override
+    public void setTabPane(TabPane tabPane) {
+        generalBookParser.setTabPane(tabPane);
     }
 
     @Override

@@ -14,15 +14,15 @@ import seedu.address.commons.util.StringUtil;
  */
 public class Config {
 
+    public static final String DEFAULT_CONFIG_FILE = "config.json";
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
 
     // Config values customizable through config file
     private String appTitle = "TunedIn Desktop Application";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
     private String theme = "summer";
-
-    public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     public String getAppTitle() {
         return appTitle;
@@ -51,6 +51,7 @@ public class Config {
     public String getTheme() {
         return theme;
     }
+
 
     public void setTheme(String theme) {
         this.theme = theme;

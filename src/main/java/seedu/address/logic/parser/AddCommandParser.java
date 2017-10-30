@@ -17,6 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -55,10 +56,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Birthday birthday = arePrefixesPresent(argMultimap, PREFIX_BIRTHDAY)
                     ? ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get() : new Birthday("");
 
+            Group group = new Group("");
             Remark remark = new Remark("");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, group, remark, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

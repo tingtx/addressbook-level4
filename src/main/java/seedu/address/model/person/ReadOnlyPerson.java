@@ -28,9 +28,15 @@ public interface ReadOnlyPerson {
 
     Address getAddress();
 
+    //@@author tingtx
     ObjectProperty<Birthday> birthdayProperty();
 
     Birthday getBirthday();
+
+    ObjectProperty<Group> groupProperty();
+
+    Group getGroup();
+    //@@author
 
     ObjectProperty<Remark> remarkProperty();
 
@@ -52,6 +58,7 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
                 && other.getBirthday().equals(this.getBirthday())
+                && other.getGroup().equals(this.getGroup())
                 && other.getRemark().equals(this.getRemark()));
     }
 
@@ -69,6 +76,8 @@ public interface ReadOnlyPerson {
                 .append(getBirthday())
                 .append(" Email: ")
                 .append(getEmail())
+                .append(" Group: ")
+                .append(getGroup())
                 .append(" Remark: ")
                 .append(getRemark())
                 .append(" Tags: ");

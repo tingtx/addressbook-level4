@@ -23,6 +23,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
+    private ObjectProperty<Group> group;
     private ObjectProperty<Remark> remark;
 
     private ObjectProperty<UniqueTagList> tags;
@@ -30,14 +31,15 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,
-                  Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Group group,
+                  Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.birthday = new SimpleObjectProperty<>(birthday);
+        this.group = new SimpleObjectProperty<>(group);
         this.remark = new SimpleObjectProperty<>(remark);
 
         // protect internal tags from changes in the arg list
@@ -49,7 +51,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getBirthday(),
-                source.getRemark(), source.getTags());
+                source.getGroup(), source.getRemark(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -113,6 +115,7 @@ public class Person implements ReadOnlyPerson {
         this.birthday.set(requireNonNull(birthday));
     }
 
+    //@@author tingtx
     @Override
     public ObjectProperty<Birthday> birthdayProperty() {
         return birthday;
@@ -122,6 +125,13 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
+
+    @Override
+    public ObjectProperty<Group> groupProperty() { return group; }
+
+    @Override
+    public Group getGroup() { return group.get(); }
+    //@@author
 
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));

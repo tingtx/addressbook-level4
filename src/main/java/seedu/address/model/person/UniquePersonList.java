@@ -165,7 +165,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
     }
-    //@@ author
+    //@@author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);

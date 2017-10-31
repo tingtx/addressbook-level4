@@ -127,7 +127,9 @@ public class Person implements ReadOnlyPerson {
         return birthday.get();
     }
 
-    public void setGroup(Group group) { this.group.set(requireNonNull(group)); }
+    public void setGroup(Group group) {
+        this.group.set(requireNonNull(group));
+    }
 
     @Override
     public ObjectProperty<Group> groupProperty() {

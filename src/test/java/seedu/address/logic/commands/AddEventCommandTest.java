@@ -25,6 +25,8 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -133,6 +135,12 @@ public class AddEventCommandTest {
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void groupPerson(Person person, Group group) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
 
         @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {

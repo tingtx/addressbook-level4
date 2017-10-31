@@ -1,3 +1,4 @@
+//@@author tingtx
 package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertFalse;
@@ -30,7 +31,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
-//@@author tingtx
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code OrderCommand}.
  */

@@ -6,7 +6,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
@@ -18,7 +17,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Group person(s) into user defined group.
  */
-public class GroupCommand extends UndoableCommand{
+public class GroupCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "group";
 
@@ -52,13 +51,13 @@ public class GroupCommand extends UndoableCommand{
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        for(Index index : indexes) {
+        for (Index index : indexes) {
 
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException("Index " + index.toString() + " is invalid!");
             }
 
-            Person personToGroup = (Person)lastShownList.get(index.getZeroBased());
+            Person personToGroup = (Person) lastShownList.get(index.getZeroBased());
 
             try {
                 model.groupPerson(personToGroup, group);

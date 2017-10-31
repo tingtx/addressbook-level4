@@ -38,7 +38,6 @@ import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
-import seedu.address.model.group.Group;
 
 
 /**
@@ -215,7 +214,9 @@ public class AliasSettings implements Serializable {
         return findCommand;
     }
 
-    public Alias getGroupCommand() { return groupCommand; }
+    public Alias getGroupCommand() {
+        return groupCommand;
+    }
 
     public Alias getHelpCommand() {
         return helpCommand;
@@ -332,14 +333,15 @@ public class AliasSettings implements Serializable {
             usedAliases.add(alias);
             this.findCommand = new Alias(FindCommand.getCommandWord(), alias);
         } else if (command.equals(GroupCommand.getCommandWord())) {
-            if(!this.groupCommand.getAlias().equals("group")) {
+            if (!this.groupCommand.getAlias().equals("group")) {
                 usedAliases.remove(this.groupCommand.getAlias());
             }
-        }else if (command.equals(HelpCommand.getCommandWord())) {
+            usedAliases.add(alias);
+            this.groupCommand = new Alias(GroupCommand.getCommandWord(), alias);
+        } else if (command.equals(HelpCommand.getCommandWord())) {
             if (!this.helpCommand.getAlias().equals("help")) {
                 usedAliases.remove(this.helpCommand.getAlias());
             }
-            usedAliases.add(alias);
             this.helpCommand = new Alias(HelpCommand.getCommandWord(), alias);
         } else if (command.equals(HistoryCommand.getCommandWord())) {
             if (!this.historyCommand.getAlias().equals("history")) {

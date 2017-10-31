@@ -86,7 +86,7 @@ public class GeneralBookParser {
         } else if (commandWord.equals(OrderCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getOrderCommand().getAlias())) {
             return new OrderCommandParser().parse(arguments);
-        }else if (commandWord.equals(GroupCommand.COMMAND_WORD)
+        } else if (commandWord.equals(GroupCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getGroupCommand().getAlias())) {
             return new GroupCommandParser().parse(arguments);
         } else if (commandWord.equals(DeleteCommand.COMMAND_WORD)

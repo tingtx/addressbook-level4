@@ -56,11 +56,7 @@ public interface ReadOnlyPerson {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
-                && other.getAddress().equals(this.getAddress())
-                && other.getBirthday().equals(this.getBirthday())
-                && other.getEmail().equals(this.getEmail())
-                && other.getRemark().equals(this.getRemark())
-                && other.getGroup().equals(this.getGroup()));
+                && other.getAddress().equals(this.getAddress()));
     }
 
     /**

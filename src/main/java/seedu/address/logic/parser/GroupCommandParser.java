@@ -18,7 +18,7 @@ import seedu.address.model.group.Group;
 /**
  * Parses input arguments and creates a new GroupCommand object
  */
-public class GroupCommandParser implements Parser<GroupCommand>{
+public class GroupCommandParser implements Parser<GroupCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
@@ -35,8 +35,8 @@ public class GroupCommandParser implements Parser<GroupCommand>{
         List<Index> indexes = new ArrayList<>();
         try {
             preamble = argMultimap.getPreamble();
-            indexStr= preamble.split("\\s+");
-            for(String index :  indexStr) {
+            indexStr = preamble.split("\\s+");
+            for (String index :  indexStr) {
                 indexes.add(ParserUtil.parseIndex(index));
             }
 
@@ -44,7 +44,7 @@ public class GroupCommandParser implements Parser<GroupCommand>{
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
         }
 
-        if(!isPrefixesPresent(argMultimap, PREFIX_GROUP)) {
+        if (!isPrefixesPresent(argMultimap, PREFIX_GROUP)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
         }
 

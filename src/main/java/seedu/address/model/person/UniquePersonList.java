@@ -15,6 +15,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
@@ -60,7 +61,7 @@ public class UniquePersonList implements Iterable<Person> {
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
-    public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+    public void  setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
@@ -75,6 +76,24 @@ public class UniquePersonList implements Iterable<Person> {
 
         internalList.set(index, new Person(editedPerson));
     }
+
+    //@@author tingtx
+    /**
+     * Group the person {@code target} in the list to {@code group}.
+     *
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void groupPerson(Person target, Group group) throws PersonNotFoundException {
+        requireNonNull(group);
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        target.setGroup(group);
+
+    }
+    //@@author
 
     /**
      * Removes the equivalent person from the list.

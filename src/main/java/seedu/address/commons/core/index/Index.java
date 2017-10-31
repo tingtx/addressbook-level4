@@ -51,4 +51,10 @@ public class Index {
                 || (other instanceof Index // instanceof handles nulls
                 && this.zeroBasedIndex == ((Index) other).zeroBasedIndex); // state check
     }
+
+    //@@author tingtx
+    @Override
+    public String toString() {
+        return Integer.toString(getOneBased());
+    }
 }

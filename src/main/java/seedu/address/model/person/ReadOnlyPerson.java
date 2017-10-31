@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.group.Group;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -55,11 +56,11 @@ public interface ReadOnlyPerson {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
-                && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
                 && other.getBirthday().equals(this.getBirthday())
-                && other.getGroup().equals(this.getGroup())
-                && other.getRemark().equals(this.getRemark()));
+                && other.getEmail().equals(this.getEmail())
+                && other.getRemark().equals(this.getRemark())
+                && other.getGroup().equals(this.getGroup()));
     }
 
     /**

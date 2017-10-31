@@ -18,6 +18,7 @@ import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindEventCommand;
+import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -37,6 +38,7 @@ import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
+import seedu.address.model.group.Group;
 
 
 /**
@@ -50,6 +52,7 @@ public class AliasSettings implements Serializable {
     private Alias editCommand;
     private Alias exitCommand;
     private Alias findCommand;
+    private Alias groupCommand;
     private Alias helpCommand;
     private Alias historyCommand;
     private Alias listCommand;
@@ -86,6 +89,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add("exit");
         this.findCommand = new Alias(FindCommand.getCommandWord(), "find");
         usedAliases.add("find");
+        this.groupCommand = new Alias(GroupCommand.getCommandWord(), "group");
+        usedAliases.add("group");
         this.helpCommand = new Alias(HelpCommand.getCommandWord(), "help");
         usedAliases.add("help");
         this.historyCommand = new Alias(HistoryCommand.getCommandWord(), "history");
@@ -126,7 +131,7 @@ public class AliasSettings implements Serializable {
     }
 
     public AliasSettings(String addCommand, String clearCommand, String deleteCommand, String editCommand,
-                         String exitCommand, String findCommand, String helpCommand,
+                         String exitCommand, String findCommand, String groupCommand, String helpCommand,
                          String historyCommand, String listCommand, String orderCommand, String redoCommand,
                          String remarkCommand, String selectCommand, String setAliasCommand, String undoCommand,
                          String viewAliasCommand, String addEventCommand, String deleteEventCommand,
@@ -145,6 +150,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add(exitCommand);
         this.findCommand = new Alias(FindCommand.getCommandWord(), findCommand);
         usedAliases.add(findCommand);
+        this.groupCommand = new Alias(GroupCommand.getCommandWord(), groupCommand);
+        usedAliases.add(groupCommand);
         this.helpCommand = new Alias(HelpCommand.getCommandWord(), helpCommand);
         usedAliases.add(helpCommand);
         this.historyCommand = new Alias(HistoryCommand.getCommandWord(), historyCommand);
@@ -207,6 +214,8 @@ public class AliasSettings implements Serializable {
     public Alias getFindCommand() {
         return findCommand;
     }
+
+    public Alias getGroupCommand() { return groupCommand; }
 
     public Alias getHelpCommand() {
         return helpCommand;
@@ -322,7 +331,11 @@ public class AliasSettings implements Serializable {
             }
             usedAliases.add(alias);
             this.findCommand = new Alias(FindCommand.getCommandWord(), alias);
-        } else if (command.equals(HelpCommand.getCommandWord())) {
+        } else if (command.equals(GroupCommand.getCommandWord())) {
+            if(!this.groupCommand.getAlias().equals("group")) {
+                usedAliases.remove(this.groupCommand.getAlias());
+            }
+        }else if (command.equals(HelpCommand.getCommandWord())) {
             if (!this.helpCommand.getAlias().equals("help")) {
                 usedAliases.remove(this.helpCommand.getAlias());
             }
@@ -440,6 +453,7 @@ public class AliasSettings implements Serializable {
                 && Objects.equals(editCommand, o.getEditCommand())
                 && Objects.equals(exitCommand, o.getExitCommand())
                 && Objects.equals(findCommand, o.getFindCommand())
+                && Objects.equals(groupCommand, o.getGroupCommand())
                 && Objects.equals(helpCommand, o.getHelpCommand())
                 && Objects.equals(historyCommand, o.getHistoryCommand())
                 && Objects.equals(listCommand, o.getListCommand())
@@ -464,10 +478,10 @@ public class AliasSettings implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(this.addCommand, this.clearCommand, this.deleteCommand, this.editCommand,
-                this.exitCommand, this.findCommand, this.helpCommand, this.historyCommand, this.listCommand,
-                this.orderCommand, this.redoCommand, this.remarkCommand, this.selectCommand, this.setAliasCommand,
-                this.undoCommand, this.viewAliasCommand, this.addEventCommand, this.deleteEventCommand,
-                this.editEventCommand, this.listEventCommand, this.orderEventCommand,
+                this.exitCommand, this.findCommand, this.groupCommand, this.helpCommand, this.historyCommand,
+                this.listCommand, this.orderCommand, this.redoCommand, this.remarkCommand, this.selectCommand,
+                this.setAliasCommand, this.undoCommand, this.viewAliasCommand, this.addEventCommand,
+                this.deleteEventCommand, this.editEventCommand, this.listEventCommand, this.orderEventCommand,
                 this.findEventCommand, this.switchCommand, this.selectEventCommand);
     }
 
@@ -480,6 +494,7 @@ public class AliasSettings implements Serializable {
         sb.append("Edit Command : " + editCommand.getAlias() + "\n");
         sb.append("Exit Command : " + exitCommand.getAlias() + "\n");
         sb.append("Find Command : " + findCommand.getAlias() + "\n");
+        sb.append("Group Command : " + groupCommand.getAlias() + "\n");
         sb.append("Help Command : " + helpCommand.getAlias() + "\n");
         sb.append("History Command : " + historyCommand.getAlias() + "\n");
         sb.append("List Command : " + listCommand.getAlias() + "\n");

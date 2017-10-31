@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.group.Group;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -111,11 +112,11 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author tingtx
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
 
-    //@@author tingtx
     @Override
     public ObjectProperty<Birthday> birthdayProperty() {
         return birthday;
@@ -125,6 +126,8 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
+
+    public void setGroup(Group group) {this.group.set(requireNonNull(group)); }
 
     @Override
     public ObjectProperty<Group> groupProperty() { return group; }

@@ -1,30 +1,4 @@
 # keloysiusmak
-###### /java/seedu/address/ui/ViewAliasWindowTest.java
-``` java
-package seedu.address.ui;
-
-import org.junit.Before;
-import org.testfx.api.FxToolkit;
-
-import guitests.guihandles.ViewAliasWindowHandle;
-import javafx.stage.Stage;
-import seedu.address.logic.Logic;
-
-public class ViewAliasWindowTest extends GuiUnitTest {
-
-    private ViewAliasWindow viewAliasWindow;
-    private ViewAliasWindowHandle viewAliasWindowHandle;
-
-    @Before
-    public void setUp(Logic logic) throws Exception {
-
-        guiRobot.interact(() -> viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic));
-        Stage helpWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(viewAliasWindow.getRoot().getScene()));
-        FxToolkit.showStage();
-        viewAliasWindowHandle = new ViewAliasWindowHandle(helpWindowStage);
-    }
-}
-```
 ###### /java/seedu/address/logic/commands/CommandTestUtil.java
 ``` java
     /**
@@ -92,6 +66,8 @@ import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -207,6 +183,11 @@ public class SetAliasCommandTest {
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void groupPerson(Person person, Group group) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -384,6 +365,32 @@ public class SetThemeCommandTest {
     public void execute_winterTheme() throws Exception {
         assertConfigDiffCommandSuccess(setThemeCommand3, config,
                 String.format(SetThemeCommand.MESSAGE_CHANGED_THEME_SUCCESS, "winter"), expectedConfig);
+    }
+}
+```
+###### /java/seedu/address/ui/ViewAliasWindowTest.java
+``` java
+package seedu.address.ui;
+
+import org.junit.Before;
+import org.testfx.api.FxToolkit;
+
+import guitests.guihandles.ViewAliasWindowHandle;
+import javafx.stage.Stage;
+import seedu.address.logic.Logic;
+
+public class ViewAliasWindowTest extends GuiUnitTest {
+
+    private ViewAliasWindow viewAliasWindow;
+    private ViewAliasWindowHandle viewAliasWindowHandle;
+
+    @Before
+    public void setUp(Logic logic) throws Exception {
+
+        guiRobot.interact(() -> viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic));
+        Stage helpWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(viewAliasWindow.getRoot().getScene()));
+        FxToolkit.showStage();
+        viewAliasWindowHandle = new ViewAliasWindowHandle(helpWindowStage);
     }
 }
 ```

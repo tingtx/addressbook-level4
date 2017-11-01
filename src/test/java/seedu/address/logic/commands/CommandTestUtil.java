@@ -211,7 +211,7 @@ public class CommandTestUtil {
             assertEquals(expectedEventBook.toString(), actualModel.getEventBook().toString());
             assertEquals(expectedEventFilteredList, actualModel.getFilteredEventList());
         } catch (DuplicateUserException due) {
-            throw new AssertionError("Execution of command should not fail.", due);
+            throw new AssertionError("DuplicateUserException should not be thrown: ", due);
         }
     }
 

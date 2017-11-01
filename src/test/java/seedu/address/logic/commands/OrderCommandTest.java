@@ -26,6 +26,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -51,8 +52,8 @@ public class OrderCommandTest {
         thirdParameter = "BIRTHDAY";
         fourthParameter = "TAG";
 
-        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new Account());
 
     }
 

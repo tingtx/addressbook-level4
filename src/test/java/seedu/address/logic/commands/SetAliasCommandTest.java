@@ -22,6 +22,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.alias.Alias;
@@ -37,6 +38,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.testutil.AliasBuilder;
 
 public class SetAliasCommandTest {
@@ -140,6 +143,12 @@ public class SetAliasCommandTest {
         }
 
         @Override
+        public ReadOnlyAccount getAccount() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -231,6 +240,21 @@ public class SetAliasCommandTest {
         @Override
         public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
 
+        }
+
+        @Override
+        public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
+
+        }
+
+        @Override
+        public byte[] retrieveDigestFromStorage() {
+            return new byte[0];
+        }
+
+        @Override
+        public String retrieveSaltFromStorage(String userId) {
+            return null;
         }
     }
 

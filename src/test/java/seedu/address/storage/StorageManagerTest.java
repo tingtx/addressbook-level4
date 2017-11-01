@@ -16,6 +16,7 @@ import org.junit.rules.TemporaryFolder;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
 import seedu.address.model.EventBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -37,7 +38,8 @@ public class StorageManagerTest {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
         XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getTempFilePath("eb"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, eventBookStorage, userPrefsStorage);
+        XmlAccountStorage account = new XmlAccountStorage(getTempFilePath("ac"));
+        storageManager = new StorageManager(addressBookStorage, eventBookStorage, userPrefsStorage, account);
     }
 
     private String getTempFilePath(String fileName) {
@@ -82,7 +84,7 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                 new XmlEventBookStorageExceptionThrowingStub("dummy"),
-                new JsonUserPrefsStorage("dummy"));
+                new JsonUserPrefsStorage("dummy"), new XmlAccountStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
@@ -122,7 +124,7 @@ public class StorageManagerTest {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                 new XmlEventBookStorageExceptionThrowingStub("dummy"),
-                new JsonUserPrefsStorage("dummy"));
+                new JsonUserPrefsStorage("dummy"), new XmlAccountStorage("dummy"));
         storage.handleEventBookChangedEvent(new EventBookChangedEvent(new EventBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }

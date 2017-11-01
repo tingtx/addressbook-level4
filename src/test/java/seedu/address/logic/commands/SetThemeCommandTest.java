@@ -13,6 +13,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -27,7 +28,7 @@ public class SetThemeCommandTest {
     private SetThemeCommand setThemeCommand;
     private SetThemeCommand setThemeCommand2;
     private SetThemeCommand setThemeCommand3;
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
 
     @Before
     public void setUp() {

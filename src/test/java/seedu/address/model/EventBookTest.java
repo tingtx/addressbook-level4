@@ -18,7 +18,6 @@ public class EventBookTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final EventBook eventBook = new EventBook();
 
     @Test

@@ -32,6 +32,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -130,6 +131,7 @@ public class CommandTestUtil {
     }
 
     //@@author keloysiusmak
+
     /**
      * Executes the given {@code command}, confirms that <br>
      * - the result message matches {@code expectedMessage} <br>
@@ -143,6 +145,8 @@ public class CommandTestUtil {
             assertEquals(expectedConfig, actualConfig);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (DuplicateUserException due) {
+            throw new AssertionError("Execution of command should not fail.", due);
         }
     }
 
@@ -152,13 +156,15 @@ public class CommandTestUtil {
      * - the {@code actualConfig} does not match {@code expectedConfig}
      */
     public static void assertConfigDiffCommandSuccess(Command command, Config actualConfig, String expectedMessage,
-                                                  Config expectedConfig) {
+                                                      Config expectedConfig) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);
             assertNotEquals(expectedConfig, actualConfig);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (DuplicateUserException due) {
+            throw new AssertionError("Execution of command should not fail.", due);
         }
     }
     //@@author
@@ -176,6 +182,8 @@ public class CommandTestUtil {
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (DuplicateUserException due) {
+            throw new AssertionError("Execution of command should not fail.", due);
         }
     }
 
@@ -203,6 +211,8 @@ public class CommandTestUtil {
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
             assertEquals(expectedEventBook.toString(), actualModel.getEventBook().toString());
             assertEquals(expectedEventFilteredList, actualModel.getFilteredEventList());
+        } catch (DuplicateUserException due) {
+            throw new AssertionError("DuplicateUserException should not be thrown: ", due);
         }
     }
 

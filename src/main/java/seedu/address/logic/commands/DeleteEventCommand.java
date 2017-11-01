@@ -28,6 +28,10 @@ public class DeleteEventCommand extends UndoableCommand {
         this.targetIndex = targetIndex;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
@@ -52,9 +56,5 @@ public class DeleteEventCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteEventCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteEventCommand) other).targetIndex)); // state check
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

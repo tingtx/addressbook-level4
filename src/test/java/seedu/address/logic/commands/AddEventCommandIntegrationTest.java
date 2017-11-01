@@ -10,6 +10,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -25,14 +26,15 @@ public class AddEventCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
     }
 
     @Test
     public void execute_newEvent_success() throws Exception {
         Event validEvent = new EventBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new
+                Account());
         expectedModel.addEvent(validEvent);
 
         assertCommandSuccess(prepareCommand(validEvent, model), model,

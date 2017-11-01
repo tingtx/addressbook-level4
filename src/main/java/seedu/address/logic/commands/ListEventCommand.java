@@ -10,14 +10,13 @@ public class ListEventCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all events";
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 
     @Override
     public CommandResult execute() {
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

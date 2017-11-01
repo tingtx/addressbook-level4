@@ -105,6 +105,24 @@ Examples:
 * `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13-10-17 2359`
 * `addevent et/Basketball Competition ed/Tournament el/UTSH edt/26-10-2017 0800`
 
+=== Lock Current Contact By User: `lock` - Since V1.3
+
+Create a user that will later beocome. +
+Format: `lock u/USERID p/PASSWORD`
+
+****
+* `USERID` is case sensitive and cannot be the same as an exsiting user. If the user already exists, an error mesage will
+be thrown.
+* Even if the `PASSWORDs` are different, if a `USERID` to be registered is the same as an exsiting one, this user will not
+be accepted
+* The user credentials will be hashed and stored on disk to preserve confidentiality.
+****
+
+Examples:
+
+* `findevent et/Basketball` +
+Returns `Basketball Competition`
+
 === Change Password : `changepassword` - Coming in V2.0
 
 Changes the account password. +
@@ -295,10 +313,26 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Lock contacts by user : `lock` - Since V1.5
+
+Create a user account from the specified username and password. +
+Format: `lock u/USER_NAME p/PASSWORD`
+
+Examples:
+
+* `lock u/KELOYSIUS p/SPECIAL1PASS`
+
+====
+* The user's credentials will be hashed by SHA-256 algorithm.
+* The `USER_NAME` is case sensitive.
+* If the `USER_NAME` has been registered before, an error message saying `User Exists` will be displayed.
+* Different users can use the same password
+====
+
 === Login : `login` - Coming in V2.0
 
 Logs in to the TunedIn Application. +
-Format: `login u/USER_NAME pw/PASSWORD`
+Format: `login u/USER_NAME p/PASSWORD`
 
 Examples:
 

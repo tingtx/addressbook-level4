@@ -34,7 +34,7 @@ public class FindEventCommandParser implements Parser<FindEventCommand> {
         }  else if (trimmedArgs.substring(0, 2).equals("em")) {
             TitleContainsKeywordsPredicate.setPredicateType("em");
         } else {
-            throw new ParseException (
+            throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
         }
 

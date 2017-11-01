@@ -19,6 +19,10 @@ public class HistoryCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Entered commands (from most recent to earliest):\n%1$s";
     public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands.";
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() {
         List<String> previousCommands = history.getHistory();
@@ -35,9 +39,5 @@ public class HistoryCommand extends Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Config config) {
         requireNonNull(history);
         this.history = history;
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

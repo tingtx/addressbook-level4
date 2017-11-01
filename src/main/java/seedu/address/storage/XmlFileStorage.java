@@ -38,6 +38,18 @@ public class XmlFileStorage {
     }
 
     /**
+     * Saves the given account data to the specified file.
+     */
+    public static void saveAccountToFile(File file, XmlSerializableAccount account)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, account);
+        } catch (JAXBException e) {
+            assert false : "Unexpected exception " + e.getMessage();
+        }
+    }
+
+    /**
      * Returns event book in the file or an empty event book
      */
     public static XmlSerializableEventBook loadEventDataFromSaveFile(File file) throws DataConversionException,
@@ -56,6 +68,18 @@ public class XmlFileStorage {
             FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
+
+    /**
+     * Returns accounts in the file or an empty account list
+     */
+    public static XmlSerializableAccount loadAccountFromSaveFile(File file) throws DataConversionException,
+            FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableAccount.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

@@ -16,6 +16,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -33,6 +34,8 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEventCommand;
+import seedu.address.logic.commands.LockCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -55,6 +58,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.storage.Storage;
 
 /**
@@ -69,22 +74,24 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
     private final ArrayList<ArrayList<String>> viewAliases;
+    private final Account account;
     private UserPrefs userPref;
     private Storage userStorage;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyEventBook eventBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyEventBook eventBook, UserPrefs userPrefs,
+                        ReadOnlyAccount account) {
         super();
         requireAllNonNull(addressBook, eventBook, userPrefs);
-
         logger.fine("Initializing with address book: " + addressBook + ", event book: " + eventBook
-                + " and user prefs " + userPrefs);
+                + " and user prefs " + userPrefs + " and account " + account);
 
         this.addressBook = new AddressBook(addressBook);
         this.eventBook = new EventBook(eventBook);
         this.userPref = userPrefs;
+        this.account = new Account(account);
 
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.eventBook.getEventList());
@@ -148,6 +155,15 @@ public class ModelManager extends ComponentManager implements Model {
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
 
+        //Order Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
+
+        //Lock Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
+
+        //Login Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Log in", LoginCommand.getCommandWord())));
+
         //Select Event Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select Event", SelectEventCommand.getCommandWord())));
 
@@ -168,7 +184,19 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public ModelManager() {
-        this(new AddressBook(), new EventBook(), new UserPrefs());
+        this(new AddressBook(), new EventBook(), new UserPrefs(), new Account());
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
+        HashSet<Tag> tags = new HashSet<>();
+        for (String s : strings) {
+            tags.add(new Tag(s));
+        }
+
+        return tags;
     }
 
     @Override
@@ -182,11 +210,23 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    @Override
+    public ReadOnlyAccount getAccount() {
+        return account;
+    }
+
     /**
      * Raises an event to indicate the model has changed
      */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    /**
+     * Raises an event to indicate the model has changed
+     */
+    private void indicateAccountChanged() {
+        raise(new AccountChangedEvent(account));
     }
 
     @Override
@@ -300,6 +340,8 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //=========== Filtered Person List Accessors =============================================================
+
     @Override
     public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
         try {
@@ -310,8 +352,6 @@ public class ModelManager extends ComponentManager implements Model {
             throw e;
         }
     }
-
-    //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
@@ -326,13 +366,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredListToShowAll() {
         filteredPersons.setPredicate(null);
     }
+    //========================================================================================================
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-    //========================================================================================================
 
     @Override
     public void resetEventData(ReadOnlyEventBook newData) {
@@ -380,10 +420,28 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredEvents);
     }
 
+    //===================== Account Operations =========================
+
     @Override
     public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
+    }
+
+    @Override
+    public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
+        account.addUser(user);
+        indicateAccountChanged();
+    }
+
+    @Override
+    public byte[] retrieveDigestFromStorage() {
+        return new byte[0];
+    }
+
+    @Override
+    public String retrieveSaltFromStorage(String userId) {
+        return null;
     }
 
     @Override
@@ -409,18 +467,6 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
-    }
-
-    /**
-     * Returns a tag set containing the list of strings given.
-     */
-    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
-        HashSet<Tag> tags = new HashSet<>();
-        for (String s : strings) {
-            tags.add(new Tag(s));
-        }
-
-        return tags;
     }
 
 }

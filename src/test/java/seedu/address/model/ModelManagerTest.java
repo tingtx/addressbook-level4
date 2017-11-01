@@ -47,9 +47,11 @@ public class ModelManagerTest {
 
         UserPrefs userPrefs = new UserPrefs();
 
+        Account account = new Account();
+
         // same values -> returns true
-        ModelManager modelManager = new ModelManager(addressBook, eventBook, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, eventBook, userPrefs);
+        ModelManager modelManager = new ModelManager(addressBook, eventBook, userPrefs, account);
+        ModelManager modelManagerCopy = new ModelManager(addressBook, eventBook, userPrefs, account);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -62,12 +64,13 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, differentEventBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, differentEventBook, userPrefs,
+                account)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, eventBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, eventBook, userPrefs, account)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -76,6 +79,6 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(addressBook, eventBook, differentUserPrefs)));
+        assertTrue(modelManager.equals(new ModelManager(addressBook, eventBook, differentUserPrefs, account)));
     }
 }

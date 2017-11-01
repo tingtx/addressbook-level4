@@ -544,7 +544,6 @@ Person object. +
 
 ---
 
-
 === Theme mechanism - Coming in V1.4
 
 The theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
@@ -553,6 +552,38 @@ of custom preset themes for the TunedIn application.
 ---
 
 Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+
+
+=== Lock Mechanism - Coming in V1.4 and V1.5
+
+The lock mechanism will enable users to create user accounts with a user name and a password. The user credentials will
+then be persisted into the account.xml as hash digests of the SHA-256 algorithm. User name will be hashed and the hashed
+value will be stored directly into the account.xml file. Each user will be given a randomised salt value, which will
+also be hashed and stored in the account.xml file. For the password, it will first be prepended with the salt value from
+that user, after which the combined string will be hashed and stored. In this way, users with the same password will
+have different hash digests, upholding the confidentiality of the information.
+
+When the user uses the lock command, he/she needs to supply the `USERNAME` and `PASSWORD` for that account. The program
+will then hash the `USERNAME` and compare with the existing user name hash digests from the file. If the hash values are
+the same, a `DuplicateUserException` exception will be thrown.
+
+Further development would be to encrypt the existing contacts with the user's password. A log out command will be
+developed so that once user has locked the contact and logged out, the list of contacts will be emptied. Next, a log-in
+command will be developed which will require the user to supply the `USERNAME` and `PASSWORD`. The programme then verify
+if the credentials are correct with the account.xml file. Finally, it will decrypt the contacts of that user using the
+plaintext of the supplied password.
+
+INSERT DIAGRAM HERE!
+
+**Design Considerations:** +
+**Aspect:** Separation of addressbook.xml file into usercontact files +
+**Description:** Save the contacts that belong to a user in a separate file designated for that user only +
+**Pros:** Ease of encryption, decryption and navigation. +
+**Cons:** Greater overheads to manage multiple xml files which can interfere with other existing or incoming increments
+to the program +
+
+---
+
 
 
 // tag::undoredo[]
@@ -681,6 +712,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+>>>>>>> master
 
 === Logging
 

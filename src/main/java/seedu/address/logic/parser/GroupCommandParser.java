@@ -15,10 +15,19 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.group.Group;
 
 //@@author tingtx
+
 /**
  * Parses input arguments and creates a new GroupCommand object
  */
 public class GroupCommandParser implements Parser<GroupCommand> {
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
+        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
@@ -36,7 +45,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         try {
             preamble = argMultimap.getPreamble();
             indexStr = preamble.split("\\s+");
-            for (String index :  indexStr) {
+            for (String index : indexStr) {
                 indexes.add(ParserUtil.parseIndex(index));
             }
 
@@ -51,12 +60,5 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         String group = argMultimap.getValue(PREFIX_GROUP).get();
 
         return new GroupCommand(indexes, new Group(group));
-    }
-
-    /** Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
-        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

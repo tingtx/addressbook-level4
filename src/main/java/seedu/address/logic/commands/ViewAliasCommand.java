@@ -16,14 +16,14 @@ public class ViewAliasCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "Opened alias window.";
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() {
         EventsCenter.getInstance().post(new ViewAliasRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
 
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

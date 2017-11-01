@@ -28,6 +28,9 @@ public class DeleteCommand extends UndoableCommand {
         this.targetIndex = targetIndex;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -54,9 +57,5 @@ public class DeleteCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

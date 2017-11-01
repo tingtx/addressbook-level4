@@ -20,6 +20,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -32,6 +33,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -126,6 +129,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyAccount getAccount() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -140,6 +149,7 @@ public class AddCommandTest {
         public void groupPerson(Person target, Group group) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
+
         @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
@@ -217,6 +227,21 @@ public class AddCommandTest {
 
         public void setAlias(String command, String alias) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
+
+        }
+
+        @Override
+        public byte[] retrieveDigestFromStorage() {
+            return new byte[0];
+        }
+
+        @Override
+        public String retrieveSaltFromStorage(String userId) {
+            return null;
         }
     }
 

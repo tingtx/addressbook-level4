@@ -17,6 +17,10 @@ public class UndoCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
         requireAllNonNull(model, undoRedoStack);
@@ -33,9 +37,5 @@ public class UndoCommand extends Command {
     public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Config config) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

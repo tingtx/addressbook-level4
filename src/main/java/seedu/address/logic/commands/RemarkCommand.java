@@ -48,6 +48,10 @@ public class RemarkCommand extends UndoableCommand {
         this.remark = remark;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -101,9 +105,5 @@ public class RemarkCommand extends UndoableCommand {
         RemarkCommand newRemark = (RemarkCommand) other;
         return index.equals(newRemark.index)
                 && remark.equals(newRemark.remark);
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

@@ -250,8 +250,6 @@ public class MainWindow extends UiPart<Region> {
     }
 
 
-
-
     void show() {
         primaryStage.show();
     }

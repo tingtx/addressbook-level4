@@ -61,7 +61,7 @@ public class UniquePersonList implements Iterable<Person> {
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
-    public void  setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+    public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
@@ -78,10 +78,11 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //@@author tingtx
+
     /**
      * Group the person {@code target} in the list to {@code group}.
      *
-     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     public void groupPerson(Person target, Group group) throws PersonNotFoundException {
         requireNonNull(group);
@@ -110,6 +111,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //@@author tingtx
+
     /**
      * Order the list.
      */
@@ -118,7 +120,8 @@ public class UniquePersonList implements Iterable<Person> {
                 .compareToIgnoreCase(b.getName().toString());
         Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
                 .compareToIgnoreCase(b.getAddress().toString());
-        Comparator<Person>orderByBirthday = comparing(a->a.getBirthday().getReformatDate(), nullsLast(naturalOrder()));
+        Comparator<Person> orderByBirthday = comparing(a -> a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
         Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
                 .compareToIgnoreCase(b.getTags().toString());
 

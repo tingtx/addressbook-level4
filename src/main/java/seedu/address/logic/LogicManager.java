@@ -18,6 +18,7 @@ import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.ui.CalendarView;
 
 /**
@@ -44,7 +45,6 @@ public class LogicManager extends ComponentManager implements Logic {
         this.history = new CommandHistory();
         this.generalBookParser = new GeneralBookParser(userprefs);
         this.undoRedoStack = new UndoRedoStack();
-
     }
 
     @Override
@@ -52,13 +52,12 @@ public class LogicManager extends ComponentManager implements Logic {
         generalBookParser.setTabPane(tabPane);
     }
 
-    @Override
     public void setCalendarView(CalendarView calendarView) {
         this.calendarViewStateParser = new CalendarViewStateParser(this.userPrefs, this.model, calendarView);
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public CommandResult execute(String commandText) throws CommandException, ParseException, DuplicateUserException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = generalBookParser.parseCommand(commandText);

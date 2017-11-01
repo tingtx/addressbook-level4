@@ -38,6 +38,10 @@ public class SetAliasCommand extends Command {
         toAdd = alias;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
@@ -57,9 +61,5 @@ public class SetAliasCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SetAliasCommand // instanceof handles nulls
                 && toAdd.equals(((SetAliasCommand) other).toAdd));
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

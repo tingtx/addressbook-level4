@@ -24,14 +24,11 @@ public class ViewAliasWindow extends UiPart<Region> {
     private static final String ICON = "/images/help_icon.png";
     private static final String FXML = "ViewAliasWindow.fxml";
     private static final String TITLE = "View Aliases";
-
-    private ViewAliasListPanel viewAliasListPanel;
-
-    @FXML
-    private StackPane viewAliasListPanelPlaceholder;
-
     @FXML
     private final Stage dialogStage;
+    private ViewAliasListPanel viewAliasListPanel;
+    @FXML
+    private StackPane viewAliasListPanelPlaceholder;
 
 
     public ViewAliasWindow(ArrayList<ArrayList<String>> c, Logic logic) {

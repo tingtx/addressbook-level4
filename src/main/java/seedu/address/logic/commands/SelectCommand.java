@@ -29,6 +29,10 @@ public class SelectCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
 
@@ -48,9 +52,5 @@ public class SelectCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SelectCommand // instanceof handles nulls
                 && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

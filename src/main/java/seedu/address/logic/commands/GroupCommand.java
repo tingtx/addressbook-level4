@@ -14,6 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author tingtx
+
 /**
  * Group person(s) into user defined group.
  */
@@ -25,7 +26,7 @@ public class GroupCommand extends UndoableCommand {
             + "by the index number used in the last person listing.\n "
             + "Person(s) will be grouped to group name specified.\n"
             + "Parameters: INDEX_1 [INDEX_2...] (must be a positive integer) "
-            +  PREFIX_GROUP + "GROUPNAME "
+            + PREFIX_GROUP + "GROUPNAME "
             + "Example: " + COMMAND_WORD + " 1 3 4 "
             + PREFIX_GROUP + "FAMILY";
 
@@ -45,6 +46,10 @@ public class GroupCommand extends UndoableCommand {
 
         this.indexes = indexes;
         this.group = group;
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
     }
 
     @Override
@@ -98,9 +103,5 @@ public class GroupCommand extends UndoableCommand {
         GroupCommand groupCommand = (GroupCommand) other;
         return indexes.equals(groupCommand.indexes)
                 && group.equals(groupCommand.group);
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

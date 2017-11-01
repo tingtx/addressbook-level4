@@ -49,6 +49,10 @@ public class AddCommand extends UndoableCommand {
         toAdd = new Person(person);
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
@@ -66,9 +70,5 @@ public class AddCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

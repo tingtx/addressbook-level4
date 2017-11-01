@@ -37,10 +37,6 @@ public class Event implements ReadOnlyEvent {
         this(source.getTitle(), source.getDescription(), source.getLocation(), source.getDatetime());
     }
 
-    public void setTitle(Title title) {
-        this.title.set(requireNonNull(title));
-    }
-
     @Override
     public ObjectProperty<Title> titleProperty() {
         return title;
@@ -51,8 +47,8 @@ public class Event implements ReadOnlyEvent {
         return title.get();
     }
 
-    public void setDescription(Description description) {
-        this.description.set(requireNonNull(description));
+    public void setTitle(Title title) {
+        this.title.set(requireNonNull(title));
     }
 
     @Override
@@ -65,8 +61,8 @@ public class Event implements ReadOnlyEvent {
         return description.get();
     }
 
-    public void setLocation(Location location) {
-        this.location.set(requireNonNull(location));
+    public void setDescription(Description description) {
+        this.description.set(requireNonNull(description));
     }
 
     @Override
@@ -79,8 +75,8 @@ public class Event implements ReadOnlyEvent {
         return location.get();
     }
 
-    public void setDatetime(Datetime datetime) {
-        this.datetime.set(requireNonNull(datetime));
+    public void setLocation(Location location) {
+        this.location.set(requireNonNull(location));
     }
 
     @Override
@@ -91,6 +87,10 @@ public class Event implements ReadOnlyEvent {
     @Override
     public Datetime getDatetime() {
         return datetime.get();
+    }
+
+    public void setDatetime(Datetime datetime) {
+        this.datetime.set(requireNonNull(datetime));
     }
 
     @Override

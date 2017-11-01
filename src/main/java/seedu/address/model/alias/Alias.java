@@ -42,12 +42,12 @@ public class Alias implements Serializable {
         }
     }
 
-    public void setAlias(String alias) {
-        this.aliasString = (requireNonNull(alias));
-    }
-
     public String getAlias() {
         return aliasString;
+    }
+
+    public void setAlias(String alias) {
+        this.aliasString = (requireNonNull(alias));
     }
 
     public String getCommand() {

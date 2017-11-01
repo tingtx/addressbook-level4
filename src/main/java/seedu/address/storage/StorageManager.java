@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -8,10 +9,12 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.UserPrefs;
@@ -25,14 +28,15 @@ public class StorageManager extends ComponentManager implements Storage {
     private AddressBookStorage addressBookStorage;
     private EventBookStorage eventBookStorage;
     private UserPrefsStorage userPrefsStorage;
-
+    private AccountStorage accountStorage;
 
     public StorageManager(AddressBookStorage addressBookStorage, EventBookStorage eventBookStorage,
-                          UserPrefsStorage userPrefsStorage) {
+                          UserPrefsStorage userPrefsStorage, AccountStorage accountStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.eventBookStorage = eventBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.accountStorage = accountStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -89,6 +93,35 @@ public class StorageManager extends ComponentManager implements Storage {
 
     }
 
+    // ================ Account methods ===================================
+    @Override
+    public String getAccountFilePath() {
+        return accountStorage.getAccountFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyAccount> readAccount() throws FileNotFoundException, DataConversionException {
+        return readAccount(accountStorage.getAccountFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyAccount> readAccount(String filePath)
+            throws FileNotFoundException, DataConversionException {
+        logger.fine("Attempting to read data from account file: " + filePath);
+        return accountStorage.readAccount(filePath);
+    }
+
+    @Override
+    public void saveAccount(ReadOnlyAccount account) throws IOException {
+        saveAccount(account, accountStorage.getAccountFilePath());
+    }
+
+    @Override
+    public void saveAccount(ReadOnlyAccount account, String filePath) throws IOException {
+        logger.fine("Attempting to write to account file: " + filePath);
+        accountStorage.saveAccount(account, filePath);
+    }
+
 
     @Override
     @Subscribe
@@ -101,6 +134,16 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    @Override
+    @Subscribe
+    public void handleAccountChangeEvent(AccountChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local accounts changed, saving to accounts file"));
+        try {
+            saveAccount(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
     // ================ EventBook methods ==============================
 
     @Override
@@ -147,4 +190,11 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    public AccountStorage getAccountStorage() {
+        return accountStorage;
+    }
+
+    public void setAccountStorage(AccountStorage accountStorage) {
+        this.accountStorage = accountStorage;
+    }
 }

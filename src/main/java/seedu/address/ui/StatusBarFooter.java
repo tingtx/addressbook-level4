@@ -21,7 +21,8 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "last Updated: %s";
-
+    private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
+    private static final String FXML = "StatusBarFooter.fxml";
     /**
      * Used to generate time stamps.
      * <p>
@@ -31,11 +32,6 @@ public class StatusBarFooter extends UiPart<Region> {
      * but it should be easier once we have factories/DI frameworks.
      */
     private static Clock clock = Clock.systemDefaultZone();
-
-    private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
-
-    private static final String FXML = "StatusBarFooter.fxml";
-
     @FXML
     private StatusBar syncStatus;
     @FXML
@@ -50,17 +46,17 @@ public class StatusBarFooter extends UiPart<Region> {
     }
 
     /**
-     * Sets the clock used to determine the current time.
-     */
-    public static void setClock(Clock clock) {
-        StatusBarFooter.clock = clock;
-    }
-
-    /**
      * Returns the clock currently in use.
      */
     public static Clock getClock() {
         return clock;
+    }
+
+    /**
+     * Sets the clock used to determine the current time.
+     */
+    public static void setClock(Clock clock) {
+        StatusBarFooter.clock = clock;
     }
 
     private void setSaveLocation(String location) {

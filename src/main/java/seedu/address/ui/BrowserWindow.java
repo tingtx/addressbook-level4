@@ -26,11 +26,9 @@ public class BrowserWindow extends UiPart<Region> {
     private static final String FXML = "BrowserWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(BrowserWindow.class);
-
+    private final Stage dialogStage;
     @FXML
     private WebView browser;
-
-    private final Stage dialogStage;
 
     public BrowserWindow() {
         super(FXML);

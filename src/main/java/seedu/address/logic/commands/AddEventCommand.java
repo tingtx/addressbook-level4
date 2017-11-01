@@ -42,6 +42,10 @@ public class AddEventCommand extends UndoableCommand {
         toAdd = new Event(event);
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
@@ -58,9 +62,5 @@ public class AddEventCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddEventCommand // instanceof handles nulls
                 && toAdd.equals(((AddEventCommand) other).toAdd));
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

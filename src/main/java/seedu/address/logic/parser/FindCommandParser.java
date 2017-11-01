@@ -32,7 +32,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         } else if (trimmedArgs.charAt(0) == 'm') {
             NameContainsKeywordsPredicate.setPredicateType('m');
         } else {
-            throw new ParseException (
+            throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 

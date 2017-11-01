@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
 import seedu.address.model.EventBook;
+import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.event.Datetime;
@@ -51,7 +53,6 @@ public class SampleDataUtil {
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"), new Birthday("20-10-1998"),
                     new Group("CCA"), new Remark(""), getTagSet("colleagues"))
-
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
@@ -83,6 +84,10 @@ public class SampleDataUtil {
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
+    }
+
+    public static ReadOnlyAccount getEmptyAccount() {
+        return new Account();
     }
 
     public static ReadOnlyEventBook getSampleEventBook() {

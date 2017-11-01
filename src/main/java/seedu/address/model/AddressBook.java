@@ -119,9 +119,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Group the given person {@code target} in the list to {@code group}.
      *
-     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
-    public void groupPerson(Person target,  Group group) throws PersonNotFoundException {
+    public void groupPerson(Person target, Group group) throws PersonNotFoundException {
         persons.groupPerson(target, group);
 
     }

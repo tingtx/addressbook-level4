@@ -11,14 +11,13 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
 
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

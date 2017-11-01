@@ -25,6 +25,10 @@ public class OrderCommand extends UndoableCommand {
         this.orderParameter = orderParameter;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
@@ -41,9 +45,5 @@ public class OrderCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof OrderCommand // instanceof handles nulls
                 && this.orderParameter.equals(((OrderCommand) other).orderParameter)); // state check
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

@@ -1,6 +1,6 @@
-.root{
+.root {
     -fx-background-size: cover;
-    background-size:cover;
+    background-size: cover;
     background-position: left top;
     background-repeat: no-repeat;
     -fx-font-family: "Avenir";
@@ -100,15 +100,15 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: rgba(255,255,255,0.8);
+    -fx-background-color: rgba(255, 255, 255, 0.8);
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: rgba(255,255,255,0.6);
+    -fx-background-color: rgba(255, 255, 255, 0.6);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: rgba(140,140,140,0.4);
+    -fx-background-color: rgba(140, 140, 140, 0.4);
 }
 
 .list-cell:filled:selected #cardPane {
@@ -119,6 +119,7 @@
     background-color: transparent;
     -fx-text-fill: #777;
 }
+
 .list-cell:filled:selected .label {
     -fx-text-fill: #FFF;
 }
@@ -189,7 +190,7 @@
 
 .context-menu {
     -fx-padding: 5px 20px;
-    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-background-color: rgba(255, 255, 255, 0.25);
 }
 
 .context-menu .label {
@@ -287,11 +288,11 @@
 }
 
 .scroll-bar {
-    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-color: rgba(255, 255, 255, 0.2);
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: rgba(255,255,255,0.4);
+    -fx-background-color: rgba(255, 255, 255, 0.4);
     -fx-background-insets: 5;
 }
 
@@ -340,7 +341,7 @@
 }
 
 .text-area {
-    -fx-background-color: rgba(255, 255, 255,0.4);
+    -fx-background-color: rgba(255, 255, 255, 0.4);
     -fx-alignment: center-right;
 }
 
@@ -348,12 +349,11 @@
     -fx-background-color: transparent;
 }
 
-.text-area .scroll-pane .viewport{
+.text-area .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
 
-
-.text-area .scroll-pane .content{
+.text-area .scroll-pane .content {
     -fx-background-color: transparent;
 }
 
@@ -382,4 +382,22 @@
 
 #tags .labelFriends {
     -fx-background-color: #45ADA8 !important;
+}
+
+.remarkIcon {
+    -fx-alignment: center;
+    -fx-border-color: none;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: #0080ff;
+    -fx-padding: 1 1 1 1;
+}
+
+.remarkIcon:hover {
+    -fx-background-color: #00bfbf;
+}
+
+.remarkBox {
+    -fx-background-radius: 0 7 7 7;
+    -fx-border-radius: 0 7 7 7;
 }

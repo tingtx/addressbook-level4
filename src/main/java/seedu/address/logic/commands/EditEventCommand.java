@@ -61,6 +61,26 @@ public class EditEventCommand extends UndoableCommand {
         this.editEventDescriptor = editEventDescriptor;
     }
 
+    /**
+     * Creates and returns a {@code Event} with the details of {@code eventToEdit}
+     * edited with {@code editEventDescriptor}.
+     */
+    private static Event createEditedEvent(ReadOnlyEvent eventToEdit,
+                                           EditEventDescriptor editEventDescriptor) {
+        assert eventToEdit != null;
+
+        Title updatedTitle = editEventDescriptor.getTitle().orElse(eventToEdit.getTitle());
+        Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
+        Location updatedLocation = editEventDescriptor.getLocation().orElse(eventToEdit.getLocation());
+        Datetime updatedDatetime = editEventDescriptor.getDatetime().orElse(eventToEdit.getDatetime());
+
+        return new Event(updatedTitle, updatedDescription, updatedLocation, updatedDatetime);
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
@@ -81,22 +101,6 @@ public class EditEventCommand extends UndoableCommand {
         }
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));
-    }
-
-    /**
-     * Creates and returns a {@code Event} with the details of {@code eventToEdit}
-     * edited with {@code editEventDescriptor}.
-     */
-    private static Event createEditedEvent(ReadOnlyEvent eventToEdit,
-                                           EditEventDescriptor editEventDescriptor) {
-        assert eventToEdit != null;
-
-        Title updatedTitle = editEventDescriptor.getTitle().orElse(eventToEdit.getTitle());
-        Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
-        Location updatedLocation = editEventDescriptor.getLocation().orElse(eventToEdit.getLocation());
-        Datetime updatedDatetime = editEventDescriptor.getDatetime().orElse(eventToEdit.getDatetime());
-
-        return new Event(updatedTitle, updatedDescription, updatedLocation, updatedDatetime);
     }
 
     @Override
@@ -144,36 +148,36 @@ public class EditEventCommand extends UndoableCommand {
             return CollectionUtil.isAnyNonNull(this.title, this.description, this.location, this.datetime);
         }
 
-        public void setTitle(Title title) {
-            this.title = title;
-        }
-
         public Optional<Title> getTitle() {
             return Optional.ofNullable(title);
         }
 
-        public void setDescription(Description description) {
-            this.description = description;
+        public void setTitle(Title title) {
+            this.title = title;
         }
 
         public Optional<Description> getDescription() {
             return Optional.ofNullable(description);
         }
 
-        public void setLocation(Location location) {
-            this.location = location;
+        public void setDescription(Description description) {
+            this.description = description;
         }
 
         public Optional<Location> getLocation() {
             return Optional.ofNullable(location);
         }
 
-        public void setDatetime(Datetime datetime) {
-            this.datetime = datetime;
+        public void setLocation(Location location) {
+            this.location = location;
         }
 
         public Optional<Datetime> getDatetime() {
             return Optional.ofNullable(datetime);
+        }
+
+        public void setDatetime(Datetime datetime) {
+            this.datetime = datetime;
         }
 
         @Override
@@ -196,9 +200,5 @@ public class EditEventCommand extends UndoableCommand {
                     && getLocation().equals(e.getLocation())
                     && getDatetime().equals(e.getDatetime());
         }
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

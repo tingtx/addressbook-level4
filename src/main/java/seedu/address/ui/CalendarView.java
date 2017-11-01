@@ -23,6 +23,7 @@ import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 
 /**
  * The CalendarView UI Component
@@ -150,6 +151,8 @@ public class CalendarView {
 
                     } catch (CommandException | ParseException e) {
                         logger.info("Invalid command: " + commandText);
+                    } catch (DuplicateUserException e) {
+                        logger.info("Duplicated User");
                     }
                 });
                 ap.setStyle("-fx-background-color: #3543CB");

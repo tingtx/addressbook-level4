@@ -60,14 +60,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#commands[Commands] section below for details of each command.
 .  Having troubles? Drop us an email at help@tunedinapp.com and we'll get back to you as soon as possible.
 
 == Commands
 
 TunedIn is a Command Line Application (CLI), and we have no plans to do otherwise. Operations are carried out on
-TunedIn using Commands, which can be keyed in in the command field. We have a variety of commands on TunedIn, we have
-listed all of them, and how they are used below. We are constantly striving to expand this list of commands, feel free
+TunedIn using Commands, which can be keyed in in the command field. We have a variety of commands on TunedIn to interact
+with Contact List, Event List and the app Theme. All the commands together with their usage are listed below.
+We are constantly striving to expand this list of commands, feel free
 to contact us if you have any suggestions for commands.
 
 ====
@@ -82,16 +83,17 @@ to contact us if you have any suggestions for commands.
 === Adding a person: `add` - Since V1.0
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` or
-`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...` or
+`a n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...`
 
 [TIP]
+A person can be added with or without email and birthday.
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/09-10-1996`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/01-10-1995 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 b/01-10-1995 t/criminal`
 
 === Adding an event: `addevent` - Since V1.2
 
@@ -176,7 +178,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [b/BIRTHDAY] [e/EMAIL] [t/TAG
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st person in current list of address book to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
@@ -252,6 +254,26 @@ Examples:
 * `findevent et/Basketball` +
 Returns `Basketball Competition`
 
+=== Group person(s) : `group` - Since V1.4
+
+Group a number of persons in address book. +
+Format: `group INDEX [MORE_INDEX] g/GROUP_NAME`
+
+****
+* Group the person(s) at the specified `INDEX(ES)`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Group name can take anyform and must be specified.
+* A person can only be grouped in `One` group.
+* Existing values will be updated to the input values.
+* You can remove all the person's group by typing `g/` without specifying any group after it.
+****
+
+Examples:
+
+* `group 2 g/Family` +
+Group the 2nd person in the current list of address book to group `Family`. +
+* `group 1 3 4 5 g/NUS` +
+Group the 1st, 3rd, 4th and 5th persons to group `NUS`.
+
 === Viewing help : `help` - Since V1.0
 
 Format: `help`
@@ -291,17 +313,24 @@ Order the list of persons according to a specified parameter. Parameters are cas
 Format: `order PARAMETER [MORE_PARAMETER]` or `o PARAMETER [MORE_PARAMETER]`
 
 ****
-* The allowable parameters are `NAME`, `ADDRESS`, `BIRTHDAY` and 'TAG'.
+* The allowable parameters are `NAME`, `ADDRESS`, `BIRTHDAY` and `TAG`.
 * The parameter is case insensitive. e.g 'NaMe' will match 'NAME'
 * Only full word will be matched. e.g. 'addr' will not match 'Address'
 * To order by multiple parameters, each parameter should be separated by a single space.
-* The order of the parameter is important. e.g 'tag address' will order the list by tag
+* The order of the parameter is important. e.g `tag address` will order the list by tag
 then by address.
 * The command can only take in a maximum of `two` parameters.
 * The command change the index of the person in the Address Book,
 which will affect other commands that use this attribute such as
 `delete` or `select`.
 ****
+
+Examples:
+
+* `order NAME` +
+Returns address list sorted by name in alphabetical order.
+* 'order BIRTHDAY name` +
+Returns address list sorted by birthday then by name.
 
 === Order events in Event Book by a parameter: `orderevent` - Since V1.3
 
@@ -511,13 +540,15 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `editevent 1 ed/Buy one get one free edt/13-10-2017 0900`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* * Find Event * : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find Event* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `findevent et/Basketball`
+* *Group* : `group INDEX [MORE_INDEX] g/GROUP_NAME` +
+e.g. `group 1 2 g/SOC`
 * *Help* : `help`
 * *History* : `history`
 * *List* : `list`
 * *Order* : `order PARAMETER [MORE PARAMETERS]` +
-e.g `order name address`
+e.g `order address nAme`
 * *Redo* : `redo`
 * *Remark* : `remark INDEX r/REMARK` +
 e.g. `remark 2 r/Likes to play.`

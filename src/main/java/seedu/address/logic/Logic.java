@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.CalendarView;
 
 /**
  * API of the Logic component
@@ -53,4 +54,9 @@ public interface Logic {
      * Passing the UI Object TabPane
      */
     void setTabPane(TabPane tabPane);
+
+    /**
+     * Passing the UI Object Calendar
+     */
+    void setCalendarView(CalendarView calendarView);
 }

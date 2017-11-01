@@ -49,6 +49,7 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
 
+
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 

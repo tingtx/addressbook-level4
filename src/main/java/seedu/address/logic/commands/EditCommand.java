@@ -17,6 +17,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -104,11 +105,12 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
-        Remark updatedRemark = personToEdit.getRemark(); //edit command does not allow editing remarks
+        Group updatedGroup = personToEdit.getGroup();  //edit command does not allow editing of group
+        Remark updatedRemark = personToEdit.getRemark(); //edit command does not allow editing of remarks
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBirthday,
-                updatedRemark, updatedTags);
+                updatedGroup, updatedRemark, updatedTags);
     }
 
     @Override

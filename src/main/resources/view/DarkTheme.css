@@ -1,6 +1,4 @@
 .root{
-    -fx-background-image: url(../images/summer.jpg);
-    background-image: url(../images/summer.jpg);
     -fx-background-size: cover;
     background-size:cover;
     background-position: left top;

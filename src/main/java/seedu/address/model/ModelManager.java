@@ -41,7 +41,9 @@ import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
@@ -49,6 +51,7 @@ import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -162,8 +165,14 @@ public class ModelManager extends ComponentManager implements Model {
         //Login Command
         commandList.add(new ArrayList<String>(Arrays.asList("Log in", LoginCommand.getCommandWord())));
 
+        //Select Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Select Event", SelectEventCommand.getCommandWord())));
+
         //Set Alias Command
         commandList.add(new ArrayList<String>(Arrays.asList("Set Alias", SetAliasCommand.getCommandWord())));
+
+        //Switch Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Switch", SwitchCommand.getCommandWord())));
 
         //Undo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
@@ -239,6 +248,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void groupPerson(Person target, Group group) throws PersonNotFoundException {
+        requireAllNonNull(target, group);
+        addressBook.groupPerson(target, group);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
@@ -304,6 +320,10 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getOrderEventCommand().getAlias();
         } else if (command.equals(FindEventCommand.getCommandWord())) {
             return aliasSettings.getFindEventCommand().getAlias();
+        } else if (command.equals(SwitchCommand.getCommandWord())) {
+            return aliasSettings.getSwitchCommand().getAlias();
+        } else if (command.equals(SelectEventCommand.getCommandWord())) {
+            return aliasSettings.getSelectEventCommand().getAlias();
         } else {
             return "Not Set";
         }

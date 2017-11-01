@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.TabPane;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -27,12 +29,19 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final GeneralBookParser generalBookParser;
     private final UndoRedoStack undoRedoStack;
+    private final Config config;
 
-    public LogicManager(Model model, UserPrefs userprefs) {
+    public LogicManager(Model model, UserPrefs userprefs, Config config) {
         this.model = model;
+        this.config = config;
         this.history = new CommandHistory();
         this.generalBookParser = new GeneralBookParser(userprefs);
         this.undoRedoStack = new UndoRedoStack();
+    }
+
+    @Override
+    public void setTabPane(TabPane tabPane) {
+        generalBookParser.setTabPane(tabPane);
     }
 
     @Override
@@ -40,7 +49,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = generalBookParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack);
+            command.setData(model, history, undoRedoStack, config);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;

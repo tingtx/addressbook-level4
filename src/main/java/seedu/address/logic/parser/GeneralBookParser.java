@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.scene.control.TabPane;
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
@@ -18,6 +19,7 @@ import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindEventCommand;
+import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -28,7 +30,10 @@ import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
+import seedu.address.logic.commands.SetThemeCommand;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -41,6 +46,8 @@ public class GeneralBookParser {
 
     private static UserPrefs userPrefs;
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
+    private TabPane tabPane;
 
     public GeneralBookParser(UserPrefs userPref) {
         this.userPrefs = userPref;
@@ -83,6 +90,9 @@ public class GeneralBookParser {
         } else if (commandWord.equals(OrderCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getOrderCommand().getAlias())) {
             return new OrderCommandParser().parse(arguments);
+        } else if (commandWord.equals(GroupCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getGroupCommand().getAlias())) {
+            return new GroupCommandParser().parse(arguments);
         } else if (commandWord.equals(DeleteCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getDeleteCommand().getAlias())) {
             return new DeleteCommandParser().parse(arguments);
@@ -137,8 +147,24 @@ public class GeneralBookParser {
         } else if (commandWord.equals(FindEventCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getFindEventCommand().getAlias())) {
             return new FindEventCommandParser().parse(arguments);
+        } else if (commandWord.equals(SetThemeCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getSetThemeCommand().getAlias())) {
+            return new SetThemeCommandParser().parse(arguments);
+        } else if (commandWord.equals(SwitchCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getSwitchCommand().getAlias())) {
+            return new SwitchCommand(tabPane);
+        } else if (commandWord.equals(SelectEventCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getSelectEventCommand().getAlias())) {
+            return new SelectEventCommandParser().parse(arguments);
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+    }
+
+    /**
+     * Used for passing the UI TabPane
+     */
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
     }
 }

@@ -10,11 +10,34 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/PhaseBT14A2/main
+:repoURL: https://github.com/CS2103AUG2017-T14-B2/main
 
 By: `The TunedIn Team`      Since: `Sep 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+
+Welcome to TunedIn, a free-to-use application that brings to you the power of a full-fledged command line personal
+organizer, bundled together with a user-friendly interface that keeps all of your information easily accessible and
+at your fingertips.
+
+With TunedIn, we keep things simple yet efficient for you, so you can focus on the things you love.
+
+TunedIn is a free-to-use application. If you paid for this software, contact the seller immediately and request for a
+refund.
+
+== The TunedIn Way
+
+We believe in the freedom of information, and the value of aesthetics. TunedIn is a reflection of what we believe
+strongly in, echoed strongly by our firm intention to keep the application free-to-use. In our development, we put a
+heavy emphasis on our design pedagogy, and we recognize that aesthetics are just as important as functionality. No
+cohesive application functions well without a unified design structure, which is why we allowed for maximum
+customizability in our application as much as possible.
+
+We continue to strive and innovate to bring TunedIn to the next level, in a harmonious and non-invasive way to
+complement our daily lives. Feedback is always welcome at hello@tunedinapp.com, we'd be happy to hear how we can
+improve TunedIn.
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -38,8 +61,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
+.  Having troubles? Drop us an email at help@tunedinapp.com and we'll get back to you as soon as possible.
 
 == Commands
+
+TunedIn is a Command Line Application (CLI), and we have no plans to do otherwise. Operations are carried out on
+TunedIn using Commands, which can be keyed in in the command field. We have a variety of commands on TunedIn, we have
+listed all of them, and how they are used below. We are constantly striving to expand this list of commands, feel free
+to contact us if you have any suggestions for commands.
 
 ====
 *Command Format*
@@ -50,7 +79,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Adding a person: `add`
+=== Adding a person: `add` - Since V1.0
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` or
@@ -101,7 +130,7 @@ Examples:
 
 * `changepassword pw/SPECIAL1PASS pw/SPECIAL2PASS`
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` - Since V1.0
 
 Clears all entries from the address book. +
 Format: `clear`
@@ -111,7 +140,7 @@ Format: `clear`
 Coming in V2.0
 
 // tag::undoredo[]
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` - Since V1.0
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -149,7 +178,7 @@ Deletes the 2nd event in the event book.
 * `deleteevent 1` +
 Deletes the 1st event in the event book.
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` - Since V1.0
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [b/BIRTHDAY] [e/EMAIL] [t/TAG]...`
@@ -187,7 +216,7 @@ Edits the description and datetime of the 1st event to be `Buy one get one free`
 * `editevent 2 et/2018 iPhone 11 Release` +
 Edits the title of the 2nd event to be `2018 iPhone 11 Release`.
 
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` - Since V1.0
 
 Exits the program. +
 Format: `exit`
@@ -196,7 +225,7 @@ Format: `exit`
 
 Exports the TunedIn application for use on another computer.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` - Since V1.0
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -223,7 +252,7 @@ Deletes the 2nd event in the event book.
 * `deleteevent 1` +
 Deletes the 1st event in the event book.
 
-=== Locating persons by name: `findevent` - Since V1.3
+=== Finding Event : `findevent` - Since V1.3
 
 Finds events whose titles contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -241,11 +270,11 @@ Examples:
 * `findevent et/Basketball` +
 Returns `Basketball Competition`
 
-=== Viewing help : `help`
+=== Viewing help : `help` - Since V1.0
 
 Format: `help`
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `history` - Since V1.0
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -255,7 +284,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` - Since V1.0
 
 Shows a list of all persons in the address book. +
 Format: `list`
@@ -274,19 +303,19 @@ Examples:
 Logs out of the address book. +
 Format: `logout`
 
-=== Order persons in Address Book by a parameter: `order`
+=== Order persons in Address Book by a parameter: `order` - Since V1.0
 
 Order the list of persons according to a specified parameter. Parameters are case insensitive. +
 Format: `order PARAMETER [MORE_PARAMETER]` or `o PARAMETER [MORE_PARAMETER]`
 
 ****
-* The allowable parameters are `NAME`, `ADDRESS` and 'TAG'.
-* The parameter is case insensitive. e.g 'naMe' will match 'NAME'
+* The allowable parameters are `NAME`, `ADDRESS`, `BIRTHDAY` and 'TAG'.
+* The parameter is case insensitive. e.g 'NaMe' will match 'NAME'
 * Only full word will be matched. e.g. 'addr' will not match 'Address'
 * To order by multiple parameters, each parameter should be separated by a single space.
-* The order of the parameter is important. e.g 'name address' will order the list by name
+* The order of the parameter is important. e.g 'tag address' will order the list by tag
 then by address.
-* To order the list by three parameters, the order of the parameters can only be 'name address tag'.
+* The command can only take in a maximum of `two` parameters.
 * The command change the index of the person in the Address Book,
 which will affect other commands that use this attribute such as
 `delete` or `select`.
@@ -314,7 +343,7 @@ Returns event list sorted by title
 * `orderevent LOCATION` +
 Returns event list sorted by location
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` - Since V1.0
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -355,7 +384,7 @@ Edits the remark of the 1st person to be `Likes to swim`.
 * `remark 1 r/` +
 Remove the remark of the 1st person.
 
-=== Selecting a person : `select`
+=== Selecting a person : `select` - Since V1.0
 
 Selects the person identified by the index number used in the last person listing, and opens in a separate window a
 google search for the person. +
@@ -376,6 +405,32 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Selecting an event : `selectevent` - Since V1.4
+
+Selects the event identified by the index number used in the last event listing. +
+Format: `selectevent INDEX`
+
+****
+* Selects the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `listevent` +
+`selectevent 2` +
+Selects the 2nd event in the event book.
+* `findevent basketball` +
+`selectevent 1` +
+Selects the 1st event in the results of the `findevent` command.
+
+=== Switch Tab : `switch` - Since V1.4
+
+Switch to either `contacts` or `events` tab panel. +
+Format: `switch`
+
+
 === Set aliases : `setalias` - Since V1.2
 
 Set alias for a particular command. +
@@ -390,13 +445,13 @@ Examples:
 aliases
 ****
 
-=== Set theme : `settheme` - Coming in V1.4
+=== Set theme : `settheme` - Since V1.4
 
 Set theme for the TunedIn Application. +
-Format: `settheme x/THEME_NAME`
+Format: `settheme THEME_NAME`
 
 Examples:
-* `settheme x/AUTUMN`
+* `settheme AUTUMN`
 
 === Sync : `sync` - Coming in V2.0
 
@@ -408,7 +463,7 @@ Format: `sync`
 Shows the list of aliases used, as well as protected aliases. +
 Format: `viewalias`
 
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` - Since V1.0
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -434,21 +489,25 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous Address Book folder.
 
 *Q*: How do I see the protected aliases for the commands? +
 *A*: You can type `viewalias` or you can access it from the Menu Bar.
 
 *Q*: Can I set my own background? +
-*A*: Not at the moment, this is coming in a later stage
+*A*: No, but you can choose from a wide range of backgrounds that we offer.
+
+*Q*: Will the application move away from a CLI interface?? +
+*A*: No, we have no plans to do so. This is a design principle which we've decided on at the start of the development,
+and we have no plans to change it away.
+
+*Q*: How do I save the data? +
+*A*: Address book data are saved in the hard disk automatically after any command that changes the data. There is no
+need to save manually.
 
 *Q*: Is this application free to use? +
 *A*: Yes, the application is free to use, and will remain this way.
@@ -482,7 +541,13 @@ e.g `order name address`
 e.g. `remark 2 r/Likes to play.`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Select Event* : `selectevent INDEX` +
+e.g.`selectevent 2`
+* *Switch* : `switch` +
+e.g.`switch`
 * *Set Alias* : `setalias` +
 e.g.`setalias c\help al\h`
+* *Set Theme* : `settheme` +
+e.g.`settheme autumn`
 * *Undo* : `undo`
 * *View Alias* : `viewalias`

@@ -2,9 +2,10 @@ package seedu.address.commons.util;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
+
+import javax.xml.bind.JAXBException;
 
 import org.junit.Rule;
 import org.junit.Test;

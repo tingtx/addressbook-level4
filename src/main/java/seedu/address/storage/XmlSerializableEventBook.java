@@ -1,10 +1,11 @@
 package seedu.address.storage;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

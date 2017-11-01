@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 import java.security.SecureRandom;
 import java.util.Random;
 
-import seedu.address.logic.commands.digestUtil.HashDigest;
+import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
@@ -23,7 +23,8 @@ public class LockCommand extends Command {
             + PREFIX_USERID + "USER ID "
             + PREFIX_PASSWORD + "PASSWORD";
     private static final String MESSAGE_EXISTING_USER = "User already exists";
-    private static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your password";
+    private static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your " +
+            "password";
     private String userId;
     private String passwordText;
 
@@ -44,8 +45,8 @@ public class LockCommand extends Command {
         final Random r = new SecureRandom();
         r.nextBytes(salt);
         String saltText = new String(salt);
-        byte[] pwDigest = new seedu.address.logic.commands.digestUtil.HashDigest().getHashDigest(saltText + passwordText);
-
+        byte[] pwDigest = new seedu.address.logic.commands.digestutil.HashDigest()
+                .getHashDigest(saltText + passwordText);
         String hexUidDigest = getHexFormat(uIdDigest);
         String hexSalt = getHexFormat(salt);
         String hexPassword = getHexFormat(pwDigest);

@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 
-import seedu.address.logic.commands.digestUtil.HashDigest;
+import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -53,9 +53,9 @@ public class LoginCommand extends Command {
     }
 
     private boolean checkExistingUserId() {
-        byte[] UidDigest = new HashDigest().getHashDigest(userId);
+        byte[] uidDigest = new HashDigest().getHashDigest(userId);
         byte[] retrievedDigest = model.retrieveDigestFromStorage();
-        return isSameDigest(UidDigest, retrievedDigest);
+        return isSameDigest(uidDigest, retrievedDigest);
     }
 
     public byte[] getPassword() {

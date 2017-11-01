@@ -8,6 +8,9 @@ import seedu.address.model.user.UniqueUserList;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+/**
+ * Wrap all data at account level
+ */
 public class Account implements ReadOnlyAccount {
 
     private final UniqueUserList users;
@@ -19,11 +22,17 @@ public class Account implements ReadOnlyAccount {
     public Account() {
     }
 
+    /**
+     * Creates an Account list using the Events in the {@code toBeCopied}
+     */
     public Account(ReadOnlyAccount toBeCopied) {
         this();
         resetData(toBeCopied);
     }
 
+    /**
+     * Resets the existing data of this {@code Account} with {@code newData}.
+     */
     private void resetData(ReadOnlyAccount newData) {
         requireNonNull(newData);
         try {

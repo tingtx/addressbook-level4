@@ -9,6 +9,9 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parse Lock command
+ */
 public class LockCommandParser implements Parser<LockCommand> {
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given

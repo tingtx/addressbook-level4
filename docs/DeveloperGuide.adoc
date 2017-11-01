@@ -583,7 +583,30 @@ The following activity diagram summarize what happens inside the `Person` when a
 
 image::ReplacingRemarkActivityDiagram.png[width="200"]
 
-==== Find From All Text Fields Mechanism
+
+==== Design Considerations
+
+**Aspect:** Implementation of Remark +
+**Alternative 1 (current choice):** Replace the existing Person object with an edited
+Person object. +
+**Pros:** Neat and Clearer abstractions to be displayed in class diagram. +
+**Cons:** Tedious, as the implementation could have be simpler by assigning String as Remark attribute. +
+**Alternative 2:** Let String be the attribute for Remark +
+**Pros:** Easy to implement. +
+**Cons:** Harder to understand the flow of the implementation.
+
+---
+
+**Aspect:** Viewing of Remark
+**Alternative 1 (current choice):** Only one remark is able to store for one contact. +
+**Pros:** Easy to implement. +
+**Cons:** User is unable to keep more than 1 remark. +
+**Alternative 2:** Data structure to support multiple remark. +
+**Pros:** User is given the choice to overwrite or save a new remark. +
+**Cons:** Harder to implement.
+
+---
+=== Find From All Text Fields Mechanism
 
 The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
 only search for the contact by the name. However, with this mechanism, a user can find texts in the contact's name,
@@ -626,29 +649,6 @@ find will look for keywords in the name. If the attribute is a, the command will
 attribute is m, the command will find in all text fields.
 
 In the future, this feature can be developed into a best-matched result based on different fields.
-
-==== Design Considerations
-
-**Aspect:** Implementation of Remark +
-**Alternative 1 (current choice):** Replace the existing Person object with an edited
-Person object. +
-**Pros:** Neat and Clearer abstractions to be displayed in class diagram. +
-**Cons:** Tedious, as the implementation could have be simpler by assigning String as Remark attribute. +
-**Alternative 2:** Let String be the attribute for Remark +
-**Pros:** Easy to implement. +
-**Cons:** Harder to understand the flow of the implementation.
-
----
-
-**Aspect:** Viewing of Remark
-**Alternative 1 (current choice):** Only one remark is able to store for one contact. +
-**Pros:** Easy to implement. +
-**Cons:** User is unable to keep more than 1 remark. +
-**Alternative 2:** Data structure to support multiple remark. +
-**Pros:** User is given the choice to overwrite or save a new remark. +
-**Cons:** Harder to implement.
-
----
 
 === Logging
 

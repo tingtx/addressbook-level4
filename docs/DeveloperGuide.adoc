@@ -573,6 +573,8 @@ command will be developed which will require the user to supply the `USERNAME` a
 if the credentials are correct with the account.xml file. Finally, it will decrypt the contacts of that user using the
 plaintext of the supplied password.
 
+INSERT DIAGRAM HERE!
+
 **Design Considerations:** +
 **Aspect:** Separation of addressbook.xml file into usercontact files +
 **Description:** Save the contacts that belong to a user in a separate file designated for that user only +

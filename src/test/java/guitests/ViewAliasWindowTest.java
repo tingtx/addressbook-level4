@@ -1,12 +1,11 @@
 package guitests;
 
+import guitests.guihandles.ViewAliasWindowHandle;
+import org.junit.Test;
+import seedu.address.logic.commands.ViewAliasCommand;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import guitests.guihandles.ViewAliasWindowHandle;
-import seedu.address.logic.commands.ViewAliasCommand;
 
 public class ViewAliasWindowTest extends AddressBookGuiTest {
     private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "

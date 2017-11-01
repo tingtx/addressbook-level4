@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+
+import java.util.List;
 
 /**
  * Deletes a event identified using it's last displayed index from the event book.
@@ -26,6 +26,10 @@ public class DeleteEventCommand extends UndoableCommand {
 
     public DeleteEventCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
     }
 
     @Override
@@ -52,9 +56,5 @@ public class DeleteEventCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteEventCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteEventCommand) other).targetIndex)); // state check
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

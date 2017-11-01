@@ -1,5 +1,7 @@
 package seedu.address.commons.core;
 
+import seedu.address.commons.events.BaseEvent;
+
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -7,8 +9,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
-import seedu.address.commons.events.BaseEvent;
 
 /**
  * Configures and manages loggers and handlers, including their logging level
@@ -22,9 +22,9 @@ public class LogsCenter {
     private static final int MAX_FILE_SIZE_IN_BYTES = (int) (Math.pow(2, 20) * 5); // 5MB
     private static final String LOG_FILE = "addressbook.log";
     private static Level currentLogLevel = Level.INFO;
-    private static final Logger logger = LogsCenter.getLogger(LogsCenter.class);
     private static FileHandler fileHandler;
     private static ConsoleHandler consoleHandler;
+    private static final Logger logger = LogsCenter.getLogger(LogsCenter.class);
 
     /**
      * Initializes with a custom log level (specified in the {@code config} object)

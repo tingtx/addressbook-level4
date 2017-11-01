@@ -11,7 +11,7 @@ public class HashDigest {
     /**
      * Return the hash digest of {@code text}. Used for creating accounts and validating log-ins.
      */
-    public byte[] getHashDigest(String text){
+    public byte[] getHashDigest(String text) {
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");

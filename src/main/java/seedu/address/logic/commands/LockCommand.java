@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.digestUtil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
-
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 

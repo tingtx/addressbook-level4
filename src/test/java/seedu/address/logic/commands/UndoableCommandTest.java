@@ -1,14 +1,6 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
 import org.junit.Test;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Account;
@@ -17,6 +9,13 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class UndoableCommandTest {
 

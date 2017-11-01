@@ -1,15 +1,5 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.logging.Logger;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -33,9 +23,9 @@ import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -62,6 +52,16 @@ import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.storage.Storage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
@@ -74,16 +74,15 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
     private final ArrayList<ArrayList<String>> viewAliases;
+    private final Account account;
     private UserPrefs userPref;
     private Storage userStorage;
-
-    private final Account account;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyEventBook eventBook, UserPrefs userPrefs,
-                ReadOnlyAccount account) {
+                        ReadOnlyAccount account) {
         super();
         requireAllNonNull(addressBook, eventBook, userPrefs);
         logger.fine("Initializing with address book: " + addressBook + ", event book: " + eventBook
@@ -186,6 +185,18 @@ public class ModelManager extends ComponentManager implements Model {
 
     public ModelManager() {
         this(new AddressBook(), new EventBook(), new UserPrefs(), new Account());
+    }
+
+    /**
+     * Returns a tag set containing the list of strings given.
+     */
+    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
+        HashSet<Tag> tags = new HashSet<>();
+        for (String s : strings) {
+            tags.add(new Tag(s));
+        }
+
+        return tags;
     }
 
     @Override
@@ -329,6 +340,8 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //=========== Filtered Person List Accessors =============================================================
+
     @Override
     public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
         try {
@@ -339,8 +352,6 @@ public class ModelManager extends ComponentManager implements Model {
             throw e;
         }
     }
-
-    //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
@@ -355,13 +366,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredListToShowAll() {
         filteredPersons.setPredicate(null);
     }
+    //========================================================================================================
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-    //========================================================================================================
 
     @Override
     public void resetEventData(ReadOnlyEventBook newData) {
@@ -409,13 +420,13 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredEvents);
     }
 
+    //===================== Account Operations =========================
+
     @Override
     public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
-
-    //===================== Account Operations =========================
 
     @Override
     public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
@@ -456,18 +467,6 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
-    }
-
-    /**
-     * Returns a tag set containing the list of strings given.
-     */
-    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
-        HashSet<Tag> tags = new HashSet<>();
-        for (String s : strings) {
-            tags.add(new Tag(s));
-        }
-
-        return tags;
     }
 
 }

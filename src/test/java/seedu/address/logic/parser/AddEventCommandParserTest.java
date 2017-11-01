@@ -1,5 +1,8 @@
 package seedu.address.logic.parser;
 
+import org.junit.Test;
+import seedu.address.logic.commands.AddEventCommand;
+
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_DEEPAVALI;
@@ -10,10 +13,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_DEE
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_DEEPAVALI;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.AddEventCommand;
 
 public class AddEventCommandParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();

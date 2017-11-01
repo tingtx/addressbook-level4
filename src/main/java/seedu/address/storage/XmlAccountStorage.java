@@ -19,7 +19,7 @@ public class XmlAccountStorage implements AccountStorage {
 
     private String filePath;
 
-    public XmlAccountStorage(String filePath){
+    public XmlAccountStorage(String filePath) {
         this.filePath = filePath;
     }
 

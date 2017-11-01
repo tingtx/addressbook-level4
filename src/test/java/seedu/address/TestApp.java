@@ -1,9 +1,5 @@
 package seedu.address;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.function.Supplier;
-
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
@@ -21,6 +17,10 @@ import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.function.Supplier;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
@@ -50,6 +50,10 @@ public class TestApp extends MainApp {
             createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
                     this.saveFileLocation);
         }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
@@ -103,10 +107,6 @@ public class TestApp extends MainApp {
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
     /**

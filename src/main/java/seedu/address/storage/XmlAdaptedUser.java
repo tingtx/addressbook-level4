@@ -34,7 +34,7 @@ public class XmlAdaptedUser {
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      */
-    public User toModelType(){
+    public User toModelType() {
         return new User(this.userId, this.salt, this.password);
     }
 }

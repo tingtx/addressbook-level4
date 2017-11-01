@@ -1,13 +1,11 @@
 package seedu.address.model.user;
 
-import java.util.Objects;
-
 public class User implements ReadOnlyUser {
     private String userId;
     private String salt;
     private String password;
 
-    public User(String userId, String salt, String password){
+    public User(String userId, String salt, String password) {
         this.userId = userId;
         this.salt = salt;
         this.password = password;

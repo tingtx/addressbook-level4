@@ -1,7 +1,5 @@
 package seedu.address.logic;
 
-import java.util.ArrayList;
-
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import seedu.address.logic.commands.CommandResult;
@@ -10,6 +8,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+
+import java.util.ArrayList;
 
 /**
  * API of the Logic component

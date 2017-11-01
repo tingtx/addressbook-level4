@@ -22,6 +22,10 @@ public class SwitchCommand extends Command {
         this.tabPane = tabPane;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
@@ -33,9 +37,5 @@ public class SwitchCommand extends Command {
         }
         selectionModel.select(selectedIndex);
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

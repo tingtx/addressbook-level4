@@ -1,17 +1,17 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Set;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.group.Group;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Set;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a Person in the address book.
@@ -55,11 +55,6 @@ public class Person implements ReadOnlyPerson {
                 source.getGroup(), source.getRemark(), source.getTags());
     }
 
-    public void setName(Name name) {
-        this.name.set(requireNonNull(name));
-    }
-
-
     @Override
     public ObjectProperty<Name> nameProperty() {
         return name;
@@ -70,8 +65,8 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
-    public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
+    public void setName(Name name) {
+        this.name.set(requireNonNull(name));
     }
 
     @Override
@@ -84,8 +79,8 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
+    public void setPhone(Phone phone) {
+        this.phone.set(requireNonNull(phone));
     }
 
     @Override
@@ -98,8 +93,8 @@ public class Person implements ReadOnlyPerson {
         return email.get();
     }
 
-    public void setAddress(Address address) {
-        this.address.set(requireNonNull(address));
+    public void setEmail(Email email) {
+        this.email.set(requireNonNull(email));
     }
 
     @Override
@@ -112,9 +107,8 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    //@@author tingtx
-    public void setBirthday(Birthday birthday) {
-        this.birthday.set(requireNonNull(birthday));
+    public void setAddress(Address address) {
+        this.address.set(requireNonNull(address));
     }
 
     @Override
@@ -127,8 +121,9 @@ public class Person implements ReadOnlyPerson {
         return birthday.get();
     }
 
-    public void setGroup(Group group) {
-        this.group.set(requireNonNull(group));
+    //@@author tingtx
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
     }
 
     @Override
@@ -140,11 +135,11 @@ public class Person implements ReadOnlyPerson {
     public Group getGroup() {
         return group.get();
     }
-    //@@author
 
-    public void setRemark(Remark remark) {
-        this.remark.set(requireNonNull(remark));
+    public void setGroup(Group group) {
+        this.group.set(requireNonNull(group));
     }
+    //@@author
 
     @Override
     public ObjectProperty<Remark> remarkProperty() {
@@ -156,6 +151,10 @@ public class Person implements ReadOnlyPerson {
         return remark.get();
     }
 
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -165,15 +164,15 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
-    public ObjectProperty<UniqueTagList> tagProperty() {
-        return tags;
-    }
-
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public ObjectProperty<UniqueTagList> tagProperty() {
+        return tags;
     }
 
     @Override

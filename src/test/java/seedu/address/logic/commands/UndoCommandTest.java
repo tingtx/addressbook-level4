@@ -1,19 +1,7 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.Arrays;
-import java.util.Collections;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -21,6 +9,17 @@ import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+
+import java.util.Arrays;
+import java.util.Collections;
+
+import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class UndoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();

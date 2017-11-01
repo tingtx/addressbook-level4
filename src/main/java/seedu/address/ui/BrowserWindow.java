@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -12,6 +10,8 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.model.person.ReadOnlyPerson;
+
+import java.util.logging.Logger;
 
 /**
  * The Browser Panel of the App.
@@ -26,11 +26,9 @@ public class BrowserWindow extends UiPart<Region> {
     private static final String FXML = "BrowserWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(BrowserWindow.class);
-
+    private final Stage dialogStage;
     @FXML
     private WebView browser;
-
-    private final Stage dialogStage;
 
     public BrowserWindow() {
         super(FXML);

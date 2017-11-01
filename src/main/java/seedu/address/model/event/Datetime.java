@@ -1,8 +1,8 @@
 package seedu.address.model.event;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Event's Datetime in the event book.

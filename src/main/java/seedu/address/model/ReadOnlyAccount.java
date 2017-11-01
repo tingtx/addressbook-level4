@@ -5,7 +5,7 @@ import seedu.address.model.user.ReadOnlyUser;
 
 /**
  * Unmodifiable view of the accounts
- * */
+ */
 
 public interface ReadOnlyAccount {
 

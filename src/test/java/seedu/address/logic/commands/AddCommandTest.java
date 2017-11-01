@@ -1,19 +1,9 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
-
+import javafx.collections.ObservableList;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -36,6 +26,15 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.testutil.PersonBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AddCommandTest {
 
@@ -149,6 +148,7 @@ public class AddCommandTest {
         public void groupPerson(Person target, Group group) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
+
         @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");

@@ -1,5 +1,10 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
@@ -7,11 +12,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * Adds a person to the address book.
@@ -49,6 +49,10 @@ public class AddCommand extends UndoableCommand {
         toAdd = new Person(person);
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
@@ -66,9 +70,5 @@ public class AddCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

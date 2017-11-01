@@ -8,7 +8,7 @@ import seedu.address.model.user.exceptions.DuplicateUserException;
 
 import static java.util.Objects.requireNonNull;
 
-public class Account implements ReadOnlyAccount{
+public class Account implements ReadOnlyAccount {
 
     private final UniqueUserList users;
 
@@ -16,9 +16,10 @@ public class Account implements ReadOnlyAccount{
         users = new UniqueUserList();
     }
 
-    public Account(){}
+    public Account() {
+    }
 
-    public Account(ReadOnlyAccount toBeCopied){
+    public Account(ReadOnlyAccount toBeCopied) {
         this();
         resetData(toBeCopied);
     }

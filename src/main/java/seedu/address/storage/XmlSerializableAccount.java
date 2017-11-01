@@ -2,7 +2,6 @@ package seedu.address.storage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.user.ReadOnlyUser;
 
@@ -21,17 +20,17 @@ public class XmlSerializableAccount implements ReadOnlyAccount {
     @XmlElement
     private List<XmlAdaptedUser> users;
 
-    public List<XmlAdaptedUser> getUsers() {
-        return users;
-    }
-
-    public XmlSerializableAccount(){
+    public XmlSerializableAccount() {
         users = new ArrayList<>();
     }
 
-    public XmlSerializableAccount(ReadOnlyAccount src){
+    public XmlSerializableAccount(ReadOnlyAccount src) {
         this();
         users.addAll(src.getUserList().stream().map(XmlAdaptedUser::new).collect(Collectors.toList()));
+    }
+
+    public List<XmlAdaptedUser> getUsers() {
+        return users;
     }
 
     @Override

@@ -1,6 +1,12 @@
 package seedu.address.model.event;
 
-import static java.util.Objects.requireNonNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.fxmisc.easybind.EasyBind;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,14 +15,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.fxmisc.easybind.EasyBind;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.event.exceptions.EventNotFoundException;
-import seedu.address.model.person.exceptions.UnrecognisedParameterException;
+import static java.util.Objects.requireNonNull;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -134,20 +133,20 @@ public class UniqueEventList implements Iterable<Event> {
         };
 
         switch (parameter) {
-        case "TITLE":
-            internalList.sort(orderByTitle);
-            break;
+            case "TITLE":
+                internalList.sort(orderByTitle);
+                break;
 
-        case "LOCATION":
-            internalList.sort(orderByLocation);
-            break;
+            case "LOCATION":
+                internalList.sort(orderByLocation);
+                break;
 
-        case "DATETIME":
-            internalList.sort(orderByDatetime);
-            break;
+            case "DATETIME":
+                internalList.sort(orderByDatetime);
+                break;
 
-        default:
-            throw new UnrecognisedParameterException();
+            default:
+                throw new UnrecognisedParameterException();
         }
 
 

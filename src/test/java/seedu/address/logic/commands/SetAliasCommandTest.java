@@ -1,22 +1,10 @@
 //@@author keloysiusmak
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
-
+import javafx.collections.ObservableList;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -41,6 +29,17 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.testutil.AliasBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 public class SetAliasCommandTest {
 

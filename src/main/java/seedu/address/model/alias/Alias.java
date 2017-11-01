@@ -1,13 +1,13 @@
 //@@author keloysiusmak
 package seedu.address.model.alias;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a Person in the address book.
@@ -42,12 +42,12 @@ public class Alias implements Serializable {
         }
     }
 
-    public void setAlias(String alias) {
-        this.aliasString = (requireNonNull(alias));
-    }
-
     public String getAlias() {
         return aliasString;
+    }
+
+    public void setAlias(String alias) {
+        this.aliasString = (requireNonNull(alias));
     }
 
     public String getCommand() {

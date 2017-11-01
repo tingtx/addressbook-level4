@@ -1,9 +1,6 @@
 //@@author keloysiusmak
 package seedu.address.ui;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
@@ -11,6 +8,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Panel containing the list of commands, and their command words and aliases

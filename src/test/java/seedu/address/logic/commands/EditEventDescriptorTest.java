@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import org.junit.Test;
+import seedu.address.testutil.EditEventDescriptorBuilder;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_DEEPAVALI;
@@ -8,10 +11,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DATETIME_DEEPAV
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_DEEPAVALI;
-
-import org.junit.Test;
-
-import seedu.address.testutil.EditEventDescriptorBuilder;
 
 public class EditEventDescriptorTest {
 

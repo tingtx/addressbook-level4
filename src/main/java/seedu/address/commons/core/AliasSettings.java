@@ -1,13 +1,6 @@
 //@@author keloysiusmak
 package seedu.address.commons.core;
 
-import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -22,9 +15,9 @@ import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.LoginCommand;
-import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -36,10 +29,16 @@ import seedu.address.logic.commands.SetThemeCommand;
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
-
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 
 /**

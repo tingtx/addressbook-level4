@@ -1,24 +1,23 @@
 package seedu.address.model.person;
 
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.naturalOrder;
-import static java.util.Comparator.nullsLast;
-import static java.util.Objects.requireNonNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.fxmisc.easybind.EasyBind;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.fxmisc.easybind.EasyBind;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.group.Group;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.exceptions.UnrecognisedParameterException;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
+import static java.util.Objects.requireNonNull;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -61,7 +60,7 @@ public class UniquePersonList implements Iterable<Person> {
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
      * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
-    public void  setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+    public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
@@ -78,10 +77,11 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //@@author tingtx
+
     /**
      * Group the person {@code target} in the list to {@code group}.
      *
-     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     public void groupPerson(Person target, Group group) throws PersonNotFoundException {
         requireNonNull(group);
@@ -110,6 +110,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //@@author tingtx
+
     /**
      * Order the list.
      */
@@ -118,69 +119,69 @@ public class UniquePersonList implements Iterable<Person> {
                 .compareToIgnoreCase(b.getName().toString());
         Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
                 .compareToIgnoreCase(b.getAddress().toString());
-        Comparator<Person>orderByBirthday = comparing(a->a.getBirthday().getReformatDate(), nullsLast(naturalOrder()));
+        Comparator<Person> orderByBirthday = comparing(a -> a.getBirthday().getReformatDate(), nullsLast(naturalOrder()));
         Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
                 .compareToIgnoreCase(b.getTags().toString());
 
         switch (parameter) {
-        case "NAME":
-            internalList.sort(orderByName);
-            break;
+            case "NAME":
+                internalList.sort(orderByName);
+                break;
 
-        case "ADDRESS":
-            internalList.sort(orderByAddress);
-            break;
+            case "ADDRESS":
+                internalList.sort(orderByAddress);
+                break;
 
-        case "BIRTHDAY":
-            internalList.sort(orderByBirthday);
-            break;
+            case "BIRTHDAY":
+                internalList.sort(orderByBirthday);
+                break;
 
-        case "TAG":
-            internalList.sort(orderByTag);
-            break;
+            case "TAG":
+                internalList.sort(orderByTag);
+                break;
 
-        case "NAME ADDRESS":
-            internalList.sort(orderByName.thenComparing(orderByAddress));
-            break;
+            case "NAME ADDRESS":
+                internalList.sort(orderByName.thenComparing(orderByAddress));
+                break;
 
-        case "ADDRESS NAME":
-            internalList.sort(orderByName.thenComparing(orderByTag));
-            break;
+            case "ADDRESS NAME":
+                internalList.sort(orderByName.thenComparing(orderByTag));
+                break;
 
-        case "TAG NAME":
-            internalList.sort(orderByTag.thenComparing(orderByName));
-            break;
+            case "TAG NAME":
+                internalList.sort(orderByTag.thenComparing(orderByName));
+                break;
 
-        case "NAME TAG":
-            internalList.sort(orderByName.thenComparing(orderByTag));
-            break;
+            case "NAME TAG":
+                internalList.sort(orderByName.thenComparing(orderByTag));
+                break;
 
-        case "NAME BIRTHDAY":
-            internalList.sort(orderByName.thenComparing(orderByBirthday));
-            break;
+            case "NAME BIRTHDAY":
+                internalList.sort(orderByName.thenComparing(orderByBirthday));
+                break;
 
-        case "BIRTHDAY NAME":
-            internalList.sort(orderByBirthday.thenComparing(orderByName));
-            break;
+            case "BIRTHDAY NAME":
+                internalList.sort(orderByBirthday.thenComparing(orderByName));
+                break;
 
-        case "ADDRESS BIRTHDAY":
-            internalList.sort(orderByAddress.thenComparing(orderByBirthday));
-            break;
+            case "ADDRESS BIRTHDAY":
+                internalList.sort(orderByAddress.thenComparing(orderByBirthday));
+                break;
 
-        case "BIRTHDAY ADDRESS":
-            internalList.sort(orderByBirthday.thenComparing(orderByAddress));
-            break;
+            case "BIRTHDAY ADDRESS":
+                internalList.sort(orderByBirthday.thenComparing(orderByAddress));
+                break;
 
-        case "BIRTHDAY TAG":
-            internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
-            break;
+            case "BIRTHDAY TAG":
+                internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
+                break;
 
-        case "TAG BIRTHDAY":
-            internalList.sort(orderByTag.thenComparing(orderByBirthday));
-            break;
+            case "TAG BIRTHDAY":
+                internalList.sort(orderByTag.thenComparing(orderByBirthday));
+                break;
 
-        default:
-            throw new UnrecognisedParameterException();
+            default:
+                throw new UnrecognisedParameterException();
         }
 
     }

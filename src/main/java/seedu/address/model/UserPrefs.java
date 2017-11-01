@@ -1,11 +1,11 @@
 package seedu.address.model;
 
-import java.util.Objects;
-
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
+
+import java.util.Objects;
 
 /**
  * Represents User's preferences.

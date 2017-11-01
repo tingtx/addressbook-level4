@@ -1,20 +1,5 @@
 package systemtests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-
 import guitests.guihandles.BrowserWindowHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
@@ -22,6 +7,10 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -31,18 +20,26 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
+import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
 public abstract class AddressBookSystemTest {
-    @ClassRule
-    public static ClockRule clockRule = new ClockRule();
-
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
-
+    @ClassRule
+    public static ClockRule clockRule = new ClockRule();
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
     private SystemTestSetupHelper setupHelper;

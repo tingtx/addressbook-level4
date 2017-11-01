@@ -1,14 +1,13 @@
 package systemtests;
 
-import java.time.Clock;
-import java.time.Instant;
-import java.time.ZoneId;
-
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-
 import seedu.address.ui.StatusBarFooter;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 
 /**
  * This rule makes the time stamp in the status bar predictable during a test.
@@ -18,8 +17,8 @@ import seedu.address.ui.StatusBarFooter;
  * @see Clock#fixed(Instant, ZoneId)
  */
 public class ClockRule implements TestRule {
-    private Clock injectedClock;
     private final Clock originalClock = StatusBarFooter.getClock();
+    private Clock injectedClock;
 
     protected void before() {
         setInjectedClockToCurrentTime();

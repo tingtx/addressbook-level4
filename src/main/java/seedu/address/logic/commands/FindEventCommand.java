@@ -22,6 +22,10 @@ public class FindEventCommand extends Command {
         this.predicate = predicate;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() {
         model.updateFilteredEventList(predicate);
@@ -33,9 +37,5 @@ public class FindEventCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof FindEventCommand // instanceof handles nulls
                 && this.predicate.equals(((FindEventCommand) other).predicate)); // state check
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

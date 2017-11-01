@@ -1,24 +1,33 @@
 package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.group.Group;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+
 //@@author tingtx
+
 /**
  * Parses input arguments and creates a new GroupCommand object
  */
 public class GroupCommandParser implements Parser<GroupCommand> {
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
+        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
@@ -36,7 +45,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         try {
             preamble = argMultimap.getPreamble();
             indexStr = preamble.split("\\s+");
-            for (String index :  indexStr) {
+            for (String index : indexStr) {
                 indexes.add(ParserUtil.parseIndex(index));
             }
 
@@ -51,12 +60,5 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         String group = argMultimap.getValue(PREFIX_GROUP).get();
 
         return new GroupCommand(indexes, new Group(group));
-    }
-
-    /** Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
-        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

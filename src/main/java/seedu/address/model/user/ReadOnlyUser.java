@@ -17,7 +17,7 @@ public interface ReadOnlyUser {
         return this.getUserId().equals(userId);
     }
 
-    default boolean isCorrectPassword(String userId, String password){
+    default boolean isCorrectPassword(String userId, String password) {
         return this.getUserId().equals(userId) && this.getPassword().equals(password);
     }
 

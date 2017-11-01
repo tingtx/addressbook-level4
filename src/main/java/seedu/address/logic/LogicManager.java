@@ -1,8 +1,5 @@
 package seedu.address.logic;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import seedu.address.commons.core.ComponentManager;
@@ -18,6 +15,9 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * The main LogicManager of the app.

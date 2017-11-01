@@ -24,6 +24,10 @@ public class OrderEventCommand extends UndoableCommand {
         this.orderParameter = orderParameter;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() {
         try {
@@ -43,9 +47,5 @@ public class OrderEventCommand extends UndoableCommand {
 
     public String getOrderParameter() {
         return orderParameter;
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

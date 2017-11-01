@@ -1,10 +1,10 @@
 package seedu.address.commons.core;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Represents a version with major, minor and patch number
@@ -29,22 +29,6 @@ public class Version implements Comparable<Version> {
         this.isEarlyAccess = isEarlyAccess;
     }
 
-    public int getMajor() {
-        return major;
-    }
-
-    public int getMinor() {
-        return minor;
-    }
-
-    public int getPatch() {
-        return patch;
-    }
-
-    public boolean isEarlyAccess() {
-        return isEarlyAccess;
-    }
-
     /**
      * Parses a version number string in the format V1.2.3.
      *
@@ -63,6 +47,22 @@ public class Version implements Comparable<Version> {
                 Integer.parseInt(versionMatcher.group(2)),
                 Integer.parseInt(versionMatcher.group(3)),
                 versionMatcher.group(4) == null ? false : true);
+    }
+
+    public int getMajor() {
+        return major;
+    }
+
+    public int getMinor() {
+        return minor;
+    }
+
+    public int getPatch() {
+        return patch;
+    }
+
+    public boolean isEarlyAccess() {
+        return isEarlyAccess;
     }
 
     @JsonValue

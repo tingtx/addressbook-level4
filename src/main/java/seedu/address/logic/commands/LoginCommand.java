@@ -10,7 +10,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Log the user in.
  */
-public class LoginCommand extends Command{
+public class LoginCommand extends Command {
 
     public static final String COMMAND_WORD = "login";
     public static final String COMMAND_ALIAS = "li";
@@ -21,7 +21,7 @@ public class LoginCommand extends Command{
     private String userId;
     private String passwordText;
 
-    public LoginCommand(String userId, String passwordText){
+    public LoginCommand(String userId, String passwordText) {
         this.userId = userId;
         this.passwordText = passwordText;
     }
@@ -37,7 +37,7 @@ public class LoginCommand extends Command{
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
-        if (!checkExistingUserId()){
+        if (!checkExistingUserId()) {
             return new CommandResult(MESSAGE_ERROR_NO_USER);
         }
         String pwSalt = getSalt();
@@ -49,13 +49,13 @@ public class LoginCommand extends Command{
     }
 
     private boolean matchedPassword(byte[] digest) {
-        return isSameDigest(password,digest);
+        return isSameDigest(password, digest);
     }
 
     private boolean checkExistingUserId() {
         byte[] UidDigest = new HashDigest().getHashDigest(userId);
         byte[] retrievedDigest = model.retrieveDigestFromStorage();
-        return isSameDigest(UidDigest,retrievedDigest);
+        return isSameDigest(UidDigest, retrievedDigest);
     }
 
     public byte[] getPassword() {

@@ -1,15 +1,15 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.exceptions.DuplicateEventException;
 
 /**
  * Adds a event to the event book.
@@ -42,6 +42,10 @@ public class AddEventCommand extends UndoableCommand {
         toAdd = new Event(event);
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
@@ -58,9 +62,5 @@ public class AddEventCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddEventCommand // instanceof handles nulls
                 && toAdd.equals(((AddEventCommand) other).toAdd));
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

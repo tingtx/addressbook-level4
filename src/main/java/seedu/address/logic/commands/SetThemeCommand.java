@@ -30,6 +30,10 @@ public class SetThemeCommand extends UndoableCommand {
         this.theme = setTheme;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() {
         if (!((this.theme.equals("summer"))
@@ -49,9 +53,5 @@ public class SetThemeCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof SetThemeCommand // instanceof handles nulls
                 && this.theme.equals(((SetThemeCommand) other).theme)); // state check
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

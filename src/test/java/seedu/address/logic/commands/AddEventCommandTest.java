@@ -1,17 +1,9 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.function.Predicate;
-
+import javafx.collections.ObservableList;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -36,6 +28,13 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.testutil.EventBuilder;
+
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AddEventCommandTest {
 

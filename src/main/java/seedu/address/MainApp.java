@@ -1,12 +1,14 @@
 package seedu.address;
 
-import com.google.common.eventbus.Subscribe;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Optional;
+import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
 import javafx.application.Platform;
-
 import javafx.stage.Stage;
-
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -15,10 +17,8 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
-
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-
 import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
 import seedu.address.model.EventBook;
@@ -29,7 +29,6 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-
 import seedu.address.storage.AccountStorage;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.EventBookStorage;
@@ -42,11 +41,6 @@ import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.storage.XmlEventBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
-
-import java.io.IOException;
-import java.util.Map;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * The main entry point to the application.

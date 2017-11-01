@@ -1,21 +1,6 @@
 package seedu.address.logic.commands;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalEvents.DEEPAVALI;
-import static seedu.address.testutil.TypicalEvents.HENNA;
-import static seedu.address.testutil.TypicalEvents.SPECTRA;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.Test;
-
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -26,6 +11,20 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalEvents.DEEPAVALI;
+import static seedu.address.testutil.TypicalEvents.HENNA;
+import static seedu.address.testutil.TypicalEvents.SPECTRA;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindEventCommand}.

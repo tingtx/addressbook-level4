@@ -1,8 +1,5 @@
 package seedu.address.model;
 
-import java.util.ArrayList;
-import java.util.function.Predicate;
-
 import javafx.collections.ObservableList;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -18,6 +15,9 @@ import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+
+import java.util.ArrayList;
+import java.util.function.Predicate;
 
 /**
  * The API of the Model component.
@@ -76,6 +76,7 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     //@@author tingtx
+
     /**
      * Group the given person(s)
      */

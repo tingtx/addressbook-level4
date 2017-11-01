@@ -1,13 +1,13 @@
 package seedu.address.commons.core;
 
+import seedu.address.MainApp;
+import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.StringUtil;
+
 import java.io.IOException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import seedu.address.MainApp;
-import seedu.address.commons.util.ConfigUtil;
-import seedu.address.commons.util.StringUtil;
 
 /**
  * Config values used by the app

@@ -1,14 +1,5 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
 import javafx.collections.ObservableList;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
@@ -19,6 +10,15 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Wraps all data at the address-book level
@@ -35,8 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */
-    {
+     */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
@@ -119,9 +118,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Group the given person {@code target} in the list to {@code group}.
      *
-     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
-    public void groupPerson(Person target,  Group group) throws PersonNotFoundException {
+    public void groupPerson(Person target, Group group) throws PersonNotFoundException {
         persons.groupPerson(target, group);
 
     }

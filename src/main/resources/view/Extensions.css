@@ -47,3 +47,8 @@
     -fx-alignment: CENTER;
     -fx-text-fill: #444;
 }
+
+.anchor {
+    -fx-border-color: white;
+    -fx-text-fill: white;
+}

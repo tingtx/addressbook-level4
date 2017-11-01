@@ -134,6 +134,7 @@ public class CommandBox extends UiPart<Region> {
      */
     private void setStyleToDefault() {
         commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
+
     }
 
     /**

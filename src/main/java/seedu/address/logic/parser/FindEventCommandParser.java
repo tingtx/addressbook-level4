@@ -27,16 +27,23 @@ public class FindEventCommandParser implements Parser<FindEventCommand> {
         }
         if (trimmedArgs.substring(0, 2).equals("et")) {
             TitleContainsKeywordsPredicate.setPredicateType("et");
+        } else if (trimmedArgs.substring(0, 3).equals("edt")) {
+            TitleContainsKeywordsPredicate.setPredicateType("edt");
         } else if (trimmedArgs.substring(0, 2).equals("ed")) {
             TitleContainsKeywordsPredicate.setPredicateType("ed");
-        } else if (trimmedArgs.substring(0, 2).equals("em")) {
+        }  else if (trimmedArgs.substring(0, 2).equals("em")) {
             TitleContainsKeywordsPredicate.setPredicateType("em");
         } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindEventCommand.MESSAGE_USAGE));
         }
 
-        trimmedArgs = trimmedArgs.substring(3).trim();
+        if (trimmedArgs.substring(0, 3).equals("edt")) {
+            trimmedArgs = trimmedArgs.substring(4).trim();
+        } else {
+            trimmedArgs = trimmedArgs.substring(3).trim();
+        }
+
         String[] titleKeywords = trimmedArgs.split("\\s+");
 
         return new FindEventCommand(new TitleContainsKeywordsPredicate(Arrays.asList(titleKeywords)));

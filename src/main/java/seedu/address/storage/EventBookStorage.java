@@ -1,10 +1,10 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyEventBook;
-
 import java.io.IOException;
 import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyEventBook;
 
 /**
  * Represents a storage for {@link seedu.address.model.EventBook}.

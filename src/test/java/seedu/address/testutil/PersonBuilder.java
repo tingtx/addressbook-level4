@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.util.Set;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
@@ -12,8 +14,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
-
-import java.util.Set;
 
 /**
  * A utility class to help with building Person objects.

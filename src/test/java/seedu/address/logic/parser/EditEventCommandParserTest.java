@@ -1,11 +1,5 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditEventCommand;
-import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
-import seedu.address.testutil.EditEventDescriptorBuilder;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_SPECTRA;
@@ -26,6 +20,12 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_EVENT;
+
+import org.junit.Test;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.EditEventCommand;
+import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 
 public class EditEventCommandParserTest {
 

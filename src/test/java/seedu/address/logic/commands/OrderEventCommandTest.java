@@ -1,19 +1,5 @@
 package seedu.address.logic.commands;
 
-import org.junit.Before;
-import org.junit.Test;
-import seedu.address.commons.core.Config;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Account;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.event.ReadOnlyEvent;
-
-import java.util.Arrays;
-import java.util.List;
-
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,6 +10,20 @@ import static seedu.address.testutil.TypicalEvents.SPECTRA;
 import static seedu.address.testutil.TypicalEvents.WINE;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import seedu.address.commons.core.Config;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Account;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.event.ReadOnlyEvent;
 
 public class OrderEventCommandTest {
     private Model model;

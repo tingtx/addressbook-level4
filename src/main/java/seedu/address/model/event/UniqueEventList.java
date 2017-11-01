@@ -1,12 +1,6 @@
 package seedu.address.model.event;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.fxmisc.easybind.EasyBind;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.event.exceptions.EventNotFoundException;
-import seedu.address.model.person.exceptions.UnrecognisedParameterException;
+import static java.util.Objects.requireNonNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +9,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.fxmisc.easybind.EasyBind;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.

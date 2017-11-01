@@ -1,6 +1,13 @@
 //@@author keloysiusmak
 package seedu.address.commons.core;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -32,13 +39,6 @@ import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-
-import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 
 /**
@@ -517,12 +517,12 @@ public class AliasSettings implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.addCommand, this.clearCommand, this.deleteCommand, this.editCommand,
-                this.exitCommand, this.findCommand, this.groupCommand, this.helpCommand, this.historyCommand,
-                this.listCommand, this.orderCommand, this.redoCommand, this.remarkCommand, this.selectCommand,
-                this.setAliasCommand, this.undoCommand, this.viewAliasCommand, this.addEventCommand,
-                this.deleteEventCommand, this.editEventCommand, this.listEventCommand, this.orderEventCommand,
-                this.findEventCommand, this.switchCommand, this.selectEventCommand, this.lockCommand, this.loginCommand);
+        return Objects.hash(this.addCommand, this.clearCommand, this.deleteCommand, this.editCommand, this.exitCommand,
+                this.findCommand, this.groupCommand, this.helpCommand, this.historyCommand, this.listCommand,
+                this.orderCommand, this.redoCommand, this.remarkCommand, this.selectCommand, this.setAliasCommand,
+                this.undoCommand, this.viewAliasCommand, this.addEventCommand, this.deleteEventCommand,
+                this.editEventCommand, this.listEventCommand, this.orderEventCommand, this.findEventCommand,
+                this.switchCommand, this.selectEventCommand, this.lockCommand, this.loginCommand);
     }
 
     @Override

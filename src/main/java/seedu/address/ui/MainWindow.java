@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,8 +26,6 @@ import seedu.address.commons.events.ui.ViewAliasRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-
-import java.util.logging.Logger;
 
 /**
  * The Main Window. Provides the basic application layout containing

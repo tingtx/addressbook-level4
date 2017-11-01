@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.core.Config;
@@ -7,8 +9,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-
-import static org.junit.Assert.assertEquals;
 
 public class HistoryCommandTest {
     private HistoryCommand historyCommand;

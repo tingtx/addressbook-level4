@@ -1,5 +1,9 @@
 package seedu.address.ui;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import org.junit.Before;
@@ -11,10 +15,6 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
 
 public class CommandBoxTest extends GuiUnitTest {
 

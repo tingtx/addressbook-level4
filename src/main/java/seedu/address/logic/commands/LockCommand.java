@@ -1,16 +1,16 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.digestUtil.HashDigest;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.user.User;
-import seedu.address.model.user.exceptions.DuplicateUserException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
 import java.security.SecureRandom;
 import java.util.Random;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
+import seedu.address.logic.commands.digestUtil.HashDigest;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.user.User;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 
 /**
  * Create an account

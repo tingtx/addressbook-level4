@@ -1,5 +1,7 @@
 package guitests;
 
+import java.util.concurrent.TimeoutException;
+
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -17,8 +19,6 @@ import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
 import seedu.address.testutil.TypicalPersons;
-
-import java.util.concurrent.TimeoutException;
 
 /**
  * A GUI Test class for AddressBook.

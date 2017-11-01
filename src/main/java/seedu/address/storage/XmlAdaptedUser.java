@@ -1,9 +1,9 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.User;
-
-import javax.xml.bind.annotation.XmlElement;
 
 public class XmlAdaptedUser {
     @XmlElement(required = true)

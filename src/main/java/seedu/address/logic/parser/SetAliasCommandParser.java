@@ -1,16 +1,16 @@
 //@@author keloysiusmak
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.SetAliasCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.stream.Stream;
-
 import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
+
+import java.util.stream.Stream;
+
+import seedu.address.logic.commands.SetAliasCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new SetAliasCommand object

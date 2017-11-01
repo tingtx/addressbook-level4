@@ -1,6 +1,11 @@
 //@@author keloysiusmak
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.assertConfigCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.assertConfigDiffCommandSuccess;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
 import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.core.Config;
@@ -11,11 +16,6 @@ import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
-import static seedu.address.logic.commands.CommandTestUtil.assertConfigCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.assertConfigDiffCommandSuccess;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.

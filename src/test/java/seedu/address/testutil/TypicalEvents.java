@@ -1,12 +1,12 @@
 package seedu.address.testutil;
 
-import seedu.address.model.EventBook;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import seedu.address.model.EventBook;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 
 /**
  * A utility class containing a list of {@code Event} objects to be used in tests.

@@ -1,13 +1,13 @@
 //@@author keloysiusmak
 package seedu.address.model.alias;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person in the address book.

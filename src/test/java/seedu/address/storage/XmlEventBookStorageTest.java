@@ -1,5 +1,13 @@
 package seedu.address.storage;
 
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalEvents.NETWORK;
+import static seedu.address.testutil.TypicalEvents.SECURITY;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+
+import java.io.IOException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -10,14 +18,6 @@ import seedu.address.model.EventBook;
 import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-
-import java.io.IOException;
-
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalEvents.NETWORK;
-import static seedu.address.testutil.TypicalEvents.SECURITY;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 
 public class XmlEventBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil

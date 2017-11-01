@@ -1,11 +1,11 @@
 package systemtests;
 
+import java.util.concurrent.TimeoutException;
+
 import guitests.guihandles.MainWindowHandle;
 import org.testfx.api.FxToolkit;
 import seedu.address.TestApp;
 import seedu.address.testutil.TypicalPersons;
-
-import java.util.concurrent.TimeoutException;
 
 /**
  * Contains helper methods that system tests require.

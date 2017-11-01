@@ -1,19 +1,19 @@
 package seedu.address.ui;
 
+import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
+import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_PREFIX;
+import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_SUFFIX;
+
+import java.net.URL;
+
 import guitests.guihandles.BrowserWindowHandle;
 import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxToolkit;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-
-import java.net.URL;
-
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
-import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_SUFFIX;
 
 public class BrowserWindowTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;

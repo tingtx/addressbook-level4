@@ -1,15 +1,15 @@
 //@@author keloysiusmak
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.alias.exceptions.DuplicateAliasException;
-import seedu.address.model.alias.exceptions.UnknownCommandException;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 
 /**
  * Sets an alias for a particular command

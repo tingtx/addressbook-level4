@@ -1,8 +1,8 @@
 package seedu.address.model.event;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Event's title in the event book.

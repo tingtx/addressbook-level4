@@ -1,13 +1,13 @@
 package seedu.address.model.user;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.fxmisc.easybind.EasyBind;
 import seedu.address.model.user.exceptions.DuplicateUserException;
-
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 public class UniqueUserList {
     private final ObservableList<User> internalList = FXCollections.observableArrayList();

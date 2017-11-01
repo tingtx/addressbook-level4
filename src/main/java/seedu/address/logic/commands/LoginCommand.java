@@ -1,11 +1,11 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.digestUtil.HashDigest;
-import seedu.address.logic.commands.exceptions.CommandException;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 
-import static java.util.Objects.requireNonNull;
+import seedu.address.logic.commands.digestUtil.HashDigest;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Log the user in.

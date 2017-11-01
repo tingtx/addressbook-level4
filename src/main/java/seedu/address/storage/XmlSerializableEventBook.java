@@ -1,16 +1,16 @@
 package seedu.address.storage;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.ReadOnlyEventBook;
-import seedu.address.model.event.ReadOnlyEvent;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.ReadOnlyEventBook;
+import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * An Immutable AddressBook that is serializable to XML format

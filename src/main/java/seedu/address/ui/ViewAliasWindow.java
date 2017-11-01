@@ -1,6 +1,9 @@
 //@@author keloysiusmak
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
@@ -9,9 +12,6 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
-
-import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  * Controller for a help page

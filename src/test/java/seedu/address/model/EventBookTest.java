@@ -1,17 +1,17 @@
 package seedu.address.model;
 
+import static junit.framework.TestCase.assertEquals;
+import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+
+import java.util.Collection;
+import java.util.Collections;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import seedu.address.model.event.ReadOnlyEvent;
-
-import java.util.Collection;
-import java.util.Collections;
-
-import static junit.framework.TestCase.assertEquals;
-import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 
 public class EventBookTest {
 

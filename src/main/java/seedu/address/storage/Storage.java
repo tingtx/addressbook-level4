@@ -1,5 +1,9 @@
 package seedu.address.storage;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Optional;
+
 import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
@@ -9,10 +13,6 @@ import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.UserPrefs;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Optional;
 
 /**
  * API of the Storage component

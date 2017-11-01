@@ -1,9 +1,9 @@
 package seedu.address.model.event;
 
-import org.junit.Test;
-
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
+
+import org.junit.Test;
 
 public class LocationTest {
 

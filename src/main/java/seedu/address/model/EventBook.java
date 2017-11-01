@@ -1,5 +1,10 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+import java.util.Objects;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -7,11 +12,6 @@ import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
-
-import java.util.List;
-import java.util.Objects;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Wraps all data at the event-book level

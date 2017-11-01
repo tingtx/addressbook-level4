@@ -1,5 +1,9 @@
 package seedu.address;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.function.Supplier;
+
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
@@ -17,10 +21,6 @@ import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.function.Supplier;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for

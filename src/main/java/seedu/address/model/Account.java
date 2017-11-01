@@ -1,12 +1,12 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.UniqueUserList;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
-
-import static java.util.Objects.requireNonNull;
 
 public class Account implements ReadOnlyAccount {
 

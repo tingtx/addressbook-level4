@@ -51,7 +51,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public void setTabPane(TabPane tabPane) {
         generalBookParser.setTabPane(tabPane);
     }
-    
+
     public void setCalendarView(CalendarView calendarView) {
         this.calendarViewStateParser = new CalendarViewStateParser(this.userPrefs, this.model, calendarView);
     }

@@ -1,9 +1,8 @@
 //@@author keloysiusmak
 package seedu.address.ui;
 
-import javafx.stage.Stage;
-
 import guitests.guihandles.ViewAliasWindowHandle;
+import javafx.stage.Stage;
 import org.junit.Before;
 import org.testfx.api.FxToolkit;
 import seedu.address.logic.Logic;

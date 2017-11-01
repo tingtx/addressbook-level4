@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
-
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;

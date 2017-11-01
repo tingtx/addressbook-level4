@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import javafx.collections.ObservableList;
-
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.UniqueUserList;
 import seedu.address.model.user.User;

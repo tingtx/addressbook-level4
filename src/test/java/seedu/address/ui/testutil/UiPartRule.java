@@ -4,7 +4,6 @@ import java.util.concurrent.TimeoutException;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import org.testfx.api.FxToolkit;
 import seedu.address.ui.UiPart;
 

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import javax.xml.bind.JAXBException;
 
 import org.junit.Rule;

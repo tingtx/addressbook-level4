@@ -2,14 +2,13 @@ package guitests;
 
 import java.util.concurrent.TimeoutException;
 
-import javafx.stage.Stage;
-
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;

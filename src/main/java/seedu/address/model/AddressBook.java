@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;

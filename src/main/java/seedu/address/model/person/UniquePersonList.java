@@ -12,7 +12,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.group.Group;

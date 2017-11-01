@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.model.person.ReadOnlyPerson;

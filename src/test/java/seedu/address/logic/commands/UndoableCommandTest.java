@@ -20,8 +20,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
 
-    private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-            Account());
+    private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
+            new Account());
 
     private final DummyCommand dummyCommand = new DummyCommand(model);
 
@@ -42,8 +42,8 @@ public class UndoableCommandTest {
 
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
-        expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account
-                ());
+        expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
+                new Account());
         assertEquals(expectedModel, model);
     }
 

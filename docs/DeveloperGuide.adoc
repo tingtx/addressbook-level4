@@ -317,6 +317,273 @@ image::SetAliasActivityDiagram.png[width="200"]
 **Cons:** Creates a separate file for alias settings which could be grouped under the umbrella of preferences. +
 // end::setalias[]
 
+=== Event mechanism - Coming in V1.4
+
+The event mechanism will facilitated by `EventBook`, which resides inside `ModelManager`. It supports the additional
+feature of event management, which allows the user to add, edit, delete, or find event.
+
+==== Find From All Text Fields Mechanism
+
+The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
+only search for the contact by the name. However, with this mechanism, a user can find texts in the contact's name,
+address, or mixed fields which principally mean all the text fields such as name, address, birthday, phone number and
+remarks *EXCEPT* for tag names.
+
+This leads to the change in the command's syntax. Here is the new syntax: `find <ATTRIBUTE>/KEYWORD [MORE KEYWORDS]`.
+Here, `<ATTRIBUTE>` can either be `n`, `a` or `m`.
+
+The change the format of the command leads to the changes in the FindCommandParser.parse() method:
+
+[source, java]
+----
+    public FindCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+        if (trimmedArgs.charAt(0) == 'n') {
+            NameContainsKeywordsPredicate.setPredicateType('n');
+        } else if (trimmedArgs.charAt(0) == 'a') {
+            NameContainsKeywordsPredicate.setPredicateType('a');
+        } else if (trimmedArgs.charAt(0) == 'm') {
+            NameContainsKeywordsPredicate.setPredicateType('m');
+        } else {
+            throw new ParseException (
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        trimmedArgs = trimmedArgs.substring(2).trim();
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+    }
+----
+
+The code shows how the command is being processed based on the attribute character. Namely, if the attribute is n, the
+find will look for keywords in the name. If the attribute is a, the command will find in the address. Lastly, if the
+attribute is m, the command will find in all text fields.
+
+In the future, this feature can be developed into a best-matched result based on different fields.
+
+
+=== Group mechanism
+
+The group mechanism is facilitated by the `Person`, which resides inside the 'Addressbook'.
+It supports adding a custom group to a number of contacts by utilizing the CLI commands in the TunedIn application.
+
+Group is stored as an attribute of Person. Each person will have an empty or a group.
+
+The implementation of the `Group` command constructor is shown below : +
+insert diagram
+
+As you can see from the implementation, Group command require two type of inputs in the form of `Index` and `Group`.
+The first input in the form of `List<Index>` stores a list of index(es) correspond to the person(s) to be grouped. The
+second input in the form of Group stores the group name specified by the user.
+
+The implementation of storing group into individual person is as shown : +
+insert code.
+
+Suppose that the user has just launched the application.
+Assuming a valid addressbook xml file exists (with numerous person data in it),
+the UniquePersonList will start storing a list of Person object with correspondence to the xml file.
+Each person will either have a textual or empty `Group`.
+
+The user executes a `group` Command by calling `group 1 2 g/TEST1`, to set the 1st and 2nd person’s group to "TEST1" in the address book.
+The existing `group` will be replaced by the user input "TEST1" and the Persons’ object will be updated.
+
+The user then executes another `group`Command by calling `group 2 3 4 5 g/ to ungroup the 2nd to 5th person.
+
+[NOTE]
+If the group command fails its execution due to invalid index(es), the list of person(s) will not be grouped.
+
+The following sequence diagram shows how the group operation works: //insert sequence diagram.
+
+
+`list` command will be enhanced with group feature, allowing user to list contacts of a specified group.
+
+
+=== Order(Sort) mechanism
+The order mechanism is facilitated by the `orderBy` method, which resides inside the `UniquePersonList > Person > Addressbook`. It supports
+the ordering(sorting) of the contact list by utilizing the CLI commands in the TunedIn application. +
+
+`OrderCommand` supports
+undoing and redoing of command and inherit from the `UndoableCommands`. The following diagram shows the inheritance
+diagram for the command: //insert diagram +
+
+The implementation of the `order` command constructor is as shown : //insert code +
+
+As you can see from the implementation, the command requires user inputs in the form of 'String' as the paramater/s
+to order. The inputs are restricted by the fields of `Person` which only includes `Name`, `Address`,
+`Tag` and `Birthday`. The command is able to order by a maximum of two parameters. It will order the list by
+the first parameter follow by the second parameter.
+
+The implementation of the ordering mechanism is shown below: //insert code +
+
+As you can see, 4 `Comparator` object are constructed for each valid parameter to compare the list of contacts
+and order according to natural order. +
+
+[NOTE]
+`Birthday` is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format. +
+This is achieved by reformatting the
+ `Birthday` string as shown: //insert code
+ +
+ Person(s) with empty `Birthday` field will be sorted to the last.
+
+Suppose that the user has just launched the application and no previous `order` command has been called. The contacts will
+be listed according to the default ordering, in order of the order a particular contact is added (Last contact added will appear as the last in the list).
+
+
+The user executes another `order` command by typing `order name`, to view the list of contacts ordered in alphabetical order
+based on the `Name` field of a person. With valid input the list of contacts will be ordered accordingly and
+the ordered list will be shown.
+
+The user executes another command by typing `order tag name` to order the list by `Tag` first then `Name` of the person.
+
+[NOTE]
+If the order command fails its execution due to invalid order parameter, the list of contact will
+not be ordered.
+
+The following sequence diagram shows how the order operation works: //insert sequence diagram.
+
+
+=== Remark mechanism
+
+The remark mechanism is facilitated by `Person`, which resides inside `Addressbook`. It supports adding a custom remark to individual contact
+by utilizing the CLI commands in the Tunedln application.
+
+`Person` only deals with `Name`, `Phone`, `Email`, `Address`, `Birthday`, `Remark`, and `Tags`.
+
+The following diagram shows the inheritance diagram for `Person`:
+
+image::RemarkClassDiagram.png[width="800"]
+
+As you can see from the diagram, Person stores the remark as an attribute. This Person object is then stored in the
+UniquePersonList, which resides in the AddressBook.
+
+The implementation of the constructor Remark class is shown below in greater detail. Each person in the UnqiuePersonList will have
+either an empty or textual remark. As you can see from the implementation, Remark require one String input. This input
+will be provided by the user (which is also owner of the Addressbook), and it will override the existing Remark value (*Note: Empty String is also allowed).
+Note that this technique of abstraction allows us to further expand Remark into different smaller class to display
+out a more detailed Remark (E.g. let's take Address class for instance, it could consists of Block, Street, UnitNo, Postal).
+
+[source, java]
+----
+  public Remark(String remark) {
+        requireNonNull(remark);
+        this.value = remark;
+    }
+----
+
+The implementation of storing Remark into a Person object is shown below:
+
+[source, java]
+----
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        this.remark = new SimpleObjectProperty<>(remark);
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+----
+
+Suppose that the user has just launched the application. Assuming a valid addressbook xml file exists (with numerous person data in it),
+the UniquePersonList will start storing a list of Person object with correspondence to the xml file. Each person will either have a textual or empty remark.
+
+The user executes an `edit` Command by calling `edit 1 r/1st try`, to set the 1st person's
+remark to "1st try" in the address book. The existing Remark value will be replaced by the user input "1st try" and
+the 1st Person's object will be updated, since the Remark object is referencing to the 1st Person's remark attribute.
+
+image::ReplacingRemarkDiagram.png[width="800"]
+
+The user executes another edit command by calling `edit 1 r/2nd try`, to replace the remark initial value which is
+"1st try" to "2nd try".
+
+image::ReplacingRemarkDiagram2.png[width="800"]
+
+[NOTE]
+If the edit command fails its execution due to unacceptable syntax, the person's remark will not be replaced.
+
+
+The following sequence diagram shows how the edit remark operation works:
+
+image::ReplacingRemarkSequence.png[width="800"]
+
+
+The following activity diagram summarize what happens inside the `Person` when a user executes a new command:
+
+image::ReplacingRemarkActivityDiagram.png[width="200"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of Remark +
+**Alternative 1 (current choice):** Replace the existing Person object with an edited
+Person object. +
+**Pros:** Neat and Clearer abstractions to be displayed in class diagram. +
+**Cons:** Tedious, as the implementation could have be simpler by assigning String as Remark attribute. +
+**Alternative 2:** Let String be the attribute for Remark +
+**Pros:** Easy to implement. +
+**Cons:** Harder to understand the flow of the implementation.
+
+---
+
+**Aspect:** Viewing of Remark
+**Alternative 1 (current choice):** Only one remark is able to store for one contact. +
+**Pros:** Easy to implement. +
+**Cons:** User is unable to keep more than 1 remark. +
+**Alternative 2:** Data structure to support multiple remark. +
+**Pros:** User is given the choice to overwrite or save a new remark. +
+**Cons:** Harder to implement.
+
+---
+
+=== Theme mechanism - Coming in V1.4
+
+The theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
+of custom preset themes for the TunedIn application.
+
+---
+
+Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+
+
+=== Lock Mechanism - Coming in V1.4 and V1.5
+
+The lock mechanism will enable users to create user accounts with a user name and a password. The user credentials will
+then be persisted into the account.xml as hash digests of the SHA-256 algorithm. User name will be hashed and the hashed
+value will be stored directly into the account.xml file. Each user will be given a randomised salt value, which will
+also be hashed and stored in the account.xml file. For the password, it will first be prepended with the salt value from
+that user, after which the combined string will be hashed and stored. In this way, users with the same password will
+have different hash digests, upholding the confidentiality of the information.
+
+When the user uses the lock command, he/she needs to supply the `USERNAME` and `PASSWORD` for that account. The program
+will then hash the `USERNAME` and compare with the existing user name hash digests from the file. If the hash values are
+the same, a `DuplicateUserException` exception will be thrown.
+
+Further development would be to encrypt the existing contacts with the user's password. A log out command will be
+developed so that once user has locked the contact and logged out, the list of contacts will be emptied. Next, a log-in
+command will be developed which will require the user to supply the `USERNAME` and `PASSWORD`. The programme then verify
+if the credentials are correct with the account.xml file. Finally, it will decrypt the contacts of that user using the
+plaintext of the supplied password.
+
+**Design Considerations:** +
+**Aspect:** Separation of addressbook.xml file into usercontact files +
+**Description:** Save the contacts that belong to a user in a separate file designated for that user only +
+**Pros:** Ease of encryption, decryption and navigation. +
+**Cons:** Greater overheads to manage multiple xml files which can interfere with other existing or incoming increments
+to the program +
+
+---
+
+
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -443,212 +710,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
-
-=== Order(Sort) mechanism
-The order mechanism is facilitated by the `orderBy` method, which resides inside the `UniquePersonList > Person > Addressbook`. It supports
-the ordering(sorting) of the contact list by utilizing the CLI commands in the TunedIn application. +
-
-`OrderCommand` supports
-undoing and redoing of command and inherit from the `UndoableCommands`. The following diagram shows the inheritance
-diagram for the command: //insert diagram +
-
-The implementation of the `order` command is as shown : //insert code +
-
-As you can see from the implementation, the command requires user inputs in the form of 'String' as the paramater/s
-to order. The inputs are restricted by the fields of `Person` which includes `Name`, `Address`,
-`Tag` and `Birthday`. The command is able to order by a maximum of two parameters. It will order the list by
-the first parameter follow by the second parameter.
-
-The implementation of the ordering mechanism is shown below: //insert code +
-
-As you can see, 4 `Comparator` object are constructed for each valid parameter to compare the list of contacts
-and order according to natural order. +
-
-[NOTE]
-`Birthday` is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format. +
-This is achieved by reformatting the
- `Birthday' string as shown: //insert code
- +
-
-Suppose that the user has just launched the application and no previous `order` command has been called. The contacts will
-be listed according to the default ordering, in order of the order a particular contact is added (Last contact added will appear as the last in the list).
-
-
-The user executes an `order` command by typing `order name`, to view the list of contacts ordered in alphabetical order
-based on the `Name` field of a person. With valid input the list of contacts will be ordered accordingly and
-the ordered list will be shown.
-
-The user executes another command by typing `order tag name` to order the list by `Tag` first then `Name` of the person.
-
-[NOTE]
-If the order command fails its execution due to invalid order parameter, the list of contact will
-not be ordered.
-
-The following sequence diagram shows how the order operation works: //insert sequence diagram.
-
-
-=== Theme mechanism - Coming in V1.4
-
-The theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
-of custom preset themes for the TunedIn application.
-
----
-
-Themes will persist even after closing the app, allowing the user to use the application the way he desires.
-
-=== Group mechanism - Coming in V1.4
-
-The group mechanism will be facilitated by the `Person', which resides inside 'Addressbook'. It supports
-grouping contacts into user defined group by utilizing the CLI commands in the TunedIn application.
-
-`list` command will be enhanced with group feature, allowing user to list contacts of a specified group.
-
-=== Event mechanism - Coming in V1.4
-
-The event mechanism will facilitated by `EventBook`, which resides inside `ModelManager`. It supports the additional
-feature of event management, which allows the user to add, edit, delete, or find event.
-
-
-=== Remark mechanism
-
-The remark mechanism is facilitated by `Person`, which resides inside `Addressbook`. It supports adding a custom remark to individual contact
-by utilizing the CLI commands in the Tunedln application.
-
-`Person` only deals with `Name`, `Phone`, `Email`, `Address`, `Birthday`, `Remark`, and `Tags`.
-
-The following diagram shows the inheritance diagram for `Person`:
-
-image::RemarkClassDiagram.png[width="800"]
-
-As you can see from the diagram, Person stores the remark as an attribute. This Person object is then stored in the
-UniquePersonList, which resides in the AddressBook.
-
-The implementation of the constructor Remark class is shown below in greater detail. Each person in the UnqiuePersonList will have
-either an empty or textual remark. As you can see from the implementation, Remark require one String input. This input
-will be provided by the user (which is also owner of the Addressbook), and it will override the existing Remark value (*Note: Empty String is also allowed).
-Note that this technique of abstraction allows us to further expand Remark into different smaller class to display
-out a more detailed Remark (E.g. let's take Address class for instance, it could consists of Block, Street, UnitNo, Postal).
-
-[source, java]
-----
-  public Remark(String remark) {
-        requireNonNull(remark);
-        this.value = remark;
-    }
-----
-
-The implementation of storing Remark into a Person object is shown below:
-
-[source, java]
-----
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,
-                  Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, birthday, tags);
-        this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        this.birthday = new SimpleObjectProperty<>(birthday);
-        this.remark = new SimpleObjectProperty<>(remark);
-
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-    }
-----
-
-Suppose that the user has just launched the application. Assuming a valid addressbook xml file exists (with numerous person data in it),
-the UniquePersonList will start storing a list of Person object with correspondence to the xml file. Each person will either have a textual or empty remark.
-
-The user executes an `edit` Command by calling `edit 1 r/1st try`, to set the 1st person's
-remark to "1st try" in the address book. The existing Remark value will be replaced by the user input "1st try" and
-the 1st Person's object will be updated, since the Remark object is referencing to the 1st Person's remark attribute.
-
-image::ReplacingRemarkDiagram.png[width="800"]
-
-The user executes another edit command by calling `edit 1 r/2nd try`, to replace the remark initial value which is
-"1st try" to "2nd try".
-
-image::ReplacingRemarkDiagram2.png[width="800"]
-
-[NOTE]
-If the edit command fails its execution due to unacceptable syntax, the person's remark will not be replaced.
-
-
-The following sequence diagram shows how the edit remark operation works:
-
-image::ReplacingRemarkSequence.png[width="800"]
-
-
-The following activity diagram summarize what happens inside the `Person` when a user executes a new command:
-
-image::ReplacingRemarkActivityDiagram.png[width="200"]
-
-
-==== Design Considerations
-
-**Aspect:** Implementation of Remark +
-**Alternative 1 (current choice):** Replace the existing Person object with an edited
-Person object. +
-**Pros:** Neat and Clearer abstractions to be displayed in class diagram. +
-**Cons:** Tedious, as the implementation could have be simpler by assigning String as Remark attribute. +
-**Alternative 2:** Let String be the attribute for Remark +
-**Pros:** Easy to implement. +
-**Cons:** Harder to understand the flow of the implementation.
-
----
-
-**Aspect:** Viewing of Remark
-**Alternative 1 (current choice):** Only one remark is able to store for one contact. +
-**Pros:** Easy to implement. +
-**Cons:** User is unable to keep more than 1 remark. +
-**Alternative 2:** Data structure to support multiple remark. +
-**Pros:** User is given the choice to overwrite or save a new remark. +
-**Cons:** Harder to implement.
-
----
-=== Find From All Text Fields Mechanism
-
-The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
-only search for the contact by the name. However, with this mechanism, a user can find texts in the contact's name,
-address, or mixed fields which principally mean all the text fields such as name, address, birthday, phone number and
-remarks *EXCEPT* for tag names.
-
-This leads to the change in the command's syntax. Here is the new syntax: `find <ATTRIBUTE>/KEYWORD [MORE KEYWORDS]`.
-Here, `<ATTRIBUTE>` can either be `n`, `a` or `m`.
-
-The change the format of the command leads to the changes in the FindCommandParser.parse() method:
-
-[source, java]
-----
-    public FindCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-        if (trimmedArgs.charAt(0) == 'n') {
-            NameContainsKeywordsPredicate.setPredicateType('n');
-        } else if (trimmedArgs.charAt(0) == 'a') {
-            NameContainsKeywordsPredicate.setPredicateType('a');
-        } else if (trimmedArgs.charAt(0) == 'm') {
-            NameContainsKeywordsPredicate.setPredicateType('m');
-        } else {
-            throw new ParseException (
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
-
-        trimmedArgs = trimmedArgs.substring(2).trim();
-        String[] nameKeywords = trimmedArgs.split("\\s+");
-
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-    }
-----
-
-The code shows how the command is being processed based on the attribute character. Namely, if the attribute is n, the
-find will look for keywords in the name. If the attribute is a, the command will find in the address. Lastly, if the
-attribute is m, the command will find in all text fields.
-
-In the future, this feature can be developed into a best-matched result based on different fields.
+>>>>>>> master
 
 === Logging
 
@@ -664,6 +726,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
 
 === Configuration
 

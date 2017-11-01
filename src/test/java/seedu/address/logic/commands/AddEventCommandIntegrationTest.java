@@ -33,7 +33,8 @@ public class AddEventCommandIntegrationTest {
     public void execute_newEvent_success() throws Exception {
         Event validEvent = new EventBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new Account());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new
+                Account());
         expectedModel.addEvent(validEvent);
 
         assertCommandSuccess(prepareCommand(validEvent, model), model,

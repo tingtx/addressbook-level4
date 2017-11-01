@@ -34,7 +34,8 @@ public class AddCommandIntegrationTest {
     public void execute_newPerson_success() throws Exception {
         Person validPerson = new PersonBuilder().withName("Steven Lim").build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new Account());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(),
+                new Account());
         expectedModel.addPerson(validPerson);
 
         assertCommandSuccess(prepareCommand(validPerson, model), model,

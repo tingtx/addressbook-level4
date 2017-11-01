@@ -38,7 +38,8 @@ import seedu.address.testutil.EventBuilder;
  */
 public class EditEventCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
+            Account());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {

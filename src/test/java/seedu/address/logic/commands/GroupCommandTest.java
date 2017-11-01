@@ -39,7 +39,8 @@ import seedu.address.testutil.TypicalIndexes;
 
 public class GroupCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
+            Account());
 
     @Test
     public void execute_groupOnePerson_success() throws Exception {

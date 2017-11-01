@@ -32,7 +32,8 @@ import seedu.address.testutil.PersonBuilder;
 
 public class RemarkCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
+            Account());
 
     //
     @Test

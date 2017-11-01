@@ -32,7 +32,8 @@ import seedu.address.model.event.TitleContainsKeywordsPredicate;
  */
 public class FindEventCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
+            Account());
 
     @Test
     public void equals() {

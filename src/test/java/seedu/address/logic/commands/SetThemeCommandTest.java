@@ -28,7 +28,8 @@ public class SetThemeCommandTest {
     private SetThemeCommand setThemeCommand;
     private SetThemeCommand setThemeCommand2;
     private SetThemeCommand setThemeCommand3;
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
+            Account());
 
     @Before
     public void setUp() {

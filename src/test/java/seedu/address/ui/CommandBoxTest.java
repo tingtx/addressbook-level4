@@ -4,8 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
-import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+
+import guitests.guihandles.CommandBoxHandle;
 import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.core.Config;

@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;

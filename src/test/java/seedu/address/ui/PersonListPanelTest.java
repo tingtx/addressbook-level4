@@ -7,10 +7,11 @@ import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import guitests.guihandles.PersonCardHandle;
+import guitests.guihandles.PersonListPanelHandle;
 import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;

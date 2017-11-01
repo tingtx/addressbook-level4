@@ -8,8 +8,9 @@ import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_SUFFIX;
 
 import java.net.URL;
 
-import guitests.guihandles.BrowserWindowHandle;
 import javafx.stage.Stage;
+
+import guitests.guihandles.BrowserWindowHandle;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.api.FxToolkit;

@@ -1,7 +1,8 @@
 package guitests.guihandles;
 
-import guitests.GuiRobot;
 import javafx.stage.Stage;
+
+import guitests.GuiRobot;
 
 /**
  * A handle to the {@code ViewAliasWindow} of the application.

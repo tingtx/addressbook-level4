@@ -105,7 +105,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyAccount> readAccount(String filePath) throws FileNotFoundException, DataConversionException {
+    public Optional<ReadOnlyAccount> readAccount(String filePath)
+            throws FileNotFoundException, DataConversionException {
         logger.fine("Attempting to read data from account file: " + filePath);
         return accountStorage.readAccount(filePath);
     }

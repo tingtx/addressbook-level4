@@ -27,7 +27,8 @@ public class EventBook implements ReadOnlyEventBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */ {
+     */
+    {
         events = new UniqueEventList();
     }
 

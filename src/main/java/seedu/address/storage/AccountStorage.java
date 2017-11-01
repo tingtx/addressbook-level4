@@ -7,6 +7,9 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAccount;
 
+/**
+ * Represents a storage for {@link seedu.address.model.Account}.
+ */
 public interface AccountStorage {
 
     /**

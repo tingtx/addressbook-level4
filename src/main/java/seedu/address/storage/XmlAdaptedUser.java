@@ -5,6 +5,9 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.User;
 
+/**
+ * JAXB-friendly version of the Event.
+ */
 public class XmlAdaptedUser {
     @XmlElement(required = true)
     private String userId;

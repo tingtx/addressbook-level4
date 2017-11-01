@@ -36,7 +36,8 @@ public class XmlSerializableAccount implements ReadOnlyAccount {
 
     @Override
     public ObservableList<ReadOnlyUser> getUserList() {
-        final ObservableList<ReadOnlyUser> users = this.users.stream().map(u -> u.toModelType()).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        final ObservableList<ReadOnlyUser> users = this.users.stream().map(u ->
+                u.toModelType()).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(users);
     }
 }

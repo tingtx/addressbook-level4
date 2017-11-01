@@ -9,6 +9,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
 
 public class UniqueUserList {
     private final ObservableList<User> internalList = FXCollections.observableArrayList();
@@ -34,6 +35,20 @@ public class UniqueUserList {
             throw new DuplicateUserException();
         }
         internalList.add(new User(toAdd));
+    }
+
+    /**
+     * Removes the equivalent event from the list.
+     *
+     * @throws UserNotFoundException if no such event could be found in the list.
+     */
+    public boolean remove(ReadOnlyUser toRemove) throws UserNotFoundException {
+        requireNonNull(toRemove);
+        final boolean userFoundAndDeleted = internalList.remove(toRemove);
+        if (!userFoundAndDeleted) {
+            throw new UserNotFoundException();
+        }
+        return userFoundAndDeleted;
     }
 
     /**

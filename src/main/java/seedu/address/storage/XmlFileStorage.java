@@ -37,6 +37,9 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Saves the given account data to the specified file.
+     */
     public static void saveAccountToFile(File file, XmlSerializableAccount account)
             throws FileNotFoundException {
         try {

@@ -1,5 +1,10 @@
 package seedu.address.model.user;
 
+
+/**
+ * A read-only immutable interface for a user in the Account.
+ * Implementations should guarantee: details are present and not null, field values are validated.
+ */
 public interface ReadOnlyUser {
     String getUserId();
 

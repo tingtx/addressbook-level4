@@ -13,6 +13,9 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAccount;
 
+/**
+ * A class to access TunedIn Account data stored as an xml file on the hard disk.
+ */
 public class XmlAccountStorage implements AccountStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
@@ -36,12 +39,19 @@ public class XmlAccountStorage implements AccountStorage {
         return filePath;
     }
 
-    public Optional<ReadOnlyAccount> readAccount(String FilePath) throws FileNotFoundException, DataConversionException {
+    /**
+     * Similar to {@link #readAccount()}
+     *
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public Optional<ReadOnlyAccount> readAccount(String filePath)
+            throws FileNotFoundException, DataConversionException {
         requireNonNull(filePath);
 
         File accountFile = new File(filePath);
         if (!accountFile.exists()) {
-            logger.info("AddressBook file " + accountFile + " not found");
+            logger.info("Account file " + accountFile + " not found");
             return Optional.empty();
         }
 
@@ -56,11 +66,15 @@ public class XmlAccountStorage implements AccountStorage {
     }
 
     @Override
-    public void saveAccount(ReadOnlyAccount addressBook) {
-
+    public void saveAccount(ReadOnlyAccount account) throws IOException {
+        saveAccount(account, filePath);
     }
 
-    @Override
+    /**
+     * Similar to {@link #saveAccount(ReadOnlyAccount)}
+     *
+     * @param filePath location of the data. Cannot be null
+     */
     public void saveAccount(ReadOnlyAccount account, String filePath) throws IOException {
         requireNonNull(account);
         requireNonNull(filePath);

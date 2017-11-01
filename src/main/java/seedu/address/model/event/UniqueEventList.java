@@ -134,20 +134,20 @@ public class UniqueEventList implements Iterable<Event> {
         };
 
         switch (parameter) {
-            case "TITLE":
-                internalList.sort(orderByTitle);
-                break;
+        case "TITLE":
+            internalList.sort(orderByTitle);
+            break;
 
-            case "LOCATION":
-                internalList.sort(orderByLocation);
-                break;
+        case "LOCATION":
+            internalList.sort(orderByLocation);
+            break;
 
-            case "DATETIME":
-                internalList.sort(orderByDatetime);
-                break;
+        case "DATETIME":
+            internalList.sort(orderByDatetime);
+            break;
 
-            default:
-                throw new UnrecognisedParameterException();
+        default:
+            throw new UnrecognisedParameterException();
         }
 
 

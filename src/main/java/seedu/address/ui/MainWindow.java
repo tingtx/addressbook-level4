@@ -6,6 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SingleSelectionModel;
@@ -50,6 +51,7 @@ public class MainWindow extends UiPart<Region> {
     private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
+    private CalendarViewPane calendarviewPane;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -163,7 +165,12 @@ public class MainWindow extends UiPart<Region> {
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
+        calendarviewPane = new CalendarViewPane(logic);
+        logic.setCalendarView(calendarviewPane.getCalendarPane());
+
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        resultDisplayPlaceholder.getChildren().add(calendarviewPane.getRoot());
+        StackPane.setMargin(resultDisplayPlaceholder.getChildren().get(1), new Insets(35, 0, 0, 0));
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());

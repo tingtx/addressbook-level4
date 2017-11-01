@@ -53,7 +53,7 @@ public class AddCommandParserTest {
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withGroup("").withTags(VALID_TAG_FRIEND).build();
 
         // multiple names - last name accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB
@@ -94,17 +94,17 @@ public class AddCommandParserTest {
         // zero tags
         Person personNoTag = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
-                .withTags().build();
+                .withGroup("").withTags().build();
 
         //no birthday
         Person personNoBday = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBirthday("")
-                .withTags(VALID_TAG_FRIEND).build();
+                .withGroup("").withTags(VALID_TAG_FRIEND).build();
 
         //no email
         Person personNoEmail = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail("").withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withGroup("").withTags(VALID_TAG_FRIEND).build();
 
         // command word
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY

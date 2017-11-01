@@ -4,10 +4,12 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +20,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.AliasSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -28,9 +31,11 @@ import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -39,6 +44,7 @@ import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -67,7 +73,7 @@ public class GeneralBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new PersonBuilder().withGroup("").build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         Assert.assertEquals(new AddCommand(person), command);
     }
@@ -108,19 +114,6 @@ public class GeneralBookParserTest {
     }
 
     @Test
-    public void parseCommand_remark() throws Exception {
-        final Remark remark = new Remark("Some remark.");
-        RemarkCommand command = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
-        Assert.assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
-
-        //alias
-        command = (RemarkCommand) parser.parseCommand(aliasSettings.getRemarkCommand().getAlias() + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
-        Assert.assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
-    }
-
-    @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
@@ -144,6 +137,23 @@ public class GeneralBookParserTest {
                         Collectors.joining(" ")));
         Assert.assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
+
+    //@@author tingtx
+    @Test
+    public void parseCommand_group() throws Exception {
+        final Group group = new Group("TEST");
+        final List<Index> indexes = new ArrayList<>();
+        indexes.add(INDEX_FIRST_PERSON);
+        GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group.value);
+        Assert.assertEquals(new GroupCommand(indexes, group), command);
+
+        //alias
+        command = (GroupCommand) parser.parseCommand(aliasSettings.getGroupCommand().getAlias()
+                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group.value);
+        Assert.assertEquals(new GroupCommand(indexes, group), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {
@@ -185,6 +195,34 @@ public class GeneralBookParserTest {
                 instanceof ListCommand);
     }
 
+    //@@author tingtx
+    @Test
+    public void parseCommand_order() throws Exception {
+        final String parameter = "NAME";
+        OrderCommand command = (OrderCommand) parser.parseCommand(OrderCommand.COMMAND_WORD + " "
+                + parameter);
+        Assert.assertEquals(new OrderCommand(parameter), command);
+
+        //alias
+        command = (OrderCommand) parser.parseCommand(aliasSettings.getOrderCommand().getAlias()
+                + " " + parameter);
+        Assert.assertEquals(new OrderCommand(parameter), command);
+    }
+    //@@author
+
+    @Test
+    public void parseCommand_remark() throws Exception {
+        final Remark remark = new Remark("Some remark.");
+        RemarkCommand command = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
+        Assert.assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
+
+        //alias
+        command = (RemarkCommand) parser.parseCommand(aliasSettings.getRemarkCommand().getAlias() + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + " " + remark.value);
+        Assert.assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
+    }
+
     @Test
     public void parseCommand_viewalias() throws Exception {
         assertTrue(parser.parseCommand(ViewAliasCommand.COMMAND_WORD) instanceof ViewAliasCommand);
@@ -195,6 +233,7 @@ public class GeneralBookParserTest {
         assertTrue(parser.parseCommand(aliasSettings.getViewAliasCommand().getAlias() + " 3")
                 instanceof ViewAliasCommand);
     }
+
 
     @Test
     public void parseCommand_select() throws Exception {

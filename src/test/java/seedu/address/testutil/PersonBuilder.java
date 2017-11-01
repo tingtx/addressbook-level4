@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_BIRTHDAY = "10-10-1994";
+    public static final String DEFAULT_GROUP = "TEST";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_TAGS = "friends";
 
@@ -36,10 +38,11 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
+            Group defaultGroup = new Group(DEFAULT_GROUP);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultBirthday, defaultRemark, defaultTags);
+                    defaultAddress, defaultBirthday, defaultGroup, defaultRemark, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -112,6 +115,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author tingtx
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
@@ -124,6 +128,15 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Group} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withGroup(String group) {
+
+        this.person.setGroup(new Group(group));
+        return this;
+    }
+    //@@author
 
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building

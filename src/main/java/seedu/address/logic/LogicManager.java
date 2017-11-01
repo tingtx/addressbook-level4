@@ -45,7 +45,6 @@ public class LogicManager extends ComponentManager implements Logic {
         this.history = new CommandHistory();
         this.generalBookParser = new GeneralBookParser(userprefs);
         this.undoRedoStack = new UndoRedoStack();
-
     }
 
     @Override

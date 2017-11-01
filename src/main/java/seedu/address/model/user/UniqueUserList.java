@@ -11,6 +11,13 @@ import javafx.collections.ObservableList;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
+/**
+ * A list of users that enforces uniqueness between its elements and does not allow nulls.
+ * <p>
+ * Supports a minimal set of list operations.
+ *
+ * @see User#equals(Object)
+ */
 public class UniqueUserList {
     private final ObservableList<User> internalList = FXCollections.observableArrayList();
     // used by asObservableList()

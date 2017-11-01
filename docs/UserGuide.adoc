@@ -220,6 +220,7 @@ or finding in any text field. This is case-sensitive.
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
+* The keyword doesn't have to be an exact word. e.g. `kai` will match similar names like `kai yu`, `kaiser`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -242,9 +243,10 @@ Finds events whose titles contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* `<attribute>` refers to either `et`, standing for title, `ed`, standing for description, or `em`, standing for mixed fields,
+* `<attribute>` refers to either `et`, standing for title, `ed`, standing for description, `edt`, standing for Datetime, or `em`, standing for mixed fields,
 or finding in any text field. This is case-sensitive.
 * The search is case insensitive. e.g `sentosa` will match `Sentosa`
+* The keyword doesn't have to be an exact word. e.g. `bask` will match similar words like `Basketball Competition`, `Basket Promotion`
 * The order of the keywords does not matter. e.g. `Universal Sentosa` will match `Sentosa Universal`
 * Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `Sentosa Fun` will return `Sentosa Universal`
 ****

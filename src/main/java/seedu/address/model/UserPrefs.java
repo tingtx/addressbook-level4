@@ -15,8 +15,8 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private AliasSettings aliasSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
     private String accountFilePath = "data/account.xml";
+    private String addressBookName = "MyAddressBook";
     private String eventBookFilePath = "data/eventbook.xml";
     private String eventBookName = "MyEventBook";
 

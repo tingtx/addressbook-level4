@@ -32,6 +32,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -143,6 +144,8 @@ public class CommandTestUtil {
             assertEquals(expectedConfig, actualConfig);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (DuplicateUserException due) {
+            throw new AssertionError("Execution of command should not fail.", due);
         }
     }
 
@@ -159,6 +162,8 @@ public class CommandTestUtil {
             assertNotEquals(expectedConfig, actualConfig);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (DuplicateUserException due) {
+            throw new AssertionError("Execution of command should not fail.", due);
         }
     }
     //@@author
@@ -176,6 +181,8 @@ public class CommandTestUtil {
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
+        } catch (DuplicateUserException due) {
+            throw new AssertionError("Execution of command should not fail.", due);
         }
     }
 
@@ -203,6 +210,8 @@ public class CommandTestUtil {
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
             assertEquals(expectedEventBook.toString(), actualModel.getEventBook().toString());
             assertEquals(expectedEventFilteredList, actualModel.getFilteredEventList());
+        } catch (DuplicateUserException due) {
+            throw new AssertionError("Execution of command should not fail.", due);
         }
     }
 

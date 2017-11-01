@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.ViewAliasCommand.MESSAGE_SUCCESS;
 
 import org.junit.Rule;
 import org.junit.Test;
+
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class ViewAliasCommandTest {

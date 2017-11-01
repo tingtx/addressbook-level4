@@ -2,8 +2,9 @@ package systemtests;
 
 import java.util.concurrent.TimeoutException;
 
-import guitests.guihandles.MainWindowHandle;
 import org.testfx.api.FxToolkit;
+
+import guitests.guihandles.MainWindowHandle;
 import seedu.address.TestApp;
 import seedu.address.testutil.TypicalPersons;
 

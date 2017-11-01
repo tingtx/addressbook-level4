@@ -4,9 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import org.fxmisc.easybind.EasyBind;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.fxmisc.easybind.EasyBind;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
 public class UniqueUserList {

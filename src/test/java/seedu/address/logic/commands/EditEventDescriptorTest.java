@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEEPAV
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_DEEPAVALI;
 
 import org.junit.Test;
+
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
 public class EditEventDescriptorTest {

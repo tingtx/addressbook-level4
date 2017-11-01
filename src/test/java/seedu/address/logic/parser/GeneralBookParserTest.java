@@ -18,6 +18,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;

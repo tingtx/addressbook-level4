@@ -3,8 +3,9 @@ package guitests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import guitests.guihandles.HelpWindowHandle;
 import org.junit.Test;
+
+import guitests.guihandles.HelpWindowHandle;
 import seedu.address.logic.commands.HelpCommand;
 
 public class HelpWindowTest extends AddressBookGuiTest {

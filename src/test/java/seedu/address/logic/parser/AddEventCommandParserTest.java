@@ -12,6 +12,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_DEEPAVALI
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.AddEventCommand;
 
 public class AddEventCommandParserTest {

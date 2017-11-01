@@ -6,11 +6,12 @@ import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
 import java.util.Collection;
 import java.util.Collections;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 
 public class EventBookTest {

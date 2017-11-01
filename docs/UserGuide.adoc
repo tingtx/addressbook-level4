@@ -289,10 +289,26 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Lock contacts by user : `lock` - Since V1.5
+
+Create a user account from the specified username and password. +
+Format: `lock u/USER_NAME p/PASSWORD`
+
+Examples:
+
+* `lock u/KELOYSIUS p/SPECIAL1PASS`
+
+====
+* The user's credentials will be hashed by SHA-256 algorithm.
+* The `USER_NAME` is case sensitive.
+* If the `USER_NAME` has been registered before, an error message saying `User Exists` will be displayed.
+* Different users can use the same password
+====
+
 === Login : `login` - Coming in V2.0
 
 Logs in to the TunedIn Application. +
-Format: `login u/USER_NAME pw/PASSWORD`
+Format: `login u/USER_NAME p/PASSWORD`
 
 Examples:
 

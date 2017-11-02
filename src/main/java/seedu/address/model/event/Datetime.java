@@ -18,7 +18,7 @@ public class Datetime {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String DATETIME_VALIDATION_REGEX =
-            "\\d\\d-\\d\\d-\\d\\d\\d\\d \\d\\d\\d\\d";
+            "((0[1-9])|([012][0-9])|(3[01]))-(0[1-9]|1[012])-\\d\\d\\d\\d (([0-1][0-9])|(2[0-3]))[0-5][0-9]";
 
     public final String value;
 

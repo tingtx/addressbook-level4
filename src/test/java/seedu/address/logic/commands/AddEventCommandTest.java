@@ -37,6 +37,7 @@ import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.testutil.EventBuilder;
 
+//@author kaiyu92
 public class AddEventCommandTest {
 
     @Rule

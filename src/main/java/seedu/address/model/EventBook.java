@@ -13,6 +13,7 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
+//@@author kaiyu92
 /**
  * Wraps all data at the event-book level
  * Duplicates are not allowed (by .equals comparison)

@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import seedu.address.logic.Logic;
 
+//@@author kaiyu92
 /**
  * The UI component that is responsible containing the CalendarView
  */

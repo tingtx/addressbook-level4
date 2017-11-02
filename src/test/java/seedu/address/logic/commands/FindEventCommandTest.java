@@ -27,6 +27,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
+//@@author kaiyu92
 /**
  * Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
  */

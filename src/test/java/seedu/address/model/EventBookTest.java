@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author kaiyu92
 public class EventBookTest {
 
     @Rule

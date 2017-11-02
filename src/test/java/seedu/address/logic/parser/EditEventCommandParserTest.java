@@ -28,6 +28,7 @@ import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
+//@@author kaiyu92
 public class EditEventCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =

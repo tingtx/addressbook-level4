@@ -20,6 +20,7 @@ import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author kaiyu92
 public class XmlEventBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil
             .getPath("./src/test/data/XmlEventBookStorageTest/");

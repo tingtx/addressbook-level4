@@ -17,6 +17,7 @@ import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author kaiyu92
 /**
  * Panel containing the list of events.
  */

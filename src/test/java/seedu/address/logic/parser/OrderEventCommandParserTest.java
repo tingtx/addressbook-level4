@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.OrderEventCommand;
 
+//@@author kaiyu92
 public class OrderEventCommandParserTest {
 
     private OrderEventCommandParser parser = new OrderEventCommandParser();

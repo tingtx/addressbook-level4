@@ -1,6 +1,6 @@
 package seedu.address.model.user;
 
-
+//@@author quanle1994
 /**
  * A read-only immutable interface for a user in the Account.
  * Implementations should guarantee: details are present and not null, field values are validated.

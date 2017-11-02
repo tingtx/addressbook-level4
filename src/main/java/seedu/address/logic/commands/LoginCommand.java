@@ -7,6 +7,7 @@ import java.util.Arrays;
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author quanle1994
 /**
  * Log the user in.
  */

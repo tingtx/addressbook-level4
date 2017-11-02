@@ -1,5 +1,5 @@
 # tingtx
-###### /java/seedu/address/commons/core/index/Index.java
+###### \java\seedu\address\commons\core\index\Index.java
 ``` java
     @Override
     public String toString() {
@@ -7,8 +7,9 @@
     }
 }
 ```
-###### /java/seedu/address/logic/commands/GroupCommand.java
+###### \java\seedu\address\logic\commands\GroupCommand.java
 ``` java
+
 /**
  * Group person(s) into user defined group.
  */
@@ -20,7 +21,7 @@ public class GroupCommand extends UndoableCommand {
             + "by the index number used in the last person listing.\n "
             + "Person(s) will be grouped to group name specified.\n"
             + "Parameters: INDEX_1 [INDEX_2...] (must be a positive integer) "
-            +  PREFIX_GROUP + "GROUPNAME "
+            + PREFIX_GROUP + "GROUPNAME "
             + "Example: " + COMMAND_WORD + " 1 3 4 "
             + PREFIX_GROUP + "FAMILY";
 
@@ -40,6 +41,10 @@ public class GroupCommand extends UndoableCommand {
 
         this.indexes = indexes;
         this.group = group;
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
     }
 
     @Override
@@ -94,13 +99,9 @@ public class GroupCommand extends UndoableCommand {
         return indexes.equals(groupCommand.indexes)
                 && group.equals(groupCommand.group);
     }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }
 ```
-###### /java/seedu/address/logic/commands/OrderCommand.java
+###### \java\seedu\address\logic\commands\OrderCommand.java
 ``` java
     @Override
     public boolean equals(Object other) {
@@ -108,18 +109,23 @@ public class GroupCommand extends UndoableCommand {
                 || (other instanceof OrderCommand // instanceof handles nulls
                 && this.orderParameter.equals(((OrderCommand) other).orderParameter)); // state check
     }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }
 ```
-###### /java/seedu/address/logic/parser/GroupCommandParser.java
+###### \java\seedu\address\logic\parser\GroupCommandParser.java
 ``` java
+
 /**
  * Parses input arguments and creates a new GroupCommand object
  */
 public class GroupCommandParser implements Parser<GroupCommand> {
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
+        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
@@ -137,7 +143,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
         try {
             preamble = argMultimap.getPreamble();
             indexStr = preamble.split("\\s+");
-            for (String index :  indexStr) {
+            for (String index : indexStr) {
                 indexes.add(ParserUtil.parseIndex(index));
             }
 
@@ -153,16 +159,9 @@ public class GroupCommandParser implements Parser<GroupCommand> {
 
         return new GroupCommand(indexes, new Group(group));
     }
-
-    /** Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
-        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
 }
 ```
-###### /java/seedu/address/model/group/Group.java
+###### \java\seedu\address\model\group\Group.java
 ``` java
 package seedu.address.model.group;
 
@@ -201,31 +200,18 @@ public class Group {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
+
     /**
      * Group the given person(s)
      */
     void groupPerson(Person target, Group group) throws PersonNotFoundException;
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
-    }
-
-    @Override
-    public ObjectProperty<Birthday> birthdayProperty() {
-        return birthday;
-    }
-
-    @Override
-    public Birthday getBirthday() {
-        return birthday.get();
-    }
-
-    public void setGroup(Group group) {
-        this.group.set(requireNonNull(group));
     }
 
     @Override
@@ -237,8 +223,12 @@ public class Group {
     public Group getGroup() {
         return group.get();
     }
+
+    public void setGroup(Group group) {
+        this.group.set(requireNonNull(group));
+    }
 ```
-###### /java/seedu/address/model/person/ReadOnlyPerson.java
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
 ``` java
     ObjectProperty<Birthday> birthdayProperty();
 
@@ -248,12 +238,13 @@ public class Group {
 
     Group getGroup();
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
+
     /**
      * Group the person {@code target} in the list to {@code group}.
      *
-     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     public void groupPerson(Person target, Group group) throws PersonNotFoundException {
         requireNonNull(group);
@@ -266,8 +257,9 @@ public class Group {
 
     }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
+
     /**
      * Order the list.
      */
@@ -276,7 +268,8 @@ public class Group {
                 .compareToIgnoreCase(b.getName().toString());
         Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
                 .compareToIgnoreCase(b.getAddress().toString());
-        Comparator<Person>orderByBirthday = comparing(a->a.getBirthday().getReformatDate(), nullsLast(naturalOrder()));
+        Comparator<Person> orderByBirthday = comparing(a -> a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
         Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
                 .compareToIgnoreCase(b.getTags().toString());
 

@@ -1,5 +1,5 @@
 # keloysiusmak
-###### /java/seedu/address/commons/core/AliasSettings.java
+###### \java\seedu\address\commons\core\AliasSettings.java
 ``` java
 package seedu.address.commons.core;
 
@@ -25,6 +25,8 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEventCommand;
+import seedu.address.logic.commands.LockCommand;
+import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -36,7 +38,6 @@ import seedu.address.logic.commands.SetThemeCommand;
 import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
-
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -57,6 +58,8 @@ public class AliasSettings implements Serializable {
     private Alias helpCommand;
     private Alias historyCommand;
     private Alias listCommand;
+    private Alias lockCommand;
+    private Alias loginCommand;
     private Alias orderCommand;
     private Alias redoCommand;
     private Alias remarkCommand;
@@ -98,6 +101,12 @@ public class AliasSettings implements Serializable {
         usedAliases.add("history");
         this.listCommand = new Alias(ListCommand.getCommandWord(), "list");
         usedAliases.add("list");
+
+        this.lockCommand = new Alias(LockCommand.getCommandWord(), "lock");
+        usedAliases.add("lock");
+
+        this.loginCommand = new Alias(LoginCommand.getCommandWord(), "login");
+        usedAliases.add("login");
         this.orderCommand = new Alias(OrderCommand.getCommandWord(), "order");
         usedAliases.add("order");
         this.redoCommand = new Alias(RedoCommand.getCommandWord(), "redo");
@@ -133,7 +142,8 @@ public class AliasSettings implements Serializable {
 
     public AliasSettings(String addCommand, String clearCommand, String deleteCommand, String editCommand,
                          String exitCommand, String findCommand, String groupCommand, String helpCommand,
-                         String historyCommand, String listCommand, String orderCommand, String redoCommand,
+                         String historyCommand, String listCommand, String lockCommand, String loginCommand,
+                         String orderCommand, String redoCommand,
                          String remarkCommand, String selectCommand, String setAliasCommand, String undoCommand,
                          String viewAliasCommand, String addEventCommand, String deleteEventCommand,
                          String editEventCommand, String listEventCommand, String orderEventCommand,
@@ -159,6 +169,12 @@ public class AliasSettings implements Serializable {
         usedAliases.add(historyCommand);
         this.listCommand = new Alias(ListCommand.getCommandWord(), listCommand);
         usedAliases.add(listCommand);
+
+        this.lockCommand = new Alias(LockCommand.getCommandWord(), lockCommand);
+        usedAliases.add(lockCommand);
+
+        this.loginCommand = new Alias(LoginCommand.getCommandWord(), loginCommand);
+        usedAliases.add(loginCommand);
         this.orderCommand = new Alias(OrderCommand.getCommandWord(), orderCommand);
         usedAliases.add(orderCommand);
         this.redoCommand = new Alias(RedoCommand.getCommandWord(), redoCommand);
@@ -230,6 +246,14 @@ public class AliasSettings implements Serializable {
 
     public Alias getListCommand() {
         return listCommand;
+    }
+
+    public Alias getLockCommand() {
+        return lockCommand;
+    }
+
+    public Alias getLoginCommand() {
+        return loginCommand;
     }
 
     public Alias getOrderCommand() {
@@ -351,6 +375,18 @@ public class AliasSettings implements Serializable {
             }
             usedAliases.add(alias);
             this.historyCommand = new Alias(HistoryCommand.getCommandWord(), alias);
+        } else if (command.equals(LockCommand.getCommandWord())) {
+            if (!this.lockCommand.getAlias().equals("lock")) {
+                usedAliases.remove(this.lockCommand.getAlias());
+            }
+            usedAliases.add(alias);
+            this.lockCommand = new Alias(LockCommand.getCommandWord(), alias);
+        } else if (command.equals(LoginCommand.getCommandWord())) {
+            if (!this.loginCommand.getAlias().equals("login")) {
+                usedAliases.remove(this.loginCommand.getAlias());
+            }
+            usedAliases.add(alias);
+            this.loginCommand = new Alias(LoginCommand.getCommandWord(), alias);
         } else if (command.equals(ListCommand.getCommandWord())) {
             if (!this.listCommand.getAlias().equals("list")) {
                 usedAliases.remove(this.listCommand.getAlias());
@@ -460,6 +496,8 @@ public class AliasSettings implements Serializable {
                 && Objects.equals(groupCommand, o.getGroupCommand())
                 && Objects.equals(helpCommand, o.getHelpCommand())
                 && Objects.equals(historyCommand, o.getHistoryCommand())
+                && Objects.equals(lockCommand, o.getLockCommand())
+                && Objects.equals(loginCommand, o.getLoginCommand())
                 && Objects.equals(listCommand, o.getListCommand())
                 && Objects.equals(orderCommand, o.getOrderCommand())
                 && Objects.equals(redoCommand, o.getRedoCommand())
@@ -481,12 +519,12 @@ public class AliasSettings implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.addCommand, this.clearCommand, this.deleteCommand, this.editCommand,
-                this.exitCommand, this.findCommand, this.groupCommand, this.helpCommand, this.historyCommand,
-                this.listCommand, this.orderCommand, this.redoCommand, this.remarkCommand, this.selectCommand,
-                this.setAliasCommand, this.undoCommand, this.viewAliasCommand, this.addEventCommand,
-                this.deleteEventCommand, this.editEventCommand, this.listEventCommand, this.orderEventCommand,
-                this.findEventCommand, this.switchCommand, this.selectEventCommand);
+        return Objects.hash(this.addCommand, this.clearCommand, this.deleteCommand, this.editCommand, this.exitCommand,
+                this.findCommand, this.groupCommand, this.helpCommand, this.historyCommand, this.listCommand,
+                this.orderCommand, this.redoCommand, this.remarkCommand, this.selectCommand, this.setAliasCommand,
+                this.undoCommand, this.viewAliasCommand, this.addEventCommand, this.deleteEventCommand,
+                this.editEventCommand, this.listEventCommand, this.orderEventCommand, this.findEventCommand,
+                this.switchCommand, this.selectEventCommand, this.lockCommand, this.loginCommand);
     }
 
     @Override
@@ -501,6 +539,8 @@ public class AliasSettings implements Serializable {
         sb.append("Group Command : " + groupCommand.getAlias() + "\n");
         sb.append("Help Command : " + helpCommand.getAlias() + "\n");
         sb.append("History Command : " + historyCommand.getAlias() + "\n");
+        sb.append("Lock Command : " + lockCommand.getAlias() + "\n");
+        sb.append("Login Command : " + loginCommand.getAlias() + "\n");
         sb.append("List Command : " + listCommand.getAlias() + "\n");
         sb.append("Order Command : " + orderCommand.getAlias() + "\n");
         sb.append("Redo Command : " + redoCommand.getAlias() + "\n");
@@ -523,7 +563,7 @@ public class AliasSettings implements Serializable {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangedThemeEvent.java
+###### \java\seedu\address\commons\events\ui\ChangedThemeEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -547,7 +587,7 @@ public class ChangedThemeEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/ui/ViewAliasRequestEvent.java
+###### \java\seedu\address\commons\events\ui\ViewAliasRequestEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -565,7 +605,7 @@ public class ViewAliasRequestEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SetAliasCommand.java
+###### \java\seedu\address\logic\commands\SetAliasCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -606,6 +646,10 @@ public class SetAliasCommand extends Command {
         toAdd = alias;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
@@ -626,13 +670,9 @@ public class SetAliasCommand extends Command {
                 || (other instanceof SetAliasCommand // instanceof handles nulls
                 && toAdd.equals(((SetAliasCommand) other).toAdd));
     }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }
 ```
-###### /java/seedu/address/logic/commands/SetThemeCommand.java
+###### \java\seedu\address\logic\commands\SetThemeCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -665,6 +705,10 @@ public class SetThemeCommand extends UndoableCommand {
         this.theme = setTheme;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() {
         if (!((this.theme.equals("summer"))
@@ -685,13 +729,9 @@ public class SetThemeCommand extends UndoableCommand {
                 || (other instanceof SetThemeCommand // instanceof handles nulls
                 && this.theme.equals(((SetThemeCommand) other).theme)); // state check
     }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewAliasCommand.java
+###### \java\seedu\address\logic\commands\ViewAliasCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -710,19 +750,19 @@ public class ViewAliasCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "Opened alias window.";
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult executeUndoableCommand() {
         EventsCenter.getInstance().post(new ViewAliasRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
 
     }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
 }
 ```
-###### /java/seedu/address/logic/parser/SetAliasCommandParser.java
+###### \java\seedu\address\logic\parser\SetAliasCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -741,6 +781,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new SetAliasCommand object
  */
 public class SetAliasCommandParser implements Parser<SetAliasCommand> {
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
     /**
      * Parses the given {@code String} of arguments in the context of the SetAliasCommand
@@ -779,17 +827,9 @@ public class SetAliasCommandParser implements Parser<SetAliasCommand> {
         return new SetAliasCommand(command, alias);
     }
 
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
 }
 ```
-###### /java/seedu/address/logic/parser/SetThemeCommandParser.java
+###### \java\seedu\address\logic\parser\SetThemeCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -812,7 +852,7 @@ public class SetThemeCommandParser implements Parser<SetThemeCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/alias/Alias.java
+###### \java\seedu\address\model\alias\Alias.java
 ``` java
 package seedu.address.model.alias;
 
@@ -857,12 +897,12 @@ public class Alias implements Serializable {
         }
     }
 
-    public void setAlias(String alias) {
-        this.aliasString = (requireNonNull(alias));
-    }
-
     public String getAlias() {
         return aliasString;
+    }
+
+    public void setAlias(String alias) {
+        this.aliasString = (requireNonNull(alias));
     }
 
     public String getCommand() {
@@ -884,7 +924,7 @@ public class Alias implements Serializable {
 
 }
 ```
-###### /java/seedu/address/ui/ViewAliasCard.java
+###### \java\seedu\address\ui\ViewAliasCard.java
 ``` java
 package seedu.address.ui;
 
@@ -949,7 +989,7 @@ public class ViewAliasCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/ViewAliasListPanel.java
+###### \java\seedu\address\ui\ViewAliasListPanel.java
 ``` java
 package seedu.address.ui;
 
@@ -1010,7 +1050,7 @@ class ViewAliasListPanel extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/ViewAliasWindow.java
+###### \java\seedu\address\ui\ViewAliasWindow.java
 ``` java
 package seedu.address.ui;
 
@@ -1037,14 +1077,11 @@ public class ViewAliasWindow extends UiPart<Region> {
     private static final String ICON = "/images/help_icon.png";
     private static final String FXML = "ViewAliasWindow.fxml";
     private static final String TITLE = "View Aliases";
-
-    private ViewAliasListPanel viewAliasListPanel;
-
-    @FXML
-    private StackPane viewAliasListPanelPlaceholder;
-
     @FXML
     private final Stage dialogStage;
+    private ViewAliasListPanel viewAliasListPanel;
+    @FXML
+    private StackPane viewAliasListPanelPlaceholder;
 
 
     public ViewAliasWindow(ArrayList<ArrayList<String>> c, Logic logic) {

@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author kaiyu92
 /**
  * Selects an event identified using it's last displayed index from the event book.
  */

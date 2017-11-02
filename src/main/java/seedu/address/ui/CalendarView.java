@@ -25,6 +25,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+//@@author kaiyu92
 /**
  * The CalendarView UI Component
  */

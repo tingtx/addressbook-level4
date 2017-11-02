@@ -7,7 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
-
+//@@author kaiyu92
 /**
  * Deletes a event identified using it's last displayed index from the event book.
  */

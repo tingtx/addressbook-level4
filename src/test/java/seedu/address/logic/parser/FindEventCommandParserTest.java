@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
+//@@author kaiyu92
 public class FindEventCommandParserTest {
 
     private FindEventCommandParser parser = new FindEventCommandParser();

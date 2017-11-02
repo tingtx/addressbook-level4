@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.AddEventCommand;
 
+//@@author kaiyu92
 public class AddEventCommandParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();
 

@@ -5,10 +5,11 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
+//@@author kaiyu92
 public class LocationTest {
 
     @Test
-    public void isValidTitle() {
+    public void isValidLocation() {
         // invalid location
         assertFalse(Location.isValidLocation("")); // empty string
         assertFalse(Location.isValidLocation(" ")); // spaces only

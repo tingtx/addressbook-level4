@@ -37,6 +37,7 @@ public class ModelManagerTest {
         modelManager.getFilteredEventList().remove(0);
     }
 
+    //@@author kaiyu92
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

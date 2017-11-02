@@ -26,6 +26,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
 import seedu.address.model.EventBook;
 import seedu.address.model.Model;
@@ -40,7 +41,8 @@ import seedu.address.testutil.TypicalIndexes;
 
 public class GroupCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
+            Account());
 
     @Test
     public void execute_groupOnePerson_success() throws Exception {
@@ -55,7 +57,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
 
         assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
@@ -82,7 +84,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPersonOne);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), groupedPersonTwo);
         expectedModel.updatePerson(model.getFilteredPersonList().get(2), groupedPersonThree);
@@ -104,7 +106,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
 
         assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
@@ -131,7 +133,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPersonOne);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), groupedPersonTwo);
         expectedModel.updatePerson(model.getFilteredPersonList().get(2), groupedPersonThree);
@@ -155,7 +157,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
 
         assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
@@ -267,6 +269,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -292,8 +295,8 @@ public class OrderCommandTest {
         thirdParameter = "BIRTHDAY";
         fourthParameter = "TAG";
 
-        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new Account());
 
     }
 
@@ -597,6 +600,7 @@ public class BirthdayTest {
 ```
 ###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
+
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */

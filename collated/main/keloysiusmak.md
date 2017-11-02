@@ -1,5 +1,5 @@
 # keloysiusmak
-###### /java/seedu/address/commons/core/AliasSettings.java
+###### \java\seedu\address\commons\core\AliasSettings.java
 ``` java
 package seedu.address.commons.core;
 
@@ -563,7 +563,7 @@ public class AliasSettings implements Serializable {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangedThemeEvent.java
+###### \java\seedu\address\commons\events\ui\ChangedThemeEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -587,7 +587,7 @@ public class ChangedThemeEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/ui/ViewAliasRequestEvent.java
+###### \java\seedu\address\commons\events\ui\ViewAliasRequestEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -605,7 +605,7 @@ public class ViewAliasRequestEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SetAliasCommand.java
+###### \java\seedu\address\logic\commands\SetAliasCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -672,7 +672,7 @@ public class SetAliasCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SetThemeCommand.java
+###### \java\seedu\address\logic\commands\SetThemeCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -731,7 +731,7 @@ public class SetThemeCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewAliasCommand.java
+###### \java\seedu\address\logic\commands\ViewAliasCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -762,7 +762,7 @@ public class ViewAliasCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/SetAliasCommandParser.java
+###### \java\seedu\address\logic\parser\SetAliasCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -829,7 +829,7 @@ public class SetAliasCommandParser implements Parser<SetAliasCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/SetThemeCommandParser.java
+###### \java\seedu\address\logic\parser\SetThemeCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -852,7 +852,7 @@ public class SetThemeCommandParser implements Parser<SetThemeCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/alias/Alias.java
+###### \java\seedu\address\model\alias\Alias.java
 ``` java
 package seedu.address.model.alias;
 
@@ -924,7 +924,7 @@ public class Alias implements Serializable {
 
 }
 ```
-###### /java/seedu/address/ui/ViewAliasCard.java
+###### \java\seedu\address\ui\ViewAliasCard.java
 ``` java
 package seedu.address.ui;
 
@@ -989,7 +989,7 @@ public class ViewAliasCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/ViewAliasListPanel.java
+###### \java\seedu\address\ui\ViewAliasListPanel.java
 ``` java
 package seedu.address.ui;
 
@@ -1050,7 +1050,7 @@ class ViewAliasListPanel extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/ViewAliasWindow.java
+###### \java\seedu\address\ui\ViewAliasWindow.java
 ``` java
 package seedu.address.ui;
 

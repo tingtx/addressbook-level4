@@ -1,5 +1,5 @@
 # tingtx
-###### /java/seedu/address/commons/core/index/Index.java
+###### \java\seedu\address\commons\core\index\Index.java
 ``` java
     @Override
     public String toString() {
@@ -7,7 +7,7 @@
     }
 }
 ```
-###### /java/seedu/address/logic/commands/GroupCommand.java
+###### \java\seedu\address\logic\commands\GroupCommand.java
 ``` java
 
 /**
@@ -101,7 +101,7 @@ public class GroupCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/OrderCommand.java
+###### \java\seedu\address\logic\commands\OrderCommand.java
 ``` java
     @Override
     public boolean equals(Object other) {
@@ -111,7 +111,7 @@ public class GroupCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/GroupCommandParser.java
+###### \java\seedu\address\logic\parser\GroupCommandParser.java
 ``` java
 
 /**
@@ -161,7 +161,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/group/Group.java
+###### \java\seedu\address\model\group\Group.java
 ``` java
 package seedu.address.model.group;
 
@@ -200,7 +200,7 @@ public class Group {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
 
     /**
@@ -208,7 +208,7 @@ public class Group {
      */
     void groupPerson(Person target, Group group) throws PersonNotFoundException;
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
@@ -228,7 +228,7 @@ public class Group {
         this.group.set(requireNonNull(group));
     }
 ```
-###### /java/seedu/address/model/person/ReadOnlyPerson.java
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
 ``` java
     ObjectProperty<Birthday> birthdayProperty();
 
@@ -238,7 +238,7 @@ public class Group {
 
     Group getGroup();
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
 
     /**
@@ -257,7 +257,7 @@ public class Group {
 
     }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
 
     /**

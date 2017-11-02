@@ -1,5 +1,5 @@
 # tingtx
-###### /java/seedu/address/logic/commands/GroupCommandTest.java
+###### \java\seedu\address\logic\commands\GroupCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -240,7 +240,7 @@ public class GroupCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/OrderCommandTest.java
+###### \java\seedu\address\logic\commands\OrderCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -401,7 +401,7 @@ public class OrderCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/GeneralBookParserTest.java
+###### \java\seedu\address\logic\parser\GeneralBookParserTest.java
 ``` java
     @Test
     public void parseCommand_group() throws Exception {
@@ -418,7 +418,7 @@ public class OrderCommandTest {
         Assert.assertEquals(new GroupCommand(indexes, group), command);
     }
 ```
-###### /java/seedu/address/logic/parser/GeneralBookParserTest.java
+###### \java\seedu\address\logic\parser\GeneralBookParserTest.java
 ``` java
     @Test
     public void parseCommand_order() throws Exception {
@@ -433,7 +433,7 @@ public class OrderCommandTest {
         Assert.assertEquals(new OrderCommand(parameter), command);
     }
 ```
-###### /java/seedu/address/logic/parser/GroupCommandParserTest.java
+###### \java\seedu\address\logic\parser\GroupCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -530,7 +530,7 @@ public class GroupCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/OrderCommandParserTest.java
+###### \java\seedu\address\logic\parser\OrderCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -573,7 +573,7 @@ public class OrderCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/BirthdayTest.java
+###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
 public class BirthdayTest {
     @Test
@@ -598,7 +598,7 @@ public class BirthdayTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
 
     /**

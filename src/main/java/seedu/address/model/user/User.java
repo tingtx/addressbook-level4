@@ -1,5 +1,6 @@
 package seedu.address.model.user;
 
+//@@author quanle1994
 /**
  * Represents a User in the account.
  * Guarantees: details are present and not null, field values are validated.

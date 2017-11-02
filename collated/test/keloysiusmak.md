@@ -1,5 +1,5 @@
 # keloysiusmak
-###### /java/seedu/address/logic/commands/CommandTestUtil.java
+###### \java\seedu\address\logic\commands\CommandTestUtil.java
 ``` java
 
     /**
@@ -38,7 +38,7 @@
         }
     }
 ```
-###### /java/seedu/address/logic/commands/SetAliasCommandTest.java
+###### \java\seedu\address\logic\commands\SetAliasCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -333,7 +333,7 @@ public class SetAliasCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SetThemeCommandTest.java
+###### \java\seedu\address\logic\commands\SetThemeCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -399,7 +399,7 @@ public class SetThemeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/ui/ViewAliasWindowTest.java
+###### \java\seedu\address\ui\ViewAliasWindowTest.java
 ``` java
 package seedu.address.ui;
 

@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
+
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -134,8 +136,6 @@ public class CalendarView {
                 }
             }
 
-
-
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             txt.setFill(Color.WHITE);
             ap.setDate(calendarDate);
@@ -145,7 +145,7 @@ public class CalendarView {
             if (eventExist) {
                 ap.setOnMouseClicked(ev -> {
                     String commandText = FindEventCommand.getCommandWord()
-                            + " edt/" + getFormartDate(dayValue, monthValue, yearValue);
+                            + " " + PREFIX_DATETIME + getFormartDate(dayValue, monthValue, yearValue);
                     try {
                         CommandResult commandResult = logic.execute(commandText);
                         logger.info("Result: " + commandResult.feedbackToUser);

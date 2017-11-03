@@ -99,7 +99,7 @@ public class FindEventCommandTest {
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList.toString(), model.getFilteredEventList().toString());
+        assertEquals(expectedList, model.getFilteredEventList());
         assertEquals(expectedEventBook.toString(), model.getEventBook().toString());
     }
 }

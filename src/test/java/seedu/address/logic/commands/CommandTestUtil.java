@@ -111,6 +111,14 @@ public class CommandTestUtil {
     public static final String DATETIME_DESC_SPECTRA = " " + PREFIX_DATETIME + VALID_DATETIME_SPECTRA;
     public static final String DATETIME_DESC_DEEPAVALI = " " + PREFIX_DATETIME + VALID_DATETIME_DEEPAVALI;
 
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "Sentosa&"; // '&' not allowed in title
+    public static final String INVALID_DESCRIPTION_DESC = " "
+            + PREFIX_DESCRIPTION + "New Basketball &"; // '&' not allowed in description
+    public static final String INVALID_LOCATION_DESC = " "
+            + PREFIX_LOCATION + "Tampines&"; // '&' not allowed in location
+    public static final String INVALID_DATETIME_DESC = " "
+            + PREFIX_DATETIME + "32-11-2017 2359"; //There is no 32 in the date
+
     public static final EditEventCommand.EditEventDescriptor DESC_SPECTRA;
     public static final EditEventCommand.EditEventDescriptor DESC_DEEPAVALI;
 
@@ -209,7 +217,7 @@ public class CommandTestUtil {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
-            assertEquals(expectedEventBook.toString(), actualModel.getEventBook().toString());
+            assertEquals(expectedEventBook, actualModel.getEventBook());
             assertEquals(expectedEventFilteredList, actualModel.getFilteredEventList());
         } catch (DuplicateUserException due) {
             throw new AssertionError("DuplicateUserException should not be thrown: ", due);

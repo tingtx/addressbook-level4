@@ -2,24 +2,35 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_DEEPAVALI;
+import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_DEEPAVALI;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_DEEPAVALI;
+import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_DEEPAVALI;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DATETIME_DEEPAVALI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATETIME_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_DEEPAVALI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_DEEPAVALI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_DEEPAVALI;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_SPECTRA;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.model.event.Event;
+import seedu.address.testutil.EventBuilder;
 
 //@@author kaiyu92
 public class AddEventCommandParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();
 
-    /*@Test
+    @Test
     public void parse_allFieldsPresent_success() {
         Event expectedEvent = new EventBuilder().withTitle(VALID_TITLE_DEEPAVALI)
                 .withDescription(VALID_DESCRIPTION_DEEPAVALI)
@@ -30,18 +41,8 @@ public class AddEventCommandParserTest {
                 + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
-        // [alias] multiple titles - last title accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_SPECTRA + TITLE_DESC_DEEPAVALI
-                + DESCRIPTION_DESC_DEEPAVALI
-                + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
-
         // multiple description - last description accepted
         assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_SPECTRA
-                + DESCRIPTION_DESC_DEEPAVALI
-                + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
-
-        // [alias] multiple description - last description accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_SPECTRA
                 + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
@@ -50,23 +51,14 @@ public class AddEventCommandParserTest {
                 + LOCATION_DESC_SPECTRA
                 + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
-        // [alias] multiple locations - last location accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
-                + LOCATION_DESC_SPECTRA
-                + LOCATION_DESC_DEEPAVALI + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
-
         // multiple datetime - last datetime accepted
         assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
                 + LOCATION_DESC_DEEPAVALI
                 + DATETIME_DESC_SPECTRA + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
 
-        // [alias] multiple datetime - last datetime accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_ALIAS + TITLE_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI
-                + LOCATION_DESC_DEEPAVALI
-                + DATETIME_DESC_SPECTRA + DATETIME_DESC_DEEPAVALI, new AddEventCommand(expectedEvent));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Event expectedEvent = new EventBuilder().withTitle(VALID_TITLE_SPECTRA)
@@ -76,7 +68,7 @@ public class AddEventCommandParserTest {
         assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_SPECTRA + DESCRIPTION_DESC_SPECTRA
                 + LOCATION_DESC_SPECTRA + DATETIME_DESC_SPECTRA, new AddEventCommand(expectedEvent));
 
-    }*/
+    }
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {

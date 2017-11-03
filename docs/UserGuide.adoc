@@ -117,7 +117,7 @@ Examples:
 
 === Clearing all entries : `clear` - Since V1.0
 
-Clears all entries from the address book. +
+Clears all entries from the address book and event book. +
 Format: `clear`
 
 === Connect with social media : `connect` - Coming in V2.0
@@ -213,7 +213,7 @@ Exports the TunedIn application for use on another computer.
 === Locating persons by name: `find` - Since V1.0
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find <attribute>/KEYWORD`
 
 ****
 * `<attribute>` refers to either `n`, standing for name, `a`, standing for address, or `m`, standing for mixed fields,
@@ -229,19 +229,14 @@ or finding in any text field. This is case-sensitive.
 Examples:
 
 * `find n/John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-* `deleteevent 2` +
-Deletes the 2nd event in the event book.
-* `deleteevent 1` +
-Deletes the 1st event in the event book.
+Returns  any person having names with `john` in the sequence
+* `find n/Jo` +
+Returns any person having names with `jo` in the sequence
 
 === Finding Event : `findevent` - Since V1.3
 
 Finds events whose titles contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find <attribute>/KEYWORD`
 
 ****
 * `<attribute>` refers to either `et`, standing for title, `ed`, standing for description, `edt`, standing for Datetime, or `em`, standing for mixed fields,
@@ -255,7 +250,10 @@ or finding in any text field. This is case-sensitive.
 Examples:
 
 * `findevent et/Basketball` +
-Returns `Basketball Competition`
+Returns  any event having title with `Basketball` in the sequence
+
+* `findevent et/ball` +
+Returns  any event having title with `ball` in the sequence
 
 === Group person(s) : `group` - Since V1.4
 

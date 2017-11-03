@@ -66,7 +66,7 @@ public class Datetime {
             }
 
             //Check Date Validation
-            if (day >=1){
+            if (day >= 1) {
                 // For months with 30 days.
                 if ((month == 4
                         || month == 6
@@ -87,14 +87,13 @@ public class Datetime {
                     validDate = true;
                 }
                 // For February.
-                if (month == 2)
-                {
-                    if(day <= 28) {
+                if (month == 2) {
+                    if (day <= 28) {
                         validDate = true;
-                    } else if(day == 29) {
-                        if ((year%4 == 0 && year%100!=0) || year%400 == 0){
+                    } else if (day == 29) {
+                        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
                             validDate = true;
-                        } //else invalid
+                        }
                     }
                 }
             } //else date is not valid

@@ -117,7 +117,7 @@ Examples:
 
 === Clearing all entries : `clear` - Since V1.0
 
-Clears all entries from the address book. +
+Clears all entries from the address book and event book. +
 Format: `clear`
 
 === Connect with social media : `connect` - Coming in V2.0

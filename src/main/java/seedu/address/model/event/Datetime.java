@@ -43,7 +43,6 @@ public class Datetime {
      * Returns true if a given string is a valid event datetime.
      */
     public static boolean isValidDatetime(String test) {
-        //return test.matches(DATETIME_VALIDATION_REGEX);
         Boolean validTime = false;
         Boolean validDate = false;
 
@@ -60,7 +59,7 @@ public class Datetime {
 
             //Check Time Validation
             if (0 <= hour && hour <= 23) {
-                if (0 <= min && min <= 60) {
+                if (0 <= min && min <= 59) {
                     validTime = true;
                 }
             }

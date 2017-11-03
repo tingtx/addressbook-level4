@@ -5,6 +5,10 @@ import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_DEEPAVA
 import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_SPECTRA;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATETIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_LOCATION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_SPECTRA;
@@ -26,6 +30,10 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
+import seedu.address.model.event.Datetime;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.Location;
+import seedu.address.model.event.Title;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
 //@@author kaiyu92
@@ -63,31 +71,30 @@ public class EditEventCommandParserTest {
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
 
-    /*@Test
+    @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
-        assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
+        assertParseFailure(parser, "1" + INVALID_TITLE_DESC,
+                Title.MESSAGE_TITLE_CONSTRAINTS); // invalid title
+        assertParseFailure(parser, "1" + INVALID_DESCRIPTION_DESC,
+                Description.MESSAGE_DESCRIPTION_CONSTRAINTS); // invalid description
+        assertParseFailure(parser, "1" + INVALID_LOCATION_DESC,
+                Location.MESSAGE_LOCATION_CONSTRAINTS); // invalid location
+        assertParseFailure(parser, "1" + INVALID_DATETIME_DESC,
+                Datetime.MESSAGE_DATETIME_CONSTRAINTS); // invalid datetime
 
-        // invalid phone followed by valid email
-        assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        // invalid description followed by valid location
+        assertParseFailure(parser, "1" + INVALID_DESCRIPTION_DESC
+                + LOCATION_DESC_SPECTRA, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 
-        // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
+        // valid description followed by invalid location. The test case for invalid phone followed by valid phone
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-        assertParseFailure(parser, "1" + PHONE_DESC_BOB + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS);
-
-        // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
-        // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "1" + DESCRIPTION_DESC_DEEPAVALI
+                + INVALID_DESCRIPTION_DESC, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
-                Name.MESSAGE_NAME_CONSTRAINTS);
-    }*/
+        assertParseFailure(parser, "1" + INVALID_TITLE_DESC + INVALID_DESCRIPTION_DESC
+                + VALID_LOCATION_SPECTRA + VALID_DATETIME_SPECTRA, Title.MESSAGE_TITLE_CONSTRAINTS);
+    }
 
     @Test
     public void parse_allFieldsSpecified_success() {
@@ -158,21 +165,22 @@ public class EditEventCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
-    /*@Test
+    @Test
     public void parse_invalidValueFollowedByValidValue_success() {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_EVENT;
-        String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+        String userInput = targetIndex.getOneBased() + INVALID_DESCRIPTION_DESC + DESCRIPTION_DESC_DEEPAVALI;
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder()
+                .withDescription(VALID_DESCRIPTION_DEEPAVALI).build();
+        EditEventCommand expectedCommand = new EditEventCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_BOB + INVALID_PHONE_DESC + ADDRESS_DESC_BOB
-                + PHONE_DESC_BOB;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
+        userInput = targetIndex.getOneBased() + LOCATION_DESC_DEEPAVALI + INVALID_DESCRIPTION_DESC
+                + DATETIME_DESC_DEEPAVALI + DESCRIPTION_DESC_DEEPAVALI;
+        descriptor = new EditEventDescriptorBuilder().withDescription(VALID_DESCRIPTION_DEEPAVALI)
+                .withLocation(VALID_LOCATION_DEEPAVALI).withDatetime(VALID_DATETIME_DEEPAVALI).build();
+        expectedCommand = new EditEventCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
-    }*/
+    }
 }

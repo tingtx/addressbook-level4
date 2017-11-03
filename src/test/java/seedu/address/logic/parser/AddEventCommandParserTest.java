@@ -5,6 +5,10 @@ import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_DEEPAVA
 import static seedu.address.logic.commands.CommandTestUtil.DATETIME_DESC_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_SPECTRA;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATETIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_LOCATION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_DEEPAVALI;
 import static seedu.address.logic.commands.CommandTestUtil.LOCATION_DESC_SPECTRA;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_DEEPAVALI;
@@ -23,7 +27,11 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.model.event.Datetime;
+import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.Location;
+import seedu.address.model.event.Title;
 import seedu.address.testutil.EventBuilder;
 
 //@@author kaiyu92
@@ -91,56 +99,32 @@ public class AddEventCommandParserTest {
                 + LOCATION_DESC_DEEPAVALI + VALID_DATETIME_DEEPAVALI, expectedMessage);
     }
 
-    /*@Test
+    @Test
     public void parse_invalidValue_failure() {
+
         // invalid title
-        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + INVALID_TITLE_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + INVALID_TITLE_DESC
+                + DESCRIPTION_DESC_DEEPAVALI + LOCATION_DESC_DEEPAVALI
+                + DATETIME_DESC_DEEPAVALI, Title.MESSAGE_TITLE_CONSTRAINTS);
 
-        // [alias] invalid name
-        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
+        // invalid description
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI
+                + INVALID_DESCRIPTION_DESC + LOCATION_DESC_DEEPAVALI
+                + DATETIME_DESC_DEEPAVALI, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 
-        // invalid phone
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        // invalid location
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI
+                + DESCRIPTION_DESC_DEEPAVALI + INVALID_LOCATION_DESC
+                + DATETIME_DESC_DEEPAVALI, Location.MESSAGE_LOCATION_CONSTRAINTS);
 
-        // [alias] invalid phone
-        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_PHONE_CONSTRAINTS);
-
-        // invalid email
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
-
-        // [alias] invalid email
-        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
-                + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_EMAIL_CONSTRAINTS);
-
-        // invalid address
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                Address.MESSAGE_ADDRESS_CONSTRAINTS);
-
-        // [alias] invalid address
-        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                Address.MESSAGE_ADDRESS_CONSTRAINTS);
-
-        // invalid tag
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
-
-        // [alias] invalid tag
-        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, Tag.MESSAGE_TAG_CONSTRAINTS);
+        // invalid datetime
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_DESC_DEEPAVALI
+                + DESCRIPTION_DESC_DEEPAVALI + LOCATION_DESC_DEEPAVALI
+                + INVALID_DATETIME_DESC, Datetime.MESSAGE_DATETIME_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + INVALID_ADDRESS_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
-
-        // [alias] two invalid values, only first invalid value reported
-        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + INVALID_ADDRESS_DESC, Name.MESSAGE_NAME_CONSTRAINTS);
-    }*/
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + INVALID_TITLE_DESC
+                + DESCRIPTION_DESC_DEEPAVALI + LOCATION_DESC_DEEPAVALI
+                + INVALID_DATETIME_DESC, Title.MESSAGE_TITLE_CONSTRAINTS);
+    }
 }

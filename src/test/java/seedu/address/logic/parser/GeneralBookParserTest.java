@@ -22,6 +22,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
@@ -283,12 +284,12 @@ public class GeneralBookParserTest {
         parser.parseCommand("unknownCommand");
     }
 
-    /*@Test
+    @Test
     public void parseCommand_addEvent() throws Exception {
         Event event = new EventBuilder().build();
         AddEventCommand command = (AddEventCommand) parser.parseCommand(EveUtil.getAddEventCommand(event));
         assertEquals(new AddEventCommand(event), command);
-    }*/
+    }
 
     @Test
     public void parseCommand_deleteEvent() throws Exception {

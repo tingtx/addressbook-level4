@@ -20,6 +20,8 @@ public class Datetime {
     public static final String DATETIME_VALIDATION_REGEX =
             "((0[1-9])|([012][0-9])|(3[01]))-(0[1-9]|1[012])-\\d\\d\\d\\d (([0-1][0-9])|(2[0-3]))[0-5][0-9]";
 
+    private static final int VALID_DATETIME_LENGTH = 15;
+
     public final String value;
 
     /**
@@ -30,6 +32,7 @@ public class Datetime {
     public Datetime(String datetime) throws IllegalValueException {
         requireNonNull(datetime);
         String trimmedDatetime = datetime.trim();
+
         if (!isValidDatetime(trimmedDatetime)) {
             throw new IllegalValueException(MESSAGE_DATETIME_CONSTRAINTS);
         }
@@ -40,7 +43,65 @@ public class Datetime {
      * Returns true if a given string is a valid event datetime.
      */
     public static boolean isValidDatetime(String test) {
-        return test.matches(DATETIME_VALIDATION_REGEX);
+        //return test.matches(DATETIME_VALIDATION_REGEX);
+        Boolean validTime = false;
+        Boolean validDate = false;
+
+        if (test.length() != VALID_DATETIME_LENGTH) {
+            return false;
+        }
+
+        try {
+            int day = Integer.parseInt(test.substring(0, 2));
+            int month = Integer.parseInt(test.substring(3, 5));
+            int year = Integer.parseInt(test.substring(6, 10));
+            int hour = Integer.parseInt(test.substring(11, 13));
+            int min = Integer.parseInt(test.substring(13, 15));
+
+            //Check Time Validation
+            if (0 <= hour && hour <= 23) {
+                if (0 <= min && min <= 60) {
+                    validTime = true;
+                }
+            }
+
+            //Check Date Validation
+            if (day >=1){
+                // For months with 30 days.
+                if ((month == 4
+                        || month == 6
+                        || month == 9
+                        || month == 11)
+                        && day <= 30) {
+                    validDate = true;
+                }
+                // For months with 31 days.
+                if ((month == 1
+                        || month == 3
+                        || month == 5
+                        || month == 7
+                        || month == 8
+                        || month == 10
+                        || month == 12)
+                        && day <= 31) {
+                    validDate = true;
+                }
+                // For February.
+                if (month == 2)
+                {
+                    if(day <= 28) {
+                        validDate = true;
+                    } else if(day == 29) {
+                        if ((year%4 == 0 && year%100!=0) || year%400 == 0){
+                            validDate = true;
+                        } //else invalid
+                    }
+                }
+            } //else date is not valid
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return validTime && validDate;
     }
 
     @Override

@@ -1,10 +1,12 @@
 package seedu.address.logic.commands;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -15,6 +17,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAccount;
@@ -49,7 +53,7 @@ public class AddEventCommandTest {
         new AddEventCommand(null);
     }
 
-    /*@Test
+    @Test
     public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
         Event validEvent = new EventBuilder().build();
@@ -58,9 +62,9 @@ public class AddEventCommandTest {
 
         assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void execute_duplicateEvent_throwsCommandException() throws Exception {
         AddEventCommandTest.ModelStub modelStub = new AddEventCommandTest.ModelStubThrowingDuplicateEventException();
         Event validEvent = new EventBuilder().build();
@@ -69,7 +73,7 @@ public class AddEventCommandTest {
         thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 
         getAddEventCommandForEvent(validEvent, modelStub).execute();
-    }*/
+    }
 
     @Test
     public void equals() {
@@ -83,7 +87,7 @@ public class AddEventCommandTest {
 
         // same values -> returns true
         AddEventCommand addTest1CommandCopy = new AddEventCommand(test1);
-        //assertTrue(addTest1Command.equals(addTest1CommandCopy));
+        assertTrue(addTest1Command.equals(addTest1CommandCopy));
 
         // different types -> returns false
         assertFalse(addTest1Command.equals(1));
@@ -258,6 +262,11 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+
+        @Override
         public ReadOnlyEventBook getEventBook() {
             return new EventBook();
         }
@@ -277,6 +286,11 @@ public class AddEventCommandTest {
         @Override
         public ReadOnlyEventBook getEventBook() {
             return new EventBook();
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
         }
     }
 

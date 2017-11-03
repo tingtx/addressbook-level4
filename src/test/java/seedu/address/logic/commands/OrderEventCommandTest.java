@@ -121,6 +121,6 @@ public class OrderEventCommandTest {
         CommandResult commandResult = command.executeUndoableCommand();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList.toString(), model.getFilteredEventList().toString());
+        assertEquals(expectedList, model.getFilteredEventList());
     }
 }

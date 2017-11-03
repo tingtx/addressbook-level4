@@ -19,6 +19,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -189,7 +190,7 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyEventBook getEventBook() {
-
+            fail("This method should not be called.");
             return null;
         }
 
@@ -258,6 +259,9 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() { return new EventBook(); }
     }
 
     /**
@@ -275,6 +279,9 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() { return new EventBook(); }
     }
 
 }

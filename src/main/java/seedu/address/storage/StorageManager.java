@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
+
 import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.ComponentManager;
@@ -93,6 +98,12 @@ public class StorageManager extends ComponentManager implements Storage {
 
     }
 
+    @Override
+    public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
+            IOException, SAXException, TransformerException {
+        addressBookStorage.exportAddressBook();
+    }
+
     // ================ Account methods ===================================
     @Override
     public String getAccountFilePath() {
@@ -160,6 +171,12 @@ public class StorageManager extends ComponentManager implements Storage {
     public Optional<ReadOnlyEventBook> readEventBook(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return eventBookStorage.readEventBook(filePath);
+    }
+
+    @Override
+    public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
+            IOException, SAXException, TransformerException {
+        eventBookStorage.exportEventBook();
     }
 
     @Override

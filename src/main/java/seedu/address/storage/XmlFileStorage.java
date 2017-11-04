@@ -2,8 +2,13 @@ package seedu.address.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
@@ -85,4 +90,20 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Export XML Data into CSV file
+     */
+    public static void exportGeneralbook(String source, String destination, String style, String objectElement)
+            throws FileNotFoundException, ParserConfigurationException,
+            IOException, SAXException, TransformerException {
+        try {
+            XmlUtil.exportDataToFile(source, destination, style, objectElement);
+        } catch (ParserConfigurationException pce) {
+            throw new ParserConfigurationException();
+        } catch (SAXException se) {
+            throw new SAXException();
+        } catch (TransformerException te) {
+            throw new TransformerException(te);
+        }
+    }
 }

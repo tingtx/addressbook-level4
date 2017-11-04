@@ -8,13 +8,19 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
@@ -40,6 +46,7 @@ import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.storage.Storage;
 import seedu.address.testutil.AliasBuilder;
 
 public class SetAliasCommandTest {
@@ -143,6 +150,12 @@ public class SetAliasCommandTest {
         }
 
         @Override
+        public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
+                IOException, SAXException, TransformerException {
+
+        }
+
+        @Override
         public ReadOnlyAccount getAccount() {
             fail("This method should not be called.");
             return null;
@@ -207,6 +220,12 @@ public class SetAliasCommandTest {
         }
 
         @Override
+        public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
+                IOException, SAXException, TransformerException {
+
+        }
+
+        @Override
         public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
 
         }
@@ -255,6 +274,11 @@ public class SetAliasCommandTest {
         @Override
         public String retrieveSaltFromStorage(String userId) {
             return null;
+        }
+
+        @Override
+        public void setUserStorage(Storage userStorage) {
+
         }
     }
 

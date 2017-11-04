@@ -33,7 +33,7 @@ public class UndoableCommandTest {
             new Account());
 
     // 1 is for address book turn, 2 is for event book turn;
-    private int undo_redo_turn = 1;
+    private int undoRedoTurn = 1;
 
     public UndoableCommandTest() throws IllegalValueException {
     }
@@ -43,7 +43,7 @@ public class UndoableCommandTest {
     public void executeUndo() throws Exception {
 
         //excute undo for address book
-        undo_redo_turn = 1;
+        undoRedoTurn = 1;
 
         dummyCommand.execute();
         deleteFirstPerson(expectedModel);
@@ -58,7 +58,7 @@ public class UndoableCommandTest {
         assertEquals(expectedModel, model);
 
         //excute undo for event book
-        undo_redo_turn = 2;
+        undoRedoTurn = 2;
 
         dummyCommand.execute();
         deleteFirstEvent(expectedModel);
@@ -77,7 +77,7 @@ public class UndoableCommandTest {
     public void redo() {
 
         //excute redo for address book
-        undo_redo_turn = 1;
+        undoRedoTurn = 1;
 
         showFirstPersonOnly(model);
 
@@ -87,7 +87,7 @@ public class UndoableCommandTest {
         assertEquals(expectedModel, model);
 
         //excute undo for event book
-        undo_redo_turn = 2;
+        undoRedoTurn = 2;
 
         showFirstEventOnly(model);
 
@@ -108,7 +108,7 @@ public class UndoableCommandTest {
         @Override
         public CommandResult executeUndoableCommand() throws CommandException {
 
-            if (undo_redo_turn == 1) {
+            if (undoRedoTurn == 1) {
                 ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(0);
                 try {
                     model.deletePerson(personToDelete);
@@ -116,7 +116,7 @@ public class UndoableCommandTest {
                     fail("Impossible: personToDelete was retrieved from model.");
                 }
 
-            } else if (undo_redo_turn == 2) {
+            } else if (undoRedoTurn == 2) {
                 ReadOnlyEvent eventToDelete = model.getFilteredEventList().get(0);
                 try {
                     model.deleteEvent(eventToDelete);

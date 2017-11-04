@@ -80,6 +80,7 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        model.setUserStorage(storage);
 
         logic = new LogicManager(model, userPrefs, config);
 

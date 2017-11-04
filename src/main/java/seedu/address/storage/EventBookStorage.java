@@ -1,7 +1,13 @@
 package seedu.address.storage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyEventBook;
@@ -48,5 +54,11 @@ public interface EventBookStorage {
      * @see #saveEventBook(ReadOnlyEventBook)
      */
     void backupEventBook(ReadOnlyEventBook eventBook) throws IOException;
+
+    /**
+     * @see #exportEventBook()
+     */
+    void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
+            IOException, SAXException, TransformerException;
 
 }

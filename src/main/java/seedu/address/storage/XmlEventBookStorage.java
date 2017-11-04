@@ -8,6 +8,11 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
@@ -22,6 +27,10 @@ public class XmlEventBookStorage implements EventBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlEventBookStorage.class);
 
     private String filePath;
+    private String stylePath = "data/eventbookStyle.xsl";
+    private String exportedPath = "data/eventbook.csv";
+    private String objectElement = "events";
+
 
     public XmlEventBookStorage(String filePath) {
         this.filePath = filePath;
@@ -72,5 +81,11 @@ public class XmlEventBookStorage implements EventBookStorage {
     @Override
     public void backupEventBook(ReadOnlyEventBook eventBook) throws IOException {
         saveEventBook(eventBook, filePath.substring(0, filePath.indexOf('.')) + "_backup.xml");
+    }
+
+    @Override
+    public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
+            IOException, SAXException, TransformerException {
+        XmlFileStorage.exportGeneralbook(filePath, exportedPath, stylePath, objectElement);
     }
 }

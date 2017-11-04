@@ -4,6 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
+
 import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
@@ -65,6 +70,10 @@ public interface Storage extends AddressBookStorage, EventBookStorage, UserPrefs
 
     @Override
     void saveEventBook(ReadOnlyEventBook eventBook) throws IOException;
+
+    @Override
+    void exportEventBook() throws FileNotFoundException, ParserConfigurationException, IOException,
+            SAXException, TransformerException;
 
     /**
      * Saves the current version of the Event Book to the hard disk.

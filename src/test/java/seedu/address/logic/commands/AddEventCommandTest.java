@@ -5,13 +5,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
@@ -39,6 +45,7 @@ import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.storage.Storage;
 import seedu.address.testutil.EventBuilder;
 
 //@author kaiyu92
@@ -129,6 +136,12 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
+                IOException, SAXException, TransformerException {
+
+        }
+
+        @Override
         public ReadOnlyAccount getAccount() {
             fail("This method should not be called.");
             return null;
@@ -200,6 +213,12 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
+                IOException, SAXException, TransformerException {
+
+        }
+
+        @Override
         public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
             fail("This method should not be called.");
         }
@@ -249,6 +268,11 @@ public class AddEventCommandTest {
         @Override
         public String retrieveSaltFromStorage(String userId) {
             return null;
+        }
+
+        @Override
+        public void setUserStorage(Storage userStorage) {
+
         }
     }
 

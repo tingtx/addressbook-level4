@@ -206,9 +206,21 @@ Edits the title of the 2nd event to be `2018 iPhone 11 Release`.
 Exits the program. +
 Format: `exit`
 
-=== Export : `export` - Coming in V2.0
+=== Export : `export` - Since V1.5
 
-Exports the TunedIn application for use on another computer.
+Exports the TunedIn application data (either event book or address book) into csv format. +
+Format: `export BOOK`
+
+****
+* export the data of the specified `BOOK`. The book refers to either address book or event book.
+* `BOOK` is case-insensitive.
+* Existing CSV will be overwrited.
+****
+
+Examples:
+
+* `export addressbook` +
+Exports the addressbook into csv format
 
 === Locating persons by name: `find` - Since V1.0
 

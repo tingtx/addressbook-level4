@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
+import com.sun.istack.internal.localization.NullLocalizable;
+
 import seedu.address.commons.util.StringUtil;
 
 /**
@@ -31,10 +33,12 @@ public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         } else if (predicateType == 'm') {
             return (keywords.stream()
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAsText(), keyword)));
+        //@@ author tingtx
         } else if (predicateType == 'g') {
-            return (keywords.stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getGroup().value, keyword)));
+            assert keywords.size() == 1;
+            return (person.getGroup().value.equalsIgnoreCase(keywords.get(0).toString()));
         }
+        //@@author
         return false;
     }
 

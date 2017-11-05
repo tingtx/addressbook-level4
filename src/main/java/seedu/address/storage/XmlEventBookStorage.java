@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
@@ -27,9 +26,8 @@ public class XmlEventBookStorage implements EventBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlEventBookStorage.class);
 
     private String filePath;
-    private String stylePath = "data/eventbookStyle.xsl";
     private String exportedPath = "data/eventbook.csv";
-    private String objectElement = "events";
+    private String header = "Title,Description,Location,Datetime";
 
 
     public XmlEventBookStorage(String filePath) {
@@ -84,8 +82,7 @@ public class XmlEventBookStorage implements EventBookStorage {
     }
 
     @Override
-    public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
-            IOException, SAXException, TransformerException {
-        XmlFileStorage.exportGeneralbook(filePath, exportedPath, stylePath, objectElement);
+    public void exportEventBook() throws ParserConfigurationException, IOException, SAXException {
+        XmlFileStorage.exportEventbook(filePath, exportedPath, header);
     }
 }

@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
@@ -26,9 +25,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private String filePath;
-    private String stylePath = "data/addressbookStyle.xsl";
     private String exportedPath = "data/addressbook.csv";
-    private String objectElement = "persons";
+    private String header = "Name,Phone,Address,Birthday,Email,Group,Remark,Tagged";
 
     public XmlAddressBookStorage(String filePath) {
         this.filePath = filePath;
@@ -89,9 +87,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
-            IOException, SAXException, TransformerException {
-        XmlFileStorage.exportGeneralbook(filePath, exportedPath, stylePath, objectElement);
+    public void exportAddressBook() throws ParserConfigurationException, IOException, SAXException {
+        XmlFileStorage.exportAddressbook(filePath, exportedPath, header);
     }
 
 }

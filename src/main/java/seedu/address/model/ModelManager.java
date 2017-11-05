@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -165,9 +167,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
-
-        //Order Command
-        commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
 
         //Lock Command
         commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
@@ -359,8 +358,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    //=========== Filtered Person List Accessors =============================================================
-
     @Override
     public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
         try {
@@ -371,6 +368,8 @@ public class ModelManager extends ComponentManager implements Model {
             throw e;
         }
     }
+
+    //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
@@ -385,13 +384,14 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredListToShowAll() {
         filteredPersons.setPredicate(null);
     }
-    //========================================================================================================
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //========================================================================================================
 
     @Override
     public void resetEventData(ReadOnlyEventBook newData) {

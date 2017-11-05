@@ -46,7 +46,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
 import seedu.address.model.group.Group;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.testutil.EditEventDescriptorBuilder;
@@ -130,13 +130,13 @@ public class GeneralBookParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " n/" + keywords.stream().collect(Collectors.joining(" ")));
-        Assert.assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        Assert.assertEquals(new FindCommand(new ContainsKeywordsPredicate(keywords)), command);
 
         //alias
         command = (FindCommand) parser.parseCommand(
                 aliasSettings.getFindCommand().getAlias() + " n/" + keywords.stream().collect(
                         Collectors.joining(" ")));
-        Assert.assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        Assert.assertEquals(new FindCommand(new ContainsKeywordsPredicate(keywords)), command);
     }
 
     //@@author tingtx

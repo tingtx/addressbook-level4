@@ -22,7 +22,7 @@ import seedu.address.model.group.Group;
 public class GroupCommandParser implements Parser<GroupCommand> {
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * Returns true the prefixes contains no empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
      */
     private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
@@ -57,8 +57,13 @@ public class GroupCommandParser implements Parser<GroupCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
         }
 
-        String group = argMultimap.getValue(PREFIX_GROUP).get();
+        Group group;
+        try {
+            group = new Group(argMultimap.getValue(PREFIX_GROUP).get());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage());
+        }
 
-        return new GroupCommand(indexes, new Group(group));
+        return new GroupCommand(indexes, group);
     }
 }

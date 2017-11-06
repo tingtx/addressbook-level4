@@ -1,6 +1,10 @@
 package seedu.address.logic.commands.digestutil;
 
 public class HexCode {
+
+    /**
+     * Return hex string of text
+     */
     public String getHexFormat(String text) {
         char[] chars = text.toCharArray();
 
@@ -12,6 +16,9 @@ public class HexCode {
         return hex.toString();
     }
 
+    /**
+     * Return text of hex string
+     */
     public String hexStringToByteArray(String hexString) {
         StringBuilder sb = new StringBuilder();
         StringBuilder temp = new StringBuilder();

@@ -60,9 +60,12 @@ public class LoginCommand extends Command {
         return isSameDigest(password, digest);
     }
 
+    /**
+     * This checks if the userId is existing
+     */
     private boolean checkExistingUserId() {
         byte[] uidDigest = new HashDigest().getHashDigest(userId);
-//        byte[] retrievedDigest = model.retrieveDigestFromStorage();
+        //byte[] retrievedDigest = model.retrieveDigestFromStorage();
         byte[] retrievedDigest = null;
         return isSameDigest(uidDigest, retrievedDigest);
     }

@@ -126,64 +126,64 @@ public class UniquePersonList implements Iterable<Person> {
                 .compareToIgnoreCase(b.getTags().toString());
 
         switch (parameter) {
-            case "NAME":
-                internalList.sort(orderByName);
-                break;
+        case "NAME":
+            internalList.sort(orderByName);
+            break;
 
-            case "ADDRESS":
-                internalList.sort(orderByAddress);
-                break;
+        case "ADDRESS":
+            internalList.sort(orderByAddress);
+            break;
 
-            case "BIRTHDAY":
-                internalList.sort(orderByBirthday);
-                break;
+        case "BIRTHDAY":
+            internalList.sort(orderByBirthday);
+            break;
 
-            case "TAG":
-                internalList.sort(orderByTag);
-                break;
+        case "TAG":
+            internalList.sort(orderByTag);
+            break;
 
-            case "NAME ADDRESS":
-                internalList.sort(orderByName.thenComparing(orderByAddress));
-                break;
+        case "NAME ADDRESS":
+            internalList.sort(orderByName.thenComparing(orderByAddress));
+            break;
 
-            case "ADDRESS NAME":
-                internalList.sort(orderByName.thenComparing(orderByTag));
-                break;
+        case "ADDRESS NAME":
+            internalList.sort(orderByName.thenComparing(orderByTag));
+            break;
 
-            case "TAG NAME":
-                internalList.sort(orderByTag.thenComparing(orderByName));
-                break;
+        case "TAG NAME":
+            internalList.sort(orderByTag.thenComparing(orderByName));
+            break;
 
-            case "NAME TAG":
-                internalList.sort(orderByName.thenComparing(orderByTag));
-                break;
+        case "NAME TAG":
+            internalList.sort(orderByName.thenComparing(orderByTag));
+            break;
 
-            case "NAME BIRTHDAY":
-                internalList.sort(orderByName.thenComparing(orderByBirthday));
-                break;
+        case "NAME BIRTHDAY":
+            internalList.sort(orderByName.thenComparing(orderByBirthday));
+            break;
 
-            case "BIRTHDAY NAME":
-                internalList.sort(orderByBirthday.thenComparing(orderByName));
-                break;
+        case "BIRTHDAY NAME":
+            internalList.sort(orderByBirthday.thenComparing(orderByName));
+            break;
 
-            case "ADDRESS BIRTHDAY":
-                internalList.sort(orderByAddress.thenComparing(orderByBirthday));
-                break;
+        case "ADDRESS BIRTHDAY":
+            internalList.sort(orderByAddress.thenComparing(orderByBirthday));
+            break;
 
-            case "BIRTHDAY ADDRESS":
-                internalList.sort(orderByBirthday.thenComparing(orderByAddress));
-                break;
+        case "BIRTHDAY ADDRESS":
+            internalList.sort(orderByBirthday.thenComparing(orderByAddress));
+            break;
 
-            case "BIRTHDAY TAG":
-                internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
-                break;
+        case "BIRTHDAY TAG":
+            internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
+            break;
 
-            case "TAG BIRTHDAY":
-                internalList.sort(orderByTag.thenComparing(orderByBirthday));
-                break;
+        case "TAG BIRTHDAY":
+            internalList.sort(orderByTag.thenComparing(orderByBirthday));
+            break;
 
-            default:
-                throw new UnrecognisedParameterException();
+        default:
+            throw new UnrecognisedParameterException();
         }
 
     }

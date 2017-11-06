@@ -61,8 +61,6 @@ public interface Model {
     void exportAddressBook() throws FileNotFoundException, ParserConfigurationException, IOException,
             SAXException, TransformerException;
 
-    ;
-
     /**
      * Returns the Account
      */
@@ -152,8 +150,6 @@ public interface Model {
      */
     void exportEventBook() throws FileNotFoundException, ParserConfigurationException, IOException,
             SAXException, TransformerException;
-
-    ;
 
     /**
      * Deletes the given event.

@@ -125,33 +125,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person editedPerson = new Person(editedReadOnlyPerson);
 
-        try {
-            persons.setPerson(target, editedPerson);
-            syncMasterTagListWith(editedPerson);
+        persons.setPerson(target, editedPerson);
+        syncMasterTagListWith(editedPerson);
+        syncMasterGroupListWith(editedPerson);
+        updateMasterGroupList(target.getGroup());
 
-            // TODO: the tags master list will be updated even though the below line fails.
-            // This can cause the tags master list to have additional tags that are not tagged to any person
-            // in the person list.
-
-        } catch (DuplicatePersonException dpe) {
-            throw new DuplicatePersonException();
-
-        } catch (PersonNotFoundException pnfe) {
-            throw new PersonNotFoundException();
-        }
-    }
-
-    //TODO: This function will be deleted!
-    /**
-     * Group the given person {@code target} in the list to {@code group}.
-     *
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     */
-    public void groupPerson(Person target, Group group) throws PersonNotFoundException {
-        Group prevGroup = target.getGroup();
-        persons.groupPerson(target, group);
-        groups.addIfNew(group);
-        updateMasterGroupList(prevGroup);
     }
 
     /**

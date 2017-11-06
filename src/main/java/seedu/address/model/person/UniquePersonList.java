@@ -77,25 +77,6 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.set(index, new Person(editedPerson));
     }
 
-    //@@author tingtx
-
-    /**
-     * Group the person {@code target} in the list to {@code group}.
-     *
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     */
-    public void groupPerson(Person target, Group group) throws PersonNotFoundException {
-        requireNonNull(group);
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new PersonNotFoundException();
-        }
-
-        target.setGroup(group);
-
-    }
-    //@@author
-
     /**
      * Removes the equivalent person from the list.
      *

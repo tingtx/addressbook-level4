@@ -89,14 +89,6 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    //@@author tingtx
-
-    /**
-     * Group the given person(s)
-     */
-    void groupPerson(Person target, Group group) throws PersonNotFoundException;
-    //@@author
-
     /**
      * Delete the given tag on every person in the Addressbook
      */

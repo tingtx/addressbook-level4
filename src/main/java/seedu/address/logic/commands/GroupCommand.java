@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author tingtx
@@ -62,13 +63,17 @@ public class GroupCommand extends UndoableCommand {
                 throw new CommandException("Index " + index.toString() + " is invalid!");
             }
 
-            Person personToGroup = (Person) lastShownList.get(index.getZeroBased());
+            ReadOnlyPerson personToGroup = lastShownList.get(index.getZeroBased());
+            Person editedPerson = new Person(personToGroup.getName(), personToGroup.getPhone(), personToGroup.getEmail(),
+                    personToGroup.getAddress(), personToGroup.getBirthday(), group,
+                    personToGroup.getRemark(), personToGroup.getTags());
 
             try {
-                model.groupPerson(personToGroup, group);
+                model.updatePerson(personToGroup,editedPerson);
+            } catch (DuplicatePersonException dpe) {
+                //this should not happened
             } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The person with index " + index.toString()
-                        + " cannot be missing");
+                throw new CommandException("The target person cannot be missing");
             }
 
         }

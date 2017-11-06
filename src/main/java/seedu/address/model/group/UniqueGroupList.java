@@ -34,11 +34,7 @@ public class UniqueGroupList implements Iterable<Group>{
      */
     public void setGroup(Set<Group> groups) {
         requireAllNonNull(groups);
-        final Set<Group> replacement = new HashSet<Group>();
-        for (final Group group : groups) {
-            replacement.add(new Group(group.value));
-        }
-        internalList.setAll(replacement);
+        internalList.setAll(groups);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
@@ -51,14 +47,13 @@ public class UniqueGroupList implements Iterable<Group>{
     }
 
     /**
-     * Adds a Group to the list only if it is not already exist.
+     * Adds a Group to the list only if it is not already exist and Group does not contains empty value.
      */
     public void addIfNew(Group toAdd) {
         requireNonNull(toAdd);
         if (!toAdd.value.isEmpty() && !contains(toAdd)) {
             internalList.add(toAdd);
         }
-
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 

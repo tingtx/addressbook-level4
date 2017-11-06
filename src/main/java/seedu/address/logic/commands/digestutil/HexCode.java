@@ -1,5 +1,8 @@
 package seedu.address.logic.commands.digestutil;
 
+/**
+ * Provide the utilities to obtain hex strings from texts and texts from hex strings
+ */
 public class HexCode {
 
     /**

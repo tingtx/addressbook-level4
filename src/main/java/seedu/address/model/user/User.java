@@ -7,13 +7,17 @@ package seedu.address.model.user;
  */
 public class User implements ReadOnlyUser {
     private String userId;
-    private String salt;
-    private String password;
+    private String salt = "";
+    private String password = "";
 
     public User(String userId, String salt, String password) {
         this.userId = userId;
         this.salt = salt;
         this.password = password;
+    }
+
+    public User(String userId){
+        this.userId = userId;
     }
 
     /**
@@ -58,5 +62,11 @@ public class User implements ReadOnlyUser {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyUser // instanceof handles nulls
                 && this.isSameStateAs((ReadOnlyUser) other));
+    }
+
+    public boolean sameAs(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReadOnlyUser // instanceof handles nulls
+                && this.isSameUserAs((ReadOnlyUser) other));
     }
 }

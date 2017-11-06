@@ -27,11 +27,21 @@ public interface ReadOnlyUser {
     }
 
     /**
-     * Returns true if both have the same state. (interfaces cannot override .equals)
+     * Returns true if both have the same username. (interfaces cannot override .equals)
      */
     default boolean isSameStateAs(ReadOnlyUser other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getUserId().equals(this.getUserId())); // state checks here onwards
+    }
+
+    /**
+     * Returns true if both have the same username and password
+     */
+    default boolean isSameUserAs(ReadOnlyUser other) {
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getUserId().equals(this.getUserId())
+                && other.getPassword().equals(this.getPassword())); // state checks here onwards
     }
 }

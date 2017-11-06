@@ -8,6 +8,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 import seedu.address.logic.commands.digestutil.HashDigest;
+import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
@@ -42,15 +43,16 @@ public class LockCommand extends Command {
     public CommandResult execute() throws CommandException, DuplicateUserException {
         requireNonNull(model);
         byte[] uIdDigest = new HashDigest().getHashDigest(userId);
+
         byte[] salt = new byte[32];
         final Random r = new SecureRandom();
         r.nextBytes(salt);
         String saltText = new String(salt);
-        byte[] pwDigest = new seedu.address.logic.commands.digestutil.HashDigest()
-                .getHashDigest(saltText + passwordText);
-        String hexUidDigest = getHexFormat(uIdDigest);
-        String hexSalt = getHexFormat(salt);
-        String hexPassword = getHexFormat(pwDigest);
+
+        byte[] pwDigest = new HashDigest().getHashDigest(saltText + passwordText);
+        String hexUidDigest = new HexCode().getHexFormat(uIdDigest);
+        String hexSalt = new HexCode().getHexFormat(salt);
+        String hexPassword = new HexCode().getHexFormat(pwDigest);
         try {
             model.persistUserAccount(new User(hexUidDigest, hexSalt, hexPassword));
         } catch (DuplicateUserException due) {
@@ -58,15 +60,6 @@ public class LockCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
-    private String getHexFormat(byte[] byteStream) {
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < byteStream.length; i++) {
-            hexString.append(Integer.toHexString(0xFF & byteStream[i]));
-        }
-        return hexString.toString();
-    }
-
 
     public String getUserId() {
         return userId;

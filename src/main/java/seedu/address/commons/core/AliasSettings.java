@@ -29,6 +29,7 @@ import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemoveUserCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
@@ -61,6 +62,7 @@ public class AliasSettings implements Serializable {
     private Alias orderCommand;
     private Alias redoCommand;
     private Alias remarkCommand;
+    private Alias removeUserCommand;
     private Alias selectCommand;
     private Alias setAliasCommand;
     private Alias undoCommand;
@@ -99,10 +101,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add("history");
         this.listCommand = new Alias(ListCommand.getCommandWord(), "list");
         usedAliases.add("list");
-
         this.lockCommand = new Alias(LockCommand.getCommandWord(), "lock");
         usedAliases.add("lock");
-
         this.loginCommand = new Alias(LoginCommand.getCommandWord(), "login");
         usedAliases.add("login");
         this.orderCommand = new Alias(OrderCommand.getCommandWord(), "order");
@@ -111,6 +111,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add("redo");
         this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), "remark");
         usedAliases.add("remark");
+        this.removeUserCommand = new Alias(RemoveUserCommand.getCommandWord(), "remove");
+        usedAliases.add("remove");
         this.selectCommand = new Alias(SelectCommand.getCommandWord(), "select");
         usedAliases.add("select");
         this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), "setalias");
@@ -141,8 +143,8 @@ public class AliasSettings implements Serializable {
     public AliasSettings(String addCommand, String clearCommand, String deleteCommand, String editCommand,
                          String exitCommand, String findCommand, String groupCommand, String helpCommand,
                          String historyCommand, String listCommand, String lockCommand, String loginCommand,
-                         String orderCommand, String redoCommand,
-                         String remarkCommand, String selectCommand, String setAliasCommand, String undoCommand,
+                         String orderCommand, String redoCommand, String remarkCommand, String removeUserCommand,
+                         String selectCommand, String setAliasCommand, String undoCommand,
                          String viewAliasCommand, String addEventCommand, String deleteEventCommand,
                          String editEventCommand, String listEventCommand, String orderEventCommand,
                          String findEventCommand, String setThemeCommand, String switchCommand,
@@ -167,10 +169,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add(historyCommand);
         this.listCommand = new Alias(ListCommand.getCommandWord(), listCommand);
         usedAliases.add(listCommand);
-
         this.lockCommand = new Alias(LockCommand.getCommandWord(), lockCommand);
         usedAliases.add(lockCommand);
-
         this.loginCommand = new Alias(LoginCommand.getCommandWord(), loginCommand);
         usedAliases.add(loginCommand);
         this.orderCommand = new Alias(OrderCommand.getCommandWord(), orderCommand);
@@ -179,6 +179,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add(redoCommand);
         this.remarkCommand = new Alias(RemarkCommand.getCommandWord(), remarkCommand);
         usedAliases.add(remarkCommand);
+        this.removeUserCommand = new Alias(RemoveUserCommand.getCommandWord(), removeUserCommand);
+        usedAliases.add(removeUserCommand);
         this.selectCommand = new Alias(SelectCommand.getCommandWord(), selectCommand);
         usedAliases.add(selectCommand);
         this.setAliasCommand = new Alias(SetAliasCommand.getCommandWord(), setAliasCommand);
@@ -264,6 +266,10 @@ public class AliasSettings implements Serializable {
 
     public Alias getRemarkCommand() {
         return remarkCommand;
+    }
+
+    public Alias getRemoveUserCommand() {
+        return removeUserCommand;
     }
 
     public Alias getSelectCommand() {
@@ -403,6 +409,12 @@ public class AliasSettings implements Serializable {
             }
             usedAliases.add(alias);
             this.redoCommand = new Alias(RedoCommand.getCommandWord(), alias);
+        } else if (command.equals(RemoveUserCommand.getCommandWord())) {
+            if (!this.removeUserCommand.getAlias().equals("remove")) {
+                usedAliases.remove(this.removeUserCommand.getAlias());
+            }
+            usedAliases.add(alias);
+            this.removeUserCommand = new Alias(RemoveUserCommand.getCommandWord(), alias);
         } else if (command.equals(RemarkCommand.getCommandWord())) {
             if (!this.remarkCommand.getAlias().equals("remark")) {
                 usedAliases.remove(this.remarkCommand.getAlias());

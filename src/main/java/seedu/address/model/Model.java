@@ -17,7 +17,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
 
 /**
  * The API of the Model component.
@@ -178,5 +180,9 @@ public interface Model {
 
     byte[] retrieveDigestFromStorage();
 
-    String retrieveSaltFromStorage(String userId);
+    String retrieveSaltFromStorage(String userId) throws UserNotFoundException;
+
+    User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException;
+
+    void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException;
 }

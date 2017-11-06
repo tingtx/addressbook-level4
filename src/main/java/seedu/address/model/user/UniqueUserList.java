@@ -78,4 +78,17 @@ public class UniqueUserList {
     public void setUsers(UniqueUserList replacement) throws DuplicateUserException {
         this.internalList.setAll(replacement.internalList);
     }
+
+
+    public User getUser(String userName) throws UserNotFoundException {
+        int targetIndex = this.internalList.indexOf(new User(userName));
+        if (targetIndex < 0) {
+            throw new UserNotFoundException();
+        }
+        return this.internalList.get(targetIndex);
+    }
+
+    public String getSalt(String userId) throws UserNotFoundException {
+        return getUser(userId).getSalt();
+    }
 }

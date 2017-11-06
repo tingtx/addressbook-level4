@@ -17,9 +17,9 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_USAGE = COMMAND_WORD
             + ": List the Address Book or ONE specified group of contact.\n"
-            + "Parameters: [GROUP]\n"
+            + "Parameters: [g/GROUP]\n"
             + "Example: " + COMMAND_WORD + "\n"
-            + "Example: " + COMMAND_WORD + " friends";
+            + "Example: " + COMMAND_WORD + " g/friends";
     public static final String MESSAGE_LIST_ALL_SUCCESS = "Listed all persons";
     public static final String MESSAGE_LIST_GROUP_SUCCESS = "Listed all persons in ";
     public static final String MESSAGE_LIST_WRONG_PARAMTER = "Group does not exist!";
@@ -29,7 +29,9 @@ public class ListCommand extends Command {
 
     public ListCommand(String predicate) {
         this.listParameter = predicate;
+        predicate = predicate.isEmpty() ? predicate : predicate.substring(2).trim();
         this.predicate = new ContainsKeywordsPredicate(Arrays.asList(predicate));
+
     }
 
     public static String getCommandWord() {

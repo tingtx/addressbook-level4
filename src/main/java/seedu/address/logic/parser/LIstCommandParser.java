@@ -6,6 +6,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ContainsKeywordsPredicate;
 
+//@@author tingtx
 /**
  * Parses input arguments and creates a new ListCommand object
  */
@@ -20,16 +21,12 @@ public class LIstCommandParser implements Parser<ListCommand> {
     public ListCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
 
+        if (!trimmedArgs.isEmpty() && !trimmedArgs.substring(0,2).equals("g/")) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.COMMAND_USAGE));
+        }
+
         ContainsKeywordsPredicate.setPredicateType('g');
-
-//        if ()
-//            throw new ParseException(
-//                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-//        }
-
-        //to check if group exist.
-
-
         return new ListCommand(trimmedArgs);
     }
 }

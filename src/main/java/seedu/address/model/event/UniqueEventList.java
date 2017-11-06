@@ -121,17 +121,17 @@ public class UniqueEventList implements Iterable<Event> {
                 .compareToIgnoreCase(b.getLocation().toString());
         Comparator<Event> orderByDatetime = (Event a, Event b) -> {
 
-        SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy hhmm");
-        try {
-            Date datetime1 = formatDate.parse(a.getDatetime().value);
-            Date datetime2 = formatDate.parse(b.getDatetime().value);
+            SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy hhmm");
+            try {
+                Date datetime1 = formatDate.parse(a.getDatetime().value);
+                Date datetime2 = formatDate.parse(b.getDatetime().value);
 
-            return datetime2.compareTo(datetime1);
+                return datetime2.compareTo(datetime1);
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return 0;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return 0;
 
         };
 

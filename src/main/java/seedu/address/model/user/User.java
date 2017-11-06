@@ -65,6 +65,9 @@ public class User implements ReadOnlyUser {
                 && this.isSameStateAs((ReadOnlyUser) other));
     }
 
+    /**
+     * Check if the users have the same userName and password
+     */
     public boolean sameAs(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyUser // instanceof handles nulls

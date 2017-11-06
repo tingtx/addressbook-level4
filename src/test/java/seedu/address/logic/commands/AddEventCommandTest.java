@@ -44,7 +44,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.EventBuilder;
 
@@ -247,32 +249,39 @@ public class AddEventCommandTest {
 
         @Override
         public void orderEventList(String parameter) throws UnrecognisedParameterException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void setAlias(String command, String alias) throws UnknownCommandException, DuplicateAliasException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
-
+            fail("This method should not be called.");
         }
 
         @Override
-        public byte[] retrieveDigestFromStorage() {
-            return new byte[0];
+        public User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException {
+            fail("This method should not be called.");
         }
 
         @Override
         public String retrieveSaltFromStorage(String userId) {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void setUserStorage(Storage userStorage) {
-
+            fail("This method should not be called.");
         }
     }
 

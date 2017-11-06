@@ -31,6 +31,8 @@ public class FileEncryptor {
             (byte) 0x5b, (byte) 0xd7, (byte) 0x45, (byte) 0x17
     };
 
+    private static final String addressBookFilePath = "data/addressbook.xml";
+
     /**
      * Create a cipher
      *
@@ -49,9 +51,6 @@ public class FileEncryptor {
         //Create parameters from the salt and an arbitrary number of iterations:
         PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, 42);
 
-        /*Dump the key to a file for testing: */
-        FileEncryptor.keyToFile(key);
-
         //Set up the cipher:
         Cipher cipher = Cipher.getInstance("PBEWithMD5AndDES");
 
@@ -69,11 +68,11 @@ public class FileEncryptor {
     /**
      * Encrypts one file to a second file using a key derived from a passphrase:
      */
-    public static void encryptFile(String fileName, String pass)
+    public static void encryptFile(String userId, String pass)
             throws IOException, GeneralSecurityException{
         byte[] decData;
         byte[] encData;
-        File inFile = new File(fileName);
+        File inFile = new File(addressBookFilePath);
         //Generate the cipher using pass:
         Cipher cipher = FileEncryptor.makeCipher(pass, true);
 
@@ -104,8 +103,14 @@ public class FileEncryptor {
 
 
         //Write the encrypted data to a new file:
-        FileOutputStream outStream = new FileOutputStream(new File(fileName + ".encrypted"));
+        FileOutputStream outStream = new FileOutputStream(new File("data/" +userId + ".encrypted"));
         outStream.write(encData);
+        outStream.close();
+
+        outStream = new FileOutputStream(new File("data/addressbook.xml"));
+        String emptyContent = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                "<addressbook/>";
+        outStream.write(emptyContent.getBytes());
         outStream.close();
     }
 
@@ -145,26 +150,8 @@ public class FileEncryptor {
 
 
 
-        FileOutputStream target = new FileOutputStream(new File("data/addressbook_decrypted.xml"));
+        FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
         target.write(decData);
         target.close();
-    }
-
-    /**
-     * Record the key to a text file for testing:
-     */
-    private static void keyToFile(SecretKey key){
-        try {
-            File keyFile = new File("data/keyfile.txt");
-            FileWriter keyStream = new FileWriter(keyFile);
-            String encodedKey = "\n" + "Encoded version of key:  " + key.getEncoded().toString();
-            keyStream.write(key.toString());
-            keyStream.write(encodedKey);
-            keyStream.close();
-        } catch (IOException e) {
-            System.err.println("Failure writing key to file");
-            e.printStackTrace();
-        }
-
     }
 }

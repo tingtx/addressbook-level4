@@ -4,11 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
@@ -56,6 +59,13 @@ public class LockCommand extends Command {
             model.persistUserAccount(new User(hexUidDigest, hexSalt, hexPassword));
         } catch (DuplicateUserException due) {
             throw new CommandException(MESSAGE_EXISTING_USER);
+        }
+        try {
+            FileEncryptor.encryptFile(hexUidDigest.substring(0,10), saltText + passwordText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }

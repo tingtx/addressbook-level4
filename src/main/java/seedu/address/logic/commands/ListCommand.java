@@ -39,7 +39,6 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
 
-
         if (listParameter.isEmpty()) {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);

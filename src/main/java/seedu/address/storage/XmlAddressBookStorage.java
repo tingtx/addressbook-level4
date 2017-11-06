@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
@@ -21,6 +25,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private String filePath;
+    private String exportedPath = "data/addressbook.csv";
+    private String header = "Name,Phone,Address,Birthday,Email,Group,Remark,Tagged";
 
     public XmlAddressBookStorage(String filePath) {
         this.filePath = filePath;
@@ -78,6 +84,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath.substring(0, filePath.indexOf('.')) + "_backup.xml");
+    }
+
+    @Override
+    public void exportAddressBook() throws ParserConfigurationException, IOException, SAXException {
+        XmlFileStorage.exportAddressbook(filePath, exportedPath, header);
     }
 
 }

@@ -61,7 +61,8 @@ public class LoginCommand extends Command {
 
     private boolean checkExistingUserId() {
         byte[] uidDigest = new HashDigest().getHashDigest(userId);
-        byte[] retrievedDigest = model.retrieveDigestFromStorage();
+//        byte[] retrievedDigest = model.retrieveDigestFromStorage();
+        byte[] retrievedDigest = null;
         return isSameDigest(uidDigest, retrievedDigest);
     }
 

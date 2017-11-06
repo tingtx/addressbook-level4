@@ -8,6 +8,7 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+//@@author kaiyu92
 /**
  * Represents a Event in the event book.
  * Guarantees: details are present and not null, field values are validated.
@@ -91,6 +92,13 @@ public class Event implements ReadOnlyEvent {
 
     public void setDatetime(Datetime datetime) {
         this.datetime.set(requireNonNull(datetime));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReadOnlyEvent // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyEvent) other));
     }
 
     @Override

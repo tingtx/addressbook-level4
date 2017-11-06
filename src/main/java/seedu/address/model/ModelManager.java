@@ -3,12 +3,19 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +35,7 @@ import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -124,6 +132,9 @@ public class ModelManager extends ComponentManager implements Model {
         //Exit Command
         commandList.add(new ArrayList<String>(Arrays.asList("Exit", ExitCommand.getCommandWord())));
 
+        //Export Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Export", ExportCommand.getCommandWord())));
+
         //Find Command
         commandList.add(new ArrayList<String>(Arrays.asList("Find", FindCommand.getCommandWord())));
 
@@ -210,6 +221,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
+            IOException, SAXException, TransformerException {
+        userStorage.exportAddressBook();
     }
 
     @Override
@@ -337,6 +354,8 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getSwitchCommand().getAlias();
         } else if (command.equals(SelectEventCommand.getCommandWord())) {
             return aliasSettings.getSelectEventCommand().getAlias();
+        } else if (command.equals(ExportCommand.getCommandWord())) {
+            return aliasSettings.getExportCommand().getAlias();
         } else {
             return "Not Set";
         }
@@ -385,6 +404,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyEventBook getEventBook() {
         return eventBook;
+    }
+
+    @Override
+    public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
+            IOException, SAXException, TransformerException {
+        userStorage.exportEventBook();
     }
 
     /**
@@ -437,11 +462,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public byte[] retrieveDigestFromStorage() {
-        return new byte[0];
-    }
-
-    @Override
     public String retrieveSaltFromStorage(String userId) throws UserNotFoundException {
         return account.getSalt(userId);
     }
@@ -455,13 +475,19 @@ public class ModelManager extends ComponentManager implements Model {
     public void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException {
         User user = getUserFromIdAndPassword(userName, saltedPasswordHex);
         account.removeUser(user);
+        indicateAccountChanged();
+    }
+
+    @Override
+    public void setUserStorage(Storage userStorage) {
+        this.userStorage = userStorage;
     }
 
     @Override
     public void orderEventList(String parameter) throws UnrecognisedParameterException {
         eventBook.orderList(parameter);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+        indicateEventBookChanged();
     }
 
     @Override

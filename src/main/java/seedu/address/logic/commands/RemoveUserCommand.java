@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -38,12 +41,12 @@ public class RemoveUserCommand extends Command {
     public CommandResult execute() throws CommandException, DuplicateUserException {
         try {
             byte[] userNameHash = new HashDigest().getHashDigest(userName);
-            String userNameHex = new HexCode().getHexFormat(userNameHash);
+            String userNameHex = new HexCode().getHexFormat(new String(userNameHash));
 
             String saltHex = model.retrieveSaltFromStorage(userNameHex);
             String saltText = new HexCode().hexStringToByteArray(saltHex);
             byte[] saltedPassword = new HashDigest().getHashDigest(saltText + password);
-            String saltedPasswordHex = new HexCode().getHexFormat(saltedPassword);
+            String saltedPasswordHex = new HexCode().getHexFormat(new String(saltedPassword));
 
             model.deleteUser(userNameHex, saltedPasswordHex);
         } catch (UserNotFoundException unfe) {

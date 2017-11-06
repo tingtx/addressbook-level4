@@ -8,11 +8,16 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyEventBook;
 
+//@@author kaiyu92
 /**
  * A class to access TunedIn EventBook data stored as an xml file on the hard disk.
  */
@@ -21,6 +26,9 @@ public class XmlEventBookStorage implements EventBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlEventBookStorage.class);
 
     private String filePath;
+    private String exportedPath = "data/eventbook.csv";
+    private String header = "Title,Description,Location,Datetime";
+
 
     public XmlEventBookStorage(String filePath) {
         this.filePath = filePath;
@@ -71,5 +79,10 @@ public class XmlEventBookStorage implements EventBookStorage {
     @Override
     public void backupEventBook(ReadOnlyEventBook eventBook) throws IOException {
         saveEventBook(eventBook, filePath.substring(0, filePath.indexOf('.')) + "_backup.xml");
+    }
+
+    @Override
+    public void exportEventBook() throws ParserConfigurationException, IOException, SAXException {
+        XmlFileStorage.exportEventbook(filePath, exportedPath, header);
     }
 }

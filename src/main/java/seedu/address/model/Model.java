@@ -1,7 +1,14 @@
 package seedu.address.model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
@@ -20,6 +27,7 @@ import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
+import seedu.address.storage.Storage;
 
 /**
  * The API of the Model component.
@@ -46,6 +54,12 @@ public interface Model {
      * Returns the AddressBook
      */
     ReadOnlyAddressBook getAddressBook();
+
+    /**
+     * Export the Addressbook
+     */
+    void exportAddressBook() throws FileNotFoundException, ParserConfigurationException, IOException,
+            SAXException, TransformerException;;
 
     /**
      * Returns the Account
@@ -132,6 +146,12 @@ public interface Model {
     ReadOnlyEventBook getEventBook();
 
     /**
+     * Export the EventBook
+     */
+    void exportEventBook() throws FileNotFoundException, ParserConfigurationException, IOException,
+            SAXException, TransformerException;;
+
+    /**
      * Deletes the given event.
      */
     void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
@@ -178,11 +198,11 @@ public interface Model {
 
     void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException;
 
-    byte[] retrieveDigestFromStorage();
-
-    String retrieveSaltFromStorage(String userId) throws UserNotFoundException;
-
     User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException;
 
     void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException;
+
+    String retrieveSaltFromStorage(String userId) throws UserNotFoundException;
+
+    void setUserStorage(Storage userStorage);
 }

@@ -3,8 +3,10 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstEvent;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -29,22 +31,22 @@ public class UndoCommandTest {
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
             Account());
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private final DeleteEventCommand deleteEventCommandTwo = new DeleteEventCommand(INDEX_FIRST_EVENT);
 
     @Before
     public void setUp() {
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, new Config());
-        deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, new Config());
+        deleteEventCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, new Config());
     }
 
     @Test
     public void execute() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(
-                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
+                Arrays.asList(deleteCommandOne, deleteEventCommandTwo), Collections.emptyList());
         UndoCommand undoCommand = new UndoCommand();
         undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack, new Config());
         deleteCommandOne.execute();
-        deleteCommandTwo.execute();
+        deleteEventCommandTwo.execute();
 
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
@@ -55,6 +57,7 @@ public class UndoCommandTest {
         // single command in undoStack
         expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
                 new Account());
+        deleteFirstEvent(expectedModel);
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in undoStack

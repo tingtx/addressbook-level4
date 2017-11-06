@@ -5,10 +5,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author kaiyu92
 public class DescriptionTest {
 
     @Test
-    public void isValidTitle() {
+    public void isValidDescription() {
         // invalid description
         assertFalse(Description.isValidDescription("")); // empty string
         assertFalse(Description.isValidDescription(" ")); // spaces only

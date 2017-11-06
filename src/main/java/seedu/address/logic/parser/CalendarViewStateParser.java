@@ -10,18 +10,22 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.UpdateCalendarView;
 import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.OrderEventCommand;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectEventCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.CalendarView;
 
+//@@author kaiyu92
 /**
  * Parses user input for the calendar UI state.
  */
@@ -71,7 +75,13 @@ public class CalendarViewStateParser {
                 || commandWord.equals(ListEventCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getListEventCommand().getAlias())
                 || commandWord.equals(OrderEventCommand.COMMAND_WORD)
-                || commandWord.equals(aliasSettings.getOrderEventCommand().getAlias())) {
+                || commandWord.equals(aliasSettings.getOrderEventCommand().getAlias())
+                || commandWord.equals(ClearCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getClearCommand().getAlias())
+                || commandWord.equals(UndoCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getUndoCommand().getAlias())
+                || commandWord.equals(RedoCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getRedoCommand().getAlias())) {
             UpdateCalendarView.updateViewState(calendarView);
         }  else if (commandWord.equals(FindEventCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getFindEventCommand().getAlias())) {

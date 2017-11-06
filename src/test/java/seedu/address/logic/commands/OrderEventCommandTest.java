@@ -26,6 +26,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author kaiyu92
 public class OrderEventCommandTest {
     private Model model;
     private Model expectedModel;
@@ -120,6 +121,6 @@ public class OrderEventCommandTest {
         CommandResult commandResult = command.executeUndoableCommand();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList.toString(), model.getFilteredEventList().toString());
+        assertEquals(expectedList, model.getFilteredEventList());
     }
 }

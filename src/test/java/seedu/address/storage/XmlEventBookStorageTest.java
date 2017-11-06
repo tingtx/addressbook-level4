@@ -20,6 +20,7 @@ import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author kaiyu92
 public class XmlEventBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil
             .getPath("./src/test/data/XmlEventBookStorageTest/");
@@ -71,7 +72,7 @@ public class XmlEventBookStorageTest {
         //Save in new file and read back
         xmlEventBookStorage.saveEventBook(original, filePath);
         ReadOnlyEventBook readBack = xmlEventBookStorage.readEventBook(filePath).get();
-        assertEquals(original.toString(), new EventBook(readBack).toString());
+        assertEquals(original, new EventBook(readBack));
 
         //Modify data, overwrite exiting file, and read back
         original.addEvent(new Event(NETWORK));
@@ -79,13 +80,13 @@ public class XmlEventBookStorageTest {
         original.removeEvent(eventToRemoved);
         xmlEventBookStorage.saveEventBook(original, filePath);
         readBack = xmlEventBookStorage.readEventBook(filePath).get();
-        assertEquals(original.toString(), new EventBook(readBack).toString());
+        assertEquals(original, new EventBook(readBack));
 
         //Save and read without specifying file path
         original.addEvent(new Event(SECURITY));
         xmlEventBookStorage.saveEventBook(original); //file path not specified
         readBack = xmlEventBookStorage.readEventBook().get(); //file path not specified
-        assertEquals(original.toString(), new EventBook(readBack).toString());
+        assertEquals(original, new EventBook(readBack));
 
     }
 

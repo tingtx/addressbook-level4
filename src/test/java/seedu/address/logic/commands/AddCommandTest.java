@@ -5,13 +5,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
@@ -19,6 +25,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -35,6 +42,7 @@ import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.storage.Storage;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -129,6 +137,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
+                IOException, SAXException, TransformerException {
+
+        }
+
+        @Override
         public ReadOnlyAccount getAccount() {
             fail("This method should not be called.");
             return null;
@@ -189,8 +203,14 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyEventBook getEventBook() {
-
+            fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
+                IOException, SAXException, TransformerException {
+
         }
 
         @Override
@@ -243,6 +263,11 @@ public class AddCommandTest {
         public String retrieveSaltFromStorage(String userId) {
             return null;
         }
+
+        @Override
+        public void setUserStorage(Storage userStorage) {
+
+        }
     }
 
     /**
@@ -257,6 +282,11 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            return new EventBook();
         }
     }
 
@@ -274,6 +304,11 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            return new EventBook();
         }
     }
 

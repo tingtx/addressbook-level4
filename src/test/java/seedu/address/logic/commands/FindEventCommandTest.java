@@ -27,6 +27,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
+//@@author kaiyu92
 /**
  * Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
  */
@@ -98,7 +99,7 @@ public class FindEventCommandTest {
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList.toString(), model.getFilteredEventList().toString());
+        assertEquals(expectedList, model.getFilteredEventList());
         assertEquals(expectedEventBook.toString(), model.getEventBook().toString());
     }
 }

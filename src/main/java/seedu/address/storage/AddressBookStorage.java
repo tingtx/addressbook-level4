@@ -1,7 +1,13 @@
 package seedu.address.storage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.xml.sax.SAXException;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -47,5 +53,11 @@ public interface AddressBookStorage {
      * @see #saveAddressBook(ReadOnlyAddressBook)
      */
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+    /**
+     * @see #exportAddressBook()
+     */
+    void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
+            IOException, SAXException, TransformerException;
 
 }

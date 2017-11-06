@@ -18,6 +18,7 @@ import seedu.address.model.event.Location;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 
+//@@author kaiyu92
 /**
  * Parses input arguments and creates a new AddEventCommand object
  */

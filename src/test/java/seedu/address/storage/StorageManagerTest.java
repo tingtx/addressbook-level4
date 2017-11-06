@@ -93,7 +93,7 @@ public class StorageManagerTest {
         EventBook original = getTypicalEventBook();
         storageManager.saveEventBook(original);
         ReadOnlyEventBook retrieved = storageManager.readEventBook().get();
-        assertEquals(original.toString().trim(), new EventBook(retrieved).toString().trim());
+        assertEquals(original, new EventBook(retrieved));
     }
 
     @Test

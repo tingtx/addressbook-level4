@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -14,6 +16,10 @@ import javax.xml.bind.Unmarshaller;
  * Helps with reading from and writing to XML files.
  */
 public class XmlUtil {
+
+    //Delimiter used in CSV file
+    public static final String COMMA_DELIMITER = ",";
+    public static final String NEW_LINE_SEPARATOR = "\n";
 
     /**
      * Returns the xml data in the file as an object of the specified type.
@@ -67,4 +73,18 @@ public class XmlUtil {
         m.marshal(data, file);
     }
 
+    /**
+     * Export the data in the xml file to csv.
+     */
+    public static void exportDataToFile(String destination, StringBuilder content)
+            throws IOException {
+
+        requireNonNull(destination);
+        requireNonNull(content);
+
+        FileWriter fileWriter = new FileWriter(destination);
+        fileWriter.write(content.toString());
+        fileWriter.flush();
+        fileWriter.close();
+    }
 }

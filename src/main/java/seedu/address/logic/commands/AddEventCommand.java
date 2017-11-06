@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
-
+//@@author kaiyu92
 /**
  * Adds a event to the event book.
  */

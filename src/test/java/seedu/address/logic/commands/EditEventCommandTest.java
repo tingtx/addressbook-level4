@@ -33,6 +33,8 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EventBuilder;
 
+
+//@@author kaiyu92
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditEventCommand.
  */
@@ -112,16 +114,16 @@ public class EditEventCommandTest {
         assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
     }
 
-    /*@Test
+    @Test
     public void execute_duplicateEventUnfilteredList_failure() {
         Event firstEvent = new Event(model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased()));
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(firstEvent).build();
         EditEventCommand editEventCommand = prepareCommand(INDEX_SECOND_EVENT, descriptor);
 
         assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_DUPLICATE_EVENT);
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void execute_duplicateEventFilteredList_failure() {
         showFirstEventOnly(model);
 
@@ -131,7 +133,7 @@ public class EditEventCommandTest {
                 new EditEventDescriptorBuilder(eventInList).build());
 
         assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_DUPLICATE_EVENT);
-    }*/
+    }
 
     @Test
     public void execute_invalidEventIndexUnfilteredList_failure() {

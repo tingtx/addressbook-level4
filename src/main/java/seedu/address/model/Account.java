@@ -10,6 +10,7 @@ import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
 //@@author quanle1994
+
 /**
  * Wrap all data at account level
  */
@@ -89,7 +90,7 @@ public class Account implements ReadOnlyAccount {
 
     public User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException {
         User target = users.getUser(userName);
-        if (!target.getPassword().equals(password)){
+        if (!target.getPassword().equals(password)) {
             throw new UserNotFoundException();
         }
         return target;

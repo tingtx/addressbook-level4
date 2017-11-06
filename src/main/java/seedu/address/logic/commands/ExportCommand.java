@@ -29,7 +29,7 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_EXPORT_BOOK_SUCCESS = "Successfully Exported";
     public static final String MESSAGE_EXPORT_BOOK_ERROR = "Export failed. Please check whether the xml file exist";
 
-    public static final String[] BOOK_VALIDATION = { "addressbook", "eventbook" };
+    public static final String[] BOOK_VALIDATION = {"addressbook", "eventbook"};
 
     private final String targetBook;
 
@@ -42,6 +42,10 @@ public class ExportCommand extends Command {
      */
     public static boolean isValidBookParameter(String targetBook) {
         return Arrays.stream(BOOK_VALIDATION).anyMatch(book -> book.equals(targetBook.toLowerCase()));
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
     }
 
     @Override
@@ -71,10 +75,6 @@ public class ExportCommand extends Command {
         }
 
         return new CommandResult(MESSAGE_EXPORT_BOOK_SUCCESS);
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 
     @Override

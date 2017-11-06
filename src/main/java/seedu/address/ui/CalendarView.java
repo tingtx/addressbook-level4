@@ -28,21 +28,23 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
 //@@author kaiyu92
+
 /**
  * The CalendarView UI Component
  */
 public class CalendarView {
 
+    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
-
     private ObservableList<ReadOnlyEvent> eventList;
     private Logic logic;
-    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+
     /**
      * Create a calendar view
+     *
      * @param eventList contains the events of the event book
      * @param yearMonth year month to create the calendar of
      */
@@ -66,9 +68,9 @@ public class CalendarView {
             }
         }
         // Days of the week labels
-        Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
-            new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
-            new Text("Saturday") };
+        Text[] dayNames = new Text[]{new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
+                new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
+                new Text("Saturday")};
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         Integer col = 0;
@@ -99,6 +101,7 @@ public class CalendarView {
 
     /**
      * Set the days of the calendar to correspond to the appropriate date
+     *
      * @param yearMonth year and month of month to render
      */
     public void populateCalendar(YearMonth yearMonth, Index targetIndex) {
@@ -207,6 +210,7 @@ public class CalendarView {
 
     /**
      * Check whether the event Day matches the input dayValue
+     *
      * @param event
      * @param dayValue
      * @return
@@ -222,6 +226,7 @@ public class CalendarView {
 
     /**
      * Check whether the event Day matches the input monthValue
+     *
      * @param event
      * @param monthValue
      * @return
@@ -237,6 +242,7 @@ public class CalendarView {
 
     /**
      * Check whether the event Day matches the input yearValue
+     *
      * @param event
      * @param yearValue
      * @return

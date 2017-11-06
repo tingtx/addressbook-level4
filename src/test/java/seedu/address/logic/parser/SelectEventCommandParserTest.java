@@ -10,6 +10,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.SelectEventCommand;
 
 //@@author kaiyu92
+
 /**
  * Test scope: similar to {@code DeleteSelectCommandParserTest}.
  *

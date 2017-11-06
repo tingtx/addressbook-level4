@@ -34,7 +34,8 @@ public class RedoCommandTest {
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteEventCommand deleteEventCommandTwo = new DeleteEventCommand(INDEX_FIRST_EVENT);
 
-    public RedoCommandTest() {}
+    public RedoCommandTest() {
+    }
 
     @Before
     public void setUp() {

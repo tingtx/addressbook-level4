@@ -24,6 +24,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 
 //@@author kaiyu92
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteEventCommand}.
  */

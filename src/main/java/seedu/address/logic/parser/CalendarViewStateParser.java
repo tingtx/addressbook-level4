@@ -26,14 +26,14 @@ import seedu.address.model.UserPrefs;
 import seedu.address.ui.CalendarView;
 
 //@@author kaiyu92
+
 /**
  * Parses user input for the calendar UI state.
  */
 public class CalendarViewStateParser {
 
-    private static UserPrefs userPrefs;
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
-
+    private static UserPrefs userPrefs;
     private final Model model;
     private CalendarView calendarView;
 
@@ -46,6 +46,7 @@ public class CalendarViewStateParser {
 
     /**
      * update the state of the calendar UI object with reference to the user input
+     *
      * @param userInput
      * @throws ParseException
      */
@@ -83,7 +84,7 @@ public class CalendarViewStateParser {
                 || commandWord.equals(RedoCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getRedoCommand().getAlias())) {
             UpdateCalendarView.updateViewState(calendarView);
-        }  else if (commandWord.equals(FindEventCommand.COMMAND_WORD)
+        } else if (commandWord.equals(FindEventCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getFindEventCommand().getAlias())) {
             UpdateCalendarView.updateFindState(calendarView, model);
         } else if (commandWord.equals(SelectEventCommand.COMMAND_WORD)

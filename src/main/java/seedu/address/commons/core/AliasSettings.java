@@ -491,7 +491,7 @@ public class AliasSettings implements Serializable {
             if (!this.selectEventCommand.getAlias().equals("selectevent")) {
                 usedAliases.remove(this.selectEventCommand.getAlias());
             }
-        } else if (command.equals(ExportCommand.getCommandWord()))  {
+        } else if (command.equals(ExportCommand.getCommandWord())) {
             if (!this.exportCommand.getAlias().equals("export")) {
                 usedAliases.remove(this.exportCommand.getAlias());
             }

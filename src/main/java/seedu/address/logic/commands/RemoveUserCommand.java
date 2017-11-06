@@ -1,8 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.security.SecureRandom;
-import java.util.Random;
-
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -22,19 +19,17 @@ public class RemoveUserCommand extends Command {
     public static final String MESSAGE_REMOVE_USER_SUCCESS = "Removed user: %1$s";
     private static final String MESSAGE_USER_NOT_FOUND = "The user credentials provided do not match our "
             + "database.";
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
-
     private String userName;
     private String password;
     private boolean cascade;
-
-    public RemoveUserCommand (String userName, String password, boolean cascade) {
+    public RemoveUserCommand(String userName, String password, boolean cascade) {
         this.userName = userName;
         this.password = password;
         this.cascade = cascade;
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
     }
 
     @Override

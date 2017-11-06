@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 //@@author quanle1994
+
 /**
  * Converts a string to a SHA-256 Hash Digest.
  */

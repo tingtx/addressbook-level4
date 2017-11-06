@@ -19,6 +19,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 //@@author kaiyu92
+
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
  * <p>
@@ -135,20 +136,20 @@ public class UniqueEventList implements Iterable<Event> {
         };
 
         switch (parameter) {
-        case "TITLE":
-            internalList.sort(orderByTitle);
-            break;
+            case "TITLE":
+                internalList.sort(orderByTitle);
+                break;
 
-        case "LOCATION":
-            internalList.sort(orderByLocation);
-            break;
+            case "LOCATION":
+                internalList.sort(orderByLocation);
+                break;
 
-        case "DATETIME":
-            internalList.sort(orderByDatetime);
-            break;
+            case "DATETIME":
+                internalList.sort(orderByDatetime);
+                break;
 
-        default:
-            throw new UnrecognisedParameterException();
+            default:
+                throw new UnrecognisedParameterException();
         }
 
 

@@ -1,6 +1,7 @@
 package seedu.address.model.user;
 
 //@author quanle1994
+
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
 //@@author quanle1994
+
 /**
  * A list of users that enforces uniqueness between its elements and does not allow nulls.
  * <p>

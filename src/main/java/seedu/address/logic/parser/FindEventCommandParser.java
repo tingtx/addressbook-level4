@@ -9,6 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
 //@@author kaiyu92
+
 /**
  * Parses input arguments and creates a new FindEventCommand object
  */
@@ -32,7 +33,7 @@ public class FindEventCommandParser implements Parser<FindEventCommand> {
             TitleContainsKeywordsPredicate.setPredicateType("edt");
         } else if (trimmedArgs.substring(0, 2).equals("ed")) {
             TitleContainsKeywordsPredicate.setPredicateType("ed");
-        }  else if (trimmedArgs.substring(0, 2).equals("em")) {
+        } else if (trimmedArgs.substring(0, 2).equals("em")) {
             TitleContainsKeywordsPredicate.setPredicateType("em");
         } else {
             throw new ParseException(

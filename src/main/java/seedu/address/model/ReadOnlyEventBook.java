@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 
 //@@author kaiyu92
+
 /**
  * Unmodifiable view of an event book
  */

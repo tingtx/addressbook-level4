@@ -1,6 +1,7 @@
 package seedu.address.model.user;
 
 //@@author quanle1994
+
 /**
  * Represents a User in the account.
  * Guarantees: details are present and not null, field values are validated.
@@ -16,7 +17,7 @@ public class User implements ReadOnlyUser {
         this.password = password;
     }
 
-    public User(String userId){
+    public User(String userId) {
         this.userId = userId;
     }
 

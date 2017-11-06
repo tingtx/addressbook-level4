@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
-import java.security.SecureRandom;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import seedu.address.logic.commands.digestutil.HashDigest;
@@ -15,6 +13,7 @@ import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
 //@@author quanle1994
+
 /**
  * Create an account
  */

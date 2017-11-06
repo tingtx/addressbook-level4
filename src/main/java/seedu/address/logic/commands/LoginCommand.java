@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
 //@@author quanle1994
+
 /**
  * Log the user in.
  */

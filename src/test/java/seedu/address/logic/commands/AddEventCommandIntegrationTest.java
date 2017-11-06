@@ -19,6 +19,7 @@ import seedu.address.model.event.Event;
 import seedu.address.testutil.EventBuilder;
 
 //@@author kaiyu92
+
 /**
  * Contains integration tests (interaction with the Model) for {@code AddEventCommand}.
  */

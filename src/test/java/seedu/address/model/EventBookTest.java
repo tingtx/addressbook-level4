@@ -21,9 +21,9 @@ import seedu.address.model.event.ReadOnlyEvent;
 //@@author kaiyu92
 public class EventBookTest {
 
+    private final EventBook eventBook = new EventBook();
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    private final EventBook eventBook = new EventBook();
 
     @Test
     public void constructor() {

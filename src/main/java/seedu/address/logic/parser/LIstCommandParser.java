@@ -1,6 +1,9 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+
+import java.util.stream.Stream;
 
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -13,6 +16,14 @@ import seedu.address.model.person.ContainsKeywordsPredicate;
 public class LIstCommandParser implements Parser<ListCommand> {
 
     /**
+     * Returns true if the prefixes contains no empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
+        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an ListCommand object for execution.
      *
@@ -20,8 +31,9 @@ public class LIstCommandParser implements Parser<ListCommand> {
      */
     public ListCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP);
 
-        if (!trimmedArgs.isEmpty() && !trimmedArgs.substring(0,2).equals("g/")) {
+        if (!trimmedArgs.isEmpty() && !isPrefixesPresent(argMultimap, PREFIX_GROUP)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.COMMAND_USAGE));
         }

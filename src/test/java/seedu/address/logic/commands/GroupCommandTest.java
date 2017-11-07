@@ -40,7 +40,7 @@ import seedu.address.testutil.TypicalIndexes;
 public class GroupCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-            Account());
+            Account(), new Config());
 
     @Test
     public void execute_groupOnePerson_success() throws Exception {
@@ -55,7 +55,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
 
         assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
@@ -82,7 +82,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPersonOne);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), groupedPersonTwo);
         expectedModel.updatePerson(model.getFilteredPersonList().get(2), groupedPersonThree);
@@ -104,7 +104,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
 
         assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
@@ -131,7 +131,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPersonOne);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), groupedPersonTwo);
         expectedModel.updatePerson(model.getFilteredPersonList().get(2), groupedPersonThree);
@@ -155,7 +155,7 @@ public class GroupCommandTest {
         String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
 
         assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);

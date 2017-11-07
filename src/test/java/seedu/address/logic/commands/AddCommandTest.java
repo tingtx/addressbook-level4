@@ -139,6 +139,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void transferData() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void transferDataWithDefault() {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
                 IOException, SAXException, TransformerException {
 

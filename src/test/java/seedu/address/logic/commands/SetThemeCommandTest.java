@@ -29,7 +29,7 @@ public class SetThemeCommandTest {
     private SetThemeCommand setThemeCommand2;
     private SetThemeCommand setThemeCommand3;
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-            Account());
+            Account(), new Config());
 
     @Before
     public void setUp() {

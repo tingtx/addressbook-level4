@@ -36,6 +36,7 @@ import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.SetThemeCommand;
 import seedu.address.logic.commands.SwitchCommand;
+import seedu.address.logic.commands.TransferCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.model.alias.Alias;
@@ -74,6 +75,7 @@ public class AliasSettings implements Serializable {
     private Alias listEventCommand;
     private Alias orderEventCommand;
     private Alias findEventCommand;
+    private Alias transferCommand;
     private Alias setThemeCommand;
     private Alias switchCommand;
     private Alias selectEventCommand;
@@ -121,6 +123,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add("setalias");
         this.undoCommand = new Alias(UndoCommand.getCommandWord(), "undo");
         usedAliases.add("undo");
+        this.transferCommand = new Alias(TransferCommand.getCommandWord(), "transfer");
+        usedAliases.add("transfer");
         this.viewAliasCommand = new Alias(ViewAliasCommand.getCommandWord(), "viewalias");
         usedAliases.add("viewalias");
         this.addEventCommand = new Alias(AddEventCommand.getCommandWord(), "addevent");
@@ -152,7 +156,7 @@ public class AliasSettings implements Serializable {
                          String viewAliasCommand, String addEventCommand, String deleteEventCommand,
                          String editEventCommand, String listEventCommand, String orderEventCommand,
                          String findEventCommand, String setThemeCommand, String switchCommand,
-                         String selectEventCommand, String exportCommand) {
+                         String selectEventCommand, String exportCommand, String transferCommand) {
         this.addCommand = new Alias(AddCommand.getCommandWord(), addCommand);
         usedAliases.add(addCommand);
         this.clearCommand = new Alias(ClearCommand.getCommandWord(), clearCommand);
@@ -200,18 +204,21 @@ public class AliasSettings implements Serializable {
         this.editEventCommand = new Alias(EditEventCommand.getCommandWord(), editEventCommand);
         usedAliases.add(editEventCommand);
         this.listEventCommand = new Alias(ListEventCommand.getCommandWord(), listEventCommand);
-        usedAliases.add(orderEventCommand);
+        usedAliases.add(listEventCommand);
         this.orderEventCommand = new Alias(OrderEventCommand.getCommandWord(), orderEventCommand);
-        usedAliases.add(findEventCommand);
+        usedAliases.add(orderEventCommand);
         this.findEventCommand = new Alias(FindEventCommand.getCommandWord(), findEventCommand);
-        usedAliases.add(setThemeCommand);
+        usedAliases.add(findEventCommand);
         this.setThemeCommand = new Alias(SetThemeCommand.getCommandWord(), setThemeCommand);
-        usedAliases.add(switchCommand);
+        usedAliases.add(setThemeCommand);
         this.switchCommand = new Alias(SwitchCommand.getCommandWord(), switchCommand);
-        usedAliases.add(selectEventCommand);
+        usedAliases.add(switchCommand);
         this.selectEventCommand = new Alias(SelectEventCommand.getCommandWord(), selectCommand);
-        usedAliases.add(exportCommand);
+        usedAliases.add(selectEventCommand);
         this.exportCommand = new Alias(ExportCommand.getCommandWord(), exportCommand);
+        usedAliases.add(exportCommand);
+        this.transferCommand = new Alias(TransferCommand.getCommandWord(), transferCommand);
+        usedAliases.add(transferCommand);
     }
 
     public Alias getAddCommand() {
@@ -332,6 +339,10 @@ public class AliasSettings implements Serializable {
 
     public Alias getExportCommand() {
         return exportCommand;
+    }
+
+    public Alias getTransferCommand() {
+        return transferCommand;
     }
 
     public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
@@ -495,6 +506,10 @@ public class AliasSettings implements Serializable {
             if (!this.exportCommand.getAlias().equals("export")) {
                 usedAliases.remove(this.exportCommand.getAlias());
             }
+        } else if (command.equals(TransferCommand.getCommandWord())) {
+            if (!this.transferCommand.getAlias().equals("transfer")) {
+                usedAliases.remove(this.transferCommand.getAlias());
+            }
         } else {
             throw new UnknownCommandException(MESSAGE_UNKNOWN_COMMAND);
         }
@@ -539,7 +554,8 @@ public class AliasSettings implements Serializable {
                 && Objects.equals(setThemeCommand, o.getSetThemeCommand())
                 && Objects.equals(switchCommand, o.getSwitchCommand())
                 && Objects.equals(selectEventCommand, o.getSelectEventCommand())
-                && Objects.equals(exportCommand, o.getExportCommand());
+                && Objects.equals(exportCommand, o.getExportCommand())
+                && Objects.equals(transferCommand, o.getTransferCommand());
     }
 
     @Override
@@ -550,7 +566,7 @@ public class AliasSettings implements Serializable {
                 this.undoCommand, this.viewAliasCommand, this.addEventCommand, this.deleteEventCommand,
                 this.editEventCommand, this.listEventCommand, this.orderEventCommand, this.findEventCommand,
                 this.switchCommand, this.selectEventCommand, this.lockCommand, this.loginCommand,
-                this.exportCommand);
+                this.exportCommand, this.transferCommand);
     }
 
     @Override
@@ -585,6 +601,7 @@ public class AliasSettings implements Serializable {
         sb.append("Switch Command : " + switchCommand.getAlias() + "\n");
         sb.append("Select Event Command: " + selectEventCommand.getAlias() + "\n");
         sb.append("Export Command: " + exportCommand.getAlias() + "\n");
+        sb.append("Transfer Command: " + transferCommand.getAlias() + "\n");
 
         return sb.toString();
     }

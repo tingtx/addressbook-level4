@@ -79,7 +79,7 @@ public class MainApp extends Application {
 
         initLogging(config);
 
-        model = initModelManager(storage, userPrefs);
+        model = initModelManager(storage, userPrefs, config);
         model.setUserStorage(storage);
 
         logic = new LogicManager(model, userPrefs, config);
@@ -99,7 +99,7 @@ public class MainApp extends Application {
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
-    private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+    private Model initModelManager(Storage storage, UserPrefs userPrefs, Config config) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         Optional<ReadOnlyAccount> accountOptional;
         ReadOnlyAddressBook initialData;
@@ -134,7 +134,7 @@ public class MainApp extends Application {
             initialAccount = new Account();
             initialEventData = new EventBook();
         }
-        return new ModelManager(initialData, initialEventData, userPrefs, initialAccount);
+        return new ModelManager(initialData, initialEventData, userPrefs, initialAccount, config);
     }
 
     private void initLogging(Config config) {

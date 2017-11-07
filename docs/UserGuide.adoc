@@ -411,7 +411,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Remarking a person : `Remark` - Since V1.1
+=== Remarking a person : `remark` - Since V1.1
 
 Remarks an existing person in the address book. +
 Format: `remark INDEX r/REMARK`

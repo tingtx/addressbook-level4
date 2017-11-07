@@ -27,7 +27,8 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account(),
+                new Config());
     }
 
     @Test
@@ -35,7 +36,7 @@ public class AddCommandIntegrationTest {
         Person validPerson = new PersonBuilder().withName("Steven Lim").build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(),
-                new Account());
+                new Account(), new Config());
         expectedModel.addPerson(validPerson);
 
         assertCommandSuccess(prepareCommand(validPerson, model), model,

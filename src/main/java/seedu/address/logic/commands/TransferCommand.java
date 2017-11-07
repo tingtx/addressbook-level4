@@ -3,17 +3,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.IOException;
-import java.util.Arrays;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.xml.sax.SAXException;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.logic.commands.exceptions.ConfigMissingException;
 
 /**
  * Export data for transfer to another computer
@@ -27,7 +17,7 @@ public class TransferCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_TRANSFER_SUCCESS = "Successfully exported ZIP file.";
-    public static final String MESSAGE_TRANSFER_ERROR = "SOme user settings were missing. Successfully exported ZIP "
+    public static final String MESSAGE_TRANSFER_ERROR = "Some user settings were missing. Successfully exported ZIP "
             + "file with default settings";
 
     public TransferCommand() {
@@ -38,7 +28,7 @@ public class TransferCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException, DuplicateUserException {
+    public CommandResult execute() {
         requireNonNull(model);
         requireNonNull(config);
 
@@ -46,7 +36,7 @@ public class TransferCommand extends Command {
             model.transferData();
         } catch (ConfigMissingException e) {
             model.transferDataWithDefault();
-            return new CommandResult(MESSAGE_TRANSFER_SUCCESS);
+            return new CommandResult(MESSAGE_TRANSFER_ERROR);
         }
 
         return new CommandResult(MESSAGE_TRANSFER_SUCCESS);
@@ -55,6 +45,6 @@ public class TransferCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ExportCommand); // state check
+                || (other instanceof TransferCommand); // state check
     }
 }

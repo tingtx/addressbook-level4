@@ -11,6 +11,7 @@ import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -206,7 +207,7 @@ public interface Model {
 
     void setUserStorage(Storage userStorage);
 
-    void transferData();
+    void transferData() throws ConfigMissingException;
 
     void transferDataWithDefault();
 }

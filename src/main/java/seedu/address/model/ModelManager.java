@@ -3,14 +3,19 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -22,6 +27,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -52,8 +58,10 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.SwitchCommand;
+import seedu.address.logic.commands.TransferCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -85,6 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyEvent> filteredEvents;
     private final ArrayList<ArrayList<String>> viewAliases;
     private final Account account;
+    private final Config config;
     private UserPrefs userPref;
     private Storage userStorage;
 
@@ -92,7 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyEventBook eventBook, UserPrefs userPrefs,
-                        ReadOnlyAccount account) {
+                        ReadOnlyAccount account, Config config) {
         super();
         requireAllNonNull(addressBook, eventBook, userPrefs);
         logger.fine("Initializing with address book: " + addressBook + ", event book: " + eventBook
@@ -102,6 +111,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.eventBook = new EventBook(eventBook);
         this.userPref = userPrefs;
         this.account = new Account(account);
+        this.config = config;
 
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.eventBook.getEventList());
@@ -168,9 +178,6 @@ public class ModelManager extends ComponentManager implements Model {
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
 
-        //Order Command
-        commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
-
         //Lock Command
         commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
 
@@ -186,6 +193,9 @@ public class ModelManager extends ComponentManager implements Model {
         //Switch Command
         commandList.add(new ArrayList<String>(Arrays.asList("Switch", SwitchCommand.getCommandWord())));
 
+        //Transfer Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Transfer", TransferCommand.getCommandWord())));
+
         //Undo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
 
@@ -197,7 +207,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public ModelManager() {
-        this(new AddressBook(), new EventBook(), new UserPrefs(), new Account());
+        this(new AddressBook(), new EventBook(), new UserPrefs(), new Account(), new Config());
     }
 
     /**
@@ -356,6 +366,8 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getSelectEventCommand().getAlias();
         } else if (command.equals(ExportCommand.getCommandWord())) {
             return aliasSettings.getExportCommand().getAlias();
+        } else if (command.equals(TransferCommand.getCommandWord())) {
+            return aliasSettings.getTransferCommand().getAlias();
         } else {
             return "Not Set";
         }
@@ -506,6 +518,108 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    //@@author keloysiusmak
+
+    @Override
+    public void transferData() throws ConfigMissingException {
+        ArrayList<String> fileList = new ArrayList<String>();
+        fileList.add(userPref.getAddressBookFilePath());
+        fileList.add(userPref.getEventBookFilePath());
+        fileList.add(userPref.getAccountFilePath());
+        fileList.add(config.getUserPrefsFilePath());
+        fileList.add(config.DEFAULT_CONFIG_FILE);
+        fileList.add("help.txt");
+
+        byte[] buffer = new byte[1024];
+
+        try {
+            FileOutputStream fos = new FileOutputStream("TunedIn.zip");
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            for (String file : fileList) {
+
+                System.out.println("File Added Into Zip : " + file);
+                ZipEntry ze = new ZipEntry(file);
+                zos.putNextEntry(ze);
+
+                FileInputStream in = new FileInputStream(file);
+
+                int len;
+                while ((len = in.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+
+                in.close();
+            }
+
+            zos.closeEntry();
+            zos.close();
+
+        } catch (IOException e) {
+            throw new ConfigMissingException("Missing file");
+        }
+    }
+
+    @Override
+    public void transferDataWithDefault() {
+        ArrayList<String> fileList = new ArrayList<String>();
+        fileList.add(userPref.getAddressBookFilePath());
+        fileList.add(userPref.getEventBookFilePath());
+        fileList.add(userPref.getAccountFilePath());
+        fileList.add(config.getUserPrefsFilePath());
+        fileList.add(config.DEFAULT_CONFIG_FILE);
+        fileList.add("help.txt");
+
+        byte[] buffer = new byte[1024];
+
+        try {
+            FileOutputStream fos = new FileOutputStream("TunedIn.zip");
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            Optional<ReadOnlyAddressBook> addressBookOptional;
+            Optional<ReadOnlyAccount> accountOptional;
+            Optional<ReadOnlyEventBook> eventBookOptional;
+
+            addressBookOptional = userStorage.readAddressBook();
+            accountOptional = userStorage.readAccount();
+            eventBookOptional = userStorage.readEventBook();
+
+            if (!addressBookOptional.isPresent()) {
+                System.out.println("File Created : " + fileList.get(0));
+                userStorage.saveAddressBook(new AddressBook());
+            }
+            if (!accountOptional.isPresent()) {
+                System.out.println("File Created : " + fileList.get(2));
+                userStorage.saveAccount(new Account());
+            }
+            if (!eventBookOptional.isPresent()) {
+                System.out.println("File Created : " + fileList.get(1));
+                userStorage.saveEventBook(new EventBook());
+            }
+            for (String file : fileList) {
+
+                System.out.println("File Added Into Zip (With Defaults) : " + file);
+                ZipEntry ze = new ZipEntry(file);
+                zos.putNextEntry(ze);
+
+                FileInputStream in = new FileInputStream(file);
+
+                int len;
+                while ((len = in.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+
+                in.close();
+            }
+
+            zos.closeEntry();
+            zos.close();
+
+        } catch (Exception e) {
+            ;
+        }
     }
 
 }

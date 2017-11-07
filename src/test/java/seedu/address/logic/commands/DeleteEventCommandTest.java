@@ -31,7 +31,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 public class DeleteEventCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
-            new Account());
+            new Account(), new Config());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -41,7 +41,7 @@ public class DeleteEventCommandTest {
         String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(),
-                new Account());
+                new Account(), new Config());
         ReadOnlyEvent expectedEventToDelete = expectedModel.getFilteredEventList()
                 .get(INDEX_FIRST_EVENT.getZeroBased());
         expectedModel.deleteEvent(expectedEventToDelete);
@@ -67,7 +67,7 @@ public class DeleteEventCommandTest {
         String expectedMessage = String.format(DeleteEventCommand.MESSAGE_DELETE_EVENT_SUCCESS, eventToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(),
-                new Account());
+                new Account(), new Config());
         ReadOnlyEvent expectedEventToDelete = expectedModel.getFilteredEventList()
                 .get(INDEX_FIRST_EVENT.getZeroBased());
         expectedModel.deleteEvent(expectedEventToDelete);

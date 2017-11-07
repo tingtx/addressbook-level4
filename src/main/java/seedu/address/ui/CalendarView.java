@@ -80,7 +80,7 @@ public class CalendarView {
             txt.setStyle("-fx-font-size: 7pt;");
             AnchorPane ap = new AnchorPane();
             ap.setPrefSize(200, 10);
-            ap.setBottomAnchor(txt, 5.0);
+            ap.setBottomAnchor(txt, 10.0);
             ap.getChildren().add(txt);
             dayLabels.add(ap, col++, 0);
         }
@@ -145,12 +145,12 @@ public class CalendarView {
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             //@@author keloysiusmak
             txt.setFont(Font.font("Avenir"));
-            txt.setFill(Color.valueOf("#444"));
+            txt.setFill(Color.valueOf("#777"));
             txt.setStyle("-fx-font-size: 12pt; ");
             //@@author
             ap.setDate(calendarDate);
-            ap.setTopAnchor(txt, 5.0);
-            ap.setLeftAnchor(txt, 5.0);
+            ap.setTopAnchor(txt, 10.0);
+            ap.setLeftAnchor(txt, 10.0);
 
             if (eventExist) {
                 ap.setOnMouseClicked(ev -> {

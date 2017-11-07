@@ -174,7 +174,7 @@ public class MainWindow extends UiPart<Region> {
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
         calendarDisplayPlaceholder.getChildren().add(calendarviewPane.getRoot());
 
-        StackPane.setMargin(calendarDisplayPlaceholder.getChildren().get(0), new Insets(35, 0, 0, 0));
+        StackPane.setMargin(calendarDisplayPlaceholder.getChildren().get(0), new Insets(5, 0, 0, 0));
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());

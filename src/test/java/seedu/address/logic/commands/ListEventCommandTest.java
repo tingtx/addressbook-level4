@@ -17,6 +17,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 //@@author kaiyu92
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListEventCommand.
  */

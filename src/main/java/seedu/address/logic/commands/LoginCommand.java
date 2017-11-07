@@ -6,8 +6,10 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
 
 //@@author quanle1994
+
 /**
  * Log the user in.
  */
@@ -41,7 +43,12 @@ public class LoginCommand extends Command {
         if (!checkExistingUserId()) {
             return new CommandResult(MESSAGE_ERROR_NO_USER);
         }
-        String pwSalt = getSalt();
+        String pwSalt = null;
+        try {
+            pwSalt = getSalt();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
         String combinedPw = pwSalt + passwordText;
         if (!matchedPassword(new HashDigest().getHashDigest(combinedPw))) {
             return new CommandResult(MESSAGE_ERROR_WRONG_PASSWORD);
@@ -53,9 +60,13 @@ public class LoginCommand extends Command {
         return isSameDigest(password, digest);
     }
 
+    /**
+     * This checks if the userId is existing
+     */
     private boolean checkExistingUserId() {
         byte[] uidDigest = new HashDigest().getHashDigest(userId);
-        byte[] retrievedDigest = model.retrieveDigestFromStorage();
+        //byte[] retrievedDigest = model.retrieveDigestFromStorage();
+        byte[] retrievedDigest = null;
         return isSameDigest(uidDigest, retrievedDigest);
     }
 
@@ -67,7 +78,7 @@ public class LoginCommand extends Command {
         return userId;
     }
 
-    public String getSalt() {
+    public String getSalt() throws UserNotFoundException {
         return model.retrieveSaltFromStorage(userId);
     }
 }

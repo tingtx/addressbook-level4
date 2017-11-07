@@ -8,6 +8,7 @@ import javafx.scene.layout.Region;
 import seedu.address.logic.Logic;
 
 //@@author kaiyu92
+
 /**
  * The UI component that is responsible containing the CalendarView
  */
@@ -24,7 +25,8 @@ public class CalendarViewPane extends UiPart<Region> {
     public CalendarViewPane(Logic logic) {
         super(FXML);
         this.logic = logic;
-        setConnections();;
+        setConnections();
+        ;
     }
 
     private void setConnections() {

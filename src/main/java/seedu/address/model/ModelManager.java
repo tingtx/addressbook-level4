@@ -67,7 +67,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
 import seedu.address.storage.Storage;
 
 /**
@@ -460,13 +462,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public byte[] retrieveDigestFromStorage() {
-        return new byte[0];
+    public String retrieveSaltFromStorage(String userId) throws UserNotFoundException {
+        return account.getSalt(userId);
     }
 
     @Override
-    public String retrieveSaltFromStorage(String userId) {
-        return null;
+    public User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException {
+        return account.getUserFromIdAndPassword(userName, password);
+    }
+
+    @Override
+    public void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException {
+        User user = getUserFromIdAndPassword(userName, saltedPasswordHex);
+        account.removeUser(user);
+        indicateAccountChanged();
     }
 
     @Override
@@ -478,7 +487,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void orderEventList(String parameter) throws UnrecognisedParameterException {
         eventBook.orderList(parameter);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+        indicateEventBookChanged();
     }
 
     @Override

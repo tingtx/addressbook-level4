@@ -4,15 +4,16 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
-import java.security.SecureRandom;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import seedu.address.logic.commands.digestutil.HashDigest;
+import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
 //@@author quanle1994
+
 /**
  * Create an account
  */
@@ -26,6 +27,8 @@ public class LockCommand extends Command {
     private static final String MESSAGE_EXISTING_USER = "User already exists";
     private static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your "
             + "password";
+    private static final int SALT_MIN = 0;
+    private static final int SALT_MAX = 1000000;
     private String userId;
     private String passwordText;
 
@@ -42,15 +45,13 @@ public class LockCommand extends Command {
     public CommandResult execute() throws CommandException, DuplicateUserException {
         requireNonNull(model);
         byte[] uIdDigest = new HashDigest().getHashDigest(userId);
-        byte[] salt = new byte[32];
-        final Random r = new SecureRandom();
-        r.nextBytes(salt);
-        String saltText = new String(salt);
-        byte[] pwDigest = new seedu.address.logic.commands.digestutil.HashDigest()
-                .getHashDigest(saltText + passwordText);
-        String hexUidDigest = getHexFormat(uIdDigest);
-        String hexSalt = getHexFormat(salt);
-        String hexPassword = getHexFormat(pwDigest);
+
+        String saltText = "" + ThreadLocalRandom.current().nextInt(SALT_MIN, SALT_MAX + 1);
+
+        byte[] pwDigest = new HashDigest().getHashDigest(saltText + passwordText);
+        String hexUidDigest = new HexCode().getHexFormat(new String(uIdDigest));
+        String hexSalt = new HexCode().getHexFormat(saltText);
+        String hexPassword = new HexCode().getHexFormat(new String(pwDigest));
         try {
             model.persistUserAccount(new User(hexUidDigest, hexSalt, hexPassword));
         } catch (DuplicateUserException due) {
@@ -58,15 +59,6 @@ public class LockCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
-    private String getHexFormat(byte[] byteStream) {
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < byteStream.length; i++) {
-            hexString.append(Integer.toHexString(0xFF & byteStream[i]));
-        }
-        return hexString.toString();
-    }
-
 
     public String getUserId() {
         return userId;

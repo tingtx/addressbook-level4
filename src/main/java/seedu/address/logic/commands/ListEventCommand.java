@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 //@@author kaiyu92
+
 /**
  * Lists all events in the event book to the user.
  */

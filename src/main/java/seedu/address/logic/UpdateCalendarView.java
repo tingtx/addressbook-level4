@@ -17,6 +17,7 @@ public class UpdateCalendarView {
     /**
      * Update the view state for commands like
      * list, add, delete, edit, order
+     *
      * @param calendarView
      */
     public static void updateViewState(CalendarView calendarView) {
@@ -26,6 +27,7 @@ public class UpdateCalendarView {
 
     /**
      * Update the view state for find event command
+     *
      * @param calendarView
      * @param model
      */
@@ -47,6 +49,7 @@ public class UpdateCalendarView {
 
     /**
      * update the view state for select event command
+     *
      * @param calendarView
      * @param model
      * @param targetIndex

@@ -19,6 +19,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 //@@author kaiyu92
+
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
  * <p>

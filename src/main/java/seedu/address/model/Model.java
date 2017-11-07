@@ -24,7 +24,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
 import seedu.address.storage.Storage;
 
 /**
@@ -57,7 +59,7 @@ public interface Model {
      * Export the Addressbook
      */
     void exportAddressBook() throws FileNotFoundException, ParserConfigurationException, IOException,
-            SAXException, TransformerException;;
+            SAXException, TransformerException;
 
     /**
      * Returns the Account
@@ -147,7 +149,7 @@ public interface Model {
      * Export the EventBook
      */
     void exportEventBook() throws FileNotFoundException, ParserConfigurationException, IOException,
-            SAXException, TransformerException;;
+            SAXException, TransformerException;
 
     /**
      * Deletes the given event.
@@ -196,9 +198,11 @@ public interface Model {
 
     void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException;
 
-    byte[] retrieveDigestFromStorage();
+    User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException;
 
-    String retrieveSaltFromStorage(String userId);
+    void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException;
+
+    String retrieveSaltFromStorage(String userId) throws UserNotFoundException;
 
     void setUserStorage(Storage userStorage);
 }

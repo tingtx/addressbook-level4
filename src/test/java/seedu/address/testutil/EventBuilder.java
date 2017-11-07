@@ -9,6 +9,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 
 //@@author kaiyu92
+
 /**
  * A utility class to help with building Event objects.
  */

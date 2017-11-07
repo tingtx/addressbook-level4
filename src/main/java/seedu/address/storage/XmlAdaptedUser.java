@@ -6,6 +6,7 @@ import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.User;
 
 //@@author quanle1994
+
 /**
  * JAXB-friendly version of the Event.
  */

@@ -30,6 +30,7 @@ import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemoveUserCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
@@ -78,6 +79,9 @@ public class GeneralBookParser {
         if (commandWord.equals(LockCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getLockCommand().getAlias())) {
             return new LockCommandParser().parse(arguments);
+        } else if (commandWord.equals(RemoveUserCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getRemoveUserCommand().getAlias())) {
+            return new RemoveUserCommandParser().parse(arguments);
         } else if (commandWord.equals(AddCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getAddCommand().getAlias())) {
             return new AddCommandParser().parse(arguments);

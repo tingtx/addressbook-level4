@@ -1,19 +1,24 @@
 package seedu.address.model.user;
 
 //@@author quanle1994
+
 /**
  * Represents a User in the account.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class User implements ReadOnlyUser {
     private String userId;
-    private String salt;
-    private String password;
+    private String salt = "";
+    private String password = "";
 
     public User(String userId, String salt, String password) {
         this.userId = userId;
         this.salt = salt;
         this.password = password;
+    }
+
+    public User(String userId) {
+        this.userId = userId;
     }
 
     /**
@@ -58,5 +63,14 @@ public class User implements ReadOnlyUser {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyUser // instanceof handles nulls
                 && this.isSameStateAs((ReadOnlyUser) other));
+    }
+
+    /**
+     * Check if the users have the same userName and password
+     */
+    public boolean sameAs(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReadOnlyUser // instanceof handles nulls
+                && this.isSameUserAs((ReadOnlyUser) other));
     }
 }

@@ -28,6 +28,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author kaiyu92
+
 /**
  * Contains integration tests (interaction with the Model) for {@code SelectEventCommand}.
  */

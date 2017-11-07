@@ -9,6 +9,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 //@@author kaiyu92
+
 /**
  * Represents a Event in the event book.
  * Guarantees: details are present and not null, field values are validated.

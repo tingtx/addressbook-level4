@@ -17,15 +17,6 @@ import javax.crypto.spec.PBEParameterSpec;
  * This provides encryption and decryption utilities
  */
 public class FileEncryptor {
-    /**
-     * Usage Examples:
-     * encryptFile( "data/addressbook.xml", "password" );
-     * decryptFile( "data/addressbook.xml", "password" );
-     */
-
-    /**
-     * Arbitrarily selected 8-byte salt sequence:
-     */
     private static final byte[] salt = {
             (byte) 0x43, (byte) 0x76, (byte) 0x95, (byte) 0xc7,
             (byte) 0x5b, (byte) 0xd7, (byte) 0x45, (byte) 0x17
@@ -63,7 +54,6 @@ public class FileEncryptor {
 
         return cipher;
     }
-
 
     /**
      * Encrypts one file to a second file using a key derived from a passphrase:
@@ -116,7 +106,6 @@ public class FileEncryptor {
         }
     }
 
-
     /**
      * Decrypts one file to a second file using a key derived from a passphrase:
      */
@@ -148,8 +137,9 @@ public class FileEncryptor {
             decData = Arrays.copyOfRange( decData , 0, decData.length - padCount);
         }
         //Write the decrypted data to a new file:
-        //FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
-        //target.write(decData);
-        //target.close();
+
+        FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
+        target.write(decData);
+        target.close();
     }
 }

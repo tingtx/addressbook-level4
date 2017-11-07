@@ -288,6 +288,11 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return addressBook.getGroupList();
+    }
+
     public ArrayList<ArrayList<String>> getCommands() {
         return viewAliases;
     }

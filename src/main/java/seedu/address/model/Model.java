@@ -100,6 +100,11 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /**
+     * Returns an unmodifiable view of the UniqueGroupList
+     */
+    ObservableList<Group> getGroupList();
+
+    /**
      * Returns a list of commands.
      */
     ArrayList<ArrayList<String>> getCommands();

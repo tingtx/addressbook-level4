@@ -21,6 +21,14 @@ import seedu.address.model.group.Group;
  */
 public class GroupCommandParser implements Parser<GroupCommand> {
 
+
+    /**
+     * Returns true the agrs contain only alphabets
+     */
+    private static boolean containsAlphabetOnly(String args) {
+        return args.matches("[a-zA-Z]+");
+    }
+
     /**
      * Returns true the prefixes contains no empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
@@ -37,11 +45,20 @@ public class GroupCommandParser implements Parser<GroupCommand> {
      */
     public GroupCommand parse(String args) throws ParseException {
         requireNonNull(args);
+        args = args.trim();
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP);
+
+        List<Index> indexes = new ArrayList<>();
+        if (containsAlphabetOnly(args)) {
+            return new GroupCommand(indexes, args);
+        }
+
+        if (!isPrefixesPresent(argMultimap, PREFIX_GROUP) && !containsAlphabetOnly(args)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
+        }
 
         String preamble;
         String[] indexStr;
-        List<Index> indexes = new ArrayList<>();
         try {
             preamble = argMultimap.getPreamble();
             indexStr = preamble.split("\\s+");
@@ -53,17 +70,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
         }
 
-        if (!isPrefixesPresent(argMultimap, PREFIX_GROUP)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
-        }
-
-        Group group;
-        try {
-            group = new Group(argMultimap.getValue(PREFIX_GROUP).get());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage());
-        }
-
+        String group = argMultimap.getValue(PREFIX_GROUP).get();
         return new GroupCommand(indexes, group);
     }
 }

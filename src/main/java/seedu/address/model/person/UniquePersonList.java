@@ -92,7 +92,6 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     //@@author tingtx
-
     /**
      * Order the list.
      */

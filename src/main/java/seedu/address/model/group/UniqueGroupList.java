@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
 //@@author tingtx
@@ -94,6 +95,15 @@ public class UniqueGroupList implements Iterable<Group>{
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
+    }
+
+    /**
+     * Signals that an operation would have violated the 'no duplicates' property of the list.
+     */
+    public static class DuplicateGroupException extends DuplicateDataException {
+        protected DuplicateGroupException() {
+            super("Operation would result in duplicate groups");
+        }
     }
 
 }

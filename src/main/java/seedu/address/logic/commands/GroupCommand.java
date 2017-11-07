@@ -4,9 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
@@ -25,29 +27,38 @@ public class GroupCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Group the person(s) identified "
             + "by the index number used in the last person listing.\n "
-            + "Person(s) will be grouped to group name specified.\n"
+            + "Person(s) will be grouped to the group name specified.\n"
             + "Parameters: INDEX_1 [INDEX_2...] (must be a positive integer) "
             + PREFIX_GROUP + "GROUPNAME "
             + "Example: " + COMMAND_WORD + " 1 3 4 "
-            + PREFIX_GROUP + "FAMILY";
+            + PREFIX_GROUP + "FAMILY \n"
+            + "To view the existing groups."
+            + "Parameters : SHOWALL (case insensitive)\n"
+            + "Example: " + COMMAND_WORD + " SHOWALL";
 
     public static final String MESSAGE_GROUP_PERSON_SUCCESS = "Grouped Person(s) to ";
     public static final String MESSAGE_UNGROUP_PERSON_SUCCESS = "Person(s) removed from group.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE__WRONG_SHOWALL_PARAMETER = "To view existing groups, " +
+            "the parameter must be SHOWALL";
+    public static final String SHOW_ALL_GROUP = "showall";
 
     private final List<Index> indexes;
-    private final Group group;
+    private final String group;
 
     /**
      * @param indexes of the person in the filtered person list to edit
      * @param group   group name to group the person with
      */
-    public GroupCommand(List<Index> indexes, Group group) {
+    public GroupCommand(List<Index> indexes, String group) {
         requireNonNull(indexes);
         requireNonNull(group);
 
         this.indexes = indexes;
         this.group = group;
+
     }
+
 
     public static String getCommandWord() {
         return COMMAND_WORD;
@@ -55,8 +66,26 @@ public class GroupCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        CommandResult commandResult ;
+        if(group.equalsIgnoreCase(SHOW_ALL_GROUP)) {
+            commandResult = showAllGroupName();
+        } else if (indexes.size() > 0) {
+            commandResult = setGroupToPerson();
+        } else {
+            throw new CommandException(MESSAGE__WRONG_SHOWALL_PARAMETER);
+        }
 
+        return commandResult;
+
+    }
+
+    private CommandResult showAllGroupName() {
+
+        return new CommandResult("Groups: " + model.getGroupList().toString());
+    }
+
+    private CommandResult setGroupToPerson() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         for (Index index : indexes) {
 
             if (index.getZeroBased() >= lastShownList.size()) {
@@ -64,14 +93,16 @@ public class GroupCommand extends UndoableCommand {
             }
 
             ReadOnlyPerson personToGroup = lastShownList.get(index.getZeroBased());
-            Person editedPerson = new Person(personToGroup.getName(), personToGroup.getPhone(), personToGroup.getEmail(),
-                    personToGroup.getAddress(), personToGroup.getBirthday(), group,
-                    personToGroup.getRemark(), personToGroup.getTags());
 
             try {
+                Person editedPerson = new Person(personToGroup.getName(), personToGroup.getPhone(), personToGroup.getEmail(),
+                        personToGroup.getAddress(), personToGroup.getBirthday(), new Group(group),
+                        personToGroup.getRemark(), personToGroup.getTags());
                 model.updatePerson(personToGroup,editedPerson);
             } catch (DuplicatePersonException dpe) {
-                //this should not happened
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (IllegalValueException ive) {
+                throw new CommandException(ive.getMessage());
             } catch (PersonNotFoundException pnfe) {
                 throw new CommandException("The target person cannot be missing");
             }
@@ -82,11 +113,11 @@ public class GroupCommand extends UndoableCommand {
     }
 
     /**
-     * @return the generated message
+     * @return the generated success message
      */
     private String generateSuccessMessage() {
-        if (!group.value.isEmpty()) {
-            return MESSAGE_GROUP_PERSON_SUCCESS + group.value;
+        if (!group.isEmpty()) {
+            return MESSAGE_GROUP_PERSON_SUCCESS + group;
         } else {
             return MESSAGE_UNGROUP_PERSON_SUCCESS;
         }

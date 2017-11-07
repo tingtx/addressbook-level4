@@ -49,6 +49,8 @@
 }
 
 .anchor {
-    -fx-border-color: white;
+    -fx-border-color: #FFF;
+    -fx-padding: 0;
+    -fx-border-width: 0.5;
     -fx-text-fill: white;
 }

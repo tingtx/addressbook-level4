@@ -474,6 +474,7 @@ Selects the 2nd event in the event book.
 `selectevent 1` +
 Selects the 1st event in the results of the `findevent` command.
 
+// tag::alias[]
 //@@author keloysiusmak
 === Set aliases : `setalias` - Since V1.2
 
@@ -488,7 +489,8 @@ Examples:
 * Note that protected aliases cannot be set as aliases. Refer to the Alias Window (F10) to see the list of protected
 aliases
 ****
-
+// end::alias[]
+// tag::theme[]
 === Set theme : `settheme` - Since V1.4
 
 Set theme for the TunedIn Application. +
@@ -496,6 +498,7 @@ Format: `settheme THEME_NAME`
 
 Examples:
 * `settheme AUTUMN`
+// end::theme[]
 
 === Switch Tab : `switch` - Since V1.4
 
@@ -512,10 +515,12 @@ Format: `sync`
 Exports your settings, data and configurations into a ZIP file, along with the installation instructions. +
 Format: `transfer`
 
+// tag::alias[]
 === Viewing aliases : `viewalias` - Since V1.1
 
 Shows the list of aliases used, as well as protected aliases. +
 Format: `viewalias`
+// end::alias[]
 //@@author
 
 === Undoing previous command : `undo` - Since V1.0

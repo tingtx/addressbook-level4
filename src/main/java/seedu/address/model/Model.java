@@ -205,4 +205,8 @@ public interface Model {
     String retrieveSaltFromStorage(String userId) throws UserNotFoundException;
 
     void setUserStorage(Storage userStorage);
+
+    void transferData();
+
+    void transferDataWithDefault();
 }

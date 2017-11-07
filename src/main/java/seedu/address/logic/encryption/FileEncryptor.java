@@ -154,6 +154,7 @@ public class FileEncryptor {
 
         FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
         target.write(decData);
+        target.write(new String("\n").getBytes());
         target.close();
     }
 }

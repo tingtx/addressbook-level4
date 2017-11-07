@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.currentuser.CurrentUserDetails;
 import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
@@ -60,13 +61,13 @@ public class LockCommand extends Command {
         } catch (DuplicateUserException due) {
             throw new CommandException(MESSAGE_EXISTING_USER);
         }
+
         try {
-            FileEncryptor.encryptFile(hexUidDigest.substring(0,10), saltText + passwordText);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (GeneralSecurityException e) {
+            FileEncryptor.encryptFile(hexUidDigest.substring(0,10), saltText + passwordText, false);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        CurrentUserDetails.setCurrentUser(this.userId, hexUidDigest, saltText,this.passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

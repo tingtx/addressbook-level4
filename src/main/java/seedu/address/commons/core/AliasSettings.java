@@ -26,6 +26,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.LockCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -61,6 +62,7 @@ public class AliasSettings implements Serializable {
     private Alias listCommand;
     private Alias lockCommand;
     private Alias loginCommand;
+    private Alias logoutCommand;
     private Alias orderCommand;
     private Alias redoCommand;
     private Alias remarkCommand;
@@ -109,6 +111,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add("lock");
         this.loginCommand = new Alias(LoginCommand.getCommandWord(), "login");
         usedAliases.add("login");
+        this.logoutCommand = new Alias(LogoutCommand.getCommandWord(), "logout");
+        usedAliases.add("logout");
         this.orderCommand = new Alias(OrderCommand.getCommandWord(), "order");
         usedAliases.add("order");
         this.redoCommand = new Alias(RedoCommand.getCommandWord(), "redo");
@@ -151,8 +155,8 @@ public class AliasSettings implements Serializable {
     public AliasSettings(String addCommand, String clearCommand, String deleteCommand, String editCommand,
                          String exitCommand, String findCommand, String groupCommand, String helpCommand,
                          String historyCommand, String listCommand, String lockCommand, String loginCommand,
-                         String orderCommand, String redoCommand, String remarkCommand, String removeUserCommand,
-                         String selectCommand, String setAliasCommand, String undoCommand,
+                         String logoutCommand, String orderCommand, String redoCommand, String remarkCommand,
+                         String removeUserCommand, String selectCommand, String setAliasCommand, String undoCommand,
                          String viewAliasCommand, String addEventCommand, String deleteEventCommand,
                          String editEventCommand, String listEventCommand, String orderEventCommand,
                          String findEventCommand, String setThemeCommand, String switchCommand,
@@ -181,6 +185,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add(lockCommand);
         this.loginCommand = new Alias(LoginCommand.getCommandWord(), loginCommand);
         usedAliases.add(loginCommand);
+        this.logoutCommand = new Alias(LogoutCommand.getCommandWord(), logoutCommand);
+        usedAliases.add(logoutCommand);
         this.orderCommand = new Alias(OrderCommand.getCommandWord(), orderCommand);
         usedAliases.add(orderCommand);
         this.redoCommand = new Alias(RedoCommand.getCommandWord(), redoCommand);
@@ -267,6 +273,10 @@ public class AliasSettings implements Serializable {
 
     public Alias getLoginCommand() {
         return loginCommand;
+    }
+
+    public Alias getLogoutCommand() {
+        return logoutCommand;
     }
 
     public Alias getOrderCommand() {
@@ -412,6 +422,12 @@ public class AliasSettings implements Serializable {
             }
             usedAliases.add(alias);
             this.loginCommand = new Alias(LoginCommand.getCommandWord(), alias);
+        } else if (command.equals(LogoutCommand.getCommandWord())) {
+            if (!this.logoutCommand.getAlias().equals("logout")) {
+                usedAliases.remove(this.logoutCommand.getAlias());
+            }
+            usedAliases.add(alias);
+            this.loginCommand = new Alias(LoginCommand.getCommandWord(), alias);
         } else if (command.equals(ListCommand.getCommandWord())) {
             if (!this.listCommand.getAlias().equals("list")) {
                 usedAliases.remove(this.listCommand.getAlias());
@@ -537,6 +553,7 @@ public class AliasSettings implements Serializable {
                 && Objects.equals(historyCommand, o.getHistoryCommand())
                 && Objects.equals(lockCommand, o.getLockCommand())
                 && Objects.equals(loginCommand, o.getLoginCommand())
+                && Objects.equals(logoutCommand, o.getLogoutCommand())
                 && Objects.equals(listCommand, o.getListCommand())
                 && Objects.equals(orderCommand, o.getOrderCommand())
                 && Objects.equals(redoCommand, o.getRedoCommand())
@@ -562,11 +579,11 @@ public class AliasSettings implements Serializable {
     public int hashCode() {
         return Objects.hash(this.addCommand, this.clearCommand, this.deleteCommand, this.editCommand, this.exitCommand,
                 this.findCommand, this.groupCommand, this.helpCommand, this.historyCommand, this.listCommand,
+                this.lockCommand, this.loginCommand, this.logoutCommand,
                 this.orderCommand, this.redoCommand, this.remarkCommand, this.selectCommand, this.setAliasCommand,
                 this.undoCommand, this.viewAliasCommand, this.addEventCommand, this.deleteEventCommand,
                 this.editEventCommand, this.listEventCommand, this.orderEventCommand, this.findEventCommand,
-                this.switchCommand, this.selectEventCommand, this.lockCommand, this.loginCommand,
-                this.exportCommand, this.transferCommand);
+                this.switchCommand, this.selectEventCommand, this.exportCommand, this.transferCommand);
     }
 
     @Override
@@ -583,6 +600,7 @@ public class AliasSettings implements Serializable {
         sb.append("History Command : " + historyCommand.getAlias() + "\n");
         sb.append("Lock Command : " + lockCommand.getAlias() + "\n");
         sb.append("Login Command : " + loginCommand.getAlias() + "\n");
+        sb.append("Logout Command : " + logoutCommand.getAlias() + "\n");
         sb.append("List Command : " + listCommand.getAlias() + "\n");
         sb.append("Order Command : " + orderCommand.getAlias() + "\n");
         sb.append("Redo Command : " + redoCommand.getAlias() + "\n");

@@ -68,7 +68,7 @@ public class FileEncryptor {
     /**
      * Encrypts one file to a second file using a key derived from a passphrase:
      */
-    public static void encryptFile(String userId, String pass)
+    public static void encryptFile(String userId, String pass, boolean emptyFile)
             throws IOException, GeneralSecurityException{
         byte[] decData;
         byte[] encData;
@@ -107,11 +107,13 @@ public class FileEncryptor {
         outStream.write(encData);
         outStream.close();
 
-        outStream = new FileOutputStream(new File("data/addressbook.xml"));
-        String emptyContent = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<addressbook/>";
-        outStream.write(emptyContent.getBytes());
-        outStream.close();
+        if (emptyFile) {
+            outStream = new FileOutputStream(new File("data/addressbook.xml"));
+            String emptyContent = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+                    "<addressbook/>";
+            outStream.write(emptyContent.getBytes());
+            outStream.close();
+        }
     }
 
 
@@ -122,7 +124,7 @@ public class FileEncryptor {
             throws GeneralSecurityException, IOException{
         byte[] encData;
         byte[] decData;
-        File inFile = new File(fileName+ ".encrypted");
+        File inFile = new File("data/"+fileName+ ".encrypted");
 
         //Generate the cipher using pass:
         Cipher cipher = FileEncryptor.makeCipher(pass, false);

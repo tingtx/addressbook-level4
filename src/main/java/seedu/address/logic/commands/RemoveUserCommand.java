@@ -1,8 +1,12 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
@@ -22,6 +26,7 @@ public class RemoveUserCommand extends Command {
     public static final String MESSAGE_REMOVE_USER_SUCCESS = "Removed user: %1$s";
     private static final String MESSAGE_USER_NOT_FOUND = "The user credentials provided do not match our "
             + "database.";
+    private static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
     private String userName;
     private String password;
     private boolean cascade;
@@ -47,8 +52,16 @@ public class RemoveUserCommand extends Command {
             String saltedPasswordHex = new HexCode().getHexFormat(new String(saltedPassword));
 
             model.deleteUser(userNameHex, saltedPasswordHex);
+            if (cascade) {
+                model.deleteEncryptedContacts(userNameHex.substring(0,10));
+            } else {
+                FileEncryptor.decryptFile(userNameHex.substring(0,10), saltText + password);
+                model.deleteEncryptedContacts(userNameHex.substring(0,10));
+            }
         } catch (UserNotFoundException unfe) {
             throw new CommandException(MESSAGE_USER_NOT_FOUND);
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
         return new CommandResult(String.format(MESSAGE_REMOVE_USER_SUCCESS, userName));
     }

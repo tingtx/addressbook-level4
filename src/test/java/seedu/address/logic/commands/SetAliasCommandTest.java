@@ -185,6 +185,16 @@ public class SetAliasCommandTest {
         }
 
         @Override
+        public void transferData() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void transferDataWithDefault() {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;

@@ -50,7 +50,7 @@ import seedu.address.model.user.exceptions.UserNotFoundException;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.EventBuilder;
 
-//@author kaiyu92
+//@@author kaiyu92
 public class AddEventCommandTest {
 
     @Rule
@@ -151,6 +151,16 @@ public class AddEventCommandTest {
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void transferData() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void transferDataWithDefault() {
             fail("This method should not be called.");
         }
 

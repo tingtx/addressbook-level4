@@ -13,6 +13,10 @@ public class LogoutCommand extends Command {
     private static final String MESSAGE_SUCCESS = "Logged out successfully!";
     private static final String MESSAGE_LOGOUT_ERROR = "You have not logged in!";
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() throws CommandException, DuplicateUserException {
         if (CurrentUserDetails.userId.equals("PUBLIC")) {
@@ -20,7 +24,7 @@ public class LogoutCommand extends Command {
         }
         try {
             ObservableList<ReadOnlyPerson> list = model.getListLength();
-            FileEncryptor.encryptFile(CurrentUserDetails.userIdHex.substring(0,10), CurrentUserDetails.saltText
+            FileEncryptor.encryptFile(CurrentUserDetails.userIdHex.substring(0, 10), CurrentUserDetails.saltText
                     + CurrentUserDetails.passwordText, true);
             model.emptyPersonList(list);
         } catch (Exception e) {
@@ -28,9 +32,5 @@ public class LogoutCommand extends Command {
         }
         CurrentUserDetails.userId = "PUBLIC";
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
     }
 }

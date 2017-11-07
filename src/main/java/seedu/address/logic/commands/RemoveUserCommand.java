@@ -1,8 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -30,6 +27,7 @@ public class RemoveUserCommand extends Command {
     private String userName;
     private String password;
     private boolean cascade;
+
     public RemoveUserCommand(String userName, String password, boolean cascade) {
         this.userName = userName;
         this.password = password;
@@ -53,10 +51,10 @@ public class RemoveUserCommand extends Command {
 
             model.deleteUser(userNameHex, saltedPasswordHex);
             if (cascade) {
-                model.deleteEncryptedContacts(userNameHex.substring(0,10));
+                model.deleteEncryptedContacts(userNameHex.substring(0, 10));
             } else {
-                FileEncryptor.decryptFile(userNameHex.substring(0,10), saltText + password);
-                model.deleteEncryptedContacts(userNameHex.substring(0,10));
+                FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + password);
+                model.deleteEncryptedContacts(userNameHex.substring(0, 10));
             }
         } catch (UserNotFoundException unfe) {
             throw new CommandException(MESSAGE_USER_NOT_FOUND);

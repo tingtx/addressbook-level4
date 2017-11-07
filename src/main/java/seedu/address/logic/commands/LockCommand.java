@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import seedu.address.logic.commands.digestutil.HashDigest;
@@ -63,11 +61,11 @@ public class LockCommand extends Command {
         }
 
         try {
-            FileEncryptor.encryptFile(hexUidDigest.substring(0,10), saltText + passwordText, false);
+            FileEncryptor.encryptFile(hexUidDigest.substring(0, 10), saltText + passwordText, false);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        CurrentUserDetails.setCurrentUser(this.userId, hexUidDigest, saltText,this.passwordText);
+        CurrentUserDetails.setCurrentUser(this.userId, hexUidDigest, saltText, this.passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

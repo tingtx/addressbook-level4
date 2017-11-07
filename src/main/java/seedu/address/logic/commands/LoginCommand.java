@@ -6,25 +6,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
 import java.util.Arrays;
 
-import seedu.address.MainApp;
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
 import seedu.address.logic.encryption.FileEncryptor;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.user.exceptions.UserNotFoundException;
-import seedu.address.storage.AccountStorage;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.EventBookStorage;
-import seedu.address.storage.JsonUserPrefsStorage;
-import seedu.address.storage.Storage;
-import seedu.address.storage.StorageManager;
-import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlAccountStorage;
-import seedu.address.storage.XmlAddressBookStorage;
-import seedu.address.storage.XmlEventBookStorage;
-import sun.applet.Main;
 
 //@@author quanle1994
 
@@ -81,12 +68,12 @@ public class LoginCommand extends Command {
         }
 
         try {
-            FileEncryptor.decryptFile(userNameHex.substring(0,10), saltText + passwordText);
+            FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + passwordText);
             model.refreshAddressBook();
         } catch (Exception e) {
             throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
-        CurrentUserDetails.setCurrentUser(userId,userNameHex,saltText,passwordText);
+        CurrentUserDetails.setCurrentUser(userId, userNameHex, saltText, passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

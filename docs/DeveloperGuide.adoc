@@ -218,6 +218,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+//@@author keloysiusmak
 === Alias mechanism
 
 The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute the command calls.
@@ -316,8 +317,9 @@ image::SetAliasActivityDiagram.png[width="200"]
 **Pros:** It is a lot clearer to see whether the AliasSettings are stored, and also any corruption of it will not affect the rest of the preferences. +
 **Cons:** Creates a separate file for alias settings which could be grouped under the umbrella of preferences. +
 // end::setalias[]
+//@@author
 
-=== Event mechanism - Coming in V1.4
+=== Event mechanism
 
 The event mechanism will facilitated by `EventBook`, which resides inside `ModelManager`. It supports the additional
 feature of event management, which allows the user to add, edit, delete, or find event.
@@ -544,7 +546,8 @@ Person object. +
 
 ---
 
-=== Theme mechanism - Coming in V1.4
+//@@author keloysiusmak
+=== Theme mechanism
 
 The theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
 of custom preset themes for the TunedIn application.
@@ -552,9 +555,9 @@ of custom preset themes for the TunedIn application.
 ---
 
 Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+//@@author
 
-
-=== Lock Mechanism - Coming in V1.4 and V1.5
+=== Lock Mechanism
 
 The lock mechanism will enable users to create user accounts with a user name and a password. The user credentials will
 then be persisted into the account.xml as hash digests of the SHA-256 algorithm. User name will be hashed and the hashed
@@ -762,7 +765,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
->>>>>>> master
 
 === Logging
 
@@ -1154,6 +1156,7 @@ A contact detail that is not meant to be shared with others
 ....
 
 [appendix]
+//@@author keloysiusmak
 == Product Survey
 
 *Wunderlist*

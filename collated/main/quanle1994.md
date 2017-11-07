@@ -394,6 +394,21 @@ public class XmlAccountStorage implements AccountStorage {
 ###### /java/seedu/address/model/user/UniqueUserList.java
 ``` java
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
+import org.fxmisc.easybind.EasyBind;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
+
+```
+###### /java/seedu/address/model/user/UniqueUserList.java
+``` java
+
 /**
  * A list of users that enforces uniqueness between its elements and does not allow nulls.
  * <p>

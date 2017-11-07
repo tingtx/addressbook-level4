@@ -50,7 +50,7 @@ import seedu.address.model.user.exceptions.UserNotFoundException;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.EventBuilder;
 
-//@author kaiyu92
+//@@author kaiyu92
 public class AddEventCommandTest {
 
     @Rule

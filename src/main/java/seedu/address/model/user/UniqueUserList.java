@@ -1,6 +1,6 @@
 package seedu.address.model.user;
 
-//@author quanle1994
+//@@author quanle1994
 
 import static java.util.Objects.requireNonNull;
 

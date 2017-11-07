@@ -2,6 +2,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_ERROR;
 import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_SUCCESS;
 
 import org.junit.Before;
@@ -30,6 +31,6 @@ public class TransferCommandTest {
     @Test
     public void execute_transfer_success() {
         CommandResult result = transferCommand.execute();
-        assertEquals(MESSAGE_TRANSFER_SUCCESS, result.feedbackToUser);
+        assertEquals(MESSAGE_TRANSFER_ERROR, result.feedbackToUser);
     }
 }

@@ -14,6 +14,7 @@ endif::[]
 
 By: `The TunedIn Team`      Since: `Sep 2017`      Licence: `MIT`
 
+//@@author keloysiusmak
 == Introduction
 
 Welcome to TunedIn, a free-to-use application that brings to you the power of a full-fledged command line personal
@@ -36,6 +37,7 @@ customizability in our application as much as possible.
 We continue to strive and innovate to bring TunedIn to the next level, in a harmonious and non-invasive way to
 complement our daily lives. Feedback is always welcome at hello@tunedinapp.com, we'd be happy to hear how we can
 improve TunedIn.
+//@@author
 
 == Getting Started
 
@@ -63,6 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#commands[Commands] section below for details of each command.
 .  Having troubles? Drop us an email at help@tunedinapp.com and we'll get back to you as soon as possible.
 
+//@@author keloysiusmak
 == Commands
 
 TunedIn is a Command Line Application (CLI), and we have no plans to do otherwise. Operations are carried out on
@@ -70,6 +73,7 @@ TunedIn using Commands, which can be keyed in in the command field. We have a va
 with Contact List, Event List and the app Theme. All the commands together with their usage are listed below.
 We are constantly striving to expand this list of commands, feel free
 to contact us if you have any suggestions for commands.
+//@@author
 
 ====
 *Command Format*
@@ -470,12 +474,7 @@ Selects the 2nd event in the event book.
 `selectevent 1` +
 Selects the 1st event in the results of the `findevent` command.
 
-=== Switch Tab : `switch` - Since V1.4
-
-Switch to either `contacts` or `events` tab panel. +
-Format: `switch`
-
-
+//@@author keloysiusmak
 === Set aliases : `setalias` - Since V1.2
 
 Set alias for a particular command. +
@@ -498,15 +497,26 @@ Format: `settheme THEME_NAME`
 Examples:
 * `settheme AUTUMN`
 
+=== Switch Tab : `switch` - Since V1.4
+
+Switch to either `contacts` or `events` tab panel. +
+Format: `switch`
+
 === Sync : `sync` - Coming in V2.0
 
 Sync the TunedIn application to your cloud TunedInLive account. +
 Format: `sync`
 
+=== Transfer : `transfer`
+
+Exports your settings, data and configurations into a ZIP file, along with the installation instructions. +
+Format: `transfer`
+
 === Viewing aliases : `viewalias` - Since V1.1
 
 Shows the list of aliases used, as well as protected aliases. +
 Format: `viewalias`
+//@@author
 
 === Undoing previous command : `undo` - Since V1.0
 
@@ -535,7 +545,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `delete 1` command) +
 
 == FAQ
-
+//@@author keloysiusmak
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
 data of your previous Address Book folder.
@@ -556,7 +566,7 @@ need to save manually.
 
 *Q*: Is this application free to use? +
 *A*: Yes, the application is free to use, and will remain this way.
-
+//@@author
 == Command Summary
 
 * *Add* : `add n/NAME p/PHONE_NUMBERx a/ADDRESS [b/BIRTHDAY] [e/EMAIL] [t/TAG]...` +
@@ -592,11 +602,12 @@ e.g. `remark 2 r/Likes to play.`
 e.g.`select 2`
 * *Select Event* : `selectevent INDEX` +
 e.g.`selectevent 2`
-* *Switch* : `switch` +
-e.g.`switch`
 * *Set Alias* : `setalias` +
 e.g.`setalias c\help al\h`
 * *Set Theme* : `settheme` +
 e.g.`settheme autumn`
+* *Switch* : `switch` +
+e.g.`switch`
+* *Transfer* : `transfer`
 * *Undo* : `undo`
 * *View Alias* : `viewalias`

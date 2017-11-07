@@ -148,9 +148,8 @@ public class FileEncryptor {
             decData = Arrays.copyOfRange( decData , 0, decData.length - padCount);
         }
         //Write the decrypted data to a new file:
-        FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
-        target.write(decData);
-        target.write(System.lineSeparator().getBytes());
-        target.close();
+        //FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
+        //target.write(decData);
+        //target.close();
     }
 }

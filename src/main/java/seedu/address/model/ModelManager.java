@@ -90,13 +90,13 @@ import seedu.address.storage.Storage;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private final AddressBook addressBook;
     private final EventBook eventBook;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final ArrayList<ArrayList<String>> viewAliases;
     private final Account account;
     private final Config config;
-    private AddressBook addressBook;
-    private FilteredList<ReadOnlyPerson> filteredPersons;
     private UserPrefs userPref;
     private Storage userStorage;
 

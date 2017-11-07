@@ -42,7 +42,7 @@ import seedu.address.testutil.EventBuilder;
 public class EditEventCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-            Account());
+            Account(), new Config());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -53,7 +53,7 @@ public class EditEventCommandTest {
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
 
         expectedModel.updateEvent(expectedModel.getFilteredEventList().get(0), editedEvent);
 
@@ -77,7 +77,7 @@ public class EditEventCommandTest {
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.updateEvent(expectedModel.getFilteredEventList().get(indexLastEvent.getZeroBased()), editedEvent);
 
         assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
@@ -92,7 +92,7 @@ public class EditEventCommandTest {
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
 
         assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);
     }
@@ -109,7 +109,7 @@ public class EditEventCommandTest {
         String expectedMessage = String.format(EditEventCommand.MESSAGE_EDIT_EVENT_SUCCESS, editedEvent);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.updateEvent(expectedModel.getFilteredEventList().get(0), editedEvent);
 
         assertCommandSuccess(editEventCommand, model, expectedMessage, expectedModel);

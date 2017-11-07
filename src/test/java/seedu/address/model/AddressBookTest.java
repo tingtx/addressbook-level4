@@ -22,9 +22,10 @@ import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
 
-    private final AddressBook addressBook = new AddressBook();
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private final AddressBook addressBook = new AddressBook();
 
     @Test
     public void constructor() {

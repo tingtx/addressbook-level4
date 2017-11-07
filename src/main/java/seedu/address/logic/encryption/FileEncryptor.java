@@ -110,7 +110,7 @@ public class FileEncryptor {
         if (emptyFile) {
             outStream = new FileOutputStream(new File("data/addressbook.xml"));
             String emptyContent = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                    "<addressbook/>";
+                    "<addressbook/>\n";
             outStream.write(emptyContent.getBytes());
             outStream.close();
         }
@@ -147,14 +147,10 @@ public class FileEncryptor {
         if( padCount >= 1 && padCount <= 8 ) {
             decData = Arrays.copyOfRange( decData , 0, decData.length - padCount);
         }
-
         //Write the decrypted data to a new file:
-
-
-
         FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
         target.write(decData);
-        target.write(new String("\n").getBytes());
+        target.write(System.lineSeparator().getBytes());
         target.close();
     }
 }

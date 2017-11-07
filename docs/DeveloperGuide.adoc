@@ -219,6 +219,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 //@@author keloysiusmak
+// tag::alias[]
 === Alias mechanism
 
 The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute the command calls.
@@ -316,7 +317,7 @@ image::SetAliasActivityDiagram.png[width="200"]
 **Alternative 2:** Create a separate json file to store `AliasSettings` +
 **Pros:** It is a lot clearer to see whether the AliasSettings are stored, and also any corruption of it will not affect the rest of the preferences. +
 **Cons:** Creates a separate file for alias settings which could be grouped under the umbrella of preferences. +
-// end::setalias[]
+// end::alias[]
 //@@author
 
 === Event mechanism
@@ -546,6 +547,7 @@ Person object. +
 
 ---
 
+// tag::theme[]
 //@@author keloysiusmak
 === Theme mechanism
 
@@ -555,6 +557,7 @@ of custom preset themes for the TunedIn application.
 ---
 
 Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+// end::theme[]
 //@@author
 
 === Lock Mechanism

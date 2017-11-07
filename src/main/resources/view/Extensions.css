@@ -49,6 +49,7 @@
 }
 
 .anchor {
-    -fx-border-color: white;
+    -fx-border-color: #AAA;
+    -fx-border-width: 0.5;
     -fx-text-fill: white;
 }

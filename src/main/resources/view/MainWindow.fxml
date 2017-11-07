@@ -33,6 +33,12 @@
 
         <VBox fx:id="mainBox" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="true">
             <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
+                       minHeight="50" maxHeight="50">
+                <padding>
+                    <Insets top="35" right="10" bottom="5" left="26"/>
+                </padding>
+            </StackPane>
+            <StackPane VBox.vgrow="NEVER" fx:id="calendarDisplayPlaceholder" styleClass="pane-with-border"
                        minHeight="100">
                 <padding>
                     <Insets top="35" right="10" bottom="5" left="26"/>

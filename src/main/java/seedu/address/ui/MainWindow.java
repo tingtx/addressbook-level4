@@ -75,6 +75,9 @@ public class MainWindow extends UiPart<Region> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
+    private StackPane calendarDisplayPlaceholder;
+
+    @FXML
     private StackPane statusbarPlaceholder;
 
     @FXML
@@ -169,8 +172,9 @@ public class MainWindow extends UiPart<Region> {
         logic.setCalendarView(calendarviewPane.getCalendarPane());
 
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
-        resultDisplayPlaceholder.getChildren().add(calendarviewPane.getRoot());
-        StackPane.setMargin(resultDisplayPlaceholder.getChildren().get(1), new Insets(35, 0, 0, 0));
+        calendarDisplayPlaceholder.getChildren().add(calendarviewPane.getRoot());
+
+        StackPane.setMargin(calendarDisplayPlaceholder.getChildren().get(0), new Insets(35, 0, 0, 0));
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());

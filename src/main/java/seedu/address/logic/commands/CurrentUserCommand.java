@@ -6,7 +6,7 @@ import seedu.address.logic.currentuser.CurrentUserDetails;
 /**
  * Gets the user name of the current user
  */
-public class CurrentUserCommand extends UndoableCommand{
+public class CurrentUserCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "currentuser";
 

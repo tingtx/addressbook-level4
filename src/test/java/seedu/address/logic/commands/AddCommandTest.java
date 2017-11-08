@@ -202,11 +202,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void groupPerson(Person target, Group group) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
@@ -220,6 +215,12 @@ public class AddCommandTest {
         @Override
         public void updateFilteredListToShowAll() {
             fail("This method should not be called");
+        }
+
+        @Override
+        public ObservableList<Group> getGroupList() {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override

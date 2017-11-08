@@ -121,7 +121,7 @@ public class GeneralBookParser {
             return new FindCommandParser().parse(arguments);
         } else if (commandWord.equals(ListCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getListCommand().getAlias())) {
-            return new ListCommand();
+            return new ListCommandParser().parse(arguments);
         } else if (commandWord.equals(ViewAliasCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getViewAliasCommand().getAlias())) {
             return new ViewAliasCommand();

@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -26,11 +26,11 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
         if (trimmedArgs.charAt(0) == 'n') {
-            NameContainsKeywordsPredicate.setPredicateType('n');
+            ContainsKeywordsPredicate.setPredicateType('n');
         } else if (trimmedArgs.charAt(0) == 'a') {
-            NameContainsKeywordsPredicate.setPredicateType('a');
+            ContainsKeywordsPredicate.setPredicateType('a');
         } else if (trimmedArgs.charAt(0) == 'm') {
-            NameContainsKeywordsPredicate.setPredicateType('m');
+            ContainsKeywordsPredicate.setPredicateType('m');
         } else {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -39,7 +39,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         trimmedArgs = trimmedArgs.substring(2).trim();
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new FindCommand(new ContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }

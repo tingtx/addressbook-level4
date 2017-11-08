@@ -41,7 +41,6 @@ public class OrderCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_ORDER_SUCCESS + orderParameter);
     }
 
-    //@@author tingtx
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -79,7 +79,7 @@ public class GroupCommand extends UndoableCommand {
     private CommandResult showAllGroupName() {
 
         return new CommandResult("Groups:  " + model.getGroupList().toString()
-                .replaceAll("\\[", "").replaceAll("\\]",""));
+                .replaceAll("\\[", "").replaceAll("\\]", ""));
     }
 
     private CommandResult setGroupToPerson() throws CommandException {

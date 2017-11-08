@@ -7,6 +7,9 @@ import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+/**
+ * Log out the current user to "PUBLIC" user
+ */
 public class LogoutCommand extends Command {
     public static final String COMMAND_WORD = "logout";
     public static final String COMMAND_ALIAS = "lgo";

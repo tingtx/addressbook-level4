@@ -10,6 +10,7 @@ import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
+import seedu.address.logic.currentuser.CurrentUserUtil;
 import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
@@ -73,7 +74,7 @@ public class LoginCommand extends Command {
         } catch (Exception e) {
             throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
-        CurrentUserDetails.setCurrentUser(userId, userNameHex, saltText, passwordText);
+        CurrentUserUtil.setCurrentUser(userId, userNameHex, saltText, passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

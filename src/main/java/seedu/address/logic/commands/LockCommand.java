@@ -10,6 +10,7 @@ import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
+import seedu.address.logic.currentuser.CurrentUserUtil;
 import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
@@ -17,7 +18,7 @@ import seedu.address.model.user.exceptions.DuplicateUserException;
 //@@author quanle1994
 
 /**
- * Create an account
+ * Create an account and encrypt the addressbook.xml with that account
  */
 public class LockCommand extends Command {
     public static final String COMMAND_WORD = "lock";
@@ -65,7 +66,7 @@ public class LockCommand extends Command {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        CurrentUserDetails.setCurrentUser(this.userId, hexUidDigest, saltText, this.passwordText);
+        CurrentUserUtil.setCurrentUser(this.userId, hexUidDigest, saltText, this.passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

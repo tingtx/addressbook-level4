@@ -347,6 +347,11 @@ Logs out of the address book. This will encrypt the current list of contacts and
  using your account credentials +
 Format: `logout`
 
+=== Current User: `currentuser` - Since V1.5
+
+Displays the current user name. The default user name is `PUBLIC` +
+Format: `currentuser`
+
 === Order persons in Address Book by a parameter: `order` - Since V1.0
 
 Order the list of persons according to a specified parameter. Parameters are case insensitive. +

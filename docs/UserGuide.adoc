@@ -281,7 +281,7 @@ Returns  any event having title with `Basketball` in the sequence
 Returns  any event having title with `ball` in the sequence
 // end::event[]
 
-
+//tag::group[]
 === Group person(s) : `group` - Since V1.4
 
 Group a number of persons in address book or view the existing groups. +
@@ -304,7 +304,8 @@ Group the 2nd person in the current list of address book to group `Family`. +
 * `group 1 3 4 5 g/NUS` +
 Group the 1st, 3rd, 4th and 5th persons to group `NUS`.
 * `group showall` +
-Show the name of existing groups in the feedback box.
+Show the name of existing groups in the command feedback box, on top of calender.
+//end::group[]
 
 === Viewing help : `help` - Since V1.0
 
@@ -380,7 +381,7 @@ Logs out of the address book. This will encrypt the current list of contacts and
  using your account credentials +
 Format: `logout`
 
-=== Current User: `currentuser` - Since V1.5
+=== Current User Display: `currentuser` - Since V1.5
 
 Displays the current user name. The default user name is `PUBLIC` +
 Format: `currentuser`

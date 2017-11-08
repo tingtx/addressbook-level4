@@ -369,7 +369,7 @@ attribute is m, the command will find in all text fields.
 
 In the future, this feature can be developed into a best-matched result based on different fields.
 
-
+// tag::Group[]
 === Group mechanism
 
 The group mechanism is facilitated by the `Person`, which resides inside the 'Addressbook'.
@@ -404,8 +404,9 @@ The following sequence diagram shows how the group operation works: //insert seq
 
 
 `list` command will be enhanced with group feature, allowing user to list contacts of a specified group.
+// end::group[]
 
-
+// tag::order[]
 === Order(Sort) mechanism
 The order mechanism is facilitated by the `orderBy` method, which resides inside the `UniquePersonList > Person > Addressbook`. It supports
 the ordering(sorting) of the contact list by utilizing the CLI commands in the TunedIn application. +
@@ -448,7 +449,7 @@ If the order command fails its execution due to invalid order parameter, the lis
 not be ordered.
 
 The following sequence diagram shows how the order operation works: //insert sequence diagram.
-
+// end::order[]
 
 === Remark mechanism
 

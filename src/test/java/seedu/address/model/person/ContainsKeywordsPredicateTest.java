@@ -73,4 +73,32 @@ public class ContainsKeywordsPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
+
+    //@@author tingtx
+    @Test
+    public void test_groupContainsKeywords_returnsTrue() {
+        ContainsKeywordsPredicate.setPredicateType('g');
+
+        // Zero keywords
+        ContainsKeywordsPredicate predicate = new ContainsKeywordsPredicate(Arrays.asList(""));
+        assertTrue(predicate.test(new PersonBuilder().withGroup("").build()));
+
+        // One keyword
+        predicate = new ContainsKeywordsPredicate(Collections.singletonList("TEST"));
+        assertTrue(predicate.test(new PersonBuilder().withGroup("TEST").build()));
+
+    }
+
+    @Test
+    public void test_groupDoesNotContainKeywords_returnsFalse() {
+        ContainsKeywordsPredicate.setPredicateType('g');
+
+        // Non-matching keyword
+        ContainsKeywordsPredicate predicate = new ContainsKeywordsPredicate(Arrays.asList("TEST2"));
+        assertFalse(predicate.test(new PersonBuilder().withGroup("").build()));
+
+        // Keywords case sensitive
+        predicate = new ContainsKeywordsPredicate(Arrays.asList("TEST"));
+        assertFalse(predicate.test(new PersonBuilder().withGroup("test").build()));
+    }
 }

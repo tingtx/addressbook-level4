@@ -18,8 +18,8 @@ import javax.crypto.spec.PBEParameterSpec;
  */
 public class FileEncryptor {
     private static final byte[] salt = {
-            (byte) 0x43, (byte) 0x76, (byte) 0x95, (byte) 0xc7,
-            (byte) 0x5b, (byte) 0xd7, (byte) 0x45, (byte) 0x17
+        (byte) 0x43, (byte) 0x76, (byte) 0x95, (byte) 0xc7,
+        (byte) 0x5b, (byte) 0xd7, (byte) 0x45, (byte) 0x17
     };
 
     private static final String addressBookFilePath = "data/addressbook.xml";
@@ -99,8 +99,8 @@ public class FileEncryptor {
 
         if (emptyFile) {
             outStream = new FileOutputStream(new File("data/addressbook.xml"));
-            String emptyContent = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                    "<addressbook/>\n";
+            String emptyContent = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
+                    + "<addressbook/>\n";
             outStream.write(emptyContent.getBytes());
             outStream.close();
         }

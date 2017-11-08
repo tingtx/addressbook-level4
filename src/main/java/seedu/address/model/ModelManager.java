@@ -637,8 +637,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void
-    refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+    public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
         AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
                 (SampleDataUtil::getSampleAddressBook));
         for (ReadOnlyPerson p : temp.getPersonList()) {

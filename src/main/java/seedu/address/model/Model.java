@@ -218,7 +218,8 @@ public interface Model {
 
     void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException;
 
-    void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException, DataConversionException;
+    void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
+            DataConversionException;
 
     ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
 }

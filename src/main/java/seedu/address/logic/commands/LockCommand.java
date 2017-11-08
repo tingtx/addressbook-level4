@@ -10,7 +10,6 @@ import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
-import seedu.address.logic.currentuser.CurrentUserUtil;
 import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
@@ -66,7 +65,7 @@ public class LockCommand extends Command {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        CurrentUserUtil.setCurrentUser(this.userId, hexUidDigest, saltText, this.passwordText);
+        new CurrentUserDetails().setCurrentUser(this.userId, hexUidDigest, saltText, this.passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

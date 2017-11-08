@@ -30,7 +30,7 @@ Responsibilities: User Interface Model
 '''
 === Quek Kai Yu
 image::kaiyu92.png[width="150", align="left"]
-{empty}[https://github.com/kaiyu92[github]]
+{empty}[https://github.com/kaiyu92[github]] [<<QuekKaiYu#, portfolio>>]
 
 Role: Developer, GitHub Manager, Code Quality +
 Responsibilities: Data Model

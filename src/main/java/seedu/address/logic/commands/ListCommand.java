@@ -15,14 +15,14 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String COMMAND_USAGE = COMMAND_WORD
+    public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": List the Address Book or ONE specified group of contact.\n"
             + "Parameters: [g/GROUP]\n"
             + "Example: " + COMMAND_WORD + "\n"
             + "Example: " + COMMAND_WORD + " g/friends";
     public static final String MESSAGE_LIST_ALL_SUCCESS = "Listed all persons";
     public static final String MESSAGE_LIST_GROUP_SUCCESS = "Listed all persons in ";
-    public static final String MESSAGE_LIST_WRONG_PARAMTER = "Group does not exist!";
+    public static final String MESSAGE_LIST_WRONG_PARAMETER = "Group does not exist!";
 
     private final ContainsKeywordsPredicate predicate;
     private final String listParameter;
@@ -48,12 +48,11 @@ public class ListCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
 
-        if (model.getFilteredPersonList().size()==0) {
+        if (model.getFilteredPersonList().size() == 0) {
             return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
-                    + " " + MESSAGE_LIST_WRONG_PARAMTER);
+                    + " " + MESSAGE_LIST_WRONG_PARAMETER);
         }
-
-        return new CommandResult(MESSAGE_LIST_GROUP_SUCCESS + listParameter);
+        return new CommandResult(MESSAGE_LIST_GROUP_SUCCESS + listParameter.substring(2).trim());
 
     }
 

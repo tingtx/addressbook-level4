@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -39,9 +38,9 @@ public class GroupCommand extends UndoableCommand {
     public static final String MESSAGE_GROUP_PERSON_SUCCESS = "Grouped Person(s) to ";
     public static final String MESSAGE_UNGROUP_PERSON_SUCCESS = "Person(s) removed from group.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE__WRONG_SHOWALL_PARAMETER = "To view existing groups, " +
-            "the parameter must be SHOWALL";
     public static final String SHOW_ALL_GROUP = "showall";
+    private static final String MESSAGE__WRONG_SHOW_ALL_PARAMETER = "To view existing groups, "
+            + "the parameter must be SHOWALL";
 
     private final List<Index> indexes;
     private final String group;
@@ -56,9 +55,7 @@ public class GroupCommand extends UndoableCommand {
 
         this.indexes = indexes;
         this.group = group;
-
     }
-
 
     public static String getCommandWord() {
         return COMMAND_WORD;
@@ -66,13 +63,13 @@ public class GroupCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        CommandResult commandResult ;
-        if(group.equalsIgnoreCase(SHOW_ALL_GROUP)) {
+        CommandResult commandResult;
+        if (group.equalsIgnoreCase(SHOW_ALL_GROUP)) {
             commandResult = showAllGroupName();
         } else if (indexes.size() > 0) {
             commandResult = setGroupToPerson();
         } else {
-            throw new CommandException(MESSAGE__WRONG_SHOWALL_PARAMETER);
+            throw new CommandException(MESSAGE__WRONG_SHOW_ALL_PARAMETER);
         }
 
         return commandResult;
@@ -95,10 +92,10 @@ public class GroupCommand extends UndoableCommand {
             ReadOnlyPerson personToGroup = lastShownList.get(index.getZeroBased());
 
             try {
-                Person editedPerson = new Person(personToGroup.getName(), personToGroup.getPhone(), personToGroup.getEmail(),
-                        personToGroup.getAddress(), personToGroup.getBirthday(), new Group(group),
-                        personToGroup.getRemark(), personToGroup.getTags());
-                model.updatePerson(personToGroup,editedPerson);
+                Person editedPerson = new Person(personToGroup.getName(), personToGroup.getPhone(),
+                        personToGroup.getEmail(), personToGroup.getAddress(), personToGroup.getBirthday(),
+                        new Group(group), personToGroup.getRemark(), personToGroup.getTags());
+                model.updatePerson(personToGroup, editedPerson);
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             } catch (IllegalValueException ive) {

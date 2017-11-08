@@ -3,7 +3,6 @@ package seedu.address.model.group;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -19,7 +18,7 @@ import seedu.address.commons.util.CollectionUtil;
  * Supports minimal set of list operations for the app's features.
  *
  */
-public class UniqueGroupList implements Iterable<Group>{
+public class UniqueGroupList implements Iterable<Group> {
 
     private final ObservableList<Group> internalList = FXCollections.observableArrayList();
 

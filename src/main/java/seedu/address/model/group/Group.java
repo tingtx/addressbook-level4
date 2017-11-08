@@ -16,7 +16,7 @@ public class Group {
 
     public final String value;
 
-    public Group(String group) throws IllegalValueException{
+    public Group(String group) throws IllegalValueException {
         requireNonNull(group);
         String trimmedGroup = group.trim();
         if (!isValidGroup(trimmedGroup)) {

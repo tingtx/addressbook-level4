@@ -1,15 +1,15 @@
-//@@author tingtx
 package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventBook;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.INDEX_THIRD_PERSON;
@@ -30,17 +30,33 @@ import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalIndexes;
 
+//@@author tingtx
 public class GroupCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
             Account());
+
+    @Test
+    public void execute_showAllGroups_success() throws Exception {
+        List<Index> indexes = new ArrayList<>();
+        String showAll = "SHOWALL";
+
+        GroupCommand groupCommand = prepareCommand(indexes, showAll);
+
+        String expectedMessage = "Groups: " + model.getGroupList().toString();
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account());
+        expectedModel.getGroupList();
+
+        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
+    }
 
     @Test
     public void execute_groupOnePerson_success() throws Exception {
@@ -72,6 +88,7 @@ public class GroupCommandTest {
         Person groupedPersonThree = new PersonBuilder(model.getFilteredPersonList()
                 .get(TypicalIndexes.INDEX_THIRD_PERSON.getZeroBased()))
                 .withGroup("JUNITTest").build();
+
         List<Index> indexes = new ArrayList<>();
         indexes.add(INDEX_FIRST_PERSON);
         indexes.add(INDEX_SECOND_PERSON);
@@ -199,10 +216,11 @@ public class GroupCommandTest {
     public void equals() {
         List<Index> indexes = new ArrayList<>();
         indexes.add(INDEX_FIRST_PERSON);
-        final GroupCommand standardCommand = new GroupCommand(indexes, new Group(VALID_GROUP_AMY));
+        final GroupCommand standardCommand = new GroupCommand(indexes, ALICE.getGroup().value);
 
-        // save values -> returns true
-        GroupCommand commandWithSameValues = new GroupCommand(indexes, new Group(VALID_GROUP_AMY));
+
+        // same values -> returns true
+        GroupCommand commandWithSameValues = new GroupCommand(indexes,  ALICE.getGroup().value);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -218,13 +236,13 @@ public class GroupCommandTest {
         // different index -> returns false
         List<Index> tempIndexes = new ArrayList<>();
         tempIndexes.add(INDEX_SECOND_PERSON);
-        GroupCommand commandWithDiffIndex = new GroupCommand(tempIndexes, new Group(VALID_GROUP_AMY));
+        GroupCommand commandWithDiffIndex = new GroupCommand(tempIndexes, ALICE.getGroup().value);
         assertFalse(standardCommand.equals(commandWithDiffIndex));
 
         // different descriptor -> returns false
         tempIndexes.remove(INDEX_SECOND_PERSON);
         tempIndexes.add(INDEX_FIRST_PERSON);
-        GroupCommand commandWithNoDesc = new GroupCommand(tempIndexes, new Group(VALID_GROUP_BOB));
+        GroupCommand commandWithNoDesc = new GroupCommand(tempIndexes, BENSON.getGroup().value);
         assertFalse(standardCommand.equals(commandWithNoDesc));
     }
 
@@ -232,7 +250,7 @@ public class GroupCommandTest {
      * Returns an {@code GroupCommand} with parameters {@code index} and {@code Group}
      */
     private GroupCommand prepareCommand(List<Index> index, String group) {
-        GroupCommand groupCommand = new GroupCommand(index, new Group(group));
+        GroupCommand groupCommand = new GroupCommand(index, group);
         groupCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         return groupCommand;
     }

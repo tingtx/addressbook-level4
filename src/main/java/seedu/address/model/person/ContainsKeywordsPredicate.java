@@ -3,8 +3,6 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.sun.istack.internal.localization.NullLocalizable;
-
 import seedu.address.commons.util.StringUtil;
 
 /**

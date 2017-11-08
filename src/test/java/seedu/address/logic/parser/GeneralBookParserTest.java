@@ -45,7 +45,6 @@ import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
-import seedu.address.model.group.Group;
 import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -142,16 +141,16 @@ public class GeneralBookParserTest {
     //@@author tingtx
     @Test
     public void parseCommand_group() throws Exception {
-        final Group group = new Group("TEST");
+        final String group = "TEST";
         final List<Index> indexes = new ArrayList<>();
         indexes.add(INDEX_FIRST_PERSON);
         GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group.value);
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group);
         Assert.assertEquals(new GroupCommand(indexes, group), command);
 
         //alias
         command = (GroupCommand) parser.parseCommand(aliasSettings.getGroupCommand().getAlias()
-                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group.value);
+                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group);
         Assert.assertEquals(new GroupCommand(indexes, group), command);
     }
     //@@author
@@ -188,11 +187,11 @@ public class GeneralBookParserTest {
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " g/TEST") instanceof ListCommand);
 
         //alias
         assertTrue(parser.parseCommand(aliasSettings.getListCommand().getAlias()) instanceof ListCommand);
-        assertTrue(parser.parseCommand(aliasSettings.getListCommand().getAlias() + " 3")
+        assertTrue(parser.parseCommand(aliasSettings.getListCommand().getAlias() + " g/TEST")
                 instanceof ListCommand);
     }
 

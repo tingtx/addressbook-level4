@@ -12,7 +12,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.group.Group;
 
 //@@author tingtx
 
@@ -67,7 +66,8 @@ public class GroupCommandParser implements Parser<GroupCommand> {
             }
 
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    GroupCommand.MESSAGE_USAGE));
         }
 
         String group = argMultimap.getValue(PREFIX_GROUP).get();

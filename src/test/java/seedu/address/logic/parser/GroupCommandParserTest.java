@@ -16,7 +16,6 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.GroupCommand;
-import seedu.address.model.group.Group;
 
 public class GroupCommandParserTest {
 
@@ -31,21 +30,13 @@ public class GroupCommandParserTest {
         assertParseFailure(parser, " " + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
         // negative index
-        assertParseFailure(parser, "-6" + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        assertParseFailure(parser, "1 -6 3" + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        assertParseFailure(parser, "1 3 -6" + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-6" + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT );
 
         // zero index
         assertParseFailure(parser, "0" + GROUP_DESC_BOB, MESSAGE_INVALID_FORMAT);
 
-        assertParseFailure(parser, "5 0 2" + GROUP_DESC_BOB, MESSAGE_INVALID_FORMAT);
-
-        assertParseFailure(parser, "5 0 2" + GROUP_DESC_BOB, MESSAGE_INVALID_FORMAT);
-
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "some random string", MESSAGE_INVALID_FORMAT);
 
         // invalid prefix being parsed as preamble
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
@@ -59,13 +50,19 @@ public class GroupCommandParserTest {
     }
 
     @Test
+    public void parse_showAllString_success() {
+        List<Index> index = new ArrayList<>();
+        GroupCommand expectedCommand = new GroupCommand(index, "SHOWALL");
+        assertParseSuccess(parser, "SHOWALL", expectedCommand);
+    }
+
+    @Test
     public void parse_oneIndex_success() throws IllegalValueException {
 
         List<Index> index = new ArrayList<>();
         index.add(ParserUtil.parseIndex("1"));
-        Group group = new Group(VALID_GROUP_AMY);
 
-        GroupCommand expectedCommand = new GroupCommand(index, group);
+        GroupCommand expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
         assertParseSuccess(parser, "1" + GROUP_DESC_AMY, expectedCommand);
     }
 
@@ -73,21 +70,20 @@ public class GroupCommandParserTest {
     public void parse_multipleIndex_success() throws IllegalValueException {
 
         List<Index> index = new ArrayList<>();
-        Group group = new Group(VALID_GROUP_AMY);
 
         //to group a smaller group of 3 person
         index.add(ParserUtil.parseIndex("1"));
         index.add(ParserUtil.parseIndex("3"));
         index.add(ParserUtil.parseIndex("4"));
 
-        GroupCommand expectedCommand = new GroupCommand(index, group);
+        GroupCommand expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
         assertParseSuccess(parser, "1 3 4" + GROUP_DESC_AMY, expectedCommand);
 
         //to group a bigger group of 15 person
         for (int i = 5; i < 17; i++) {
             index.add(ParserUtil.parseIndex(Integer.toString(i)));
         }
-        expectedCommand = new GroupCommand(index, group);
+        expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
         String userInput = "1 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
         assertParseSuccess(parser, userInput + GROUP_DESC_AMY, expectedCommand);
 

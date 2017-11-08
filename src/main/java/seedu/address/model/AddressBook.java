@@ -103,6 +103,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             persons.add(newPerson);
             syncMasterTagListWith(newPerson);
+            syncMasterGroupListWith(newPerson);
 
         } catch (DuplicatePersonException dpe) {
             throw new DuplicatePersonException();
@@ -189,12 +190,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     private void updateMasterGroupList(Group prevGroup) {
         boolean isGroupPresent = false;
-        for (Person p : persons){
-            if(p.getGroup().value.equals(prevGroup)) {
+        for (Person p : persons) {
+            if (p.getGroup().value.equals(prevGroup)) {
                 isGroupPresent = true;
             }
         }
-        if (isGroupPresent == false) {
+        if (!isGroupPresent) {
             groups.delete(prevGroup);
         }
     }
@@ -236,8 +237,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags"
-                + groups.asObservableList().size() + "groups";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags, "
+                + groups.asObservableList().size() + " groups";
         // TODO: refine later
     }
 
@@ -252,7 +253,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Group> getGroupList() { return groups.asObservableList(); }
+    public ObservableList<Group> getGroupList() {
+        return groups.asObservableList();
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -260,7 +263,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
-                && this.groups.equalsOrderInsensitive(((AddressBook)other).groups);
+                && this.groups.equalsOrderInsensitive(((AddressBook) other).groups);
     }
 
     @Override

@@ -13,7 +13,7 @@ import seedu.address.model.person.ContainsKeywordsPredicate;
 /**
  * Parses input arguments and creates a new ListCommand object
  */
-public class LIstCommandParser implements Parser<ListCommand> {
+public class ListCommandParser implements Parser<ListCommand> {
 
     /**
      * Returns true if the prefixes contains no empty {@code Optional} values in the given
@@ -35,7 +35,7 @@ public class LIstCommandParser implements Parser<ListCommand> {
 
         if (!trimmedArgs.isEmpty() && !isPrefixesPresent(argMultimap, PREFIX_GROUP)) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.COMMAND_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
 
         ContainsKeywordsPredicate.setPredicateType('g');

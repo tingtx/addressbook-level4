@@ -3,38 +3,79 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: TunedIn
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/tingtx.md[Functional code]]
+[https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/test/tingtx.md[Test code]]
+
+=== Enhancement Added:
+* Birthday and Group fields to Persons
+* Set Email, Birthday to be optional fields.
+* Order command to sort with Birthday, Tag and with multiple(2) person fields.(enhanced on the original Order command done by quanle1994)
+* Group command to group one or multiple persons in a specified group.
+* List command to view a list of person by specified group name.
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
-
-#End of Extract#
+include::../UserGuide.adoc[tag=order]
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
 
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-#End of Extract#
+include::../DeveloperGuide.adoc[tag=order]
 
 ---
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=group]
+
+---
+
+==== Justification
+
+
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=group]
+
+---
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=list]
+
+---
+
+==== Justification
+
+
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=]
+
+---
+
 
 === Enhancement Proposed: Add command `remark`
 
@@ -45,6 +86,3 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}

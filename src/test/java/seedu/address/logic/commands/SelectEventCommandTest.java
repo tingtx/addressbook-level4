@@ -28,6 +28,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author kaiyu92
+
 /**
  * Contains integration tests (interaction with the Model) for {@code SelectEventCommand}.
  */
@@ -39,7 +40,8 @@ public class SelectEventCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account(),
+                new Config());
     }
 
     @Test

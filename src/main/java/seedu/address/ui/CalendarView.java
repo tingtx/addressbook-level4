@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -28,21 +29,23 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
 //@@author kaiyu92
+
 /**
  * The CalendarView UI Component
  */
 public class CalendarView {
 
+    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private VBox view;
     private Text calendarTitle;
     private YearMonth currentYearMonth;
-
     private ObservableList<ReadOnlyEvent> eventList;
     private Logic logic;
-    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+
     /**
      * Create a calendar view
+     *
      * @param eventList contains the events of the event book
      * @param yearMonth year month to create the calendar of
      */
@@ -66,26 +69,28 @@ public class CalendarView {
             }
         }
         // Days of the week labels
-        Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
-            new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
-            new Text("Saturday") };
+        Text[] dayNames = new Text[]{new Text("SUNDAY"), new Text("MONDAY"), new Text("TUESDAY"),
+            new Text("WEDNESDAY"), new Text("THURSDAY"), new Text("FRIDAY"),
+            new Text("SATURDAY")};
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         Integer col = 0;
         for (Text txt : dayNames) {
             txt.setFill(Color.WHITE);
+            txt.setStyle("-fx-font-size: 7pt;");
             AnchorPane ap = new AnchorPane();
             ap.setPrefSize(200, 10);
-            ap.setBottomAnchor(txt, 5.0);
+            ap.setBottomAnchor(txt, 10.0);
             ap.getChildren().add(txt);
             dayLabels.add(ap, col++, 0);
         }
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
         calendarTitle.setFill(Color.WHITE);
-        Button previousMonth = new Button("<<");
+        calendarTitle.setStyle("-fx-font-size: 15pt;");
+        Button previousMonth = new Button("<  PREVIOUS");
         previousMonth.setOnAction(e -> previousMonth());
-        Button nextMonth = new Button(">>");
+        Button nextMonth = new Button("NEXT  >");
         nextMonth.setOnAction(e -> nextMonth());
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         HBox.setMargin(calendarTitle, new Insets(0, 15, 0, 15));
@@ -99,6 +104,7 @@ public class CalendarView {
 
     /**
      * Set the days of the calendar to correspond to the appropriate date
+     *
      * @param yearMonth year and month of month to render
      */
     public void populateCalendar(YearMonth yearMonth, Index targetIndex) {
@@ -137,10 +143,14 @@ public class CalendarView {
             }
 
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
-            txt.setFill(Color.WHITE);
+            //@@author keloysiusmak
+            txt.setFont(Font.font("Avenir"));
+            txt.setFill(Color.valueOf("#777"));
+            txt.setStyle("-fx-font-size: 12pt; ");
+            //@@author
             ap.setDate(calendarDate);
-            ap.setTopAnchor(txt, 5.0);
-            ap.setLeftAnchor(txt, 5.0);
+            ap.setTopAnchor(txt, 10.0);
+            ap.setLeftAnchor(txt, 10.0);
 
             if (eventExist) {
                 ap.setOnMouseClicked(ev -> {
@@ -156,9 +166,9 @@ public class CalendarView {
                         logger.info("Duplicated User");
                     }
                 });
-                ap.setStyle("-fx-background-color: #3543CB");
+                ap.setStyle("-fx-background-color: rgba(255, 255, 255, 0.8);");
             } else {
-                ap.setStyle("-fx-background-color: transparent");
+                ap.setStyle("-fx-background-color: rgba(255, 255, 255, 0.6);");
             }
 
             ap.getChildren().add(txt);
@@ -207,6 +217,7 @@ public class CalendarView {
 
     /**
      * Check whether the event Day matches the input dayValue
+     *
      * @param event
      * @param dayValue
      * @return
@@ -222,6 +233,7 @@ public class CalendarView {
 
     /**
      * Check whether the event Day matches the input monthValue
+     *
      * @param event
      * @param monthValue
      * @return
@@ -237,6 +249,7 @@ public class CalendarView {
 
     /**
      * Check whether the event Day matches the input yearValue
+     *
      * @param event
      * @param yearValue
      * @return

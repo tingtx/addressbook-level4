@@ -11,6 +11,7 @@ import java.io.StringWriter;
  */
 public class StringUtil {
     //@@author kaiyu92
+
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.

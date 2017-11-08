@@ -3,14 +3,20 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -22,10 +28,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.AliasSettings;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
@@ -52,8 +60,10 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.SwitchCommand;
+import seedu.address.logic.commands.TransferCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -67,7 +77,10 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.Storage;
 
 /**
@@ -79,10 +92,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final EventBook eventBook;
-    private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final ArrayList<ArrayList<String>> viewAliases;
     private final Account account;
+    private final Config config;
     private UserPrefs userPref;
     private Storage userStorage;
 
@@ -90,7 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyEventBook eventBook, UserPrefs userPrefs,
-                        ReadOnlyAccount account) {
+                        ReadOnlyAccount account, Config config) {
         super();
         requireAllNonNull(addressBook, eventBook, userPrefs);
         logger.fine("Initializing with address book: " + addressBook + ", event book: " + eventBook
@@ -100,6 +114,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.eventBook = new EventBook(eventBook);
         this.userPref = userPrefs;
         this.account = new Account(account);
+        this.config = config;
 
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.eventBook.getEventList());
@@ -181,6 +196,9 @@ public class ModelManager extends ComponentManager implements Model {
         //Switch Command
         commandList.add(new ArrayList<String>(Arrays.asList("Switch", SwitchCommand.getCommandWord())));
 
+        //Transfer Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Transfer", TransferCommand.getCommandWord())));
+
         //Undo Command
         commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
 
@@ -192,7 +210,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public ModelManager() {
-        this(new AddressBook(), new EventBook(), new UserPrefs(), new Account());
+        this(new AddressBook(), new EventBook(), new UserPrefs(), new Account(), new Config());
     }
 
     /**
@@ -349,6 +367,8 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getSelectEventCommand().getAlias();
         } else if (command.equals(ExportCommand.getCommandWord())) {
             return aliasSettings.getExportCommand().getAlias();
+        } else if (command.equals(TransferCommand.getCommandWord())) {
+            return aliasSettings.getTransferCommand().getAlias();
         } else {
             return "Not Set";
         }
@@ -456,13 +476,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public byte[] retrieveDigestFromStorage() {
-        return new byte[0];
+    public String retrieveSaltFromStorage(String userId) throws UserNotFoundException {
+        return account.getSalt(userId);
     }
 
     @Override
-    public String retrieveSaltFromStorage(String userId) {
-        return null;
+    public User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException {
+        return account.getUserFromIdAndPassword(userName, password);
+    }
+
+    @Override
+    public void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException {
+        User user = getUserFromIdAndPassword(userName, saltedPasswordHex);
+        account.removeUser(user);
+        indicateAccountChanged();
     }
 
     @Override
@@ -474,7 +501,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void orderEventList(String parameter) throws UnrecognisedParameterException {
         eventBook.orderList(parameter);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+        indicateEventBookChanged();
     }
 
     @Override
@@ -495,4 +522,144 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    //@@author keloysiusmak
+
+    @Override
+    public void transferData() throws ConfigMissingException {
+        ArrayList<String> fileList = new ArrayList<String>();
+        fileList.add(userPref.getAddressBookFilePath());
+        fileList.add(userPref.getEventBookFilePath());
+        fileList.add(userPref.getAccountFilePath());
+        fileList.add(config.getUserPrefsFilePath());
+        fileList.add(config.DEFAULT_CONFIG_FILE);
+        fileList.add("help.txt");
+
+        byte[] buffer = new byte[1024];
+
+        try {
+            FileOutputStream fos = new FileOutputStream("TunedIn.zip");
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            for (String file : fileList) {
+
+                System.out.println("File Added Into Zip : " + file);
+                ZipEntry ze = new ZipEntry(file);
+                zos.putNextEntry(ze);
+
+                FileInputStream in = new FileInputStream(file);
+
+                int len;
+                while ((len = in.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+
+                in.close();
+            }
+
+            zos.closeEntry();
+            zos.close();
+
+        } catch (IOException e) {
+            throw new ConfigMissingException("Missing file");
+        }
+    }
+
+    @Override
+    public void transferDataWithDefault() {
+        ArrayList<String> fileList = new ArrayList<String>();
+        fileList.add(userPref.getAddressBookFilePath());
+        fileList.add(userPref.getEventBookFilePath());
+        fileList.add(userPref.getAccountFilePath());
+        fileList.add(config.getUserPrefsFilePath());
+        fileList.add(config.DEFAULT_CONFIG_FILE);
+        fileList.add("help.txt");
+
+        byte[] buffer = new byte[1024];
+
+        try {
+            FileOutputStream fos = new FileOutputStream("TunedIn.zip");
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            Optional<ReadOnlyAddressBook> addressBookOptional;
+            Optional<ReadOnlyAccount> accountOptional;
+            Optional<ReadOnlyEventBook> eventBookOptional;
+
+            addressBookOptional = userStorage.readAddressBook();
+            accountOptional = userStorage.readAccount();
+            eventBookOptional = userStorage.readEventBook();
+
+            if (!addressBookOptional.isPresent()) {
+                System.out.println("File Created : " + fileList.get(0));
+                userStorage.saveAddressBook(new AddressBook());
+            }
+            if (!accountOptional.isPresent()) {
+                System.out.println("File Created : " + fileList.get(2));
+                userStorage.saveAccount(new Account());
+            }
+            if (!eventBookOptional.isPresent()) {
+                System.out.println("File Created : " + fileList.get(1));
+                userStorage.saveEventBook(new EventBook());
+            }
+            for (String file : fileList) {
+
+                System.out.println("File Added Into Zip (With Defaults) : " + file);
+                ZipEntry ze = new ZipEntry(file);
+                zos.putNextEntry(ze);
+
+                FileInputStream in = new FileInputStream(file);
+
+                int len;
+                while ((len = in.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+
+                in.close();
+            }
+
+            zos.closeEntry();
+            zos.close();
+
+        } catch (Exception e) {
+            ;
+        }
+    }
+
+    @Override
+    public void deleteEncryptedContacts(String fileName) {
+        File file = new File("data/" + fileName + ".encrypted");
+        file.delete();
+    }
+
+    @Override
+    public UserPrefs getUserPrefs() {
+        return userPref;
+    }
+
+    @Override
+    public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+        AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
+                (SampleDataUtil::getSampleAddressBook));
+        for (ReadOnlyPerson p : temp.getPersonList()) {
+            Person newP = new Person(p);
+            addressBook.addPerson(newP);
+        }
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException {
+        for (ReadOnlyPerson p : list) {
+            Person newP = new Person(p);
+            addressBook.removePerson(newP);
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
+        AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
+                (SampleDataUtil::getSampleAddressBook));
+        return temp.getPersonList();
+    }
 }

@@ -14,6 +14,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 
 //@@author kaiyu92
+
 /**
  * Wraps all data at the event-book level
  * Duplicates are not allowed (by .equals comparison)
@@ -29,6 +30,7 @@ public class EventBook implements ReadOnlyEventBook {
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
      */
+
     {
         events = new UniqueEventList();
     }

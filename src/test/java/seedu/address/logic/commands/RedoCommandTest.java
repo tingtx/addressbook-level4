@@ -29,12 +29,13 @@ public class RedoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-            Account());
+            Account(), new Config());
 
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteEventCommand deleteEventCommandTwo = new DeleteEventCommand(INDEX_FIRST_EVENT);
 
-    public RedoCommandTest() {}
+    public RedoCommandTest() {
+    }
 
     @Before
     public void setUp() {
@@ -49,7 +50,7 @@ public class RedoCommandTest {
         RedoCommand redoCommand = new RedoCommand();
         redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack, new Config());
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-                Account());
+                Account(), new Config());
 
         // multiple commands in redoStack
         deleteFirstPerson(expectedModel);

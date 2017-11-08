@@ -28,13 +28,14 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
 //@@author kaiyu92
+
 /**
  * Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
  */
 public class FindEventCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-            Account());
+            Account(), new Config());
 
     @Test
     public void equals() {

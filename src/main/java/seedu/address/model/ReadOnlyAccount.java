@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.user.ReadOnlyUser;
 
 //@@author quanle1994
+
 /**
  * Unmodifiable view of the accounts
  */

@@ -5,9 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import seedu.address.commons.exceptions.DataConversionException;
@@ -91,19 +96,110 @@ public class XmlFileStorage {
     }
 
     /**
-     * Export XML Data into CSV file
+     * Export Addressbook XML Data into CSV file
      */
-    public static void exportGeneralbook(String source, String destination, String style, String objectElement)
-            throws FileNotFoundException, ParserConfigurationException,
-            IOException, SAXException, TransformerException {
-        try {
-            XmlUtil.exportDataToFile(source, destination, style, objectElement);
-        } catch (ParserConfigurationException pce) {
-            throw new ParserConfigurationException();
-        } catch (SAXException se) {
-            throw new SAXException();
-        } catch (TransformerException te) {
-            throw new TransformerException(te);
+    public static void exportAddressbook(String source, String destination, String header)
+            throws FileNotFoundException, ParserConfigurationException, IOException, SAXException {
+
+        File addressbookXmlFile = new File(source);
+
+        if (!addressbookXmlFile.exists()) {
+            throw new FileNotFoundException("File not found : " + addressbookXmlFile.getAbsolutePath());
         }
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(addressbookXmlFile);
+
+        doc.getDocumentElement().normalize();
+
+        NodeList personList = doc.getElementsByTagName("persons");
+
+        StringBuilder sb = new StringBuilder();
+
+        //Append the header to the CSV file
+        sb.append(header);
+        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+
+        for (int i = 0; i < personList.getLength(); i++) {
+            Node personNode = personList.item(i);
+
+            if (personNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element elemPerson = (Element) personNode;
+
+                sb.append("\"" + elemPerson.getElementsByTagName("name").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("phone").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("address").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("birthday").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("email").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("group").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("remark").item(0).getTextContent() + "\"");
+
+                NodeList tagList = elemPerson.getElementsByTagName("tagged");
+                for (int j = 0; j < tagList.getLength(); j++) {
+                    Node tagNode = tagList.item(j);
+                    if (tagNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eTag = (Element) tagNode;
+                        sb.append(XmlUtil.COMMA_DELIMITER);
+                        sb.append("\"" + eTag.getTextContent() + "\"");
+                    }
+                }
+                sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+            }
+        }
+        XmlUtil.exportDataToFile(destination, sb);
+    }
+
+    /**
+     * Export eventbook XML Data into CSV file
+     */
+    public static void exportEventbook(String source, String destination, String header)
+            throws FileNotFoundException, ParserConfigurationException, IOException, SAXException {
+
+        File eventbookXmlFile = new File(source);
+
+        if (!eventbookXmlFile.exists()) {
+            throw new FileNotFoundException("File not found : " + eventbookXmlFile.getAbsolutePath());
+        }
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(eventbookXmlFile);
+
+        doc.getDocumentElement().normalize();
+
+        NodeList eventList = doc.getElementsByTagName("events");
+
+        StringBuilder sb = new StringBuilder();
+
+        //Append the header to the CSV file
+        sb.append(header);
+        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+
+        for (int i = 0; i < eventList.getLength(); i++) {
+            Node eventNode = eventList.item(i);
+
+            if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element elemEvent = (Element) eventNode;
+
+                sb.append("\"" + elemEvent.getElementsByTagName("title").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemEvent.getElementsByTagName("description").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemEvent.getElementsByTagName("location").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemEvent.getElementsByTagName("datetime").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+            }
+        }
+        XmlUtil.exportDataToFile(destination, sb);
     }
 }

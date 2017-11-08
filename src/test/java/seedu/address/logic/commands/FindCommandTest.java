@@ -33,7 +33,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class FindCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-            Account());
+            Account(), new Config());
 
     @Test
     public void equals() {

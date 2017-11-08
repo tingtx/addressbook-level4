@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Account;
@@ -25,12 +26,12 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class UndoableCommandTest {
 
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
-            new Account());
+            new Account(), new Config());
 
     private final DummyCommand dummyCommand = new DummyCommand(model);
 
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
-            new Account());
+            new Account(), new Config());
 
     // 1 is for address book turn, 2 is for event book turn;
     private int undoRedoTurn = 1;
@@ -54,7 +55,7 @@ public class UndoableCommandTest {
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
         expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
-                new Account());
+                new Account(), new Config());
         assertEquals(expectedModel, model);
 
         //excute undo for event book
@@ -69,7 +70,7 @@ public class UndoableCommandTest {
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
         expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
-                new Account());
+                new Account(), new Config());
         assertEquals(expectedModel, model);
     }
 

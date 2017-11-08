@@ -23,6 +23,7 @@ import seedu.address.model.event.Title;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 //@@author kaiyu92
+
 /**
  * Edits the details of an existing event in the event book.
  */

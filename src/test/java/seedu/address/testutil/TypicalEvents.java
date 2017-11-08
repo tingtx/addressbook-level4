@@ -9,6 +9,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 
 //@@author kaiyu92
+
 /**
  * A utility class containing a list of {@code Event} objects to be used in tests.
  */

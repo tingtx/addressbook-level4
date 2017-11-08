@@ -17,6 +17,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 //@@author kaiyu92
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListEventCommand.
  */
@@ -28,8 +29,10 @@ public class ListEventCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
-        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new Account());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account(),
+                new Config());
+        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new Account(),
+                new Config());
 
         listEventCommand = new ListEventCommand();
         listEventCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());

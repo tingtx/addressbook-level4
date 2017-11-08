@@ -24,7 +24,8 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyAllBook_success() {
-        Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+        Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account(),
+                new Config());
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 

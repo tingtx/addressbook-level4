@@ -19,6 +19,7 @@ import seedu.address.model.event.Event;
 import seedu.address.testutil.EventBuilder;
 
 //@@author kaiyu92
+
 /**
  * Contains integration tests (interaction with the Model) for {@code AddEventCommand}.
  */
@@ -28,7 +29,8 @@ public class AddEventCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account());
+        model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account(),
+                new Config());
     }
 
     @Test
@@ -36,7 +38,7 @@ public class AddEventCommandIntegrationTest {
         Event validEvent = new EventBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new
-                Account());
+                Account(), new Config());
         expectedModel.addEvent(validEvent);
 
         assertCommandSuccess(prepareCommand(validEvent, model), model,

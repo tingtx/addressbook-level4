@@ -33,11 +33,12 @@ public class ListCommandTest {
     private Model expectedModel;
     private ListCommand listCommand;
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
-            new Account());
+            new Account(),new Config());
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new Account());
+        expectedModel = new ModelManager(model.getAddressBook(), model.getEventBook(), new UserPrefs(), new Account(),
+                new Config());
         listCommand = new ListCommand("");
         listCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_LIST_ALL_SUCCESS, expectedModel);

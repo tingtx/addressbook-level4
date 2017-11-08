@@ -11,6 +11,8 @@ import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -23,7 +25,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
 import seedu.address.storage.Storage;
 
 /**
@@ -56,7 +60,7 @@ public interface Model {
      * Export the Addressbook
      */
     void exportAddressBook() throws FileNotFoundException, ParserConfigurationException, IOException,
-            SAXException, TransformerException;;
+            SAXException, TransformerException;
 
     /**
      * Returns the Account
@@ -143,7 +147,7 @@ public interface Model {
      * Export the EventBook
      */
     void exportEventBook() throws FileNotFoundException, ParserConfigurationException, IOException,
-            SAXException, TransformerException;;
+            SAXException, TransformerException;
 
     /**
      * Deletes the given event.
@@ -192,9 +196,26 @@ public interface Model {
 
     void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException;
 
-    byte[] retrieveDigestFromStorage();
+    User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException;
 
-    String retrieveSaltFromStorage(String userId);
+    void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException;
+
+    String retrieveSaltFromStorage(String userId) throws UserNotFoundException;
 
     void setUserStorage(Storage userStorage);
+
+    void transferData() throws ConfigMissingException;
+
+    void transferDataWithDefault();
+
+    void deleteEncryptedContacts(String substring);
+
+    UserPrefs getUserPrefs();
+
+    void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException;
+
+    void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
+            DataConversionException;
+
+    ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
 }

@@ -25,6 +25,7 @@ public class AddressBookTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
     private final AddressBook addressBook = new AddressBook();
 
     @Test

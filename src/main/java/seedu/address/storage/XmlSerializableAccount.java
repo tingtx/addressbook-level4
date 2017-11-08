@@ -13,6 +13,7 @@ import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.user.ReadOnlyUser;
 
 //@@author quanle1994
+
 /**
  * An Immutable Account that is serializable to XML format
  */

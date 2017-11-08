@@ -24,6 +24,7 @@ import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -31,6 +32,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -44,7 +46,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.UnrecognisedParameterException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.user.ReadOnlyUser;
+import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.AliasBuilder;
 
@@ -177,6 +181,44 @@ public class SetAliasCommandTest {
         }
 
         @Override
+        public void transferData() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void transferDataWithDefault() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteEncryptedContacts(String substring) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException,
+                IOException, DataConversionException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -201,6 +243,7 @@ public class SetAliasCommandTest {
 
         @Override
         public String getAliasForCommand(String commandName) {
+            fail("This method should not be called.");
             return null;
         }
 
@@ -211,74 +254,83 @@ public class SetAliasCommandTest {
 
         @Override
         public void resetEventData(ReadOnlyEventBook newData) {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public ReadOnlyEventBook getEventBook() {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
                 IOException, SAXException, TransformerException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException,
                 EventNotFoundException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void orderEventList(String parameter) throws UnrecognisedParameterException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void setAlias(String command, String alias) throws DuplicateAliasException, UnknownCommandException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
-
+            fail("This method should not be called.");
         }
 
         @Override
-        public byte[] retrieveDigestFromStorage() {
-            return new byte[0];
+        public User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException {
+            fail("This method should not be called.");
         }
 
         @Override
         public String retrieveSaltFromStorage(String userId) {
+            fail("This method should not be called.");
             return null;
         }
 
         @Override
         public void setUserStorage(Storage userStorage) {
-
+            fail("This method should not be called.");
         }
     }
 

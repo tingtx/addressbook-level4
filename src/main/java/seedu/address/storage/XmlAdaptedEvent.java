@@ -11,6 +11,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 
 //@@author kaiyu92
+
 /**
  * JAXB-friendly version of the Event.
  */

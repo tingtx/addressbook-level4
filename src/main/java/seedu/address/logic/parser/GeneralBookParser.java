@@ -12,6 +12,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CurrentUserCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -26,15 +27,19 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListEventCommand;
 import seedu.address.logic.commands.LockCommand;
+import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.OrderCommand;
 import seedu.address.logic.commands.OrderEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.RemoveUserCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectEventCommand;
 import seedu.address.logic.commands.SetAliasCommand;
 import seedu.address.logic.commands.SetThemeCommand;
 import seedu.address.logic.commands.SwitchCommand;
+import seedu.address.logic.commands.TransferCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -78,6 +83,18 @@ public class GeneralBookParser {
         if (commandWord.equals(LockCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getLockCommand().getAlias())) {
             return new LockCommandParser().parse(arguments);
+        } else if (commandWord.equals(RemoveUserCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getRemoveUserCommand().getAlias())) {
+            return new RemoveUserCommandParser().parse(arguments);
+        } else if (commandWord.equals(LoginCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getLoginCommand().getAlias())) {
+            return new LoginCommandParser().parse(arguments);
+        } else if (commandWord.equals(LogoutCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getLoginCommand().getAlias())) {
+            return new LogoutCommand();
+        } else if (commandWord.equals(CurrentUserCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getCurrentUserCommand().getAlias())) {
+            return new CurrentUserCommand();
         } else if (commandWord.equals(AddCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getAddCommand().getAlias())) {
             return new AddCommandParser().parse(arguments);
@@ -159,6 +176,9 @@ public class GeneralBookParser {
         } else if (commandWord.equals(ExportCommand.COMMAND_WORD)
                 || commandWord.equals(aliasSettings.getExportCommand().getAlias())) {
             return new ExportCommandParser().parse(arguments);
+        } else if (commandWord.equals(TransferCommand.COMMAND_WORD)
+                || commandWord.equals(aliasSettings.getTransferCommand().getAlias())) {
+            return new TransferCommand();
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

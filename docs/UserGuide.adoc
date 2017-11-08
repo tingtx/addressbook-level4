@@ -257,6 +257,7 @@ Returns  any event having title with `Basketball` in the sequence
 * `findevent et/ball` +
 Returns  any event having title with `ball` in the sequence
 
+
 === Group person(s) : `group` - Since V1.4
 
 Group a number of persons in address book or view the existing groups. +
@@ -295,6 +296,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+// tag::list[]
 === Listing all persons : `list` - Since V1.0
 
 Shows a list of all persons or a specified group of persons in the address book. +
@@ -310,6 +312,7 @@ Examples:
 
 * `list`
 * `list g/Friends`
+// end::list[]
 
 === Lock contacts by user : `lock` - Since V1.5
 
@@ -353,6 +356,7 @@ Format: `logout`
 Displays the current user name. The default user name is `PUBLIC` +
 Format: `currentuser`
 
+// tag::order[]
 === Order persons in Address Book by a parameter: `order` - Since V1.0
 
 Order the list of persons according to a specified parameter. Parameters are case insensitive. +
@@ -377,6 +381,7 @@ Examples:
 Returns address list sorted by name in alphabetical order.
 * 'order BIRTHDAY name` +
 Returns address list sorted by birthday then by name.
+// end::order[]
 
 === Order events in Event Book by a parameter: `orderevent` - Since V1.3
 

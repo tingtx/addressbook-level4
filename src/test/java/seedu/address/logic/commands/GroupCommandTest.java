@@ -49,7 +49,8 @@ public class GroupCommandTest {
 
         GroupCommand groupCommand = prepareCommand(indexes, showAll);
 
-        String expectedMessage = "Groups: " + model.getGroupList().toString();
+        String expectedMessage = "Groups:  " + model.getGroupList().toString().replaceAll("\\[", "")
+                .replaceAll("\\]", "");
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());

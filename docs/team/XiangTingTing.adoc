@@ -4,7 +4,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: TunedIn
-
+TunedIn is a free-to-use application that brings to you the power of a full-fledged command line personal organizer,
+bundled together with a user-friendly interface that keeps all of your information easily accessible and at your fingertips.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/tingtx.md[Functional code]]
 [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/test/tingtx.md[Test code]]
@@ -26,7 +27,10 @@ include::../UserGuide.adoc[tag=order]
 
 ==== Justification
 
-
+Ordering is essential to TunedIn. It provides the fundamental and a must-to-have functionality of an organizer.
+With the ordering mechanism, user will be able to order the list of contacts in 14 different ways. This
+is inline with our goal in making TunedIn as customizable as possible
+and, most importantly to allow the user to organize the contacts to their most preferred way.
 
 ==== Implementation
 
@@ -46,7 +50,8 @@ include::../UserGuide.adoc[tag=group]
 
 ==== Justification
 
-
+Group mechanism is another essential function of TunedIn. It allows the user to organize the
+contacts to user specified groups.
 
 ==== Implementation
 
@@ -66,7 +71,11 @@ include::../UserGuide.adoc[tag=list]
 
 ==== Justification
 
-
+List can be used to show the entire list of contacts.
+It is further enhanced to complement the function of group by allowing user to
+view a list of contacts by group. Instead of implementing the group list view function
+in the group function, it is more intuitive for the user to typed `list` followed by group
+name.
 
 ==== Implementation
 
@@ -76,12 +85,11 @@ include::../UserGuide.adoc[tag=list]
 ---
 
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed:
 
-{Explain similar to the Undo/Redo feature above.}
+
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
+* Updated the person card with birthday (Pull requests https://github.com[#33], https://github.com[#34])
+* Updated the person card with group ()

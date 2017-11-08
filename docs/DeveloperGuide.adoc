@@ -417,6 +417,11 @@ The following sequence diagram shows how the group operation works: //insert seq
 `list` command will be enhanced with group feature, allowing user to list contacts of a specified group.
 // end::group[]
 
+//tag::list[]
+=== List(group) mechanism
+//To be completed by tingtx
+//end::list[]
+
 // tag::order[]
 === Order(Sort) mechanism
 The order mechanism is facilitated by the `orderBy` method, which resides inside the `UniquePersonList > Person > Addressbook`. It supports

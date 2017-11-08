@@ -1,10 +1,10 @@
-//@@author tingtx
 package seedu.address.model.group;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author tingtx
 /**
  * Represents a Person's group in the address book.
  */

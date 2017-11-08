@@ -93,14 +93,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
-     *
+     * Group should not be added when adding a person. {@code syncMasterGroupListWith()} is written
+     * to assist the JUnit Testing.
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         try {
             persons.add(newPerson);
             syncMasterTagListWith(newPerson);

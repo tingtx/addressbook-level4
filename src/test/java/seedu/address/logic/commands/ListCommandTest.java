@@ -25,6 +25,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author tingtx
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
  */
@@ -33,7 +34,7 @@ public class ListCommandTest {
     private Model expectedModel;
     private ListCommand listCommand;
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(),
-            new Account(),new Config());
+            new Account(), new Config());
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {

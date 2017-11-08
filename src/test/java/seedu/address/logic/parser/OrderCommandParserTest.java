@@ -1,4 +1,3 @@
-//@@author tingtx
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -9,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.OrderCommand;
 
+//@@author tingtx
 public class OrderCommandParserTest {
 
     private OrderCommandParser parser = new OrderCommandParser();

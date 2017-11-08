@@ -4,10 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author tingtx
 /**
  * Represents a Person's birthday in the address book.
  */
-
 public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday can only contain numbers and forward slashes, and in the form dd-mm-yyyy";

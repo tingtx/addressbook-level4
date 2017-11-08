@@ -52,7 +52,7 @@ public class GroupCommandTest {
         String expectedMessage = "Groups: " + model.getGroupList().toString();
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account(),new Config());
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.getGroupList();
 
         assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);

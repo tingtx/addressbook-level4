@@ -407,48 +407,8 @@ The following sequence diagram shows how the group operation works: //insert seq
 // end::group[]
 
 //tag::list[]
-=== Order(Sort) mechanism
-The order mechanism is facilitated by the `orderBy` method, which resides inside the `UniquePersonList > Person > Addressbook`. It supports
-the ordering(sorting) of the contact list by utilizing the CLI commands in the TunedIn application. +
-
-`OrderCommand` supports
-undoing and redoing of command and inherit from the `UndoableCommands`. The following diagram shows the inheritance
-diagram for the command: //insert diagram +
-
-The implementation of the `order` command constructor is as shown : //insert code +
-
-As you can see from the implementation, the command requires user inputs in the form of 'String' as the paramater/s
-to order. The inputs are restricted by the fields of `Person` which only includes `Name`, `Address`,
-`Tag` and `Birthday`. The command is able to order by a maximum of two parameters. It will order the list by
-the first parameter follow by the second parameter.
-
-The implementation of the ordering mechanism is shown below: //insert code +
-
-As you can see, 4 `Comparator` object are constructed for each valid parameter to compare the list of contacts
-and order according to natural order. +
-
-[NOTE]
-`Birthday` is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format. +
-This is achieved by reformatting the
- `Birthday` string as shown: //insert code
- +
- Person(s) with empty `Birthday` field will be sorted to the last.
-
-Suppose that the user has just launched the application and no previous `order` command has been called. The contacts will
-be listed according to the default ordering, in order of the order a particular contact is added (Last contact added will appear as the last in the list).
-
-
-The user executes another `order` command by typing `order name`, to view the list of contacts ordered in alphabetical order
-based on the `Name` field of a person. With valid input the list of contacts will be ordered accordingly and
-the ordered list will be shown.
-
-The user executes another command by typing `order tag name` to order the list by `Tag` first then `Name` of the person.
-
-[NOTE]
-If the order command fails its execution due to invalid order parameter, the list of contact will
-not be ordered.
-
-The following sequence diagram shows how the order operation works: //insert sequence diagram.
+=== List(group) mechanism
+//To be completed by tingtx
 //end::list[]
 
 // tag::order[]

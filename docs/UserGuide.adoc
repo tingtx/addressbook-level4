@@ -109,24 +109,10 @@ Examples:
 * `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13-10-17 2359`
 * `addevent et/Basketball Competition ed/Tournament el/UTSH edt/26-10-2017 0800`
 
-
-=== Change Password : `changepassword` - Coming in V2.0
-
-Changes the account password. +
-Format: `changepassword pw/OLD_PASSWORD pwn/NEW_PASSWORD`
-
-Examples:
-
-* `changepassword pw/SPECIAL1PASS pw/SPECIAL2PASS`
-
 === Clearing all entries : `clear` - Since V1.0
 
 Clears all entries from the address book and event book. +
 Format: `clear`
-
-=== Connect with social media : `connect` - Coming in V2.0
-
-Coming in V2.0
 
 // tag::undoredo[]
 === Deleting a person : `delete` - Since V1.0
@@ -273,15 +259,17 @@ Returns  any event having title with `ball` in the sequence
 
 === Group person(s) : `group` - Since V1.4
 
-Group a number of persons in address book. +
-Format: `group INDEX [MORE_INDEX] g/GROUP_NAME`
+Group a number of persons in address book or view the existing groups. +
+Format: `group INDEX [MORE_INDEX] g/GROUP_NAME` +
+`group showall`
 
 ****
 * Group the person(s) at the specified `INDEX(ES)`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Group name can take anyform and must be specified.
+* Group name can take anyform and must not be more than 30 characters.
 * A person can only be grouped in `One` group.
 * Existing values will be updated to the input values.
 * You can remove all the person's group by typing `g/` without specifying any group after it.
+* The parameter `showall` is case insensitive.
 ****
 
 Examples:
@@ -290,6 +278,8 @@ Examples:
 Group the 2nd person in the current list of address book to group `Family`. +
 * `group 1 3 4 5 g/NUS` +
 Group the 1st, 3rd, 4th and 5th persons to group `NUS`.
+* `group showall` +
+Show the name of existing groups in the feedback box.
 
 === Viewing help : `help` - Since V1.0
 
@@ -307,19 +297,26 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 === Listing all persons : `list` - Since V1.0
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Shows a list of all persons or a specified group of persons in the address book. +
+Format: `list [g/GROUP_NAME]`
+
+****
+* The parameter `g/GROUP_NAME` is optional.
+* The `GROUP_NAME` is case sensitive.
+* If no parameter is specified, a list of all persons will be shown.
+****
+
+Examples:
+
+* `list`
+* `list g/Friends`
 
 === Lock contacts by user : `lock` - Since V1.5
 
 Create a user account from the specified username and password. +
 Format: `lock u/USER_NAME p/PASSWORD`
 
-Examples:
-
-* `lock u/KELOYSIUS p/SPECIAL1PASS`
-
-====
+****
 * The user's credentials will be hashed by SHA-256 algorithm.
 * The `USER_NAME` is case sensitive.
 * If the `USER_NAME` has been registered before, an error message saying `User Exists` will be displayed.
@@ -329,7 +326,11 @@ be thrown.
 * Even if the `PASSWORDs` are different, if a `USERID` to be registered is the same as an exsiting one, this user will not
 be accepted
 * The user credentials will be hashed and stored on disk to preserve confidentiality.
-====
+****
+
+Examples:
+
+* `lock u/KELOYSIUS p/SPECIAL1PASS`
 
 === Login : `login` - Since V1.5
 
@@ -512,10 +513,6 @@ Examples:
 Switch to either `contacts` or `events` tab panel. +
 Format: `switch`
 
-=== Sync : `sync` - Coming in V2.0
-
-Sync the TunedIn application to your cloud TunedInLive account. +
-Format: `sync`
 
 === Transfer : `transfer`
 
@@ -555,6 +552,26 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+
+=== Change Password : `changepassword` - Coming in V2.0
+
+Changes the account password. +
+Format: `changepassword pw/OLD_PASSWORD pwn/NEW_PASSWORD`
+
+Examples:
+
+* `changepassword pw/SPECIAL1PASS pw/SPECIAL2PASS`
+
+=== Connect with social media : `connect` - Coming in V2.0
+
+Coming in V2.0
+
+=== Sync : `sync` - Coming in V2.0
+
+Sync the TunedIn application to your cloud TunedInLive account. +
+Format: `sync`
+
+===
 
 == FAQ
 //@@author keloysiusmak
@@ -598,11 +615,14 @@ e.g. `editevent 1 ed/Buy one get one free edt/13-10-2017 0900`
 e.g. `find James Jake`
 * *Find Event* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `findevent et/Basketball`
-* *Group* : `group INDEX [MORE_INDEX] g/GROUP_NAME` +
-e.g. `group 1 2 g/SOC`
+* *Group* : `group INDEX [MORE_INDEX] g/GROUP_NAME / showall` +
+e.g. `group 1 2 g/SOC` +
+e.g. `group showall`
 * *Help* : `help`
 * *History* : `history`
-* *List* : `list`
+* *List* : `list [g/GROUP_NAME]` +
+e.g `list` +
+e.g `list g/Friends`
 * *Lock* : `lock` +
 e.g `lock u/KELOYSIUS p/SPECIAL1PASS`
 * *Order* : `order PARAMETER [MORE PARAMETERS]` +

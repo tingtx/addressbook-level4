@@ -11,6 +11,7 @@ import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -210,4 +211,15 @@ public interface Model {
     void transferData() throws ConfigMissingException;
 
     void transferDataWithDefault();
+
+    void deleteEncryptedContacts(String substring);
+
+    UserPrefs getUserPrefs();
+
+    void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException;
+
+    void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
+            DataConversionException;
+
+    ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
 }

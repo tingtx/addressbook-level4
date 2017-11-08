@@ -24,6 +24,7 @@ import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -31,6 +32,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -195,6 +197,34 @@ public class SetAliasCommandTest {
         }
 
         @Override
+        public void deleteEncryptedContacts(String substring) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException,
+                IOException, DataConversionException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -213,6 +243,7 @@ public class SetAliasCommandTest {
 
         @Override
         public String getAliasForCommand(String commandName) {
+            fail("This method should not be called.");
             return null;
         }
 
@@ -299,7 +330,7 @@ public class SetAliasCommandTest {
 
         @Override
         public void setUserStorage(Storage userStorage) {
-
+            fail("This method should not be called.");
         }
     }
 

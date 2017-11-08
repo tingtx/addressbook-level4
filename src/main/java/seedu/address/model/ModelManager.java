@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,6 +33,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AccountChangedEvent;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
@@ -78,6 +80,7 @@ import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
+import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.Storage;
 
 /**
@@ -89,8 +92,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final EventBook eventBook;
-    private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final ArrayList<ArrayList<String>> viewAliases;
     private final Account account;
     private final Config config;
@@ -622,4 +625,42 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
+    public void deleteEncryptedContacts(String fileName) {
+        File file = new File("data/" + fileName + ".encrypted");
+        file.delete();
+    }
+
+    @Override
+    public UserPrefs getUserPrefs() {
+        return userPref;
+    }
+
+    @Override
+    public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+        AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
+                (SampleDataUtil::getSampleAddressBook));
+        for (ReadOnlyPerson p : temp.getPersonList()) {
+            Person newP = new Person(p);
+            addressBook.addPerson(newP);
+        }
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException {
+        for (ReadOnlyPerson p : list) {
+            Person newP = new Person(p);
+            addressBook.removePerson(newP);
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
+        AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
+                (SampleDataUtil::getSampleAddressBook));
+        return temp.getPersonList();
+    }
 }

@@ -9,13 +9,15 @@ import java.util.concurrent.ThreadLocalRandom;
 import seedu.address.logic.commands.digestutil.HashDigest;
 import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.currentuser.CurrentUserDetails;
+import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
 //@@author quanle1994
 
 /**
- * Create an account
+ * Create an account and encrypt the addressbook.xml with that account
  */
 public class LockCommand extends Command {
     public static final String COMMAND_WORD = "lock";
@@ -57,6 +59,13 @@ public class LockCommand extends Command {
         } catch (DuplicateUserException due) {
             throw new CommandException(MESSAGE_EXISTING_USER);
         }
+
+        try {
+            FileEncryptor.encryptFile(hexUidDigest.substring(0, 10), saltText + passwordText, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        new CurrentUserDetails().setCurrentUser(this.userId, hexUidDigest, saltText, this.passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

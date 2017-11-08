@@ -331,18 +331,20 @@ be accepted
 * The user credentials will be hashed and stored on disk to preserve confidentiality.
 ====
 
-=== Login : `login` - Coming in V2.0
+=== Login : `login` - Since V1.5
 
-Logs in to the TunedIn Application. +
+Logs in to the TunedIn Application. Once you log in with the correct account credentials, your encrypted contacts
+will be displayed. +
 Format: `login u/USER_NAME p/PASSWORD`
 
 Examples:
 
-* `login u/KELOYSIUS pw/SPECIAL1PASS`
+* `login u/KELOYSIUS pw/SPECIALPASS`
 
-=== Logout : `logout` - Coming in V2.0
+=== Logout : `logout` - Since V1.5
 
-Logs out of the address book. +
+Logs out of the address book. This will encrypt the current list of contacts and clear them. To retrieve them, log in
+ using your account credentials +
 Format: `logout`
 
 === Order persons in Address Book by a parameter: `order` - Since V1.0

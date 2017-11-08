@@ -1,11 +1,16 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
 import java.util.Arrays;
 
 import seedu.address.logic.commands.digestutil.HashDigest;
+import seedu.address.logic.commands.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.currentuser.CurrentUserDetails;
+import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
 //@@author quanle1994
@@ -16,10 +21,15 @@ import seedu.address.model.user.exceptions.UserNotFoundException;
 public class LoginCommand extends Command {
 
     public static final String COMMAND_WORD = "login";
-    public static final String COMMAND_ALIAS = "li";
+    public static final String COMMAND_ALIAS = "lgi";
+    public static final Object MESSAGE_USAGE = COMMAND_WORD + ": User logs in using a pre-registered account. "
+            + "Parameters: "
+            + PREFIX_USERID + "USER ID "
+            + PREFIX_PASSWORD + "PASSWORD";
     public static final String MESSAGE_SUCCESS = "Log In Successful";
     private static final String MESSAGE_ERROR_NO_USER = "User does not exist";
-    private static final String MESSAGE_ERROR_WRONG_PASSWORD = "Wrong Password";
+    private static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
+    private static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
     private byte[] password;
     private String userId;
     private String passwordText;
@@ -40,34 +50,35 @@ public class LoginCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
-        if (!checkExistingUserId()) {
-            return new CommandResult(MESSAGE_ERROR_NO_USER);
+        if (!(new CurrentUserDetails().getUserId().equals("PUBLIC"))) {
+            throw new CommandException(MESSAGE_LOGIN_ERROR);
         }
-        String pwSalt = null;
+        byte[] userNameHash = new HashDigest().getHashDigest(userId);
+        String userNameHex = new HexCode().getHexFormat(new String(userNameHash));
+        String saltText;
         try {
-            pwSalt = getSalt();
+            String saltHex = model.retrieveSaltFromStorage(userNameHex);
+            saltText = new HexCode().hexStringToByteArray(saltHex);
+            byte[] saltedPassword = new HashDigest().getHashDigest(saltText + passwordText);
+            String saltedPasswordHex = new HexCode().getHexFormat(new String(saltedPassword));
+
+            model.getUserFromIdAndPassword(userNameHex, saltedPasswordHex);
         } catch (UserNotFoundException e) {
-            e.printStackTrace();
+            throw new CommandException(MESSAGE_ERROR_NO_USER);
         }
-        String combinedPw = pwSalt + passwordText;
-        if (!matchedPassword(new HashDigest().getHashDigest(combinedPw))) {
-            return new CommandResult(MESSAGE_ERROR_WRONG_PASSWORD);
+
+        try {
+            FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + passwordText);
+            model.refreshAddressBook();
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
+        new CurrentUserDetails().setCurrentUser(userId, userNameHex, saltText, passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
     private boolean matchedPassword(byte[] digest) {
         return isSameDigest(password, digest);
-    }
-
-    /**
-     * This checks if the userId is existing
-     */
-    private boolean checkExistingUserId() {
-        byte[] uidDigest = new HashDigest().getHashDigest(userId);
-        //byte[] retrievedDigest = model.retrieveDigestFromStorage();
-        byte[] retrievedDigest = null;
-        return isSameDigest(uidDigest, retrievedDigest);
     }
 
     public byte[] getPassword() {
@@ -78,7 +89,10 @@ public class LoginCommand extends Command {
         return userId;
     }
 
-    public String getSalt() throws UserNotFoundException {
+    /**
+     * This checks if the userId is existing
+     */
+    public String retrieveSaltFromStorage() throws UserNotFoundException {
         return model.retrieveSaltFromStorage(userId);
     }
 }

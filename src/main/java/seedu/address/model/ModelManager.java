@@ -291,13 +291,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void groupPerson(Person target, Group group) throws PersonNotFoundException {
-        requireAllNonNull(target, group);
-        addressBook.groupPerson(target, group);
-        indicateAddressBookChanged();
-    }
-
-    @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
@@ -309,6 +302,11 @@ public class ModelManager extends ComponentManager implements Model {
 
             addressBook.updatePerson(oldPerson, newPerson);
         }
+    }
+
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return addressBook.getGroupList();
     }
 
     public ArrayList<ArrayList<String>> getCommands() {
@@ -376,8 +374,6 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    //=========== Filtered Person List Accessors =============================================================
-
     @Override
     public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
         try {
@@ -388,6 +384,8 @@ public class ModelManager extends ComponentManager implements Model {
             throw e;
         }
     }
+
+    //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
@@ -402,6 +400,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredListToShowAll() {
         filteredPersons.setPredicate(null);
     }
+
     //========================================================================================================
 
     @Override

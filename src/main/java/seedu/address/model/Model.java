@@ -19,7 +19,6 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.group.Group;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -93,14 +92,6 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    //@@author tingtx
-
-    /**
-     * Group the given person(s)
-     */
-    void groupPerson(Person target, Group group) throws PersonNotFoundException;
-    //@@author
-
     /**
      * Delete the given tag on every person in the Addressbook
      */
@@ -110,6 +101,11 @@ public interface Model {
      * Returns an unmodifiable view of the filtered person list
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    /**
+     * Returns an unmodifiable view of the UniqueGroupList
+     */
+    ObservableList<Group> getGroupList();
 
     /**
      * Returns a list of commands.

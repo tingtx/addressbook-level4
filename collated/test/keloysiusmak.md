@@ -1,68 +1,4 @@
 # keloysiusmak
-###### /java/seedu/address/ui/ViewAliasWindowTest.java
-``` java
-package seedu.address.ui;
-
-import org.junit.Before;
-import org.testfx.api.FxToolkit;
-
-import guitests.guihandles.ViewAliasWindowHandle;
-import javafx.stage.Stage;
-import seedu.address.logic.Logic;
-
-public class ViewAliasWindowTest extends GuiUnitTest {
-
-    private ViewAliasWindow viewAliasWindow;
-    private ViewAliasWindowHandle viewAliasWindowHandle;
-
-    @Before
-    public void setUp(Logic logic) throws Exception {
-
-        guiRobot.interact(() -> viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic));
-        Stage helpWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(viewAliasWindow.getRoot().getScene()));
-        FxToolkit.showStage();
-        viewAliasWindowHandle = new ViewAliasWindowHandle(helpWindowStage);
-    }
-}
-```
-###### /java/seedu/address/logic/commands/TransferCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_ERROR;
-import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_SUCCESS;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import seedu.address.commons.core.Config;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-
-
-public class TransferCommandTest {
-
-    private TransferCommand transferCommand;
-    private CommandHistory history;
-
-    @Before
-    public void setUp() {
-        Model model = new ModelManager();
-        history = new CommandHistory();
-        transferCommand = new TransferCommand();
-        transferCommand.setData(model, history, new UndoRedoStack(), new Config());
-    }
-
-    @Test
-    public void execute_transfer_success() {
-        CommandResult result = transferCommand.execute();
-        assertEquals(MESSAGE_TRANSFER_ERROR, result.feedbackToUser);
-    }
-}
-```
 ###### /java/seedu/address/logic/commands/CommandTestUtil.java
 ``` java
 
@@ -129,6 +65,7 @@ import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -136,6 +73,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -143,7 +81,6 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.group.Group;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -280,11 +217,6 @@ public class SetAliasCommandTest {
         }
 
         @Override
-        public void groupPerson(Person person, Group group) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
@@ -297,6 +229,34 @@ public class SetAliasCommandTest {
         @Override
         public void transferDataWithDefault() {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteEncryptedContacts(String substring) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException,
+                IOException, DataConversionException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -317,7 +277,14 @@ public class SetAliasCommandTest {
         }
 
         @Override
+        public ObservableList<Group> getGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public String getAliasForCommand(String commandName) {
+            fail("This method should not be called.");
             return null;
         }
 
@@ -404,7 +371,7 @@ public class SetAliasCommandTest {
 
         @Override
         public void setUserStorage(Storage userStorage) {
-
+            fail("This method should not be called.");
         }
     }
 
@@ -505,6 +472,69 @@ public class SetThemeCommandTest {
     public void execute_winterTheme() throws Exception {
         assertConfigDiffCommandSuccess(setThemeCommand3, config,
                 String.format(SetThemeCommand.MESSAGE_CHANGED_THEME_SUCCESS, "winter"), expectedConfig);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/TransferCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_ERROR;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.commons.core.Config;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+
+
+public class TransferCommandTest {
+
+    private TransferCommand transferCommand;
+    private CommandHistory history;
+
+    @Before
+    public void setUp() {
+        Model model = new ModelManager();
+        history = new CommandHistory();
+        transferCommand = new TransferCommand();
+        transferCommand.setData(model, history, new UndoRedoStack(), new Config());
+    }
+
+    @Test
+    public void execute_transfer_success() {
+        CommandResult result = transferCommand.execute();
+        assertEquals(MESSAGE_TRANSFER_ERROR, result.feedbackToUser);
+    }
+}
+```
+###### /java/seedu/address/ui/ViewAliasWindowTest.java
+``` java
+package seedu.address.ui;
+
+import org.junit.Before;
+import org.testfx.api.FxToolkit;
+
+import guitests.guihandles.ViewAliasWindowHandle;
+import javafx.stage.Stage;
+import seedu.address.logic.Logic;
+
+public class ViewAliasWindowTest extends GuiUnitTest {
+
+    private ViewAliasWindow viewAliasWindow;
+    private ViewAliasWindowHandle viewAliasWindowHandle;
+
+    @Before
+    public void setUp(Logic logic) throws Exception {
+
+        guiRobot.interact(() -> viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic));
+        Stage helpWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(viewAliasWindow.getRoot().getScene()));
+        FxToolkit.showStage();
+        viewAliasWindowHandle = new ViewAliasWindowHandle(helpWindowStage);
     }
 }
 ```

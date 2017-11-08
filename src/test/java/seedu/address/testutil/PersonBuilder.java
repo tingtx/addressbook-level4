@@ -133,8 +133,12 @@ public class PersonBuilder {
      * Sets the {@code Group} of the {@code Person} that we are building.
      */
     public PersonBuilder withGroup(String group) {
+        try {
+            this.person.setGroup(new Group(group));
+        } catch (IllegalValueException ive ) {
+            throw new IllegalArgumentException("group name cannot exceed 30 characters");
+        }
 
-        this.person.setGroup(new Group(group));
         return this;
     }
     //@@author

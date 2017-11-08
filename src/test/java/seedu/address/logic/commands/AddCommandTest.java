@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -30,6 +31,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
@@ -149,9 +151,37 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteEncryptedContacts(String substring) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
+                DataConversionException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
                 IOException, SAXException, TransformerException {
-
+            fail("This method should not be called.");
         }
 
         @Override

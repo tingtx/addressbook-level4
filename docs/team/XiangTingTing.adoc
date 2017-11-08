@@ -72,7 +72,6 @@ include::../UserGuide.adoc[tag=list]
 
 ---
 
-include::../DeveloperGuide.adoc[tag=]
 
 ---
 

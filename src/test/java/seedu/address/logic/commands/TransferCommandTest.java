@@ -32,4 +32,5 @@ public class TransferCommandTest {
         CommandResult result = transferCommand.execute();
         assertEquals(MESSAGE_TRANSFER_ERROR, result.feedbackToUser);
     }
+
 }

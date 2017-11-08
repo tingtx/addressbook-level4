@@ -90,9 +90,12 @@ Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...` or
 `a n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...`
 
-[TIP]
-A person can be added with or without email and birthday.
-A person can have any number of tags (including 0)
+****
+* A person can be added with or without email and birthday.
+* A person can have any number of tags (including 0)
+* A person with same name, phone number and address as any of the existing contacts
+  will be  as duplicate and will not be added.
+****
 
 Examples:
 

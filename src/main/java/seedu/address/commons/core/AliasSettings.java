@@ -11,6 +11,7 @@ import java.util.Objects;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CurrentUserCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -52,6 +53,7 @@ public class AliasSettings implements Serializable {
 
     private Alias addCommand;
     private Alias clearCommand;
+    private Alias currentUserCommand;
     private Alias deleteCommand;
     private Alias editCommand;
     private Alias exitCommand;
@@ -91,6 +93,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add("add");
         this.clearCommand = new Alias(ClearCommand.getCommandWord(), "clear");
         usedAliases.add("clear");
+        this.currentUserCommand = new Alias(CurrentUserCommand.getCommandWord(), "currentuser");
+        usedAliases.add("currentuser");
         this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), "delete");
         usedAliases.add("delete");
         this.editCommand = new Alias(EditCommand.getCommandWord(), "edit");
@@ -152,7 +156,8 @@ public class AliasSettings implements Serializable {
         this.exportCommand = new Alias(ExportCommand.getCommandWord(), "export");
     }
 
-    public AliasSettings(String addCommand, String clearCommand, String deleteCommand, String editCommand,
+    public AliasSettings(String addCommand, String clearCommand, String currentUserCommand,
+                         String deleteCommand, String editCommand,
                          String exitCommand, String findCommand, String groupCommand, String helpCommand,
                          String historyCommand, String listCommand, String lockCommand, String loginCommand,
                          String logoutCommand, String orderCommand, String redoCommand, String remarkCommand,
@@ -165,6 +170,8 @@ public class AliasSettings implements Serializable {
         usedAliases.add(addCommand);
         this.clearCommand = new Alias(ClearCommand.getCommandWord(), clearCommand);
         usedAliases.add(clearCommand);
+        this.currentUserCommand = new Alias(CurrentUserCommand.getCommandWord(), currentUserCommand);
+        usedAliases.add(currentUserCommand);
         this.deleteCommand = new Alias(DeleteCommand.getCommandWord(), deleteCommand);
         usedAliases.add(deleteCommand);
         this.editCommand = new Alias(EditCommand.getCommandWord(), editCommand);
@@ -233,6 +240,10 @@ public class AliasSettings implements Serializable {
 
     public Alias getClearCommand() {
         return clearCommand;
+    }
+
+    public Alias getCurrentUserCommand() {
+        return currentUserCommand;
     }
 
     public Alias getDeleteCommand() {
@@ -370,6 +381,12 @@ public class AliasSettings implements Serializable {
             }
             usedAliases.add(alias);
             this.clearCommand = new Alias(ClearCommand.getCommandWord(), alias);
+        } else if (command.equals(CurrentUserCommand.getCommandWord())) {
+            if (!this.currentUserCommand.getAlias().equals("currentuser")) {
+                usedAliases.remove(this.currentUserCommand.getAlias());
+            }
+            usedAliases.add(alias);
+            this.currentUserCommand = new Alias(CurrentUserCommand.getCommandWord(), alias);
         } else if (command.equals(DeleteCommand.getCommandWord())) {
             if (!this.deleteCommand.getAlias().equals("delete")) {
                 usedAliases.remove(this.deleteCommand.getAlias());
@@ -544,6 +561,7 @@ public class AliasSettings implements Serializable {
 
         return Objects.equals(addCommand, o.getAddCommand())
                 && Objects.equals(clearCommand, o.getClearCommand())
+                && Objects.equals(currentUserCommand, o.getCurrentUserCommand())
                 && Objects.equals(deleteCommand, o.getDeleteCommand())
                 && Objects.equals(editCommand, o.getEditCommand())
                 && Objects.equals(exitCommand, o.getExitCommand())
@@ -577,7 +595,8 @@ public class AliasSettings implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.addCommand, this.clearCommand, this.deleteCommand, this.editCommand, this.exitCommand,
+        return Objects.hash(this.addCommand, this.clearCommand, this.currentUserCommand, this.deleteCommand,
+                this.editCommand, this.exitCommand,
                 this.findCommand, this.groupCommand, this.helpCommand, this.historyCommand, this.listCommand,
                 this.lockCommand, this.loginCommand, this.logoutCommand,
                 this.orderCommand, this.redoCommand, this.remarkCommand, this.selectCommand, this.setAliasCommand,
@@ -591,6 +610,7 @@ public class AliasSettings implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Add Command : " + addCommand.getAlias() + "\n");
         sb.append("Clear Command : " + clearCommand.getAlias() + "\n");
+        sb.append("Current User Command : " + currentUserCommand.getAlias() + "\n");
         sb.append("Delete Command : " + deleteCommand.getAlias() + "\n");
         sb.append("Edit Command : " + editCommand.getAlias() + "\n");
         sb.append("Exit Command : " + exitCommand.getAlias() + "\n");

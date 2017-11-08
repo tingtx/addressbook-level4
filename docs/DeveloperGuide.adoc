@@ -369,7 +369,7 @@ attribute is m, the command will find in all text fields.
 
 In the future, this feature can be developed into a best-matched result based on different fields.
 
-// tag::Group[]
+// tag::group[]
 === Group mechanism
 
 The group mechanism is facilitated by the `Person`, which resides inside the 'Addressbook'.

@@ -87,8 +87,7 @@ to contact us if you have any suggestions for commands.
 === Adding a person: `add` - Since V1.0
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...` or
-`a n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...`
 
 ****
 * A person can be added with or without email and birthday.
@@ -100,7 +99,7 @@ Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...` 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 b/01-10-1995 t/criminal`
+* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 b/01-10-1995 t/criminal`
 
 // tag::event[]
 //@@author kaiyu92
@@ -393,7 +392,7 @@ Format: `currentuser`
 === Order persons in Address Book by a parameter: `order` - Since V1.0
 
 Order the list of persons according to a specified parameter. Parameters are case insensitive. +
-Format: `order PARAMETER [MORE_PARAMETER]` or `o PARAMETER [MORE_PARAMETER]`
+Format: `order PARAMETER [MORE_PARAMETER]`
 
 ****
 * The allowable parameters are `NAME`, `ADDRESS`, `BIRTHDAY` and `TAG`.
@@ -562,15 +561,12 @@ Examples:
 Switch to either `contacts` or `events` tab panel. +
 Format: `switch`
 
-<<<<<<< HEAD
 // end::switch[]
 
 === Sync : `sync` - Coming in V2.0
 
 Sync the TunedIn application to your cloud TunedInLive account. +
 Format: `sync`
-=======
->>>>>>> b91ad99a416721b91a0c2ae0e090700e5057ab16
 
 === Transfer : `transfer`
 

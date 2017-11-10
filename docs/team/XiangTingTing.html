@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Xiang TingTing - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Xiang TingTing - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-tunedin"><a class="link" href="#project-tunedin">Project: TunedIn</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TunedIn is a free-to-use application that brings to you the power of a full-fledged command line personal organizer,
+bundled together with a user-friendly interface that keeps all of your information easily accessible and at your fingertips.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/tingtx.md">Functional code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added"><a class="link" href="#enhancement-added">Enhancement Added:</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Birthday and Group fields to Persons</p>
+</li>
+<li>
+<p>Set Email, Birthday to be optional fields.</p>
+</li>
+<li>
+<p>Order command to sort with Birthday, Tag and with multiple(2) person fields.(enhanced on the original Order command done by quanle1994)</p>
+</li>
+<li>
+<p>Group command to group one or multiple persons in a specified group.</p>
+</li>
+<li>
+<p>List command to view a list of person by specified group name.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="order-persons-in-address-book-by-a-parameter-code-order-code-since-v1-0"><a class="link" href="#order-persons-in-address-book-by-a-parameter-code-order-code-since-v1-0">Order persons in Address Book by a parameter: <code>order</code> - Since V1.0</a></h3>
+<div class="paragraph">
+<p>Order the list of persons according to a specified parameter. Parameters are case insensitive.<br>
+Format: <code>order PARAMETER [MORE_PARAMETER]</code> or <code>o PARAMETER [MORE_PARAMETER]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The allowable parameters are <code>NAME</code>, <code>ADDRESS</code>, <code>BIRTHDAY</code> and <code>TAG</code>.</p>
+</li>
+<li>
+<p>The parameter is case insensitive. e.g 'NaMe' will match 'NAME'</p>
+</li>
+<li>
+<p>Only full word will be matched. e.g. 'addr' will not match 'Address'</p>
+</li>
+<li>
+<p>To order by multiple parameters, each parameter should be separated by a single space.</p>
+</li>
+<li>
+<p>The order of the parameter is important. e.g <code>tag address</code> will order the list by tag
+then by address.</p>
+</li>
+<li>
+<p>The command can only take in a maximum of <code>two</code> parameters.</p>
+</li>
+<li>
+<p>The command change the index of the person in the Address Book,
+which will affect other commands that use this attribute such as
+<code>delete</code> or <code>select</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>order NAME</code><br>
+Returns address list sorted by name in alphabetical order.</p>
+</li>
+<li>
+<p>'order BIRTHDAY name`<br>
+Returns address list sorted by birthday then by name.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Ordering is essential to TunedIn. It provides the fundamental and a must-to-have functionality of an organizer.
+With the ordering mechanism, user will be able to order the list of contacts in 14 different ways. This
+is inline with our goal in making TunedIn as customizable as possible
+and, most importantly to allow the user to organize the contacts to their most preferred way.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="order-sort-mechanism"><a class="link" href="#order-sort-mechanism">Order(Sort) mechanism</a></h3>
+<div class="paragraph">
+<p>The order mechanism is facilitated by the <code>orderBy</code> method, which resides inside the <code>UniquePersonList &gt; Person &gt; Addressbook</code>. It supports
+the ordering(sorting) of the contact list by utilizing the CLI commands in the TunedIn application.<br></p>
+</div>
+<div class="paragraph">
+<p><code>OrderCommand</code> supports
+undoing and redoing of command and inherit from the <code>UndoableCommands</code>. The following diagram shows the inheritance
+diagram for the command: //insert diagram<br></p>
+</div>
+<div class="paragraph">
+<p>The implementation of the <code>order</code> command constructor is as shown : //insert code<br></p>
+</div>
+<div class="paragraph">
+<p>As you can see from the implementation, the command requires user inputs in the form of 'String' as the paramater/s
+to order. The inputs are restricted by the fields of <code>Person</code> which only includes <code>Name</code>, <code>Address</code>,
+<code>Tag</code> and <code>Birthday</code>. The command is able to order by a maximum of two parameters. It will order the list by
+the first parameter follow by the second parameter.</p>
+</div>
+<div class="paragraph">
+<p>The implementation of the ordering mechanism is shown below: //insert code<br></p>
+</div>
+<div class="paragraph">
+<p>As you can see, 4 <code>Comparator</code> object are constructed for each valid parameter to compare the list of contacts
+and order according to natural order.<br></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>Birthday</code> is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format.<br>
+This is achieved by reformatting the
+ <code>Birthday</code> string as shown: //insert code
+<br>
+ Person(s) with empty <code>Birthday</code> field will be sorted to the last.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application and no previous <code>order</code> command has been called. The contacts will
+be listed according to the default ordering, in order of the order a particular contact is added (Last contact added will appear as the last in the list).</p>
+</div>
+<div class="paragraph">
+<p>The user executes another <code>order</code> command by typing <code>order name</code>, to view the list of contacts ordered in alphabetical order
+based on the <code>Name</code> field of a person. With valid input the list of contacts will be ordered accordingly and
+the ordered list will be shown.</p>
+</div>
+<div class="paragraph">
+<p>The user executes another command by typing <code>order tag name</code> to order the list by <code>Tag</code> first then <code>Name</code> of the person.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the order command fails its execution due to invalid order parameter, the list of contact will
+not be ordered.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the order operation works: //insert sequence diagram.</p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="group-person-s-code-group-code-since-v1-4"><a class="link" href="#group-person-s-code-group-code-since-v1-4">Group person(s) : <code>group</code> - Since V1.4</a></h3>
+<div class="paragraph">
+<p>Group a number of persons in address book or view the existing groups.<br>
+Format: <code>group INDEX [MORE_INDEX] g/GROUP_NAME</code><br>
+<code>group showall</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Group the person(s) at the specified <code>INDEX(ES)</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Group name can take anyform and must not be more than 30 characters.</p>
+</li>
+<li>
+<p>A person can only be grouped in <code>One</code> group.</p>
+</li>
+<li>
+<p>Existing values will be updated to the input values.</p>
+</li>
+<li>
+<p>You can remove all the person&#8217;s group by typing <code>g/</code> without specifying any group after it.</p>
+</li>
+<li>
+<p>The parameter <code>showall</code> is case insensitive.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>group 2 g/Family</code><br>
+Group the 2nd person in the current list of address book to group <code>Family</code>.<br></p>
+</li>
+<li>
+<p><code>group 1 3 4 5 g/NUS</code><br>
+Group the 1st, 3rd, 4th and 5th persons to group <code>NUS</code>.</p>
+</li>
+<li>
+<p><code>group showall</code><br>
+Show the name of existing groups in the command feedback box, on top of calender.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Group mechanism is another essential function of TunedIn. It allows the user to organize the
+contacts to user specified groups.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="group-mechanism"><a class="link" href="#group-mechanism">Group mechanism</a></h3>
+<div class="paragraph">
+<p>The group mechanism is facilitated by the <code>Person</code>, which resides inside the 'Addressbook'.
+It supports adding a custom group to a number of contacts by utilizing the CLI commands in the TunedIn application.</p>
+</div>
+<div class="paragraph">
+<p>Group is stored as an attribute of Person. Each person will have an empty or a group.</p>
+</div>
+<div class="paragraph">
+<p>The implementation of the <code>Group</code> command constructor is shown below :<br>
+insert diagram</p>
+</div>
+<div class="paragraph">
+<p>As you can see from the implementation, Group command require two type of inputs in the form of <code>Index</code> and <code>Group</code>.
+The first input in the form of <code>List&lt;Index&gt;</code> stores a list of index(es) correspond to the person(s) to be grouped. The
+second input in the form of Group stores the group name specified by the user.</p>
+</div>
+<div class="paragraph">
+<p>The implementation of storing group into individual person is as shown :<br>
+insert code.</p>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application.
+Assuming a valid addressbook xml file exists (with numerous person data in it),
+the UniquePersonList will start storing a list of Person object with correspondence to the xml file.
+Each person will either have a textual or empty <code>Group</code>.</p>
+</div>
+<div class="paragraph">
+<p>The user executes a <code>group</code> Command by calling <code>group 1 2 g/TEST1</code>, to set the 1st and 2nd person’s group to "TEST1" in the address book.
+The existing <code>group</code> will be replaced by the user input "TEST1" and the Persons’ object will be updated.</p>
+</div>
+<div class="paragraph">
+<p>The user then executes another `group`Command by calling `group 2 3 4 5 g/ to ungroup the 2nd to 5th person.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the group command fails its execution due to invalid index(es), the list of person(s) will not be grouped.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the group operation works: //insert sequence diagram.</p>
+</div>
+<div class="paragraph">
+<p><code>list</code> command will be enhanced with group feature, allowing user to list contacts of a specified group.</p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-all-persons-code-list-code-since-v1-0"><a class="link" href="#listing-all-persons-code-list-code-since-v1-0">Listing all persons : <code>list</code> - Since V1.0</a></h3>
+<div class="paragraph">
+<p>Shows a list of all persons or a specified group of persons in the address book.<br>
+Format: <code>list [g/GROUP_NAME]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The parameter <code>g/GROUP_NAME</code> is optional.</p>
+</li>
+<li>
+<p>The <code>GROUP_NAME</code> is case sensitive.</p>
+</li>
+<li>
+<p>If no parameter is specified, a list of all persons will be shown.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code></p>
+</li>
+<li>
+<p><code>list g/Friends</code></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>List can be used to show the entire list of contacts.
+It is further enhanced to complement the function of group by allowing user to
+view a list of contacts by group. Instead of implementing the group list view function
+in the group function, it is more intuitive for the user to typed <code>list</code> followed by group
+name.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed"><a class="link" href="#enhancement-proposed">Enhancement Proposed:</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Updated the person card with birthday (Pull requests <a href="https://github.com">#33</a>, <a href="https://github.com">#34</a>)</p>
+</li>
+<li>
+<p>Updated the person card with group ()</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-09 13:07:23 +08:00
+</div>
+</div>
+</body>
+</html>

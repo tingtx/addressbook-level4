@@ -1,9 +1,10 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.digestutil.HashDigest;
-import seedu.address.logic.commands.digestutil.HexCode;
+import seedu.address.commons.util.digestutil.HashDigest;
+import seedu.address.commons.util.digestutil.HexCode;
+import seedu.address.commons.util.encryption.SaveToEncryptedFile;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.encryption.FileEncryptor;
+import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
@@ -56,6 +57,8 @@ public class RemoveUserCommand extends Command {
                 FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + password);
                 model.releaseEncryptedContacts(userNameHex.substring(0, 10));
             }
+
+            SaveToEncryptedFile.save();
         } catch (UserNotFoundException unfe) {
             throw new CommandException(MESSAGE_USER_NOT_FOUND);
         } catch (Exception e) {

@@ -171,6 +171,11 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException, IOException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public UserPrefs getUserPrefs() {
             fail("This method should not be called.");
             return null;

@@ -1,4 +1,4 @@
-package seedu.address.logic.encryption;
+package seedu.address.commons.util.encryption;
 
 import java.io.File;
 import java.io.FileInputStream;

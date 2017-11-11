@@ -641,7 +641,7 @@ The generation of salt and how the password digest is done are implemented in th
         final Random r = new SecureRandom();
         r.nextBytes(salt);
         String saltText = new String(salt);
-        byte[] pwDigest = new seedu.address.logic.commands.digestutil.HashDigest()
+        byte[] pwDigest = new seedu.address.commons.util.digestutil.HashDigest()
                 .getHashDigest(saltText + passwordText);
         String hexUidDigest = getHexFormat(uIdDigest);
         String hexSalt = getHexFormat(salt);

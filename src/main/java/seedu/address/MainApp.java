@@ -20,7 +20,7 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.logic.encryption.FileEncryptor;
+import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
 import seedu.address.model.EventBook;

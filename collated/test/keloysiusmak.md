@@ -186,7 +186,6 @@ public class SetAliasCommandTest {
         CommandResult commandResult = getSetAliasCommand(validAlias, modelStub).execute();
 
         assertEquals(String.format(SetAliasCommand.MESSAGE_SUCCESS, validAlias), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validAlias), modelStub.aliases);
     }
 
     @Test
@@ -264,6 +263,11 @@ public class SetAliasCommandTest {
         testAlias = new Alias("list", "y");
         getSetAliasCommand(testAlias, model).execute();
         assertEquals("y", model.getAliasForCommand("list"));
+
+        //set alias for invalid command
+        testAlias = new Alias("nonsense", "y");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals(null, model.getAliasForCommand("nonsense"));
     }
 
     /**
@@ -510,7 +514,7 @@ public class SetAliasCommandTest {
      * A Model stub that always accept the alias being set.
      */
     private class ModelStubAcceptingAliasSet extends ModelStub {
-        HashSet<Alias> aliases = new HashSet<Alias>();
+        private HashSet<Alias> aliases = new HashSet<Alias>();
 
         public ModelStubAcceptingAliasSet() {
             ArrayList<String> functions = new ArrayList<String>(Arrays.asList("add", "currentuser", "delete", "edit",
@@ -518,7 +522,7 @@ public class SetAliasCommandTest {
                     "remark", "remove", "select", "setalias", "undo", "transfer", "viewalias", "addevent",
                     "deleteevent", "editevent", "listevent", "orderevent", "findevent", "settheme", "switch",
                     "selectevent", "export"));
-            for(String alias : functions) {
+            for (String alias : functions) {
                 aliases.add(new Alias(alias, alias));
             }
         }
@@ -526,19 +530,25 @@ public class SetAliasCommandTest {
         @Override
         public void setAlias(String command, String name) {
             Alias newAlias = new Alias(command, name);
-            int valid = 1;
-            for(Alias a : aliases) {
+            int valid = 0;
+            for (Alias a : aliases) {
+                //check for valid command
+                if (a.getCommand().equals(newAlias.getCommand())) {
+                    valid = 1;
+                }
+                //check for duplicate alias
                 if (a.getAlias().equals(newAlias.getAlias())) {
                     valid = 0;
                     break;
                 } else if (a.getCommand().equals(newAlias.getAlias())) {
+                    //check for protected alias
                     valid = 0;
                     break;
                 }
             }
             if (valid == 1) {
                 Alias remove = null;
-                for(Alias a : aliases) {
+                for (Alias a : aliases) {
                     if (a.getCommand().equals(newAlias.getCommand())) {
                         remove = a;
                     }
@@ -550,7 +560,7 @@ public class SetAliasCommandTest {
 
         @Override
         public String getAliasForCommand(String commandName) {
-            for(Alias a : aliases) {
+            for (Alias a : aliases) {
                 if (a.getCommand() == commandName) {
                     return a.getAlias();
                 }
@@ -572,7 +582,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
@@ -593,7 +602,10 @@ public class SetThemeCommandTest {
 
     private Config config;
     private Config expectedConfig;
-    private SetThemeCommand setThemeCommand, setThemeCommand2, setThemeCommand3, setThemeCommand4;
+    private SetThemeCommand setThemeCommand;
+    private SetThemeCommand setThemeCommand2;
+    private SetThemeCommand setThemeCommand3;
+    private SetThemeCommand setThemeCommand4;
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
             Account(), new Config());
 

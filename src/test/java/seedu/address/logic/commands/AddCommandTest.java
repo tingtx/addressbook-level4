@@ -156,7 +156,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException, IOException {
+        public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
+                IOException {
             fail("This method should not be called.");
         }
 

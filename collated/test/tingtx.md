@@ -106,7 +106,7 @@ public class GroupCommandParserTest {
         assertParseFailure(parser, " " + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
         // negative index
-        assertParseFailure(parser, "-6" + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT );
+        assertParseFailure(parser, "-6" + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
         // zero index
         assertParseFailure(parser, "0" + GROUP_DESC_BOB, MESSAGE_INVALID_FORMAT);
@@ -356,6 +356,10 @@ public class OrderCommandTest {
 
     }
 
+
+    /**
+     * Generates a new OrderCommand
+     */
     private OrderCommand prepareCommand(String parameter) {
         OrderCommand orderCommand = new OrderCommand(parameter);
         UserPrefs userPrefs = new UserPrefs();
@@ -701,7 +705,7 @@ public class BirthdayTest {
     public PersonBuilder withGroup(String group) {
         try {
             this.person.setGroup(new Group(group));
-        } catch (IllegalValueException ive ) {
+        } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("group name cannot exceed 30 characters");
         }
 

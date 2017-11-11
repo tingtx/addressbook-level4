@@ -69,7 +69,7 @@ public class UiManager extends ComponentManager implements Ui {
     public MainWindow getMainWindow() {
         return mainWindow;
     }
-    //@@author 
+    //@@author
 
     @Override
     public void start(Stage primaryStage) {

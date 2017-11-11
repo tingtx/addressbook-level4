@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.xml.crypto.Data;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -620,6 +619,10 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    /**
+    *Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
+    the ZIP as well.
+     */
     private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
 
         byte[] buffer = new byte[1024];
@@ -639,15 +642,12 @@ public class ModelManager extends ComponentManager implements Model {
                 while ((len = in.read(buffer)) > 0) {
                     zos.write(buffer, 0, len);
                 }
-
                 in.close();
-            }
-
-            else if (thisFile.isDirectory()) {
+            } else if (thisFile.isDirectory()) {
                 String[] newFileList = thisFile.list();
                 ArrayList<String> dirFiles = new ArrayList<String>();
                 for (String filename: newFileList) {
-                    dirFiles.add("data/"+filename);
+                    dirFiles.add("data/" + filename);
                 }
                 addFileIntoZip(zos, dirFiles);
             }

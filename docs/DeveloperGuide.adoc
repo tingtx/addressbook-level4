@@ -397,9 +397,8 @@ A `UniqueGroupList` is also implemented to keep track of the existing groups.
 It is a list of `Group` that enforces no nulls and uniqueness between its elements and
 supports a set of list operations.
 
-image:: //insert image
-
 The implementation of the `Group` command constructor is shown below : +
+
 [source,java]
     public GroupCommand(List<Index> indexes, String group) {
         requireNonNull(indexes);
@@ -454,9 +453,7 @@ Setting the group to person is as shown. It replaces the target person with a re
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException("Index " + index.toString() + " is invalid!");
             }
-
             ReadOnlyPerson personToGroup = lastShownList.get(index.getZeroBased());
-
             try {
                 Person editedPerson = new Person(personToGroup.getName(), personToGroup.getPhone(),
                         personToGroup.getEmail(), personToGroup.getAddress(), personToGroup.getBirthday(),
@@ -513,7 +510,6 @@ of another existing person.
         if (index == -1) {
             throw new PersonNotFoundException();
         }
-
         if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {
             throw new DuplicatePersonException();
         }
@@ -586,16 +582,15 @@ The constructor of the enhanced `ListCommand` requires a `String` parameter _pre
         this.listParameter = predicate;
         predicate = predicate.isEmpty() ? predicate : predicate.substring(2).trim();
         this.predicate = new ContainsKeywordsPredicate(Arrays.asList(predicate));
-
     }
 
 As you can see a new `ContainsKeywordsPredicate()` object is instantiated to facilitate the filtering of the
 filtered group list.
 
- `ContainsKeywordsPredicate` implements the `Predicate` interface and test if a person' s group or other fields
-  matches any of the keywords passed in. The code snippets follows show how the group keyword is being matched.
+`ContainsKeywordsPredicate` implements the `Predicate` interface and test if a person' s group or other fields
+matches any of the keywords passed in. The code snippets follows show how the group keyword is being matched.
 
-  [source, java]
+[source, java]
           if (predicateType == 'g') {
               assert keywords.size() == 1;
               return (person.getGroup().value.equals(keywords.get(0).toString()));

@@ -210,6 +210,9 @@ public interface Model {
 
     void deleteEncryptedContacts(String substring);
 
+    void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
+            IOException;
+
     UserPrefs getUserPrefs();
 
     void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException;

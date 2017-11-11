@@ -54,7 +54,7 @@ public class RemoveUserCommand extends Command {
                 model.deleteEncryptedContacts(userNameHex.substring(0, 10));
             } else {
                 FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + password);
-                model.deleteEncryptedContacts(userNameHex.substring(0, 10));
+                model.releaseEncryptedContacts(userNameHex.substring(0, 10));
             }
         } catch (UserNotFoundException unfe) {
             throw new CommandException(MESSAGE_USER_NOT_FOUND);

@@ -659,6 +659,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
+            IOException {
+        File file = new File("data/" + fileName + ".encrypted");
+        file.delete();
+        refreshAddressBook();
+    }
+
+    @Override
     public UserPrefs getUserPrefs() {
         return userPref;
     }

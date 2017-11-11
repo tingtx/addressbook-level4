@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.util.encryption.SaveToEncryptedFile;
 import seedu.address.model.AddressBook;
 import seedu.address.model.EventBook;
 
@@ -22,6 +23,7 @@ public class ClearCommand extends UndoableCommand {
         requireNonNull(model);
         model.resetData(new AddressBook());
         model.resetEventData(new EventBook());
+        SaveToEncryptedFile.save();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

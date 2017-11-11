@@ -8,6 +8,7 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.encryption.SaveToEncryptedFile;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
@@ -97,6 +98,7 @@ public class GroupCommand extends UndoableCommand {
                         personToGroup.getEmail(), personToGroup.getAddress(), personToGroup.getBirthday(),
                         new Group(group), personToGroup.getRemark(), personToGroup.getTags());
                 model.updatePerson(personToGroup, editedPerson);
+                SaveToEncryptedFile.save();
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             } catch (IllegalValueException ive) {

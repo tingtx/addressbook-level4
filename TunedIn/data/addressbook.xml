@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <persons>
-        <name>Charlotte Oliveiro</name>
-        <phone>93210283</phone>
-        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
-        <birthday></birthday>
-        <email></email>
-        <group></group>
-        <remark>As quick as a leopard.</remark>
-        <tagged>neighbours</tagged>
-    </persons>
-    <persons>
         <name>Alex Yeoh</name>
         <phone>1290833</phone>
         <address>Blk 30 Geylang Street 29, #06-40</address>
         <birthday>09-09-1987</birthday>
         <email>alexyeoh@example.com</email>
-        <group>TEST</group>
+        <group>FAM</group>
         <remark>hello</remark>
         <tagged>friends</tagged>
     </persons>
@@ -26,7 +16,7 @@
         <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
         <birthday>11-09-1998</birthday>
         <email>berniceyu@example.com</email>
-        <group>TEST</group>
+        <group>FAM</group>
         <remark>Likes to swim.</remark>
         <tagged>colleagues</tagged>
         <tagged>friends</tagged>
@@ -42,16 +32,6 @@
         <tagged>family</tagged>
     </persons>
     <persons>
-        <name>Roy Balakrishnan</name>
-        <phone>92624417</phone>
-        <address>Blk 45 Aljunied Street 85, #11-31</address>
-        <birthday>11-09-1998</birthday>
-        <email>royb@example.com</email>
-        <group>TEST</group>
-        <remark></remark>
-        <tagged>colleagues</tagged>
-    </persons>
-    <persons>
         <name>Irfan Ibrahim</name>
         <phone>92492021</phone>
         <address>Blk 47 Tampines Street 20, #17-35</address>
@@ -60,15 +40,6 @@
         <group>TEST</group>
         <remark></remark>
         <tagged>classmates</tagged>
-    </persons>
-    <persons>
-        <name>haha</name>
-        <phone>12345678</phone>
-        <address>address</address>
-        <birthday>12-09-1998</birthday>
-        <email>email@email.com</email>
-        <group>NUS</group>
-        <remark></remark>
     </persons>
     <persons>
         <name>Momo Ng</name>
@@ -80,12 +51,50 @@
         <remark></remark>
     </persons>
     <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <birthday>11-09-1998</birthday>
+        <email>royb@example.com</email>
+        <group>TEST</group>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>haha</name>
+        <phone>12345678</phone>
+        <address>address</address>
+        <birthday>12-09-1998</birthday>
+        <email>email@email.com</email>
+        <group>NUS</group>
+        <remark></remark>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <birthday></birthday>
+        <email></email>
+        <group>FAM</group>
+        <remark>As quick as a leopard.</remark>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
         <name>huiyi</name>
         <phone>12345</phone>
         <address>blk 19 Bukit Timah Road #02-110 g/NUS</address>
         <birthday></birthday>
         <email></email>
-        <group>My Gang</group>
+        <group>NUS</group>
+        <remark></remark>
+    </persons>
+    <persons>
+        <name>MIMI</name>
+        <phone>123463</phone>
+        <address>somehwer</address>
+        <birthday></birthday>
+        <email></email>
+        <group></group>
         <remark></remark>
     </persons>
     <tags>colleagues</tags>
@@ -93,6 +102,7 @@
     <tags>neighbours</tags>
     <tags>family</tags>
     <tags>friends</tags>
-    <groups>My Gang</groups>
     <groups>NUS</groups>
+    <groups>FAM</groups>
+    <groups>TEST</groups>
 </addressbook>

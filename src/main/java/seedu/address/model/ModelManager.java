@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import javax.xml.crypto.Data;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -593,7 +594,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void transferDataWithDefault() {
+    public void transferDataWithDefault() throws IOException {
         ArrayList<String> fileList = new ArrayList<String>();
         fileList.add(userPref.getAddressBookFilePath());
         fileList.add(userPref.getEventBookFilePath());
@@ -647,8 +648,10 @@ public class ModelManager extends ComponentManager implements Model {
             zos.closeEntry();
             zos.close();
 
-        } catch (Exception e) {
-            ;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DataConversionException d) {
+            d.printStackTrace();
         }
     }
 

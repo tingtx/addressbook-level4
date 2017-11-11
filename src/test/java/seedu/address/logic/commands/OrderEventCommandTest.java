@@ -109,6 +109,9 @@ public class OrderEventCommandTest {
 
     }
 
+    /**
+     * Generates a new OrderCommand
+     */
     private OrderEventCommand prepareCommand(String parameter) {
         OrderEventCommand orderEventCommand = new OrderEventCommand(parameter);
         UserPrefs userPrefs = new UserPrefs();

@@ -18,8 +18,8 @@ public class SetThemeCommand extends UndoableCommand {
             + "Parameters: THEME ('summer', 'spring', 'autumn' or 'winter')\n"
             + "Example: " + COMMAND_WORD + " spring";
 
-    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes has been saved and " +
-            "will show up for all future accesses.";
+    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes has been saved and "
+            + "will show up for all future accesses.";
 
     private final String theme;
 

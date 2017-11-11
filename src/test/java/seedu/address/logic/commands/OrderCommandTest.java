@@ -142,6 +142,10 @@ public class OrderCommandTest {
 
     }
 
+
+    /**
+     * Generates a new OrderCommand
+     */
     private OrderCommand prepareCommand(String parameter) {
         OrderCommand orderCommand = new OrderCommand(parameter);
         UserPrefs userPrefs = new UserPrefs();

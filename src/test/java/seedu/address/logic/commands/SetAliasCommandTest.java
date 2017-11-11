@@ -406,7 +406,7 @@ public class SetAliasCommandTest {
                     "remark", "remove", "select", "setalias", "undo", "transfer", "viewalias", "addevent",
                     "deleteevent", "editevent", "listevent", "orderevent", "findevent", "settheme", "switch",
                     "selectevent", "export"));
-            for(String alias : functions) {
+            for (String alias : functions) {
                 aliases.add(new Alias(alias, alias));
             }
         }
@@ -415,7 +415,7 @@ public class SetAliasCommandTest {
         public void setAlias(String command, String name) {
             Alias newAlias = new Alias(command, name);
             int valid = 1;
-            for(Alias a : aliases) {
+            for (Alias a : aliases) {
                 if (a.getAlias().equals(newAlias.getAlias())) {
                     valid = 0;
                     break;
@@ -426,7 +426,7 @@ public class SetAliasCommandTest {
             }
             if (valid == 1) {
                 Alias remove = null;
-                for(Alias a : aliases) {
+                for (Alias a : aliases) {
                     if (a.getCommand().equals(newAlias.getCommand())) {
                         remove = a;
                     }
@@ -438,7 +438,7 @@ public class SetAliasCommandTest {
 
         @Override
         public String getAliasForCommand(String commandName) {
-            for(Alias a : aliases) {
+            for (Alias a : aliases) {
                 if (a.getCommand() == commandName) {
                     return a.getAlias();
                 }

@@ -11,6 +11,8 @@ public class User implements ReadOnlyUser {
     private String salt = "";
     private String password = "";
 
+    public User(){}
+
     public User(String userId, String salt, String password) {
         this.userId = userId;
         this.salt = salt;

@@ -26,9 +26,9 @@ public class LockCommand extends Command {
             + "Parameters: "
             + PREFIX_USERID + "USER ID "
             + PREFIX_PASSWORD + "PASSWORD";
-    private static final String MESSAGE_EXISTING_USER = "User already exists";
-    private static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your "
+    public static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your "
             + "password";
+    public static final String MESSAGE_EXISTING_USER = "User already exists";
     private static final int SALT_MIN = 0;
     private static final int SALT_MAX = 1000000;
     private String userId;

@@ -6,11 +6,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
 import java.util.Arrays;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.digestutil.HashDigest;
 import seedu.address.commons.util.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
 import seedu.address.commons.util.encryption.FileEncryptor;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
 //@@author quanle1994
@@ -53,27 +55,33 @@ public class LoginCommand extends Command {
         if (!(new CurrentUserDetails().getUserId().equals("PUBLIC"))) {
             throw new CommandException(MESSAGE_LOGIN_ERROR);
         }
+
         byte[] userNameHash = new HashDigest().getHashDigest(userId);
         String userNameHex = new HexCode().getHexFormat(new String(userNameHash));
-        String saltText;
+        String saltText = "";
         try {
+
             String saltHex = model.retrieveSaltFromStorage(userNameHex);
             saltText = new HexCode().hexStringToByteArray(saltHex);
             byte[] saltedPassword = new HashDigest().getHashDigest(saltText + passwordText);
             String saltedPasswordHex = new HexCode().getHexFormat(new String(saltedPassword));
 
             model.getUserFromIdAndPassword(userNameHex, saltedPasswordHex);
-        } catch (UserNotFoundException e) {
-            throw new CommandException(MESSAGE_ERROR_NO_USER);
-        }
 
-        try {
+            FileEncryptor.encryptPublicFile(model, false);
+
+            ObservableList<ReadOnlyPerson> list = model.getListLength();
+            model.emptyPersonList(list);
+
             FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + passwordText);
             model.refreshAddressBook();
+
+            new CurrentUserDetails().setCurrentUser(userId, userNameHex, saltText, passwordText);
+        } catch (UserNotFoundException e) {
+            throw new CommandException(MESSAGE_ERROR_NO_USER);
         } catch (Exception e) {
-            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
+            e.printStackTrace();
         }
-        new CurrentUserDetails().setCurrentUser(userId, userNameHex, saltText, passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

@@ -13,8 +13,8 @@ import seedu.address.model.user.exceptions.DuplicateUserException;
 public class LogoutCommand extends Command {
     public static final String COMMAND_WORD = "logout";
     public static final String COMMAND_ALIAS = "lgo";
-    private static final String MESSAGE_SUCCESS = "Logged out successfully!";
-    private static final String MESSAGE_LOGOUT_ERROR = "You have not logged in!";
+    public static final String MESSAGE_SUCCESS = "Logged out successfully!";
+    public static final String MESSAGE_LOGOUT_ERROR = "You have not logged in!";
     private CurrentUserDetails currentUser = new CurrentUserDetails();
 
     public static String getCommandWord() {

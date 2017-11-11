@@ -336,6 +336,7 @@ The export mechanism is facilitated by `XmlFileStorage`, which resides inside `S
 to export either their addressbook or eventbook in a excel format.
 //end::export[]
 
+// tag::find[]
 === Find From All Text Fields Mechanism
 
 The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
@@ -378,7 +379,10 @@ The code shows how the command is being processed based on the attribute charact
 find will look for keywords in the name. If the attribute is a, the command will find in the address. Lastly, if the
 attribute is m, the command will find in all text fields.
 
-In the future, this feature can be developed into a best-matched result based on different fields.
+In the future, this feature can be developed into a best-matched search based on different fields whereby the contact
+that matches the most fields will appear first followed by the one matching second most fields. Users are allowed to
+set the number of results to appear.
+//end::find[]
 
 // tag::group[]
 === Group mechanism

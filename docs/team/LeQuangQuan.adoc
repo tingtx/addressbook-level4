@@ -30,7 +30,7 @@ include::../UserGuide.adoc[tag=lock]
 
 ---
 
-==== Justification
+=== Justification
 
 The colouring of different tags will help users differentiate different tags associated with a contact more easily.
 
@@ -48,7 +48,7 @@ The Lock mechanism allows users to create user accounts that allow the programme
 the confidentiality of the data. This is important when the computer is shared among different people, or when a user
 wants to manage different lists of contacts.
 
-==== Implementation
+=== Implementation
 
 ---
 
@@ -56,7 +56,7 @@ include::../DeveloperGuide.adoc[tag=find]
 
 ---
 
-==== External behavior
+=== External behavior
 
 ---
 

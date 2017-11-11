@@ -1033,8 +1033,8 @@ public class SetThemeCommand extends UndoableCommand {
             + "Parameters: THEME ('summer', 'spring', 'autumn' or 'winter')\n"
             + "Example: " + COMMAND_WORD + " spring";
 
-    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes has been saved and " +
-            "will show up for all future accesses.";
+    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes has been saved and "
+            + "will show up for all future accesses.";
 
     private final String theme;
 
@@ -1059,10 +1059,14 @@ public class SetThemeCommand extends UndoableCommand {
             return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
         }
         config.setTheme(this.theme);
-        String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
-        MainWindow mainWindow = ui.getMainWindow();
+        try {
+            String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
+            MainWindow mainWindow = ui.getMainWindow();
 
-        mainWindow.getRoot().setStyle("-fx-background-image: url('" + image + "'); ");
+            mainWindow.getRoot().setStyle("-fx-background-image: url('" + image + "'); ");
+        } catch (NullPointerException e) {
+            ;
+        }
         EventsCenter.getInstance().post(new ChangedThemeEvent(this.theme));
         return new CommandResult(String.format(MESSAGE_CHANGED_THEME_SUCCESS, this.theme));
 
@@ -1385,6 +1389,10 @@ public class Alias implements Serializable {
         }
     }
 
+    /**
+    *Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
+    the ZIP as well.
+     */
     private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
 
         byte[] buffer = new byte[1024];
@@ -1404,15 +1412,12 @@ public class Alias implements Serializable {
                 while ((len = in.read(buffer)) > 0) {
                     zos.write(buffer, 0, len);
                 }
-
                 in.close();
-            }
-
-            else if (thisFile.isDirectory()) {
+            } else if (thisFile.isDirectory()) {
                 String[] newFileList = thisFile.list();
                 ArrayList<String> dirFiles = new ArrayList<String>();
                 for (String filename: newFileList) {
-                    dirFiles.add("data/"+filename);
+                    dirFiles.add("data/" + filename);
                 }
                 addFileIntoZip(zos, dirFiles);
             }

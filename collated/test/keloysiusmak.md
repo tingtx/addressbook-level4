@@ -124,6 +124,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.function.Predicate;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -212,14 +213,14 @@ public class SetAliasCommandTest {
 
     @Test
     public void equals() {
-        SetAliasCommand addAliceAlias = new SetAliasCommand("first", "alice");
-        SetAliasCommand addBobAlias = new SetAliasCommand("first", "bob");
+        SetAliasCommand addAliceAlias = new SetAliasCommand("help", "alice");
+        SetAliasCommand addBobAlias = new SetAliasCommand("help", "bob");
 
         // same object -> returns true
         assertTrue(addAliceAlias.equals(addAliceAlias));
 
         // same values -> returns true
-        SetAliasCommand addAliceAliasCopy = new SetAliasCommand("first", "alice");
+        SetAliasCommand addAliceAliasCopy = new SetAliasCommand("help", "alice");
         assertTrue(addAliceAlias.equals(addAliceAliasCopy));
 
         // different types -> returns false
@@ -230,6 +231,39 @@ public class SetAliasCommandTest {
 
         // different alias -> returns false
         assertFalse(addAliceAlias.equals(addBobAlias));
+    }
+
+    @Test
+    public void execute() throws Exception {
+
+        ModelStub model;
+        Alias testAlias;
+
+        //set valid alias
+        model = new ModelStubAcceptingAliasSet();
+        testAlias = new Alias("help", "h");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("h", model.getAliasForCommand("help"));
+
+        //change to a new valid alias
+        testAlias = new Alias("help", "x");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("x", model.getAliasForCommand("help"));
+
+        //set invalid alias
+        testAlias = new Alias("help", "help");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("x", model.getAliasForCommand("help"));
+
+        //set duplicate alias
+        testAlias = new Alias("list", "x");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("list", model.getAliasForCommand("list"));
+
+        //set valid alias
+        testAlias = new Alias("list", "y");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("y", model.getAliasForCommand("list"));
     }
 
     /**
@@ -476,14 +510,54 @@ public class SetAliasCommandTest {
      * A Model stub that always accept the alias being set.
      */
     private class ModelStubAcceptingAliasSet extends ModelStub {
-        final ArrayList<Alias> aliases = new ArrayList<>();
+        HashSet<Alias> aliases = new HashSet<Alias>();
+
+        public ModelStubAcceptingAliasSet() {
+            ArrayList<String> functions = new ArrayList<String>(Arrays.asList("add", "currentuser", "delete", "edit",
+                    "exit", "find", "group", "help", "history", "lock", "list", "login", "logout", "order", "redo",
+                    "remark", "remove", "select", "setalias", "undo", "transfer", "viewalias", "addevent",
+                    "deleteevent", "editevent", "listevent", "orderevent", "findevent", "settheme", "switch",
+                    "selectevent", "export"));
+            for(String alias : functions) {
+                aliases.add(new Alias(alias, alias));
+            }
+        }
 
         @Override
         public void setAlias(String command, String name) {
-            aliases.add(new Alias(command, name));
+            Alias newAlias = new Alias(command, name);
+            int valid = 1;
+            for(Alias a : aliases) {
+                if (a.getAlias().equals(newAlias.getAlias())) {
+                    valid = 0;
+                    break;
+                } else if (a.getCommand().equals(newAlias.getAlias())) {
+                    valid = 0;
+                    break;
+                }
+            }
+            if (valid == 1) {
+                Alias remove = null;
+                for(Alias a : aliases) {
+                    if (a.getCommand().equals(newAlias.getCommand())) {
+                        remove = a;
+                    }
+                }
+                aliases.remove(remove);
+                aliases.add(newAlias);
+            }
+        }
+
+        @Override
+        public String getAliasForCommand(String commandName) {
+            for(Alias a : aliases) {
+                if (a.getCommand() == commandName) {
+                    return a.getAlias();
+                }
+            }
+            return null;
         }
     }
-
 }
 ```
 ###### /java/seedu/address/logic/commands/SetThemeCommandTest.java
@@ -498,15 +572,18 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.Before;
 import org.junit.Test;
 
+import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
 /**
@@ -516,9 +593,7 @@ public class SetThemeCommandTest {
 
     private Config config;
     private Config expectedConfig;
-    private SetThemeCommand setThemeCommand;
-    private SetThemeCommand setThemeCommand2;
-    private SetThemeCommand setThemeCommand3;
+    private SetThemeCommand setThemeCommand, setThemeCommand2, setThemeCommand3, setThemeCommand4;
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
             Account(), new Config());
 
@@ -530,16 +605,17 @@ public class SetThemeCommandTest {
         setThemeCommand = new SetThemeCommand();
 
         UserPrefs userPrefs = new UserPrefs();
-        Config config = new Config();
-        Logic logic = null;
-        setThemeCommand.setData(model, new CommandHistory(), new UndoRedoStack(), config,
-                new UiManager(logic, config, userPrefs));
+        Ui ui = null;
+        Logic logic = new LogicManager(model, userPrefs, config, ui);
+        ui = new UiManager(logic, config, userPrefs);
+        logic.setUi(ui);
+        setThemeCommand.setData(model, new CommandHistory(), new UndoRedoStack(), config, ui);
         setThemeCommand2 = new SetThemeCommand("nonsense");
-        setThemeCommand2.setData(model, new CommandHistory(), new UndoRedoStack(), config,
-                new UiManager(logic, config, userPrefs));
+        setThemeCommand2.setData(model, new CommandHistory(), new UndoRedoStack(), config, ui);
         setThemeCommand3 = new SetThemeCommand("winter");
-        setThemeCommand3.setData(model, new CommandHistory(), new UndoRedoStack(), config,
-                new UiManager(logic, config, userPrefs));
+        setThemeCommand3.setData(model, new CommandHistory(), new UndoRedoStack(), config, ui);
+        setThemeCommand4 = new SetThemeCommand("summer");
+        setThemeCommand4.setData(model, new CommandHistory(), new UndoRedoStack(), config, ui);
     }
 
     @Test
@@ -549,15 +625,21 @@ public class SetThemeCommandTest {
     }
 
     @Test
-    public void execute_nonsenseTheme() {
-        assertConfigCommandSuccess(setThemeCommand2, config,
-                String.format(Messages.MESSAGE_WRONG_THEME, "nonsense"), expectedConfig);
+    public void execute_sameTheme() {
+        assertConfigCommandSuccess(setThemeCommand, config,
+                String.format(SetThemeCommand.MESSAGE_CHANGED_THEME_SUCCESS, "summer"), expectedConfig);
     }
 
     @Test
     public void execute_winterTheme() throws Exception {
         assertConfigDiffCommandSuccess(setThemeCommand3, config,
                 String.format(SetThemeCommand.MESSAGE_CHANGED_THEME_SUCCESS, "winter"), expectedConfig);
+    }
+
+    @Test
+    public void execute_nonsenseTheme() {
+        assertConfigCommandSuccess(setThemeCommand2, config,
+                String.format(Messages.MESSAGE_WRONG_THEME, "nonsense"), expectedConfig);
     }
 }
 ```

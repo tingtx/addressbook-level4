@@ -131,7 +131,7 @@ public class LockCommandTest {
     }
 
     private class ModelStubAcceptingUserAdded extends LockCommandTest.ModelStub {
-        User userAdded;
+        private User userAdded;
 
         @Override
         public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {

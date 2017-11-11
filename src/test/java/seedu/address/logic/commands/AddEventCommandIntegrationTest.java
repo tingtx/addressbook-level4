@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Account;
 import seedu.address.model.Model;
@@ -17,6 +18,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
 import seedu.address.testutil.EventBuilder;
+import seedu.address.ui.UiManager;
 
 //@@author kaiyu92
 
@@ -56,7 +58,11 @@ public class AddEventCommandIntegrationTest {
      */
     private AddEventCommand prepareCommand(Event event, Model model) {
         AddEventCommand command = new AddEventCommand(event);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         return command;
     }
 }

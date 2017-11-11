@@ -94,21 +94,19 @@
 .list-cell {
     -fx-background-color: transparent;
     background-color: transparent;
-    -fx-label-padding: 0 0 0 0;
-    -fx-graphic-text-gap: 0;
     -fx-padding: 20px 5px;
 }
 
 .list-cell:filled:even {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-color: rgba(255,255,255,0.8);
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: rgba(255, 255, 255, 0.6);
+    -fx-background-color: rgba(255,255,255,0.6);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: rgba(140, 140, 140, 0.4);
+    -fx-background-color: rgba(140,140,140,0.4);
 }
 
 .list-cell:filled:selected #cardPane {
@@ -190,7 +188,7 @@
 
 .context-menu {
     -fx-padding: 5px 20px;
-    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-background-color: rgba(255,255,255,0.25);
 }
 
 .context-menu .label {
@@ -230,7 +228,7 @@
 }
 
 .button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-background-color: rgba(255,255,255,0.4);
 }
 
 .button:pressed, .button:default:hover:pressed {
@@ -337,6 +335,10 @@
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+#viewAliasListPanelPlaceholder {
+    -fx-background-color: transparent;
+    background-color: transparent;
 }
 
 .text-area {

@@ -36,8 +36,8 @@ public class LogoutCommandTest {
     @Test
     public void execute_logoutSuccessful() throws Exception {
         ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
-        new LockCommandTest().getLockCommand("test","test",modelStub).execute();
-        CommandResult commandResult =  getLogoutCommand(modelStub).execute();
+        new LockCommandTest().getLockCommand("test", "test", modelStub).execute();
+        CommandResult commandResult = getLogoutCommand(modelStub).execute();
         assertEquals(LogoutCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
     }
 
@@ -51,5 +51,6 @@ public class LogoutCommandTest {
         return command;
     }
 
-    private class ModelStubAcceptingUserAdded extends ModelStub {}
+    private class ModelStubAcceptingUserAdded extends ModelStub {
+    }
 }

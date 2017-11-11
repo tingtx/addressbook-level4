@@ -11,6 +11,14 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Helps with reading from and writing to XML files.
@@ -87,5 +95,42 @@ public class XmlUtil {
         fileWriter.write(content.toString());
         fileWriter.flush();
         fileWriter.close();
+    }
+
+    //@@author kaiyu92
+    /**
+     *
+     * @param file
+     * @param nodeName
+     * @return
+     * @throws SAXException
+     * @throws IOException
+     * @throws ParserConfigurationException
+     */
+    public static NodeList getNodeListFromFile(File file, String nodeName) throws SAXException,
+            IOException, ParserConfigurationException {
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(file);
+
+        doc.getDocumentElement().normalize();
+
+        return doc.getElementsByTagName(nodeName);
+    }
+
+    public static void appendHeader(StringBuilder sb, String header) {
+
+        //Append the header to the CSV file
+        sb.append(header);
+        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+    }
+
+    public static void appendContent(StringBuilder sb, Element element, String ... fields) {
+
+        for (String f: fields) {
+            sb.append("\"" + element.getElementsByTagName(f).item(0).getTextContent() + "\"");
+            sb.append(XmlUtil.COMMA_DELIMITER);
+        }
     }
 }

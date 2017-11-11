@@ -5,11 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -25,6 +22,10 @@ public class XmlFileStorage {
 
     /**
      * Saves the given eventbook data to the specified file.
+     * Overloading method
+     * @param file
+     * @param eventBook
+     * @throws FileNotFoundException
      */
     public static void saveDataToFile(File file, XmlSerializableEventBook eventBook)
             throws FileNotFoundException {
@@ -37,6 +38,10 @@ public class XmlFileStorage {
 
     /**
      * Saves the given addressbook data to the specified file.
+     * Overloading method
+     * @param file
+     * @param addressBook
+     * @throws FileNotFoundException
      */
     public static void saveDataToFile(File file, XmlSerializableAddressBook addressBook)
             throws FileNotFoundException {
@@ -49,6 +54,9 @@ public class XmlFileStorage {
 
     /**
      * Saves the given account data to the specified file.
+     * @param file
+     * @param account
+     * @throws FileNotFoundException
      */
     public static void saveAccountToFile(File file, XmlSerializableAccount account)
             throws FileNotFoundException {
@@ -61,6 +69,10 @@ public class XmlFileStorage {
 
     /**
      * Returns event book in the file or an empty event book
+     * @param file
+     * @return
+     * @throws DataConversionException
+     * @throws FileNotFoundException
      */
     public static XmlSerializableEventBook loadEventDataFromSaveFile(File file) throws DataConversionException,
             FileNotFoundException {
@@ -73,6 +85,10 @@ public class XmlFileStorage {
 
     /**
      * Returns address book in the file or an empty address book
+     * @param file
+     * @return
+     * @throws DataConversionException
+     * @throws FileNotFoundException
      */
     public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
             FileNotFoundException {
@@ -85,6 +101,10 @@ public class XmlFileStorage {
 
     /**
      * Returns accounts in the file or an empty account list
+     * @param file
+     * @return
+     * @throws DataConversionException
+     * @throws FileNotFoundException
      */
     public static XmlSerializableAccount loadAccountFromSaveFile(File file) throws DataConversionException,
             FileNotFoundException {
@@ -96,11 +116,18 @@ public class XmlFileStorage {
     }
 
     //@@author kaiyu92
+
     /**
      * Export Addressbook XML Data into CSV file
+     * @param source
+     * @param destination
+     * @param header
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
      */
     public static void exportAddressbook(String source, String destination, String header)
-            throws FileNotFoundException, ParserConfigurationException, IOException, SAXException {
+            throws ParserConfigurationException, IOException, SAXException {
 
         File addressbookXmlFile = new File(source);
 
@@ -108,19 +135,12 @@ public class XmlFileStorage {
             throw new FileNotFoundException("File not found : " + addressbookXmlFile.getAbsolutePath());
         }
 
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(addressbookXmlFile);
-
-        doc.getDocumentElement().normalize();
-
-        NodeList personList = doc.getElementsByTagName("persons");
+        NodeList personList = XmlUtil.getNodeListFromFile(addressbookXmlFile, "persons");
 
         StringBuilder sb = new StringBuilder();
 
         //Append the header to the CSV file
-        sb.append(header);
-        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+        XmlUtil.appendHeader(sb, header);
 
         for (int i = 0; i < personList.getLength(); i++) {
             Node personNode = personList.item(i);
@@ -129,29 +149,22 @@ public class XmlFileStorage {
 
                 Element elemPerson = (Element) personNode;
 
-                sb.append("\"" + elemPerson.getElementsByTagName("name").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("phone").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("address").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("birthday").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("email").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("group").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("remark").item(0).getTextContent() + "\"");
+                XmlUtil.appendContent(sb, elemPerson, "name", "phone", "address", "birthday",
+                    "email", "group", "remark");
 
+                //Append tagged list into the StringBuilder
                 NodeList tagList = elemPerson.getElementsByTagName("tagged");
+
                 for (int j = 0; j < tagList.getLength(); j++) {
                     Node tagNode = tagList.item(j);
                     if (tagNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eTag = (Element) tagNode;
+                        Element elemTag = (Element) tagNode;
+
+                        sb.append("\"" + elemTag.getTextContent() + "\"");
                         sb.append(XmlUtil.COMMA_DELIMITER);
-                        sb.append("\"" + eTag.getTextContent() + "\"");
                     }
                 }
+                //Enter a new line in the CSV file
                 sb.append(XmlUtil.NEW_LINE_SEPARATOR);
             }
         }
@@ -161,9 +174,15 @@ public class XmlFileStorage {
     //@@author kaiyu92
     /**
      * Export eventbook XML Data into CSV file
+     * @param source
+     * @param destination
+     * @param header
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
      */
     public static void exportEventbook(String source, String destination, String header)
-            throws FileNotFoundException, ParserConfigurationException, IOException, SAXException {
+            throws ParserConfigurationException, IOException, SAXException {
 
         File eventbookXmlFile = new File(source);
 
@@ -171,19 +190,12 @@ public class XmlFileStorage {
             throw new FileNotFoundException("File not found : " + eventbookXmlFile.getAbsolutePath());
         }
 
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(eventbookXmlFile);
-
-        doc.getDocumentElement().normalize();
-
-        NodeList eventList = doc.getElementsByTagName("events");
+        NodeList eventList = XmlUtil.getNodeListFromFile(eventbookXmlFile, "events");
 
         StringBuilder sb = new StringBuilder();
 
         //Append the header to the CSV file
-        sb.append(header);
-        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+        XmlUtil.appendHeader(sb, header);
 
         for (int i = 0; i < eventList.getLength(); i++) {
             Node eventNode = eventList.item(i);
@@ -191,14 +203,9 @@ public class XmlFileStorage {
             if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
 
                 Element elemEvent = (Element) eventNode;
+                XmlUtil.appendContent(sb, elemEvent, "title", "description", "location", "datetime");
 
-                sb.append("\"" + elemEvent.getElementsByTagName("title").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemEvent.getElementsByTagName("description").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemEvent.getElementsByTagName("location").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemEvent.getElementsByTagName("datetime").item(0).getTextContent() + "\"");
+                //Enter a new line in the CSV file
                 sb.append(XmlUtil.NEW_LINE_SEPARATOR);
             }
         }

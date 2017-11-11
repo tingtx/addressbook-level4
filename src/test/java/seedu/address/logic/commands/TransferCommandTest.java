@@ -2,7 +2,6 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_ERROR;
 import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_SUCCESS;
 
 import org.junit.Before;

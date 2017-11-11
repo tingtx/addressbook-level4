@@ -560,14 +560,14 @@ Examples:
 
 Switch to either `contacts` or `events` tab panel. +
 Format: `switch`
-
+//@@author
 // end::switch[]
 
 === Sync : `sync` - Coming in V2.0
 
 Sync the TunedIn application to your cloud TunedInLive account. +
 Format: `sync`
-
+//@@author keloysiusmak
 === Transfer : `transfer`
 
 Exports your settings, data and configurations into a ZIP file, along with the installation instructions. +
@@ -607,6 +607,11 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+===
+
+//@@author keloysiusmak
+== Upcoming Features
+
 === Change Password : `changepassword` - Coming in V2.0
 
 Changes the account password. +
@@ -618,7 +623,39 @@ Examples:
 
 === Connect with social media : `connect` - Coming in V2.0
 
-Coming in V2.0
+Connect with Facebook to sync Facebook contacts into the address book. +
+Format: `connect u/FACEBOOK_EMAIL p/FACEBOOK_PASSWORD`
+
+Examples:
+
+* `connect u/keloysius@mak.com p/MYFBp4ss`
+
+=== Create Theme : `createtheme` - Coming in V2.0
+
+Creates a new theme using a URL. +
+Format: `createtheme t/THEME_NAME u/PIC_URL`
+
+Examples:
+
+* `create t/favourite u/http://zhkphoto.com/assets/photos/ky-nat_24.jpg`
+
+=== Download Theme : `downloadtheme` - Coming in V2.0
+
+Downloadss a theme to TunedIn Themes repository. +
+Format: `downloadtheme t/TUNEDIN_THEME_NAME`
+
+Examples:
+
+* `downloadtheme t/keloy_favourite`
+
+=== Export Theme : `exporttheme` - Coming in V2.0
+
+Exports a theme to TunedIn Themes repository for other users to download and use. +
+Format: `exporttheme t/THEME_NAME`
+
+Examples:
+
+* `exporttheme t/favourite`
 
 === Sync : `sync` - Coming in V2.0
 
@@ -628,10 +665,9 @@ Format: `sync`
 ===
 
 == FAQ
-//@@author keloysiusmak
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
-data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file with the ZIP file. More details are
+provided in the help document in the zip folder.
 
 *Q*: How do I see the protected aliases for the commands? +
 *A*: You can type `viewalias` or you can access it from the Menu Bar.

@@ -239,7 +239,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
             IOException, SAXException, TransformerException {
-        userStorage.exportAddressBook();
+
+        try {
+            Optional<ReadOnlyAddressBook> addressBookOptional = userStorage.readAddressBook();
+
+            if (!addressBookOptional.isPresent()) {
+                logger.info("File Created : " + userPref.getAddressBookFilePath());
+                userStorage.saveAddressBook(new AddressBook());
+            }
+        } catch (DataConversionException dce) {
+            logger.info(dce.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        } finally {
+            userStorage.exportAddressBook();
+        }
     }
 
     @Override
@@ -423,7 +437,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
             IOException, SAXException, TransformerException {
-        userStorage.exportEventBook();
+
+        try {
+            Optional<ReadOnlyEventBook> addressBookOptional = userStorage.readEventBook();
+
+            if (!addressBookOptional.isPresent()) {
+                logger.info("File Created : " + userPref.getEventBookFilePath());
+                userStorage.saveEventBook(new EventBook());
+            }
+        } catch (DataConversionException dce) {
+            logger.info(dce.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        } finally {
+            userStorage.exportEventBook();
+        }
     }
 
     /**

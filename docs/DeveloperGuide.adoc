@@ -943,9 +943,20 @@ Adding new themes are as simple as adding the new image to src > main > resource
 be at least 1600 by 1200 pixels, 72dpi. Save the image as THEME_NAME.jpg, and similarly update SetThemeCommand.java's
 executeUndoableCommand() function with the new THEME_NAME.
 
+[source, java]
+----
+  if (!((this.theme.equals("summer"))
+                  || (this.theme.equals("spring"))
+                  || (this.theme.equals("winter"))
+                  || (this.theme.equals("autumn")))) {
+        return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
+    }
+----
+
 The theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
 of custom preset themes for the TunedIn application.
 
+[NOTE]
 Themes will persist even after closing the app, allowing the user to use the application the way he desires.
 
 ==== Design Considerations

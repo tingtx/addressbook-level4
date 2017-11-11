@@ -44,10 +44,14 @@ public class SetThemeCommand extends UndoableCommand {
             return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
         }
         config.setTheme(this.theme);
-        String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
-        MainWindow mainWindow = ui.getMainWindow();
+        try {
+            String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
+            MainWindow mainWindow = ui.getMainWindow();
 
-        mainWindow.getRoot().setStyle("-fx-background-image: url('" + image + "'); ");
+            mainWindow.getRoot().setStyle("-fx-background-image: url('" + image + "'); ");
+        } catch (NullPointerException e) {
+            ;
+        }
         EventsCenter.getInstance().post(new ChangedThemeEvent(this.theme));
         return new CommandResult(String.format(MESSAGE_CHANGED_THEME_SUCCESS, this.theme));
 

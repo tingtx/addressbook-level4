@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.function.Predicate;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -121,13 +122,36 @@ public class SetAliasCommandTest {
     }
 
     @Test
-    public void test_cases() throws Exception {
-        ModelStub model = new ModelStubAcceptingAliasSet();
-        Alias validAlias = new Alias("help", "h");
+    public void execute() throws Exception {
 
-        // same object -> returns true
-        getSetAliasCommand(validAlias, model).execute();
-        assertEquals(model.getAliasForCommand("help"), "h");
+        ModelStub model;
+        Alias testAlias;
+
+        //set valid alias
+        model = new ModelStubAcceptingAliasSet();
+        testAlias = new Alias("help", "h");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("h", model.getAliasForCommand("help"));
+
+        //change to a new valid alias
+        testAlias = new Alias("help", "x");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("x", model.getAliasForCommand("help"));
+
+        //set invalid alias
+        testAlias = new Alias("help", "help");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("x", model.getAliasForCommand("help"));
+
+        //set duplicate alias
+        testAlias = new Alias("list", "x");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("list", model.getAliasForCommand("list"));
+
+        //set valid alias
+        testAlias = new Alias("list", "y");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals("y", model.getAliasForCommand("list"));
     }
 
     /**
@@ -374,11 +398,42 @@ public class SetAliasCommandTest {
      * A Model stub that always accept the alias being set.
      */
     private class ModelStubAcceptingAliasSet extends ModelStub {
-        final ArrayList<Alias> aliases = new ArrayList<>();
+        HashSet<Alias> aliases = new HashSet<Alias>();
+
+        public ModelStubAcceptingAliasSet() {
+            ArrayList<String> functions = new ArrayList<String>(Arrays.asList("add", "currentuser", "delete", "edit",
+                    "exit", "find", "group", "help", "history", "lock", "list", "login", "logout", "order", "redo",
+                    "remark", "remove", "select", "setalias", "undo", "transfer", "viewalias", "addevent",
+                    "deleteevent", "editevent", "listevent", "orderevent", "findevent", "settheme", "switch",
+                    "selectevent", "export"));
+            for(String alias : functions) {
+                aliases.add(new Alias(alias, alias));
+            }
+        }
 
         @Override
         public void setAlias(String command, String name) {
-            aliases.add(new Alias(command, name));
+            Alias newAlias = new Alias(command, name);
+            int valid = 1;
+            for(Alias a : aliases) {
+                if (a.getAlias().equals(newAlias.getAlias())) {
+                    valid = 0;
+                    break;
+                } else if (a.getCommand().equals(newAlias.getAlias())) {
+                    valid = 0;
+                    break;
+                }
+            }
+            if (valid == 1) {
+                Alias remove = null;
+                for(Alias a : aliases) {
+                    if (a.getCommand().equals(newAlias.getCommand())) {
+                        remove = a;
+                    }
+                }
+                aliases.remove(remove);
+                aliases.add(newAlias);
+            }
         }
 
         @Override

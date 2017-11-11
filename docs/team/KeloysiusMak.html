@@ -247,13 +247,55 @@ aliases which they can easily remember, and execute commands using our CLI.</p>
 <div class="sect2">
 <h3 id="theme-mechanism"><a class="link" href="#theme-mechanism">Theme mechanism</a></h3>
 <div class="paragraph">
+<p>Themes are an additional layer of configurability for users to make the application personal, which echoes our design
+principles. The TunedIn application comes with four installed curated themes modelled after the four seasons, 'Summer',
+'Winter', 'Spring' and 'Autumn'.</p>
+</div>
+<div class="paragraph">
+<p>Adding new themes are as simple as adding the new image to src &gt; main &gt; resources &gt; images. Images are recommended to
+be at least 1600 by 1200 pixels, 72dpi. Save the image as THEME_NAME.jpg, and similarly update SetThemeCommand.java&#8217;s
+executeUndoableCommand() function with the new THEME_NAME.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">  <span class="keyword">if</span> (!((<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">summer</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">spring</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">winter</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">autumn</span><span class="delimiter">&quot;</span></span>)))) {
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(Messages.MESSAGE_WRONG_THEME, <span class="local-variable">this</span>.theme));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>The theme mechanism will facilitated by <code>ThemeSettings</code>, which resides inside <code>Commons &gt; Core</code>. It supports the setting
 of custom preset themes for the TunedIn application.</p>
 </div>
-<hr>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
 <div class="paragraph">
-<p>Themes will persist even after closing the app, allowing the user to use the application the way he desires.
----</p>
+<p><strong>Aspect:</strong> Implementation of Theme<br>
+<strong>Alternative 1 (current choice):</strong> Setting predefined themes for the users.<br>
+<strong>Pros:</strong> Users have well-designed themes to begin choosing from, and can enjoy the application without having to worry
+about themes.<br>
+<strong>Cons:</strong> The level of customizability is lowered for the user.<br>
+<strong>Alternative 2:</strong> Let the user upload their own themes<br>
+<strong>Pros:</strong> An increased level of customizability is conferred upon the user.<br>
+<strong>Cons:</strong> Users will have to either resort to clicking to upload the files they require, or manually drag and drop the
+file within a predefined folder in the TunedIn application to upload the file, which goes against our CLI specification.</p>
+</div>
+<hr>
 </div>
 </div>
 <div class="sect2">

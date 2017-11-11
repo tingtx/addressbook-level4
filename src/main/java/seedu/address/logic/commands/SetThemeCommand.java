@@ -4,6 +4,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ChangedThemeEvent;
+import seedu.address.ui.MainWindow;
 
 /**
  * Sets a theme for the TunedIn Application
@@ -17,8 +18,8 @@ public class SetThemeCommand extends UndoableCommand {
             + "Parameters: THEME ('summer', 'spring', 'autumn' or 'winter')\n"
             + "Example: " + COMMAND_WORD + " spring";
 
-    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes will be shown when "
-            + "you restart the application";
+    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes has been saved and " +
+            "will show up for all future accesses.";
 
     private final String theme;
 
@@ -43,6 +44,10 @@ public class SetThemeCommand extends UndoableCommand {
             return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
         }
         config.setTheme(this.theme);
+        String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
+        MainWindow mainWindow = ui.getMainWindow();
+
+        mainWindow.getRoot().setStyle("-fx-background-image: url('" + image + "'); ");
         EventsCenter.getInstance().post(new ChangedThemeEvent(this.theme));
         return new CommandResult(String.format(MESSAGE_CHANGED_THEME_SUCCESS, this.theme));
 

@@ -7,6 +7,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.ui.Ui;
 
 /**
  * Redo the previously undone command.
@@ -34,7 +35,7 @@ public class RedoCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Config config) {
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Config config, Ui ui) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
     }

@@ -12,6 +12,13 @@ public interface Ui {
      */
     void start(Stage primaryStage);
 
+    //@@author keloysiusmak
+    /**
+     * Returns the MainWindow.
+     */
+    MainWindow getMainWindow();
+    //@author
+
     /**
      * Stops the UI.
      */

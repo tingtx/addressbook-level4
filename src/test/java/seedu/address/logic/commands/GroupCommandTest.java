@@ -23,6 +23,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
@@ -35,6 +36,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalIndexes;
+import seedu.address.ui.UiManager;
 
 //@@author tingtx
 public class GroupCommandTest {
@@ -252,7 +254,11 @@ public class GroupCommandTest {
      */
     private GroupCommand prepareCommand(List<Index> index, String group) {
         GroupCommand groupCommand = new GroupCommand(index, group);
-        groupCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        groupCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         return groupCommand;
     }
 }

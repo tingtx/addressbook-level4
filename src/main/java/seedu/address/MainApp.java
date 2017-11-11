@@ -84,9 +84,12 @@ public class MainApp extends Application {
         model = initModelManager(storage, userPrefs, config);
         model.setUserStorage(storage);
 
-        logic = new LogicManager(model, userPrefs, config);
+        logic = new LogicManager(model, userPrefs, config, ui);
 
         ui = new UiManager(logic, config, userPrefs);
+
+        logic.setUi(ui);
+
 
         initEventsCenter();
     }

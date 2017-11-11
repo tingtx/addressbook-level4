@@ -29,10 +29,8 @@ public class LoginCommand extends Command {
             + PREFIX_USERID + "USER ID "
             + PREFIX_PASSWORD + "PASSWORD";
     public static final String MESSAGE_SUCCESS = "Log In Successful";
-    private static final String MESSAGE_ERROR_NO_USER = "User does not exist";
-    private static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
+    public static final String MESSAGE_ERROR_NO_USER = "User does not exist";
     private static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
-    private byte[] password;
     private String userId;
     private String passwordText;
 
@@ -68,7 +66,7 @@ public class LoginCommand extends Command {
 
             model.getUserFromIdAndPassword(userNameHex, saltedPasswordHex);
 
-            FileEncryptor.encryptPublicFile(model, false);
+            FileEncryptor.encryptPublicFile(false);
 
             ObservableList<ReadOnlyPerson> list = model.getListLength();
             model.emptyPersonList(list);
@@ -85,12 +83,8 @@ public class LoginCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
-    private boolean matchedPassword(byte[] digest) {
-        return isSameDigest(password, digest);
-    }
-
-    public byte[] getPassword() {
-        return password;
+    public String getPassword() {
+        return passwordText;
     }
 
     public String getUserId() {

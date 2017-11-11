@@ -59,20 +59,5 @@ public class LogoutCommandTest {
         return command;
     }
 
-    private class ModelStubAcceptingUserAdded extends ModelStub {
-        @Override
-        public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
-                DataConversionException {
-        }
-
-        @Override
-        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
-            return;
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
-            return null;
-        }
-    }
+    private class ModelStubAcceptingUserAdded extends ModelStub {}
 }

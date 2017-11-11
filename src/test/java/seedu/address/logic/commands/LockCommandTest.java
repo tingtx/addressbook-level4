@@ -55,7 +55,7 @@ public class LockCommandTest {
 
         for (int i = 0; i < 500000; i++) {}
 
-            userIdHash = new String(new HashDigest().getHashDigest("test"));
+        userIdHash = new String(new HashDigest().getHashDigest("test"));
         userIdHex = new HexCode().getHexFormat(userIdHash);
         File file = new File("data/" + userIdHex.substring(0, 10) + ".encrypted");
         assertTrue(file.exists());

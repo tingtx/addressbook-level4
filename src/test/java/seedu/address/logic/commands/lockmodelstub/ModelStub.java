@@ -64,7 +64,6 @@ public class ModelStub implements Model {
 
     @Override
     public ReadOnlyAccount getAccount() {
-        fail("This method should not be called.");
         return null;
     }
 
@@ -85,35 +84,29 @@ public class ModelStub implements Model {
 
     @Override
     public void deleteEncryptedContacts(String substring) {
-        fail("This method should not be called.");
     }
 
     @Override
     public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
             IOException {
-        fail("This method should not be called.");
     }
 
     @Override
     public UserPrefs getUserPrefs() {
-        fail("This method should not be called.");
         return null;
     }
 
     @Override
     public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
-        fail("This method should not be called.");
     }
 
     @Override
     public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
             DataConversionException {
-        fail("This method should not be called.");
     }
 
     @Override
     public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
-        fail("This method should not be called.");
         return null;
     }
 
@@ -222,12 +215,10 @@ public class ModelStub implements Model {
 
     @Override
     public void persistUserAccount(ReadOnlyUser user) throws DuplicateUserException {
-        fail("This method should not be called.");
     }
 
     @Override
     public User getUserFromIdAndPassword(String userName, String password) throws UserNotFoundException {
-        fail("This method should not be called.");
         return null;
     }
 
@@ -237,8 +228,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public String retrieveSaltFromStorage(String userId) {
-        fail("This method should not be called.");
+    public String retrieveSaltFromStorage(String userId) throws UserNotFoundException{
         return null;
     }
 

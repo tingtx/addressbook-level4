@@ -150,11 +150,10 @@ public class FileEncryptor {
     /**
      * Encrypt the public list of contacts with file name as PUBLIC and password as PUBLIC.
      *
-     * @param model
      * @param isLockCommand
      * @throws CommandException
      */
-    public static void encryptPublicFile(Model model, boolean isLockCommand) throws CommandException {
+    public static void encryptPublicFile(boolean isLockCommand) throws CommandException {
         try {
             if (isLockCommand) {
                 addressBookFilePath = "data/addressbook_empty.xml";

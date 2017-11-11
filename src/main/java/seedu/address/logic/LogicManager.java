@@ -50,10 +50,12 @@ public class LogicManager extends ComponentManager implements Logic {
         this.undoRedoStack = new UndoRedoStack();
     }
 
+    //@@author keloysiusmak
     @Override
     public void setUi(Ui ui) {
         this.ui = ui;
     }
+    //@@author
 
     @Override
     public void setTabPane(TabPane tabPane) {

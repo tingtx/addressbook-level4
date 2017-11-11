@@ -1,4 +1,75 @@
 # keloysiusmak
+###### /java/seedu/address/ui/ViewAliasWindowTest.java
+``` java
+package seedu.address.ui;
+
+import org.junit.Before;
+import org.testfx.api.FxToolkit;
+
+import guitests.guihandles.ViewAliasWindowHandle;
+import javafx.stage.Stage;
+import seedu.address.commons.core.Config;
+import seedu.address.logic.Logic;
+
+public class ViewAliasWindowTest extends GuiUnitTest {
+
+    private ViewAliasWindow viewAliasWindow;
+    private ViewAliasWindowHandle viewAliasWindowHandle;
+
+    @Before
+    public void setUp(Logic logic, Config config) throws Exception {
+
+        guiRobot.interact(() -> viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic, config));
+        Stage helpWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(viewAliasWindow.getRoot().getScene()));
+        FxToolkit.showStage();
+        viewAliasWindowHandle = new ViewAliasWindowHandle(helpWindowStage);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/TransferCommandTest.java
+``` java
+package seedu.address.logic.commands;
+
+import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_SUCCESS;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.commons.core.Config;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.ui.UiManager;
+
+
+public class TransferCommandTest {
+
+    private TransferCommand transferCommand;
+    private CommandHistory history;
+
+    @Before
+    public void setUp() {
+        Model model = new ModelManager();
+        history = new CommandHistory();
+        transferCommand = new TransferCommand();
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        transferCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
+    }
+
+    @Test
+    public void execute_transfer_success() {
+        CommandResult result = transferCommand.execute();
+        assertEquals(MESSAGE_TRANSFER_SUCCESS, result.feedbackToUser);
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/CommandTestUtil.java
 ``` java
 
@@ -67,6 +138,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -92,6 +164,7 @@ import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 import seedu.address.storage.Storage;
 import seedu.address.testutil.AliasBuilder;
+import seedu.address.ui.UiManager;
 
 public class SetAliasCommandTest {
 
@@ -164,7 +237,11 @@ public class SetAliasCommandTest {
      */
     private SetAliasCommand getSetAliasCommand(Alias alias, Model model) {
         SetAliasCommand command = new SetAliasCommand(alias.getCommand(), alias.getAlias());
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         return command;
     }
 
@@ -424,11 +501,13 @@ import org.junit.Test;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.UiManager;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -449,11 +528,18 @@ public class SetThemeCommandTest {
         expectedConfig = new Config();
 
         setThemeCommand = new SetThemeCommand();
-        setThemeCommand.setData(model, new CommandHistory(), new UndoRedoStack(), config);
+
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        setThemeCommand.setData(model, new CommandHistory(), new UndoRedoStack(), config,
+                new UiManager(logic, config, userPrefs));
         setThemeCommand2 = new SetThemeCommand("nonsense");
-        setThemeCommand2.setData(model, new CommandHistory(), new UndoRedoStack(), config);
+        setThemeCommand2.setData(model, new CommandHistory(), new UndoRedoStack(), config,
+                new UiManager(logic, config, userPrefs));
         setThemeCommand3 = new SetThemeCommand("winter");
-        setThemeCommand3.setData(model, new CommandHistory(), new UndoRedoStack(), config);
+        setThemeCommand3.setData(model, new CommandHistory(), new UndoRedoStack(), config,
+                new UiManager(logic, config, userPrefs));
     }
 
     @Test
@@ -472,69 +558,6 @@ public class SetThemeCommandTest {
     public void execute_winterTheme() throws Exception {
         assertConfigDiffCommandSuccess(setThemeCommand3, config,
                 String.format(SetThemeCommand.MESSAGE_CHANGED_THEME_SUCCESS, "winter"), expectedConfig);
-    }
-}
-```
-###### /java/seedu/address/logic/commands/TransferCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertEquals;
-import static seedu.address.logic.commands.TransferCommand.MESSAGE_TRANSFER_ERROR;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import seedu.address.commons.core.Config;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-
-
-public class TransferCommandTest {
-
-    private TransferCommand transferCommand;
-    private CommandHistory history;
-
-    @Before
-    public void setUp() {
-        Model model = new ModelManager();
-        history = new CommandHistory();
-        transferCommand = new TransferCommand();
-        transferCommand.setData(model, history, new UndoRedoStack(), new Config());
-    }
-
-    @Test
-    public void execute_transfer_success() {
-        CommandResult result = transferCommand.execute();
-        assertEquals(MESSAGE_TRANSFER_ERROR, result.feedbackToUser);
-    }
-}
-```
-###### /java/seedu/address/ui/ViewAliasWindowTest.java
-``` java
-package seedu.address.ui;
-
-import org.junit.Before;
-import org.testfx.api.FxToolkit;
-
-import guitests.guihandles.ViewAliasWindowHandle;
-import javafx.stage.Stage;
-import seedu.address.logic.Logic;
-
-public class ViewAliasWindowTest extends GuiUnitTest {
-
-    private ViewAliasWindow viewAliasWindow;
-    private ViewAliasWindowHandle viewAliasWindowHandle;
-
-    @Before
-    public void setUp(Logic logic) throws Exception {
-
-        guiRobot.interact(() -> viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic));
-        Stage helpWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(viewAliasWindow.getRoot().getScene()));
-        FxToolkit.showStage();
-        viewAliasWindowHandle = new ViewAliasWindowHandle(helpWindowStage);
     }
 }
 ```

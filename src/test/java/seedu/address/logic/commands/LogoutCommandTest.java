@@ -18,6 +18,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.lockmodelstub.ModelStub;
+import seedu.address.logic.currentuser.CurrentUserDetails;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -43,7 +44,7 @@ public class LogoutCommandTest {
     @Test
     public void execute_logoutSuccessful() throws Exception {
         ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
-        new LockCommandTest().getLockCommand("test", "test", modelStub).execute();
+        CurrentUserDetails.setCurrentUser("test", "", "", "");
         CommandResult commandResult = getLogoutCommand(modelStub).execute();
         assertEquals(LogoutCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
     }
@@ -67,6 +68,11 @@ public class LogoutCommandTest {
         @Override
         public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
             return;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
+            return null;
         }
     }
 }

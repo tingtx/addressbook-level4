@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
+
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.commands.exceptions.ConfigMissingException;
 
 /**
@@ -17,8 +20,6 @@ public class TransferCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     public static final String MESSAGE_TRANSFER_SUCCESS = "Successfully exported ZIP file.";
-    public static final String MESSAGE_TRANSFER_ERROR = "Some user settings were missing. Successfully exported ZIP "
-            + "file with default settings";
 
     public TransferCommand() {
     }
@@ -35,8 +36,13 @@ public class TransferCommand extends Command {
         try {
             model.transferData();
         } catch (ConfigMissingException e) {
-            model.transferDataWithDefault();
-            return new CommandResult(MESSAGE_TRANSFER_ERROR);
+            try {
+                model.transferDataWithDefault();
+            } catch (IOException i) {
+                i.printStackTrace();
+            } catch (DataConversionException i) {
+                i.printStackTrace();
+            }
         }
 
         return new CommandResult(MESSAGE_TRANSFER_SUCCESS);

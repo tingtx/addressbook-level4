@@ -152,6 +152,11 @@ public class SetAliasCommandTest {
         testAlias = new Alias("list", "y");
         getSetAliasCommand(testAlias, model).execute();
         assertEquals("y", model.getAliasForCommand("list"));
+
+        //set alias for invalid command
+        testAlias = new Alias("nonsense", "y");
+        getSetAliasCommand(testAlias, model).execute();
+        assertEquals(null, model.getAliasForCommand("nonsense"));
     }
 
     /**
@@ -414,12 +419,18 @@ public class SetAliasCommandTest {
         @Override
         public void setAlias(String command, String name) {
             Alias newAlias = new Alias(command, name);
-            int valid = 1;
+            int valid = 0;
             for (Alias a : aliases) {
+                //check for valid command
+                if (a.getCommand().equals(newAlias.getCommand())) {
+                    valid = 1;
+                }
+                //check for duplicate alias
                 if (a.getAlias().equals(newAlias.getAlias())) {
                     valid = 0;
                     break;
                 } else if (a.getCommand().equals(newAlias.getAlias())) {
+                    //check for protected alias
                     valid = 0;
                     break;
                 }

@@ -9,7 +9,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
@@ -30,7 +29,10 @@ public class SetThemeCommandTest {
 
     private Config config;
     private Config expectedConfig;
-    private SetThemeCommand setThemeCommand, setThemeCommand2, setThemeCommand3, setThemeCommand4;
+    private SetThemeCommand setThemeCommand;
+    private SetThemeCommand setThemeCommand2;
+    private SetThemeCommand setThemeCommand3;
+    private SetThemeCommand setThemeCommand4;
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
             Account(), new Config());
 

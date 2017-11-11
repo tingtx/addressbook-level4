@@ -398,7 +398,7 @@ public class SetAliasCommandTest {
      * A Model stub that always accept the alias being set.
      */
     private class ModelStubAcceptingAliasSet extends ModelStub {
-        HashSet<Alias> aliases = new HashSet<Alias>();
+        private HashSet<Alias> aliases = new HashSet<Alias>();
 
         public ModelStubAcceptingAliasSet() {
             ArrayList<String> functions = new ArrayList<String>(Arrays.asList("add", "currentuser", "delete", "edit",

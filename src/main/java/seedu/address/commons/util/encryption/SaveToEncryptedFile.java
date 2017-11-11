@@ -6,6 +6,10 @@ import seedu.address.logic.currentuser.CurrentUserDetails;
  * auto-save current address book to the encrypted file from mutating commands
  */
 public class SaveToEncryptedFile {
+
+    /**
+     * auto-save current address book to the encrypted file from mutating commands
+     */
     public static void save() {
         CurrentUserDetails curUser = new CurrentUserDetails();
         String fileName = curUser.getUserIdHex();

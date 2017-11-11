@@ -34,7 +34,13 @@ public class LogoutCommand extends Command {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        currentUser.setUserId("PUBLIC");
+        try {
+            FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
+            model.refreshAddressBook();
+        } catch (Exception e) {
+            e.getStackTrace()
+        }
+        currentUser.setPublicUser();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

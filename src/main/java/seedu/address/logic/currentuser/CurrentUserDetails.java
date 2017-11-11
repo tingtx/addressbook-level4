@@ -47,4 +47,7 @@ public class CurrentUserDetails {
     public static void setPasswordText(String passwordText) {
         CurrentUserDetails.passwordText = passwordText;
     }
+
+    public void setPublicUser() {
+    }
 }

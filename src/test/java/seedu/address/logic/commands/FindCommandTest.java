@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
@@ -26,6 +27,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.UiManager;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -83,7 +85,11 @@ public class FindCommandTest {
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new ContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         return command;
     }
 

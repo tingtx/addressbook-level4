@@ -20,6 +20,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.ui.CalendarView;
+import seedu.address.ui.Ui;
 
 /**
  * The main LogicManager of the app.
@@ -33,18 +34,25 @@ public class LogicManager extends ComponentManager implements Logic {
     private final GeneralBookParser generalBookParser;
     private final UndoRedoStack undoRedoStack;
     private final Config config;
+    private Ui ui;
 
     private CalendarViewStateParser calendarViewStateParser;
 
     private CalendarView calendarView;
 
-    public LogicManager(Model model, UserPrefs userprefs, Config config) {
+    public LogicManager(Model model, UserPrefs userprefs, Config config, Ui ui) {
         this.model = model;
         this.userPrefs = userprefs;
         this.config = config;
+        this.ui = ui;
         this.history = new CommandHistory();
         this.generalBookParser = new GeneralBookParser(userprefs);
         this.undoRedoStack = new UndoRedoStack();
+    }
+
+    @Override
+    public void setUi(Ui ui) {
+        this.ui = ui;
     }
 
     @Override
@@ -61,7 +69,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = generalBookParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack, config);
+            command.setData(model, history, undoRedoStack, config, ui);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
 

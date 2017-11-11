@@ -18,11 +18,13 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.UiManager;
 
 public class RedoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
@@ -39,8 +41,13 @@ public class RedoCommandTest {
 
     @Before
     public void setUp() {
-        deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, new Config());
-        deleteEventCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, new Config(), new UiManager(logic, config,
+                userPrefs));
+        deleteEventCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, new Config(), new UiManager(logic,
+                config, userPrefs));
     }
 
     @Test
@@ -48,7 +55,11 @@ public class RedoCommandTest {
         UndoRedoStack undoRedoStack = prepareStack(
                 Collections.emptyList(), Arrays.asList(deleteEventCommandTwo, deleteCommandOne));
         RedoCommand redoCommand = new RedoCommand();
-        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack, new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        redoCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
                 Account(), new Config());
 

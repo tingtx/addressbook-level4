@@ -21,6 +21,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.Account;
@@ -33,6 +34,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.UiManager;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -187,7 +189,11 @@ public class EditCommandTest {
      */
     private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
         EditCommand editCommand = new EditCommand(index, descriptor);
-        editCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        editCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         return editCommand;
     }
 }

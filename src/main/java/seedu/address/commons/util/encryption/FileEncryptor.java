@@ -13,6 +13,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+
 /**
  * This provides encryption and decryption utilities
  */
@@ -141,5 +144,23 @@ public class FileEncryptor {
         FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
         target.write(decData);
         target.close();
+    }
+
+    /**
+     * Encrypt the public list of contacts with file name as PUBLIC and password as PUBLIC.
+     * @param model
+     * @param isLockCommand
+     * @throws CommandException
+     */
+    public static void encryptPublicFile(Model model, boolean isLockCommand) throws CommandException {
+        try {
+            if (isLockCommand) {
+                addressBookFilePath = "data/addressbook_empty.xml";
+            }
+            FileEncryptor.encryptFile("PUBLIC", "PUBLIC", false);
+            addressBookFilePath = "data/addressbook.xml";
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_PUBLIC_CONTACTS_ENCRYPTION_ERROR);
+        }
     }
 }

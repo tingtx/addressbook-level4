@@ -228,7 +228,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public String retrieveSaltFromStorage(String userId) throws UserNotFoundException{
+    public String retrieveSaltFromStorage(String userId) throws UserNotFoundException {
         return null;
     }
 

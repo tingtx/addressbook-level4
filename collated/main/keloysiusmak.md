@@ -997,13 +997,13 @@ import seedu.address.logic.commands.SetThemeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new SetAliasCommand object
+ * Parses input arguments and creates a new SetThemeCommand object
  */
 public class SetThemeCommandParser implements Parser<SetThemeCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the SetAliasCommand
-     * and returns an SetAliasCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the SetThemeCommand
+     * and returns an SetThemeCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -1088,7 +1088,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ViewAliasRequestEvent;
 
 /**
- * Adds a person to the address book.
+ * View aliases in a window
  */
 public class ViewAliasCommand extends UndoableCommand {
 
@@ -1142,9 +1142,11 @@ public class SetAliasCommand extends Command {
     private final String toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates a SetAliasCommand to with the specified {@code command} and {@code alias}
      */
     public SetAliasCommand(String command, String alias) {
+
+        //invalid alias, both cnanot be null
         if (command == null || alias == null) {
             throw new NullPointerException();
         }
@@ -1163,8 +1165,10 @@ public class SetAliasCommand extends Command {
             model.setAlias(commandAdd, toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UnknownCommandException e) {
+            //unable to set alias for unknown command
             throw new CommandException(MESSAGE_UNKNOWN_COMMAND);
         } catch (DuplicateAliasException e) {
+            //unable to set alias if the alias has been set for another command
             throw new CommandException(MESSAGE_DUPLICATE_ALIAS);
         }
 

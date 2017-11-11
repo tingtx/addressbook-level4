@@ -935,12 +935,31 @@ Person object. +
 //@@author keloysiusmak
 === Theme mechanism
 
+Themes are an additional layer of configurability for users to make the application personal, which echoes our design
+principles. The TunedIn application comes with four installed curated themes modelled after the four seasons, 'Summer',
+'Winter', 'Spring' and 'Autumn'.
+
+Adding new themes are as simple as adding the new image to src > main > resources > images. Images are recommended to
+be at least 1600 by 1200 pixels, 72dpi. Save the image as THEME_NAME.jpg, and similarly update SetThemeCommand.java's
+executeUndoableCommand() function with the new THEME_NAME.
+
 The theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
 of custom preset themes for the TunedIn application.
 
----
-
 Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Theme +
+**Alternative 1 (current choice):** Setting predefined themes for the users. +
+**Pros:** Users have well-designed themes to begin choosing from, and can enjoy the application without having to worry
+about themes. +
+**Cons:** The level of customizability is lowered for the user. +
+**Alternative 2:** Let the user upload their own themes +
+**Pros:** An increased level of customizability is conferred upon the user. +
+**Cons:** Users will have to either resort to clicking to upload the files they require, or manually drag and drop the
+file within a predefined folder in the TunedIn application to upload the file, which goes against our CLI specification.
+
 // end::theme[]
 //@@author
 

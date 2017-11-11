@@ -9,9 +9,9 @@ import java.util.Arrays;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.digestutil.HashDigest;
 import seedu.address.commons.util.digestutil.HexCode;
+import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
-import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 

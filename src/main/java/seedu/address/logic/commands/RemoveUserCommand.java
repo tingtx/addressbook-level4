@@ -2,9 +2,9 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.util.digestutil.HashDigest;
 import seedu.address.commons.util.digestutil.HexCode;
+import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.commons.util.encryption.SaveToEncryptedFile;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 

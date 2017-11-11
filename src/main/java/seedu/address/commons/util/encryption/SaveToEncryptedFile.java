@@ -2,6 +2,9 @@ package seedu.address.commons.util.encryption;
 
 import seedu.address.logic.currentuser.CurrentUserDetails;
 
+/**
+ * auto-save current address book to the encrypted file from mutating commands
+ */
 public class SaveToEncryptedFile {
     public static void save() {
         CurrentUserDetails curUser = new CurrentUserDetails();

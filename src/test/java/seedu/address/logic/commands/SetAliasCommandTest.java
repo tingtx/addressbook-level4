@@ -100,14 +100,14 @@ public class SetAliasCommandTest {
 
     @Test
     public void equals() {
-        SetAliasCommand addAliceAlias = new SetAliasCommand("first", "alice");
-        SetAliasCommand addBobAlias = new SetAliasCommand("first", "bob");
+        SetAliasCommand addAliceAlias = new SetAliasCommand("help", "alice");
+        SetAliasCommand addBobAlias = new SetAliasCommand("help", "bob");
 
         // same object -> returns true
         assertTrue(addAliceAlias.equals(addAliceAlias));
 
         // same values -> returns true
-        SetAliasCommand addAliceAliasCopy = new SetAliasCommand("first", "alice");
+        SetAliasCommand addAliceAliasCopy = new SetAliasCommand("help", "alice");
         assertTrue(addAliceAlias.equals(addAliceAliasCopy));
 
         // different types -> returns false
@@ -118,6 +118,16 @@ public class SetAliasCommandTest {
 
         // different alias -> returns false
         assertFalse(addAliceAlias.equals(addBobAlias));
+    }
+
+    @Test
+    public void test_cases() throws Exception {
+        ModelStub model = new ModelStubAcceptingAliasSet();
+        Alias validAlias = new Alias("help", "h");
+
+        // same object -> returns true
+        getSetAliasCommand(validAlias, model).execute();
+        assertEquals(model.getAliasForCommand("help"), "h");
     }
 
     /**
@@ -370,6 +380,15 @@ public class SetAliasCommandTest {
         public void setAlias(String command, String name) {
             aliases.add(new Alias(command, name));
         }
-    }
 
+        @Override
+        public String getAliasForCommand(String commandName) {
+            for(Alias a : aliases) {
+                if (a.getCommand() == commandName) {
+                    return a.getAlias();
+                }
+            }
+            return null;
+        }
+    }
 }

@@ -21,6 +21,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
@@ -32,6 +33,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EventBuilder;
+import seedu.address.ui.UiManager;
 
 
 //@@author kaiyu92
@@ -193,7 +195,11 @@ public class EditEventCommandTest {
      */
     private EditEventCommand prepareCommand(Index index, EditEventCommand.EditEventDescriptor descriptor) {
         EditEventCommand editEventCommand = new EditEventCommand(index, descriptor);
-        editEventCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        editEventCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         return editEventCommand;
     }
 }

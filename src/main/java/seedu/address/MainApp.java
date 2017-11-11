@@ -84,9 +84,13 @@ public class MainApp extends Application {
         model = initModelManager(storage, userPrefs, config);
         model.setUserStorage(storage);
 
-        logic = new LogicManager(model, userPrefs, config);
+        logic = new LogicManager(model, userPrefs, config, ui);
 
         ui = new UiManager(logic, config, userPrefs);
+
+        //@@author keloysiusmak
+        logic.setUi(ui);
+        //@@author
 
         initEventsCenter();
     }
@@ -217,7 +221,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("xStarting AddressBook " + MainApp.VERSION);
+        logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 

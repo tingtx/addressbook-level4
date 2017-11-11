@@ -239,7 +239,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleViewAlias() {
-        ViewAliasWindow viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic);
+        ViewAliasWindow viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic, config);
         viewAliasWindow.show();
     }
 

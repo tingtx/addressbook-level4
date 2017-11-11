@@ -14,6 +14,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private AliasSettings aliasSettings;
+    private String dataFilePath = "data/";
     private String addressBookFilePath = "data/addressbook.xml";
     private String accountFilePath = "data/account.xml";
     private String addressBookName = "MyAddressBook";
@@ -49,6 +50,10 @@ public class UserPrefs {
 
     public void setAliasSettings() {
         aliasSettings = new AliasSettings();
+    }
+
+    public String getDataFilePath() {
+        return dataFilePath;
     }
 
     public String getAddressBookFilePath() {

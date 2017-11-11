@@ -9,6 +9,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
+import seedu.address.ui.Ui;
 
 /**
  * Lists all the commands entered by user from the start of app launch.
@@ -36,7 +37,7 @@ public class HistoryCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Config config) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Config config, Ui ui) {
         requireNonNull(history);
         this.history = history;
     }

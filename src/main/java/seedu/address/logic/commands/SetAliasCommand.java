@@ -28,9 +28,11 @@ public class SetAliasCommand extends Command {
     private final String toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     * Creates a SetAliasCommand to with the specified {@code command} and {@code alias}
      */
     public SetAliasCommand(String command, String alias) {
+
+        //invalid alias, both cnanot be null
         if (command == null || alias == null) {
             throw new NullPointerException();
         }
@@ -49,8 +51,10 @@ public class SetAliasCommand extends Command {
             model.setAlias(commandAdd, toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UnknownCommandException e) {
+            //unable to set alias for unknown command
             throw new CommandException(MESSAGE_UNKNOWN_COMMAND);
         } catch (DuplicateAliasException e) {
+            //unable to set alias if the alias has been set for another command
             throw new CommandException(MESSAGE_DUPLICATE_ALIAS);
         }
 

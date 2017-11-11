@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserWindow.GOOGLE_SEARCH_URL_SUFFIX;

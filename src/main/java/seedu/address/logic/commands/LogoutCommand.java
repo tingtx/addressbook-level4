@@ -38,7 +38,7 @@ public class LogoutCommand extends Command {
             FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
             model.refreshAddressBook();
         } catch (Exception e) {
-            e.getStackTrace()
+            e.getStackTrace();
         }
         currentUser.setPublicUser();
         return new CommandResult(MESSAGE_SUCCESS);

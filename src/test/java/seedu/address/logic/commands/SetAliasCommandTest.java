@@ -74,7 +74,6 @@ public class SetAliasCommandTest {
         CommandResult commandResult = getSetAliasCommand(validAlias, modelStub).execute();
 
         assertEquals(String.format(SetAliasCommand.MESSAGE_SUCCESS, validAlias), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validAlias), modelStub.aliases);
     }
 
     @Test

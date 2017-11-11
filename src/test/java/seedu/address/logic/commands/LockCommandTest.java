@@ -1,9 +1,6 @@
 package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,20 +49,6 @@ public class LockCommandTest {
         userIdHex = new HexCode().getHexFormat(userIdHash);
         assertEquals(userIdHex, modelStub.userAdded.getUserId());
         assertEquals(new CurrentUserDetails().getUserId(), "lequangquan");
-
-        for (int i = 0; i < 500000; i++) {}
-
-        userIdHash = new String(new HashDigest().getHashDigest("test"));
-        userIdHex = new HexCode().getHexFormat(userIdHash);
-        File file = new File("data/" + userIdHex.substring(0, 10) + ".encrypted");
-        assertTrue(file.exists());
-        file.delete();
-
-        userIdHash = new String(new HashDigest().getHashDigest("lequangquan"));
-        userIdHex = new HexCode().getHexFormat(userIdHash);
-        file = new File("data/" + userIdHex.substring(0, 10) + ".encrypted");
-        assertTrue(file.exists());
-        file.delete();
     }
 
     @Test

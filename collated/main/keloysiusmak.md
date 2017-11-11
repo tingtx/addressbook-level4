@@ -1,4 +1,237 @@
 # keloysiusmak
+###### /java/seedu/address/ui/ViewAliasCard.java
+``` java
+package seedu.address.ui;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import seedu.address.logic.Logic;
+
+
+/**
+ * An UI component that displays information of a {@code Person}.
+ */
+public class ViewAliasCard extends UiPart<Region> {
+
+    private static final String FXML = "ViewAliasListCard.fxml";
+
+    /**
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable names cannot be set to such keywords
+     * or an exception will be thrown by JavaFX during runtime.
+     *
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     */
+
+    public final String command;
+
+    @FXML
+    private HBox cardPane;
+    @FXML
+    private Label defaultAlias;
+    @FXML
+    private Label alias;
+    @FXML
+    private Label id;
+
+    public ViewAliasCard(String command, String commandWord, Logic logic) {
+        super(FXML);
+        this.command = command;
+        id.setText(command);
+
+        defaultAlias.setText("Default Alias : " + commandWord);
+        alias.setText("Set Alias : " + logic.getAliasForCommand(commandWord));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonCard)) {
+            return false;
+        }
+
+        // state check
+        ViewAliasCard card = (ViewAliasCard) other;
+        return id.getText().equals(card.id.getText())
+                && command.equals(card.command);
+    }
+}
+```
+###### /java/seedu/address/ui/UiManager.java
+``` java
+    @Override
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+```
+###### /java/seedu/address/ui/CalendarView.java
+``` java
+            txt.setFont(Font.font("Avenir"));
+            txt.setFill(Color.valueOf("#777"));
+            txt.setStyle("-fx-font-size: 12pt; ");
+```
+###### /java/seedu/address/ui/ViewAliasListPanel.java
+``` java
+package seedu.address.ui;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.Logic;
+
+/**
+ * Panel containing the list of commands, and their command words and aliases
+ */
+class ViewAliasListPanel extends UiPart<Region> {
+    private static final String FXML = "ViewAliasListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(ViewAliasListPanel.class);
+
+    @javafx.fxml.FXML
+    private ListView<ViewAliasCard> viewAliasListView;
+
+    public ViewAliasListPanel(ArrayList<ArrayList<String>> commandList, Logic logic) {
+        super(FXML);
+        setCommands(commandList, logic);
+    }
+
+    private void setCommands(ArrayList<ArrayList<String>> commandList, Logic logic) {
+
+        ArrayList<ViewAliasCard> mappedList = new ArrayList<ViewAliasCard>();
+        for (int i = 0; i < commandList.size(); i++) {
+            ArrayList<String> command = commandList.get(i);
+            ViewAliasCard v = new ViewAliasCard(command.get(0), command.get(1), logic);
+            mappedList.add(v);
+        }
+        ObservableList<ViewAliasCard> convertedList = FXCollections.observableArrayList(mappedList);
+        viewAliasListView.setItems(convertedList);
+        viewAliasListView.setCellFactory(listView -> new ViewAliasListViewCell());
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class ViewAliasListViewCell extends ListCell<ViewAliasCard> {
+        @Override
+        protected void updateItem(ViewAliasCard command, boolean empty) {
+            super.updateItem(command, empty);
+
+            if (empty || command == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(command.getRoot());
+            }
+        }
+    }
+}
+```
+###### /java/seedu/address/ui/Ui.java
+``` java
+    /**
+     * Returns the MainWindow.
+     */
+    MainWindow getMainWindow();
+    //@author
+
+    /**
+     * Stops the UI.
+     */
+    void stop();
+
+}
+```
+###### /java/seedu/address/ui/ViewAliasWindow.java
+``` java
+package seedu.address.ui;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import seedu.address.commons.core.Config;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.util.FxViewUtil;
+import seedu.address.logic.Logic;
+
+/**
+ * Controller for a help page
+ */
+public class ViewAliasWindow extends UiPart<Region> {
+
+    public static final String VIEWALIAS_FILE_PATH = "/docs/ViewAliasGuide.html";
+
+    private static final Logger logger = LogsCenter.getLogger(ViewAliasWindow.class);
+    private static final String ICON = "/images/help_icon.png";
+    private static final String FXML = "ViewAliasWindow.fxml";
+    private static final String TITLE = "View Aliases";
+    @FXML
+    private final Stage dialogStage;
+    private ViewAliasListPanel viewAliasListPanel;
+    @FXML
+    private StackPane viewAliasListPanelPlaceholder;
+
+
+    public ViewAliasWindow(ArrayList<ArrayList<String>> c, Logic logic, Config config) {
+        super(FXML);
+
+        viewAliasListPanel = new ViewAliasListPanel(c, logic);
+        viewAliasListPanelPlaceholder.getChildren().add(viewAliasListPanel.getRoot());
+
+        Scene scene = new Scene(getRoot());
+        //Null passed as the parent stage to make it non-modal.
+        dialogStage = createDialogStage(TITLE, null, scene);
+        dialogStage.setMinHeight(600);
+        dialogStage.setMinWidth(400);
+        String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
+        viewAliasListPanelPlaceholder.setStyle("-fx-background-image: url('" + image + "'); ");
+
+        FxViewUtil.setStageIcon(dialogStage, ICON);
+
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Shows the help window.
+     *
+     * @throws IllegalStateException <ul>
+     *                               <li>
+     *                               if this method is called on a thread other than the JavaFX Application Thread.
+     *                               </li>
+     *                               <li>
+     *                               if this method is called during animation or layout processing.
+     *                               </li>
+     *                               <li>
+     *                               if this method is called on the primary stage.
+     *                               </li>
+     *                               <li>
+     *                               if {@code dialogStage} is already showing.
+     *                               </li>
+     *                               </ul>
+     */
+    public void show() {
+        logger.fine("Showing aliases for the application.");
+        dialogStage.showAndWait();
+    }
+
+}
+```
 ###### /java/seedu/address/commons/core/AliasSettings.java
 ``` java
 package seedu.address.commons.core;
@@ -689,215 +922,6 @@ public class ViewAliasRequestEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SetAliasCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.alias.exceptions.DuplicateAliasException;
-import seedu.address.model.alias.exceptions.UnknownCommandException;
-
-/**
- * Sets an alias for a particular command
- */
-public class SetAliasCommand extends Command {
-    public static final String COMMAND_WORD = "setalias";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets an alias for a command. "
-            + "Parameters: "
-            + PREFIX_COMMAND + "COMMAND "
-            + PREFIX_ALIAS + "ALIAS";
-
-    public static final String MESSAGE_SUCCESS = "Alias has been set.";
-
-    private final String commandAdd;
-    private final String toAdd;
-
-    /**
-     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
-     */
-    public SetAliasCommand(String command, String alias) {
-        if (command == null || alias == null) {
-            throw new NullPointerException();
-        }
-        commandAdd = command;
-        toAdd = alias;
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.setAlias(commandAdd, toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (UnknownCommandException e) {
-            throw new CommandException(MESSAGE_UNKNOWN_COMMAND);
-        } catch (DuplicateAliasException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_ALIAS);
-        }
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SetAliasCommand // instanceof handles nulls
-                && toAdd.equals(((SetAliasCommand) other).toAdd));
-    }
-}
-```
-###### /java/seedu/address/logic/commands/SetThemeCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.events.ui.ChangedThemeEvent;
-
-/**
- * Sets a theme for the TunedIn Application
- */
-public class SetThemeCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "settheme";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sets a theme for the .\n"
-            + "Parameters: THEME ('summer', 'spring', 'autumn' or 'winter')\n"
-            + "Example: " + COMMAND_WORD + " spring";
-
-    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes will be shown when "
-            + "you restart the application";
-
-    private final String theme;
-
-    public SetThemeCommand() {
-        this.theme = "summer";
-    }
-
-    public SetThemeCommand(String setTheme) {
-        this.theme = setTheme;
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() {
-        if (!((this.theme.equals("summer"))
-                || (this.theme.equals("spring"))
-                || (this.theme.equals("winter"))
-                || (this.theme.equals("autumn")))) {
-            return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
-        }
-        config.setTheme(this.theme);
-        EventsCenter.getInstance().post(new ChangedThemeEvent(this.theme));
-        return new CommandResult(String.format(MESSAGE_CHANGED_THEME_SUCCESS, this.theme));
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SetThemeCommand // instanceof handles nulls
-                && this.theme.equals(((SetThemeCommand) other).theme)); // state check
-    }
-}
-```
-###### /java/seedu/address/logic/commands/TransferCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.logic.commands.exceptions.ConfigMissingException;
-
-/**
- * Export data for transfer to another computer
- */
-public class TransferCommand extends Command {
-
-    public static final String COMMAND_WORD = "transfer";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Zips the configuration files and includes a installation guide.\n"
-            + "Example: " + COMMAND_WORD;
-
-    public static final String MESSAGE_TRANSFER_SUCCESS = "Successfully exported ZIP file.";
-    public static final String MESSAGE_TRANSFER_ERROR = "Some user settings were missing. Successfully exported ZIP "
-            + "file with default settings";
-
-    public TransferCommand() {
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
-
-    @Override
-    public CommandResult execute() {
-        requireNonNull(model);
-        requireNonNull(config);
-
-        try {
-            model.transferData();
-        } catch (ConfigMissingException e) {
-            model.transferDataWithDefault();
-            return new CommandResult(MESSAGE_TRANSFER_ERROR);
-        }
-
-        return new CommandResult(MESSAGE_TRANSFER_SUCCESS);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TransferCommand); // state check
-    }
-}
-```
-###### /java/seedu/address/logic/commands/ViewAliasCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ViewAliasRequestEvent;
-
-/**
- * Adds a person to the address book.
- */
-public class ViewAliasCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "viewalias";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all aliases.\n"
-            + "Example: " + COMMAND_WORD;
-
-    public static final String MESSAGE_SUCCESS = "Opened alias window.";
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() {
-        EventsCenter.getInstance().post(new ViewAliasRequestEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
-
-    }
-}
-```
 ###### /java/seedu/address/logic/parser/SetAliasCommandParser.java
 ``` java
 package seedu.address.logic.parser;
@@ -988,6 +1012,237 @@ public class SetThemeCommandParser implements Parser<SetThemeCommand> {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/SetThemeCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.events.ui.ChangedThemeEvent;
+import seedu.address.ui.MainWindow;
+
+/**
+ * Sets a theme for the TunedIn Application
+ */
+public class SetThemeCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "settheme";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Sets a theme for the .\n"
+            + "Parameters: THEME ('summer', 'spring', 'autumn' or 'winter')\n"
+            + "Example: " + COMMAND_WORD + " spring";
+
+    public static final String MESSAGE_CHANGED_THEME_SUCCESS = "Changed Theme: %1$s\nYour changes has been saved and " +
+            "will show up for all future accesses.";
+
+    private final String theme;
+
+    public SetThemeCommand() {
+        this.theme = "summer";
+    }
+
+    public SetThemeCommand(String setTheme) {
+        this.theme = setTheme;
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        if (!((this.theme.equals("summer"))
+                || (this.theme.equals("spring"))
+                || (this.theme.equals("winter"))
+                || (this.theme.equals("autumn")))) {
+            return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
+        }
+        config.setTheme(this.theme);
+        String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
+        MainWindow mainWindow = ui.getMainWindow();
+
+        mainWindow.getRoot().setStyle("-fx-background-image: url('" + image + "'); ");
+        EventsCenter.getInstance().post(new ChangedThemeEvent(this.theme));
+        return new CommandResult(String.format(MESSAGE_CHANGED_THEME_SUCCESS, this.theme));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SetThemeCommand // instanceof handles nulls
+                && this.theme.equals(((SetThemeCommand) other).theme)); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/commands/ViewAliasCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ViewAliasRequestEvent;
+
+/**
+ * Adds a person to the address book.
+ */
+public class ViewAliasCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "viewalias";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all aliases.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Opened alias window.";
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        EventsCenter.getInstance().post(new ViewAliasRequestEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+
+    }
+}
+```
+###### /java/seedu/address/logic/commands/SetAliasCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_ALIAS;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMAND;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
+
+/**
+ * Sets an alias for a particular command
+ */
+public class SetAliasCommand extends Command {
+    public static final String COMMAND_WORD = "setalias";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets an alias for a command. "
+            + "Parameters: "
+            + PREFIX_COMMAND + "COMMAND "
+            + PREFIX_ALIAS + "ALIAS";
+
+    public static final String MESSAGE_SUCCESS = "Alias has been set.";
+
+    private final String commandAdd;
+    private final String toAdd;
+
+    /**
+     * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
+     */
+    public SetAliasCommand(String command, String alias) {
+        if (command == null || alias == null) {
+            throw new NullPointerException();
+        }
+        commandAdd = command;
+        toAdd = alias;
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.setAlias(commandAdd, toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (UnknownCommandException e) {
+            throw new CommandException(MESSAGE_UNKNOWN_COMMAND);
+        } catch (DuplicateAliasException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_ALIAS);
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SetAliasCommand // instanceof handles nulls
+                && toAdd.equals(((SetAliasCommand) other).toAdd));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/TransferCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import java.io.IOException;
+
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.logic.commands.exceptions.ConfigMissingException;
+
+/**
+ * Export data for transfer to another computer
+ */
+public class TransferCommand extends Command {
+
+    public static final String COMMAND_WORD = "transfer";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Zips the configuration files and includes a installation guide.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_TRANSFER_SUCCESS = "Successfully exported ZIP file.";
+
+    public TransferCommand() {
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public CommandResult execute() {
+        requireNonNull(model);
+        requireNonNull(config);
+
+        try {
+            model.transferData();
+        } catch (ConfigMissingException e) {
+            try {
+                model.transferDataWithDefault();
+            } catch (IOException i) {
+                i.printStackTrace();
+            } catch (DataConversionException i) {
+                i.printStackTrace();
+            }
+        }
+
+        return new CommandResult(MESSAGE_TRANSFER_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TransferCommand); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+    @Override
+    public void setUi(Ui ui) {
+        this.ui = ui;
+    }
+```
+###### /java/seedu/address/MainApp.java
+``` java
+        logic.setUi(ui);
+```
 ###### /java/seedu/address/model/alias/Alias.java
 ``` java
 package seedu.address.model.alias;
@@ -1066,34 +1321,16 @@ public class Alias implements Serializable {
     @Override
     public void transferData() throws ConfigMissingException {
         ArrayList<String> fileList = new ArrayList<String>();
-        fileList.add(userPref.getAddressBookFilePath());
-        fileList.add(userPref.getEventBookFilePath());
-        fileList.add(userPref.getAccountFilePath());
+        fileList.add(userPref.getDataFilePath());
         fileList.add(config.getUserPrefsFilePath());
         fileList.add(config.DEFAULT_CONFIG_FILE);
         fileList.add("help.txt");
-
-        byte[] buffer = new byte[1024];
 
         try {
             FileOutputStream fos = new FileOutputStream("TunedIn.zip");
             ZipOutputStream zos = new ZipOutputStream(fos);
 
-            for (String file : fileList) {
-
-                System.out.println("File Added Into Zip : " + file);
-                ZipEntry ze = new ZipEntry(file);
-                zos.putNextEntry(ze);
-
-                FileInputStream in = new FileInputStream(file);
-
-                int len;
-                while ((len = in.read(buffer)) > 0) {
-                    zos.write(buffer, 0, len);
-                }
-
-                in.close();
-            }
+            addFileIntoZip(zos, fileList);
 
             zos.closeEntry();
             zos.close();
@@ -1104,16 +1341,12 @@ public class Alias implements Serializable {
     }
 
     @Override
-    public void transferDataWithDefault() {
+    public void transferDataWithDefault() throws IOException {
         ArrayList<String> fileList = new ArrayList<String>();
-        fileList.add(userPref.getAddressBookFilePath());
-        fileList.add(userPref.getEventBookFilePath());
-        fileList.add(userPref.getAccountFilePath());
+        fileList.add(userPref.getDataFilePath());
         fileList.add(config.getUserPrefsFilePath());
         fileList.add(config.DEFAULT_CONFIG_FILE);
         fileList.add("help.txt");
-
-        byte[] buffer = new byte[1024];
 
         try {
             FileOutputStream fos = new FileOutputStream("TunedIn.zip");
@@ -1139,12 +1372,32 @@ public class Alias implements Serializable {
                 System.out.println("File Created : " + fileList.get(1));
                 userStorage.saveEventBook(new EventBook());
             }
-            for (String file : fileList) {
 
-                System.out.println("File Added Into Zip (With Defaults) : " + file);
-                ZipEntry ze = new ZipEntry(file);
-                zos.putNextEntry(ze);
+            addFileIntoZip(zos, fileList);
 
+            zos.closeEntry();
+            zos.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DataConversionException d) {
+            d.printStackTrace();
+        }
+    }
+
+    private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
+
+        byte[] buffer = new byte[1024];
+
+        for (String file : fileList) {
+
+            System.out.println("File Added Into Zip (With Defaults) : " + file);
+            ZipEntry ze = new ZipEntry(file);
+            zos.putNextEntry(ze);
+
+            File thisFile = new File(file);
+
+            if (thisFile.isFile()) {
                 FileInputStream in = new FileInputStream(file);
 
                 int len;
@@ -1155,11 +1408,14 @@ public class Alias implements Serializable {
                 in.close();
             }
 
-            zos.closeEntry();
-            zos.close();
-
-        } catch (Exception e) {
-            ;
+            else if (thisFile.isDirectory()) {
+                String[] newFileList = thisFile.list();
+                ArrayList<String> dirFiles = new ArrayList<String>();
+                for (String filename: newFileList) {
+                    dirFiles.add("data/"+filename);
+                }
+                addFileIntoZip(zos, dirFiles);
+            }
         }
     }
 
@@ -1201,213 +1457,5 @@ public class Alias implements Serializable {
                 (SampleDataUtil::getSampleAddressBook));
         return temp.getPersonList();
     }
-}
-```
-###### /java/seedu/address/ui/CalendarView.java
-``` java
-            txt.setFont(Font.font("Avenir"));
-            txt.setFill(Color.valueOf("#777"));
-            txt.setStyle("-fx-font-size: 12pt; ");
-```
-###### /java/seedu/address/ui/ViewAliasCard.java
-``` java
-package seedu.address.ui;
-
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import seedu.address.logic.Logic;
-
-
-/**
- * An UI component that displays information of a {@code Person}.
- */
-public class ViewAliasCard extends UiPart<Region> {
-
-    private static final String FXML = "ViewAliasListCard.fxml";
-
-    /**
-     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
-     * As a consequence, UI elements' variable names cannot be set to such keywords
-     * or an exception will be thrown by JavaFX during runtime.
-     *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
-     */
-
-    public final String command;
-
-    @FXML
-    private HBox cardPane;
-    @FXML
-    private Label defaultAlias;
-    @FXML
-    private Label alias;
-    @FXML
-    private Label id;
-
-    public ViewAliasCard(String command, String commandWord, Logic logic) {
-        super(FXML);
-        this.command = command;
-        id.setText(command);
-
-        defaultAlias.setText("Default Alias : " + commandWord);
-        alias.setText("Set Alias : " + logic.getAliasForCommand(commandWord));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
-            return false;
-        }
-
-        // state check
-        ViewAliasCard card = (ViewAliasCard) other;
-        return id.getText().equals(card.id.getText())
-                && command.equals(card.command);
-    }
-}
-```
-###### /java/seedu/address/ui/ViewAliasListPanel.java
-``` java
-package seedu.address.ui;
-
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.Logic;
-
-/**
- * Panel containing the list of commands, and their command words and aliases
- */
-class ViewAliasListPanel extends UiPart<Region> {
-    private static final String FXML = "ViewAliasListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ViewAliasListPanel.class);
-
-    @javafx.fxml.FXML
-    private ListView<ViewAliasCard> viewAliasListView;
-
-    public ViewAliasListPanel(ArrayList<ArrayList<String>> commandList, Logic logic) {
-        super(FXML);
-        setCommands(commandList, logic);
-    }
-
-    private void setCommands(ArrayList<ArrayList<String>> commandList, Logic logic) {
-
-        ArrayList<ViewAliasCard> mappedList = new ArrayList<ViewAliasCard>();
-        for (int i = 0; i < commandList.size(); i++) {
-            ArrayList<String> command = commandList.get(i);
-            ViewAliasCard v = new ViewAliasCard(command.get(0), command.get(1), logic);
-            mappedList.add(v);
-        }
-        ObservableList<ViewAliasCard> convertedList = FXCollections.observableArrayList(mappedList);
-        viewAliasListView.setItems(convertedList);
-        viewAliasListView.setCellFactory(listView -> new ViewAliasListViewCell());
-    }
-
-    /**
-     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
-     */
-    class ViewAliasListViewCell extends ListCell<ViewAliasCard> {
-        @Override
-        protected void updateItem(ViewAliasCard command, boolean empty) {
-            super.updateItem(command, empty);
-
-            if (empty || command == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(command.getRoot());
-            }
-        }
-    }
-}
-```
-###### /java/seedu/address/ui/ViewAliasWindow.java
-``` java
-package seedu.address.ui;
-
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
-import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.util.FxViewUtil;
-import seedu.address.logic.Logic;
-
-/**
- * Controller for a help page
- */
-public class ViewAliasWindow extends UiPart<Region> {
-
-    public static final String VIEWALIAS_FILE_PATH = "/docs/ViewAliasGuide.html";
-
-    private static final Logger logger = LogsCenter.getLogger(ViewAliasWindow.class);
-    private static final String ICON = "/images/help_icon.png";
-    private static final String FXML = "ViewAliasWindow.fxml";
-    private static final String TITLE = "View Aliases";
-    @FXML
-    private final Stage dialogStage;
-    private ViewAliasListPanel viewAliasListPanel;
-    @FXML
-    private StackPane viewAliasListPanelPlaceholder;
-
-
-    public ViewAliasWindow(ArrayList<ArrayList<String>> c, Logic logic) {
-        super(FXML);
-
-        viewAliasListPanel = new ViewAliasListPanel(c, logic);
-        viewAliasListPanelPlaceholder.getChildren().add(viewAliasListPanel.getRoot());
-
-        Scene scene = new Scene(getRoot());
-        //Null passed as the parent stage to make it non-modal.
-        dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMinHeight(600);
-        dialogStage.setMinWidth(400);
-
-        FxViewUtil.setStageIcon(dialogStage, ICON);
-
-        registerAsAnEventHandler(this);
-    }
-
-    /**
-     * Shows the help window.
-     *
-     * @throws IllegalStateException <ul>
-     *                               <li>
-     *                               if this method is called on a thread other than the JavaFX Application Thread.
-     *                               </li>
-     *                               <li>
-     *                               if this method is called during animation or layout processing.
-     *                               </li>
-     *                               <li>
-     *                               if this method is called on the primary stage.
-     *                               </li>
-     *                               <li>
-     *                               if {@code dialogStage} is already showing.
-     *                               </li>
-     *                               </ul>
-     */
-    public void show() {
-        logger.fine("Showing aliases for the application.");
-        dialogStage.showAndWait();
-    }
-
 }
 ```

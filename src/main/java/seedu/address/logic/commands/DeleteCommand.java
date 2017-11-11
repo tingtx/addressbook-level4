@@ -4,6 +4,7 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.encryption.SaveToEncryptedFile;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -48,7 +49,7 @@ public class DeleteCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-
+        SaveToEncryptedFile.save();
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 

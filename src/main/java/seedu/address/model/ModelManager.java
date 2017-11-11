@@ -556,34 +556,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void transferData() throws ConfigMissingException {
         ArrayList<String> fileList = new ArrayList<String>();
-        fileList.add(userPref.getAddressBookFilePath());
-        fileList.add(userPref.getEventBookFilePath());
-        fileList.add(userPref.getAccountFilePath());
+        fileList.add(userPref.getDataFilePath());
         fileList.add(config.getUserPrefsFilePath());
         fileList.add(config.DEFAULT_CONFIG_FILE);
         fileList.add("help.txt");
-
-        byte[] buffer = new byte[1024];
 
         try {
             FileOutputStream fos = new FileOutputStream("TunedIn.zip");
             ZipOutputStream zos = new ZipOutputStream(fos);
 
-            for (String file : fileList) {
-
-                System.out.println("File Added Into Zip : " + file);
-                ZipEntry ze = new ZipEntry(file);
-                zos.putNextEntry(ze);
-
-                FileInputStream in = new FileInputStream(file);
-
-                int len;
-                while ((len = in.read(buffer)) > 0) {
-                    zos.write(buffer, 0, len);
-                }
-
-                in.close();
-            }
+            addFileIntoZip(zos, fileList);
 
             zos.closeEntry();
             zos.close();
@@ -596,14 +578,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void transferDataWithDefault() throws IOException {
         ArrayList<String> fileList = new ArrayList<String>();
-        fileList.add(userPref.getAddressBookFilePath());
-        fileList.add(userPref.getEventBookFilePath());
-        fileList.add(userPref.getAccountFilePath());
+        fileList.add(userPref.getDataFilePath());
         fileList.add(config.getUserPrefsFilePath());
         fileList.add(config.DEFAULT_CONFIG_FILE);
         fileList.add("help.txt");
-
-        byte[] buffer = new byte[1024];
 
         try {
             FileOutputStream fos = new FileOutputStream("TunedIn.zip");
@@ -629,12 +607,32 @@ public class ModelManager extends ComponentManager implements Model {
                 System.out.println("File Created : " + fileList.get(1));
                 userStorage.saveEventBook(new EventBook());
             }
-            for (String file : fileList) {
 
-                System.out.println("File Added Into Zip (With Defaults) : " + file);
-                ZipEntry ze = new ZipEntry(file);
-                zos.putNextEntry(ze);
+            addFileIntoZip(zos, fileList);
 
+            zos.closeEntry();
+            zos.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DataConversionException d) {
+            d.printStackTrace();
+        }
+    }
+
+    private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
+
+        byte[] buffer = new byte[1024];
+
+        for (String file : fileList) {
+
+            System.out.println("File Added Into Zip (With Defaults) : " + file);
+            ZipEntry ze = new ZipEntry(file);
+            zos.putNextEntry(ze);
+
+            File thisFile = new File(file);
+
+            if (thisFile.isFile()) {
                 FileInputStream in = new FileInputStream(file);
 
                 int len;
@@ -645,13 +643,14 @@ public class ModelManager extends ComponentManager implements Model {
                 in.close();
             }
 
-            zos.closeEntry();
-            zos.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DataConversionException d) {
-            d.printStackTrace();
+            else if (thisFile.isDirectory()) {
+                String[] newFileList = thisFile.list();
+                ArrayList<String> dirFiles = new ArrayList<String>();
+                for (String filename: newFileList) {
+                    dirFiles.add("data/"+filename);
+                }
+                addFileIntoZip(zos, dirFiles);
+            }
         }
     }
 

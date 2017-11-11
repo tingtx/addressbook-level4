@@ -5,7 +5,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ViewAliasRequestEvent;
 
 /**
- * Adds a person to the address book.
+ * View aliases in a window
  */
 public class ViewAliasCommand extends UndoableCommand {
 

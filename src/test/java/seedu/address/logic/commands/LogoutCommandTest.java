@@ -4,11 +4,15 @@ package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
 
+import java.io.IOException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
@@ -16,6 +20,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.lockmodelstub.ModelStub;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.ui.UiManager;
 
 /**
@@ -52,5 +59,14 @@ public class LogoutCommandTest {
     }
 
     private class ModelStubAcceptingUserAdded extends ModelStub {
+        @Override
+        public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
+                DataConversionException {
+        }
+
+        @Override
+        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+            return;
+        }
     }
 }

@@ -11,7 +11,8 @@ public class User implements ReadOnlyUser {
     private String salt = "";
     private String password = "";
 
-    public User(){}
+    public User() {
+    }
 
     public User(String userId, String salt, String password) {
         this.userId = userId;
@@ -43,11 +44,6 @@ public class User implements ReadOnlyUser {
     @Override
     public String getSalt() {
         return salt;
-    }
-
-    @Override
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     @Override

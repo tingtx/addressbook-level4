@@ -13,19 +13,9 @@ public interface ReadOnlyUser {
 
     String getSalt();
 
-    void setSalt(String salt);
-
     String getPassword();
 
     void setPassword(String password);
-
-    default boolean isExistingUser(String userId) {
-        return this.getUserId().equals(userId);
-    }
-
-    default boolean isCorrectPassword(String userId, String password) {
-        return this.getUserId().equals(userId) && this.getPassword().equals(password);
-    }
 
     /**
      * Returns true if both have the same username. (interfaces cannot override .equals)

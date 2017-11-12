@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -35,6 +36,8 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.encryption.FileEncryptor;
+import seedu.address.commons.util.encryption.SaveToEncryptedFile;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -63,6 +66,7 @@ import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.TransferCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -699,5 +703,25 @@ public class ModelManager extends ComponentManager implements Model {
         AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
                 (SampleDataUtil::getSampleAddressBook));
         return temp.getPersonList();
+    }
+
+    @Override
+    public void encrypt(String userId, String pass, boolean emptyFile) throws Exception {
+        FileEncryptor.encryptFile(userId, pass, emptyFile);
+    }
+
+    @Override
+    public void decrypt(String fileName, String pass) throws Exception {
+        FileEncryptor.decryptFile(fileName, pass);
+    }
+
+    @Override
+    public void encryptPublic(boolean isLockCommand) throws CommandException {
+        FileEncryptor.encryptPublicFile(isLockCommand);
+    }
+
+    @Override
+    public void saveToEncryptedFile() {
+        SaveToEncryptedFile.save();
     }
 }

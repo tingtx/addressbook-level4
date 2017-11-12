@@ -47,20 +47,19 @@ public class LoginCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage(LoginCommand.MESSAGE_ERROR_NO_USER);
 
+        CurrentUserDetails.setCurrentUser("PUBLIC", "", "PUBLIC", "PUBLIC");
         getLoginCommand(modelStub).execute();
     }
 
     @Test
     public void execute_loginSuccessful() throws Exception {
         ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
-        CurrentUserDetails.setCurrentUser("PUBLIC", "", "", "");
+        CurrentUserDetails.setCurrentUser("PUBLIC", "", "PUBLIC", "PUBLIC");
         LoginCommand loginCommand = getLoginCommand(modelStub);
         CommandResult commandResult = loginCommand.execute();
         assertEquals(LoginCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         assertEquals(CurrentUserDetails.getUserId(), "test");
         assertEquals(CurrentUserDetails.getPasswordText(), "test");
-        assertTrue(loginCommand.isEncryptionSuccessful());
-        assertTrue(loginCommand.isDecryptionSuccessful());
     }
 
     private LoginCommand getLoginCommand(Model model) {
@@ -81,7 +80,7 @@ public class LoginCommandTest {
             if (!control) {
                 throw new UserNotFoundException();
             }
-            return null;
+            return "123";
         }
     }
 }

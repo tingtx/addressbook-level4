@@ -113,7 +113,7 @@ public class FileEncryptor {
      * Decrypts one file to a second file using a key derived from a passphrase:
      */
     public static void decryptFile(String fileName, String pass)
-            throws GeneralSecurityException, IOException {
+            throws Exception {
         byte[] encData;
         byte[] decData;
         File inFile = new File("data/" + fileName + ".encrypted");

@@ -60,8 +60,8 @@ public class LockCommand extends Command {
         }
 
         try {
-            FileEncryptor.encryptFile(hexUidDigest.substring(0, 10), saltText + passwordText, false);
-            FileEncryptor.encryptPublicFile(true);
+            model.encrypt(hexUidDigest.substring(0, 10), saltText + passwordText, false);
+            model.encryptPublic(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

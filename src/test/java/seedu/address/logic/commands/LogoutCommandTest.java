@@ -42,8 +42,6 @@ public class LogoutCommandTest {
         LogoutCommand logoutCommand = getLogoutCommand(modelStub);
         CommandResult commandResult = logoutCommand.execute();
         assertEquals(LogoutCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
-        assertTrue(logoutCommand.isPrivateEncryptionSuccessful());
-        assertTrue(logoutCommand.isPublicEncryptionSuccessful());
     }
 
     private LogoutCommand getLogoutCommand(Model model) {

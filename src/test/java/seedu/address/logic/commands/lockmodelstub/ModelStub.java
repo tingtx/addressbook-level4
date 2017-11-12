@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -108,6 +109,26 @@ public class ModelStub implements Model {
     @Override
     public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
         return null;
+    }
+
+    @Override
+    public void encrypt(String userId, String pass, boolean emptyFile) throws Exception {
+
+    }
+
+    @Override
+    public void decrypt(String fileName, String pass) throws Exception {
+
+    }
+
+    @Override
+    public void encryptPublic(boolean isLockCommand) throws CommandException {
+
+    }
+
+    @Override
+    public void saveToEncryptedFile() {
+
     }
 
     @Override

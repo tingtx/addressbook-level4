@@ -206,6 +206,26 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void encrypt(String userId, String pass, boolean emptyFile) throws Exception {
+
+        }
+
+        @Override
+        public void decrypt(String fileName, String pass) throws Exception {
+
+        }
+
+        @Override
+        public void encryptPublic(boolean isLockCommand) throws CommandException {
+
+        }
+
+        @Override
+        public void saveToEncryptedFile() {
+
+        }
+
+        @Override
         public void orderList(String parameter) throws UnrecognisedParameterException {
             fail("This method should not be called.");
         }

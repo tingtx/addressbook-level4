@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
@@ -12,6 +13,7 @@ import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -221,4 +223,12 @@ public interface Model {
             DataConversionException;
 
     ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
+
+    void encrypt(String userId, String pass, boolean emptyFile) throws Exception;
+
+    void decrypt(String fileName, String pass) throws Exception;
+
+    void encryptPublic(boolean isLockCommand) throws CommandException;
+
+    void saveToEncryptedFile();
 }

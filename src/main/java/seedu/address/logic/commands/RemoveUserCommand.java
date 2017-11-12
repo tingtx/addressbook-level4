@@ -54,11 +54,11 @@ public class RemoveUserCommand extends Command {
             if (cascade) {
                 model.deleteEncryptedContacts(userNameHex.substring(0, 10));
             } else {
-                FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + password);
+                model.decrypt(userNameHex.substring(0, 10), saltText + password);
                 model.releaseEncryptedContacts(userNameHex.substring(0, 10));
             }
 
-            SaveToEncryptedFile.save();
+            model.saveToEncryptedFile();
         } catch (UserNotFoundException unfe) {
             throw new CommandException(MESSAGE_USER_NOT_FOUND);
         } catch (Exception e) {

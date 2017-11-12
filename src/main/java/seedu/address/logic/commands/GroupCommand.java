@@ -98,7 +98,7 @@ public class GroupCommand extends UndoableCommand {
                         personToGroup.getEmail(), personToGroup.getAddress(), personToGroup.getBirthday(),
                         new Group(group), personToGroup.getRemark(), personToGroup.getTags());
                 model.updatePerson(personToGroup, editedPerson);
-                SaveToEncryptedFile.save();
+                model.saveToEncryptedFile();
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             } catch (IllegalValueException ive) {

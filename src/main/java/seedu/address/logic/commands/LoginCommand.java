@@ -31,8 +31,6 @@ public class LoginCommand extends Command {
     public static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
     private String userId;
     private String passwordText;
-    private boolean encryptionSuccessful = false;
-    private boolean decryptionSuccessful = false;
 
     public LoginCommand(String userId, String passwordText) {
         this.userId = userId;
@@ -41,14 +39,6 @@ public class LoginCommand extends Command {
 
     public static String getCommandWord() {
         return COMMAND_WORD;
-    }
-
-    public boolean isEncryptionSuccessful() {
-        return encryptionSuccessful;
-    }
-
-    public boolean isDecryptionSuccessful() {
-        return decryptionSuccessful;
     }
 
     @Override
@@ -71,13 +61,11 @@ public class LoginCommand extends Command {
             model.getUserFromIdAndPassword(userNameHex, saltedPasswordHex);
 
             FileEncryptor.encryptPublicFile(false);
-            encryptionSuccessful = true;
 
             ObservableList<ReadOnlyPerson> list = model.getListLength();
             model.emptyPersonList(list);
 
-            FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + passwordText);
-            decryptionSuccessful = true;
+            model.decrypt(userNameHex.substring(0, 10), saltText + passwordText);
             model.refreshAddressBook();
 
             new CurrentUserDetails().setCurrentUser(userId, userNameHex, saltText, passwordText);

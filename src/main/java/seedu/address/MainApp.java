@@ -105,7 +105,7 @@ public class MainApp extends Application {
         try {
             FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
         } catch (Exception e) {
-            e.printStackTrace();
+            ;
         }
     }
 

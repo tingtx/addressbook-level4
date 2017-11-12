@@ -232,6 +232,7 @@ public class AliasSettings implements Serializable {
         usedAliases.add(exportCommand);
         this.transferCommand = new Alias(TransferCommand.getCommandWord(), transferCommand);
         usedAliases.add(transferCommand);
+        System.out.println(usedAliases.toString());
     }
 
     public Alias getAddCommand() {
@@ -444,7 +445,7 @@ public class AliasSettings implements Serializable {
                 usedAliases.remove(this.logoutCommand.getAlias());
             }
             usedAliases.add(alias);
-            this.loginCommand = new Alias(LoginCommand.getCommandWord(), alias);
+            this.logoutCommand = new Alias(LogoutCommand.getCommandWord(), alias);
         } else if (command.equals(ListCommand.getCommandWord())) {
             if (!this.listCommand.getAlias().equals("list")) {
                 usedAliases.remove(this.listCommand.getAlias());

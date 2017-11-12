@@ -122,6 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.eventBook.getEventList());
 
+        //@@author keloysiusmak
         ArrayList<ArrayList<String>> commandList = new ArrayList<ArrayList<String>>();
 
         //Add Command
@@ -169,6 +170,12 @@ public class ModelManager extends ComponentManager implements Model {
         //List Event Command
         commandList.add(new ArrayList<String>(Arrays.asList("List Event", ListEventCommand.getCommandWord())));
 
+        //Lock Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
+
+        //Login Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Log in", LoginCommand.getCommandWord())));
+
         //Order Command
         commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
 
@@ -183,12 +190,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
-
-        //Lock Command
-        commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
-
-        //Login Command
-        commandList.add(new ArrayList<String>(Arrays.asList("Log in", LoginCommand.getCommandWord())));
 
         //Select Event Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select Event", SelectEventCommand.getCommandWord())));
@@ -209,7 +210,7 @@ public class ModelManager extends ComponentManager implements Model {
         commandList.add(new ArrayList<String>(Arrays.asList("View Alias", ViewAliasCommand.getCommandWord())));
 
         viewAliases = commandList;
-
+        //@@author
     }
 
     public ModelManager() {
@@ -325,6 +326,7 @@ public class ModelManager extends ComponentManager implements Model {
         return viewAliases;
     }
 
+    //@@author keloysiusmak
     @Override
     public String getAliasForCommand(String command) {
         AliasSettings aliasSettings = userPref.getAliasSettings();
@@ -381,6 +383,10 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getExportCommand().getAlias();
         } else if (command.equals(TransferCommand.getCommandWord())) {
             return aliasSettings.getTransferCommand().getAlias();
+        } else if (command.equals(LoginCommand.getCommandWord())) {
+            return aliasSettings.getLoginCommand().getAlias();
+        } else if (command.equals(LockCommand.getCommandWord())) {
+            return aliasSettings.getLockCommand().getAlias();
         } else {
             return "Not Set";
         }
@@ -396,6 +402,7 @@ public class ModelManager extends ComponentManager implements Model {
             throw e;
         }
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

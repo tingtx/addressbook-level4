@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 

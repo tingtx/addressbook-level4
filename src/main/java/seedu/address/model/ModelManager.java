@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -624,8 +623,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-    *Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
-    the ZIP as well.
+     * Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
+     * the ZIP as well.
      */
     private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
 
@@ -650,7 +649,7 @@ public class ModelManager extends ComponentManager implements Model {
             } else if (thisFile.isDirectory()) {
                 String[] newFileList = thisFile.list();
                 ArrayList<String> dirFiles = new ArrayList<String>();
-                for (String filename: newFileList) {
+                for (String filename : newFileList) {
                     dirFiles.add("data/" + filename);
                 }
                 addFileIntoZip(zos, dirFiles);

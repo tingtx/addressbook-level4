@@ -111,11 +111,12 @@ public class CommandTestUtil {
     public static final String DATETIME_DESC_SPECTRA = " " + PREFIX_DATETIME + VALID_DATETIME_SPECTRA;
     public static final String DATETIME_DESC_DEEPAVALI = " " + PREFIX_DATETIME + VALID_DATETIME_DEEPAVALI;
 
-    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "Sentosa&"; // '&' not allowed in title
+    // '~' not allowed at the start of title
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "~Sentosa";
     public static final String INVALID_DESCRIPTION_DESC = " "
-            + PREFIX_DESCRIPTION + "New Basketball &"; // '&' not allowed in description
+            + PREFIX_DESCRIPTION + "&New Basketball"; // '&' not allowed at the start of description
     public static final String INVALID_LOCATION_DESC = " "
-            + PREFIX_LOCATION + "Tampines&"; // '&' not allowed in location
+            + PREFIX_LOCATION + "*Tampines"; // '*' not allowed at the start of location
     public static final String INVALID_DATETIME_DESC = " "
             + PREFIX_DATETIME + "32-11-2017 2359"; //There is no 32 in the date
 

@@ -1,11 +1,6 @@
 package seedu.address.ui;
 
-<<<<<<< HEAD
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
-//import static org.junit.Assert.assertEquals;
-=======
 import static org.junit.Assert.assertEquals;
->>>>>>> master
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserWindow.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -49,12 +44,7 @@ public class BrowserWindowTest extends GuiUnitTest {
         //postNow(selectionChangedEventStub);
         //URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
         //        + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
-
-<<<<<<< HEAD
-        waitUntilBrowserLoaded(browserWindowHandle);
-=======
         //waitUntilBrowserLoaded(browserWindowHandle);
->>>>>>> master
         //assertEquals(expectedPersonUrl, browserWindowHandle.getLoadedUrl());
     }
 }

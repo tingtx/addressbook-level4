@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -41,6 +44,7 @@ public class BrowserWindow extends UiPart<Region> {
         dialogStage.setMinHeight(400);
         dialogStage.setMinWidth(600);
         FxViewUtil.setStageIcon(dialogStage, ICON);
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -76,5 +80,11 @@ public class BrowserWindow extends UiPart<Region> {
 
     public void close() {
         dialogStage.close();
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
     }
 }

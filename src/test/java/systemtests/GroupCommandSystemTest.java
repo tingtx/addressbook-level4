@@ -1,6 +1,5 @@
 package systemtests;
 
-
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_BOB;
@@ -31,7 +30,7 @@ public class GroupCommandSystemTest extends AddressBookSystemTest {
         Model model = getModel();
         String expectedMessageGrouped =   String.format(GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + VALID_GROUP_BOB);
         String expectedMessageUnGrouped =   String.format(GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS);
-        /* ----------------- Performing group operation while an unfiltered list is being shown ---------------------- */
+        /* ----------------- Performing group operation while an unfiltered list is being shown --------------------*/
 
         /* Case: group a person, command with leading spaces, trailing spaces and multiple spaces between each field
          * -> grouped
@@ -63,7 +62,7 @@ public class GroupCommandSystemTest extends AddressBookSystemTest {
         groupedPerson = new PersonBuilder(personToGroup).withGroup("").build();
         assertCommandSuccess(command, index, groupedPerson, expectedMessageUnGrouped);
 
-        /* ------------------ Performing group operation while a filtered list is being shown ------------------------ */
+        /* ------------------ Performing group operation while a filtered list is being shown ---------------------- */
 
         /* Case: filtered person list, group index within bounds of address book and person list -> grouped*/
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
@@ -83,7 +82,7 @@ public class GroupCommandSystemTest extends AddressBookSystemTest {
                 "Index " + invalidIndex + " is invalid!");
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
-         /* Case: invalid index (0) -> rejected */
+        /* Case: invalid index (0) -> rejected */
         assertCommandFailure(GroupCommand.COMMAND_WORD + " 0" + GROUP_DESC_BOB,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
 

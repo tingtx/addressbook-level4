@@ -221,7 +221,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Order list of all persons in the Address Book based on the parameter.
      */
     public void orderList(String parameter) throws UnrecognisedParameterException {
-        persons.orderBy(parameter);
+        persons.orderPersonList(parameter);
     }
 
     //// tag-level operations

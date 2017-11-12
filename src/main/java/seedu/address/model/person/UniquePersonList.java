@@ -91,7 +91,7 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Order the list.
      */
-    public void orderBy(String parameter) throws UnrecognisedParameterException {
+    public void orderPersonList(String parameter) throws UnrecognisedParameterException {
 
         switch (parameter) {
         case "NAME":

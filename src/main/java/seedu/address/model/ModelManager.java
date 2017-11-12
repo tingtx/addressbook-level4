@@ -687,6 +687,7 @@ public class ModelManager extends ComponentManager implements Model {
             try {
                 addressBook.addPerson(newP);
             } catch (DuplicatePersonException dpe) {
+                dpe.getStackTrace();
             }
         }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

@@ -66,6 +66,24 @@
     }
 }
 ```
+###### /java/seedu/address/commons/util/XmlUtil.java
+``` java
+    /**
+     * Export the data in the xml file to csv.
+     */
+    public static void exportDataToFile(String destination, StringBuilder content)
+            throws IOException {
+
+        requireNonNull(destination);
+        requireNonNull(content);
+
+        FileWriter fileWriter = new FileWriter(destination);
+        fileWriter.write(content.toString());
+        fileWriter.flush();
+        fileWriter.close();
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/AddEventCommand.java
 ``` java
 
@@ -86,7 +104,7 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_TITLE + "Halloween Horror Night "
             + PREFIX_DESCRIPTION + "Horrifying night "
             + PREFIX_LOCATION + "Universal Studio "
-            + PREFIX_DATETIME + "13/10/17 2359";
+            + PREFIX_DATETIME + "13-10-17 2359";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event book";
@@ -357,6 +375,66 @@ public class EditEventCommand extends UndoableCommand {
                     && getLocation().equals(e.getLocation())
                     && getDatetime().equals(e.getDatetime());
         }
+    }
+}
+```
+###### /java/seedu/address/logic/commands/ExportCommand.java
+``` java
+/**
+ * Export data into csv format
+ */
+public class ExportCommand extends Command {
+
+    public static final String COMMAND_WORD = "export";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Export the data either from the address book or event book.\n"
+            + "Parameters: BOOK (either addressbook or eventbook)\n"
+            + "Example: " + COMMAND_WORD + " addressbook";
+
+    public static final String MESSAGE_EXPORT_BOOK_SUCCESS = "Successfully Exported";
+    public static final String MESSAGE_EXPORT_BOOK_ERROR = "Export failed. Please check whether the xml file exist";
+
+    public static final String[] BOOK_VALIDATION = {"addressbook", "eventbook"};
+
+    private final String targetBook;
+
+    public ExportCommand(String targetBook) {
+        this.targetBook = targetBook;
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException, DuplicateUserException {
+
+        try {
+            if (BOOK_VALIDATION[0].equals(targetBook)) {
+                model.exportAddressBook();
+            } else {
+                model.exportEventBook();
+            }
+
+        } catch (IOException ioe) {
+            throw new AssertionError("Xml File cannot be missing");
+        } catch (ParserConfigurationException pce) {
+            throw new AssertionError("Parser cannot be invalid");
+        } catch (SAXException se) {
+            throw new AssertionError("XML Document must be valid");
+        } catch (TransformerException te) {
+            throw new AssertionError("Able to produce new file");
+        }
+
+        return new CommandResult(MESSAGE_EXPORT_BOOK_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExportCommand // instanceof handles nulls
+                && this.targetBook.equals(((ExportCommand) other).targetBook)); // state check
     }
 }
 ```
@@ -829,6 +907,31 @@ public class EditEventCommandParser implements Parser<EditEventCommand> {
         }
 
         return new EditEventCommand(index, editEventDescriptor);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ExportCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ExportCommand object
+ */
+public class ExportCommandParser implements Parser<ExportCommand> {
+
+    /**
+     * Returns true if a given string is a valid book name.
+     */
+    public static boolean isValidBookParameter(String targetBook) {
+        return Arrays.stream(BOOK_VALIDATION).anyMatch(book -> book.equals(targetBook.toLowerCase()));
+    }
+
+    @Override
+    public ExportCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+
+        if (!isValidBookParameter(trimmedArgs)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_BOOK_PARAMS, ExportCommand.MESSAGE_USAGE));
+        }
+        return new ExportCommand(trimmedArgs);
     }
 }
 ```
@@ -1857,12 +1960,14 @@ public class XmlEventBookStorage implements EventBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlEventBookStorage.class);
 
     private String filePath;
-    private String exportedPath = "data/eventbook.csv";
-    private String header = "Title,Description,Location,Datetime";
+    private String exportedPath;
+    private String header;
 
 
-    public XmlEventBookStorage(String filePath) {
+    public XmlEventBookStorage(String filePath, String exportedPath, String header) {
         this.filePath = filePath;
+        this.exportedPath = exportedPath;
+        this.header = header;
     }
 
     @Override
@@ -1915,6 +2020,120 @@ public class XmlEventBookStorage implements EventBookStorage {
     @Override
     public void exportEventBook() throws ParserConfigurationException, IOException, SAXException {
         XmlFileStorage.exportEventbook(filePath, exportedPath, header);
+    }
+}
+```
+###### /java/seedu/address/storage/XmlFileStorage.java
+``` java
+    /**
+     * Export Addressbook XML Data into CSV file
+     */
+    public static void exportAddressbook(String source, String destination, String header)
+            throws FileNotFoundException, ParserConfigurationException, IOException, SAXException {
+
+        File addressbookXmlFile = new File(source);
+
+        if (!addressbookXmlFile.exists()) {
+            throw new FileNotFoundException("File not found : " + addressbookXmlFile.getAbsolutePath());
+        }
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(addressbookXmlFile);
+
+        doc.getDocumentElement().normalize();
+
+        NodeList personList = doc.getElementsByTagName("persons");
+
+        StringBuilder sb = new StringBuilder();
+
+        //Append the header to the CSV file
+        sb.append(header);
+        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+
+        for (int i = 0; i < personList.getLength(); i++) {
+            Node personNode = personList.item(i);
+
+            if (personNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element elemPerson = (Element) personNode;
+
+                sb.append("\"" + elemPerson.getElementsByTagName("name").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("phone").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("address").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("birthday").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("email").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("group").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemPerson.getElementsByTagName("remark").item(0).getTextContent() + "\"");
+
+                NodeList tagList = elemPerson.getElementsByTagName("tagged");
+                for (int j = 0; j < tagList.getLength(); j++) {
+                    Node tagNode = tagList.item(j);
+                    if (tagNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eTag = (Element) tagNode;
+                        sb.append(XmlUtil.COMMA_DELIMITER);
+                        sb.append("\"" + eTag.getTextContent() + "\"");
+                    }
+                }
+                sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+            }
+        }
+        XmlUtil.exportDataToFile(destination, sb);
+    }
+
+```
+###### /java/seedu/address/storage/XmlFileStorage.java
+``` java
+    /**
+     * Export eventbook XML Data into CSV file
+     */
+    public static void exportEventbook(String source, String destination, String header)
+            throws FileNotFoundException, ParserConfigurationException, IOException, SAXException {
+
+        File eventbookXmlFile = new File(source);
+
+        if (!eventbookXmlFile.exists()) {
+            throw new FileNotFoundException("File not found : " + eventbookXmlFile.getAbsolutePath());
+        }
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(eventbookXmlFile);
+
+        doc.getDocumentElement().normalize();
+
+        NodeList eventList = doc.getElementsByTagName("events");
+
+        StringBuilder sb = new StringBuilder();
+
+        //Append the header to the CSV file
+        sb.append(header);
+        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+
+        for (int i = 0; i < eventList.getLength(); i++) {
+            Node eventNode = eventList.item(i);
+
+            if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element elemEvent = (Element) eventNode;
+
+                sb.append("\"" + elemEvent.getElementsByTagName("title").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemEvent.getElementsByTagName("description").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemEvent.getElementsByTagName("location").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.COMMA_DELIMITER);
+                sb.append("\"" + elemEvent.getElementsByTagName("datetime").item(0).getTextContent() + "\"");
+                sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+            }
+        }
+        XmlUtil.exportDataToFile(destination, sb);
     }
 }
 ```

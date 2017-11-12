@@ -13,7 +13,8 @@ public class GroupCommandTest {
 
         GroupCommand groupCommand = prepareCommand(indexes, showAll);
 
-        String expectedMessage = "Groups: " + model.getGroupList().toString();
+        String expectedMessage = "Groups:  " + model.getGroupList().toString().replaceAll("\\[", "")
+                .replaceAll("\\]", "");
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
@@ -306,6 +307,7 @@ public class OrderCommandTest {
     private String secondParameter;
     private String thirdParameter;
     private String fourthParameter;
+    private String fifthParameter;
 
     @Before
     public void setUp() {
@@ -313,6 +315,7 @@ public class OrderCommandTest {
         secondParameter = "ADDRESS";
         thirdParameter = "BIRTHDAY";
         fourthParameter = "TAG";
+        fifthParameter = "GROUP";
 
         model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account(),
                 new Config());
@@ -370,11 +373,23 @@ public class OrderCommandTest {
     }
 
     @Test
-    public void execute_birthdayTagParameter_orderSuccess() throws CommandException {
+    public void execute_groupParameter_orderSuccess() throws CommandException {
+        OrderCommand command = prepareCommand(fifthParameter);
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + fifthParameter,
+                Arrays.asList(ELLE, FIONA, GEORGE, CARL, DANIEL, BENSON, ALICE));
+    }
+
+    @Test
+    public void execute_mulitiParameters_orderSuccess() throws CommandException {
         OrderCommand command = prepareCommand(thirdParameter.concat(" " + fourthParameter));
         assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + thirdParameter + " "
                         + fourthParameter,
                 Arrays.asList(GEORGE, ALICE, CARL, DANIEL, FIONA, BENSON, ELLE));
+
+        command = prepareCommand(fifthParameter.concat(" " + firstParameter));
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + fifthParameter + " "
+                        + firstParameter,
+                Arrays.asList(ELLE, FIONA, GEORGE, CARL, DANIEL, BENSON, ALICE));
     }
 
     @Test
@@ -489,10 +504,20 @@ public class GroupCommandParserTest {
     }
 
     @Test
+    public void parse_noIndex_success() {
+        List<Index> index = new ArrayList<>();
+        GroupCommand expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
+        assertParseSuccess(parser, " " + VALID_GROUP_AMY, expectedCommand);
+    }
+
+    @Test
     public void parse_showAllString_success() {
         List<Index> index = new ArrayList<>();
         GroupCommand expectedCommand = new GroupCommand(index, "SHOWALL");
         assertParseSuccess(parser, "SHOWALL", expectedCommand);
+
+        expectedCommand = new GroupCommand(index, "showALL");
+        assertParseSuccess(parser, "showALL", expectedCommand);
     }
 
     @Test
@@ -574,11 +599,30 @@ public class OrderCommandParserTest {
         OrderCommand expectedOrderCommand;
 
         //one parameter
+        expectedOrderCommand = new OrderCommand("NAME");
+
+        assertParseSuccess(parser, "NAME", expectedOrderCommand); //same parameter
+
+        assertParseSuccess(parser, "nAme", expectedOrderCommand); //case insensitive
+
         expectedOrderCommand = new OrderCommand("BIRTHDAY");
 
         assertParseSuccess(parser, "BIRTHDAY", expectedOrderCommand); //same parameter
 
         assertParseSuccess(parser, "birtHDaY", expectedOrderCommand); //case insensitive
+
+        expectedOrderCommand = new OrderCommand("ADDRESS");
+
+        assertParseSuccess(parser, "ADDRESS", expectedOrderCommand); //same parameter
+
+        assertParseSuccess(parser, "addresS", expectedOrderCommand); //case insensitive
+
+        expectedOrderCommand = new OrderCommand("TAG");
+
+        assertParseSuccess(parser, "TAG", expectedOrderCommand); //same parameter
+
+        assertParseSuccess(parser, "tAg", expectedOrderCommand); //case insensitive
+
 
         //two parameters
         expectedOrderCommand = new OrderCommand("TAG NAME");
@@ -586,6 +630,19 @@ public class OrderCommandParserTest {
         assertParseSuccess(parser, "TAG NAME", expectedOrderCommand); //same parameter
 
         assertParseSuccess(parser, "tAG namE", expectedOrderCommand); //case insenstive
+
+        expectedOrderCommand = new OrderCommand("GROUP NAME");
+
+        assertParseSuccess(parser, "GROUP NAME", expectedOrderCommand); //same parameter
+
+        assertParseSuccess(parser, "grouP nAmE", expectedOrderCommand); //case insenstive
+
+        expectedOrderCommand = new OrderCommand("TAG NAME");
+
+        assertParseSuccess(parser, "TAG NAME", expectedOrderCommand); //same parameter
+
+        assertParseSuccess(parser, "tAG nAmE", expectedOrderCommand); //case insenstive
+
     }
 }
 ```
@@ -625,11 +682,42 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("01-12-199")); // year less than 4 digit
         assertFalse(Birthday.isValidBirthday("01121996")); // missing '-'
         assertFalse(Birthday.isValidBirthday("12/12/1996")); // '/' invalid
+        assertTrue(Birthday.isValidBirthday("29-02-1997")); //invalid date
 
 
         // valid Birthday
         assertTrue(Birthday.isValidBirthday("12-12-1994")); // exact dd-mm-yyyy format
         assertTrue(Birthday.isValidBirthday(""));
+    }
+}
+```
+###### /java/seedu/address/model/person/ContainsKeywordsPredicateTest.java
+``` java
+    @Test
+    public void test_groupContainsKeywords_returnsTrue() {
+        ContainsKeywordsPredicate.setPredicateType('g');
+
+        // Zero keywords
+        ContainsKeywordsPredicate predicate = new ContainsKeywordsPredicate(Arrays.asList(""));
+        assertTrue(predicate.test(new PersonBuilder().withGroup("").build()));
+
+        // One keyword
+        predicate = new ContainsKeywordsPredicate(Collections.singletonList("TEST"));
+        assertTrue(predicate.test(new PersonBuilder().withGroup("TEST").build()));
+
+    }
+
+    @Test
+    public void test_groupDoesNotContainKeywords_returnsFalse() {
+        ContainsKeywordsPredicate.setPredicateType('g');
+
+        // Non-matching keyword
+        ContainsKeywordsPredicate predicate = new ContainsKeywordsPredicate(Arrays.asList("TEST2"));
+        assertFalse(predicate.test(new PersonBuilder().withGroup("").build()));
+
+        // Keywords case sensitive
+        predicate = new ContainsKeywordsPredicate(Arrays.asList("TEST"));
+        assertFalse(predicate.test(new PersonBuilder().withGroup("test").build()));
     }
 }
 ```
@@ -660,4 +748,185 @@ public class BirthdayTest {
 
         return this;
     }
+```
+###### /java/systemtests/GroupCommandSystemTest.java
+``` java
+public class GroupCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void group() throws Exception {
+        Model model = getModel();
+        String expectedMessageGrouped =   String.format(GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + VALID_GROUP_BOB);
+        String expectedMessageUnGrouped =   String.format(GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS);
+        /* ----------------- Performing group operation while an unfiltered list is being shown ---------------------- */
+
+        /* Case: group a person, command with leading spaces, trailing spaces and multiple spaces between each field
+         * -> grouped
+         */
+        Index index = INDEX_FIRST_PERSON;
+        String command = " " + GroupCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + GROUP_DESC_BOB;
+        Person groupedPerson = new PersonBuilder(ALICE).withGroup(VALID_GROUP_BOB).build();
+        assertCommandSuccess(command, index, groupedPerson, expectedMessageGrouped);
+
+        /* Case: undo grouping the last person in the list -> last person restored */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: redo grouping the last person in the list -> last person grouped again */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        model.updatePerson(
+                getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), groupedPerson);
+        assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: group a person with new values same as existing values -> grouped */
+        ReadOnlyPerson personToGroup = getModel().getFilteredPersonList().get(index.getZeroBased());
+        command = GroupCommand.COMMAND_WORD + " " + index.getOneBased() + GROUP_DESC_BOB;
+        assertCommandSuccess(command, index, personToGroup, expectedMessageGrouped);
+
+        /* Case: clear group -> cleared */
+        command = GroupCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_GROUP.getPrefix();
+        groupedPerson = new PersonBuilder(personToGroup).withGroup("").build();
+        assertCommandSuccess(command, index, groupedPerson, expectedMessageUnGrouped);
+
+        /* ------------------ Performing group operation while a filtered list is being shown ------------------------ */
+
+        /* Case: filtered person list, group index within bounds of address book and person list -> grouped*/
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        index = INDEX_FIRST_PERSON;
+        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        command = GroupCommand.COMMAND_WORD + " " + index.getOneBased() + " " + GROUP_DESC_BOB;
+        personToGroup = getModel().getFilteredPersonList().get(index.getZeroBased());
+        groupedPerson = new PersonBuilder(personToGroup).withGroup(VALID_GROUP_BOB).build();
+        assertCommandSuccess(command, index, groupedPerson, expectedMessageGrouped);
+
+        /* Case: filtered person list, group index within bounds of address book but out of bounds of person list
+         * -> rejected
+         */
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        int invalidIndex = getModel().getAddressBook().getPersonList().size();
+        assertCommandFailure(GroupCommand.COMMAND_WORD + " " + invalidIndex + GROUP_DESC_BOB,
+                "Index " + invalidIndex + " is invalid!");
+
+        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+         /* Case: invalid index (0) -> rejected */
+        assertCommandFailure(GroupCommand.COMMAND_WORD + " 0" + GROUP_DESC_BOB,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (-1) -> rejected */
+        assertCommandFailure(GroupCommand.COMMAND_WORD + " -1" + GROUP_DESC_BOB,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (size + 1) -> rejected */
+        invalidIndex = getModel().getFilteredPersonList().size() + 1;
+        assertCommandFailure(GroupCommand.COMMAND_WORD + " " + invalidIndex + GROUP_DESC_BOB,
+                "Index " + invalidIndex + " is invalid!");
+
+        /* Case: missing index -> rejected */
+        assertCommandFailure(GroupCommand.COMMAND_WORD + GROUP_DESC_BOB,
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
+
+        /* Case: missing index and prefix -> rejected */
+        assertCommandFailure(GroupCommand.COMMAND_WORD + " " + VALID_GROUP_BOB,
+                String.format(GroupCommand.MESSAGE_WRONG_PARAMETER));
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Index, ReadOnlyPerson, Index)} except that
+     * the browser url and selected card remain unchanged.
+     *
+     * @param toGroup the index of the current model's filtered list
+     * @see GroupCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyPerson, Index, String)
+     */
+    private void assertCommandSuccess(String command, Index toGroup, ReadOnlyPerson groupedPerson,
+                                      String expectedMessage) {
+        assertCommandSuccess(command, toGroup, groupedPerson, null, expectedMessage);
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
+     * 1. Asserts that result display box displays the success message of executing {@code GroupCommand}.<br>
+     * 2. Asserts that the model related components are updated to reflect the person at index {@code toEdit} being
+     * updated to values specified {@code editedPerson}.<br>
+     *
+     * @param toGroup the index of the current model's filtered list.
+     * @see GroupCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     */
+    private void assertCommandSuccess(String command, Index toGroup, ReadOnlyPerson groupedPerson,
+                                      Index expectedSelectedCardIndex, String expectedMessage) {
+        Model expectedModel = getModel();
+        try {
+            expectedModel.updatePerson(
+                    expectedModel.getFilteredPersonList().get(toGroup.getZeroBased()), groupedPerson);
+            expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        } catch (DuplicatePersonException | PersonNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "editedPerson is a duplicate in expectedModel, or it isn't found in the model.");
+        }
+
+        assertCommandSuccess(command, expectedModel,
+              expectedMessage, expectedSelectedCardIndex);
+    }
+
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} except that the
+     * browser url and selected card remain unchanged.
+     *
+     * @see GroupCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays an empty string.<br>
+     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+     * 4. Asserts that the browser url and selected card update accordingly depending on the card at
+     * {@code expectedSelectedCardIndex}.<br>
+     * 5. Asserts that the status bar's sync status changes.<br>
+     * 6. Asserts that the command box has the default style class.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
+                                      Index expectedSelectedCardIndex) {
+        executeCommand(command);
+        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxShowsDefaultStyle();
+        if (expectedSelectedCardIndex != null) {
+            assertSelectedCardChanged(expectedSelectedCardIndex);
+        } else {
+            assertSelectedCardUnchanged();
+        }
+        assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    /**
+     * Executes {@code command} and in addition,<br>
+     * 1. Asserts that the command box displays {@code command}.<br>
+     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+     * 3. Asserts that the model related components equal to the current model.<br>
+     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+     * 5. Asserts that the command box has the error style.<br>
+     * Verifications 1 to 3 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
 ```

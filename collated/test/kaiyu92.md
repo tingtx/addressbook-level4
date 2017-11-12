@@ -1403,6 +1403,27 @@ public class EditEventCommandParserTest {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/ExportCommandParserTest.java
+``` java
+public class ExportCommandParserTest {
+
+    private ExportCommandParser parser = new ExportCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_BOOK_PARAMS,
+                ExportCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsExportCommand() {
+        // no leading and trailing whitespaces
+        ExportCommand expectedExportCommand =
+                new ExportCommand("addressbook");
+        assertParseSuccess(parser, "addressbook", expectedExportCommand);
+    }
+}
+```
 ###### /java/seedu/address/logic/parser/FindEventCommandParserTest.java
 ``` java
 public class FindEventCommandParserTest {
@@ -1685,6 +1706,7 @@ public class EventBookTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
+        ContainsKeywordsPredicate.setPredicateType('n');
         modelManager.updateFilteredPersonList(new ContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, eventBook, userPrefs, account, config)));
 
@@ -1720,6 +1742,9 @@ public class XmlEventBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil
             .getPath("./src/test/data/XmlEventBookStorageTest/");
 
+    private static final String HEADER = "Title,Description,Location,Datetime";
+    private static final String EXPORT_DATE = "TempEventBook.csv";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -1733,7 +1758,8 @@ public class XmlEventBookStorageTest {
     }
 
     private java.util.Optional<ReadOnlyEventBook> readEventBook(String filePath) throws Exception {
-        return new XmlEventBookStorage(filePath).readEventBook(addToTestDataPathIfNotNull(filePath));
+        return new XmlEventBookStorage(filePath, TEST_DATA_FOLDER + EXPORT_DATE, HEADER)
+                .readEventBook(addToTestDataPathIfNotNull(filePath));
     }
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -1761,8 +1787,9 @@ public class XmlEventBookStorageTest {
     @Test
     public void readAndSaveEventBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempEventBook.xml";
+        String exportPath = testFolder.getRoot().getPath() + "TempEventBook.csv";
         EventBook original = getTypicalEventBook();
-        XmlEventBookStorage xmlEventBookStorage = new XmlEventBookStorage(filePath);
+        XmlEventBookStorage xmlEventBookStorage = new XmlEventBookStorage(filePath, exportPath, HEADER);
 
         //Save in new file and read back
         xmlEventBookStorage.saveEventBook(original, filePath);
@@ -1803,7 +1830,8 @@ public class XmlEventBookStorageTest {
      */
     private void saveEventBook(ReadOnlyEventBook eventBook, String filePath) {
         try {
-            new XmlEventBookStorage(filePath).saveEventBook(eventBook, addToTestDataPathIfNotNull(filePath));
+            new XmlEventBookStorage(filePath, TEST_DATA_FOLDER + EXPORT_DATE, HEADER)
+                    .saveEventBook(eventBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
         }

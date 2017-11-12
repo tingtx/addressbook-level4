@@ -240,7 +240,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
+    public void exportAddressBook() throws ParserConfigurationException,
             IOException, SAXException, TransformerException {
 
         try {
@@ -257,11 +257,6 @@ public class ModelManager extends ComponentManager implements Model {
         } finally {
             userStorage.exportAddressBook();
         }
-    }
-
-    @Override
-    public ReadOnlyAccount getAccount() {
-        return account;
     }
 
     /**
@@ -657,6 +652,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author quanle1994
+
+    @Override
+    public ReadOnlyAccount getAccount() {
+        return this.account;
+    }
+
     @Override
     public void deleteEncryptedContacts(String fileName) {
         File file = new File("data/" + fileName + ".encrypted");
@@ -664,8 +666,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
-            IOException {
+    public void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException {
         File file = new File("data/" + fileName + ".encrypted");
         file.delete();
         refreshAddressBook();
@@ -677,12 +678,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+    public void refreshAddressBook() throws IOException, DataConversionException {
         AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
                 (SampleDataUtil::getSampleAddressBook));
         for (ReadOnlyPerson p : temp.getPersonList()) {
             Person newP = new Person(p);
-            addressBook.addPerson(newP);
+            try {
+                addressBook.addPerson(newP);
+            } catch (DuplicatePersonException dpe) {
+            }
         }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();

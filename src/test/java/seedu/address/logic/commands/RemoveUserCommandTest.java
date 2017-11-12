@@ -20,7 +20,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.lockmodelstub.ModelStub;
 import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.user.ReadOnlyUser;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.UserNotFoundException;
@@ -165,7 +164,7 @@ public class RemoveUserCommandTest {
         }
 
         @Override
-        public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
+        public void releaseEncryptedContacts(String fileName) throws DataConversionException,
                 IOException {
             throw new IOException();
         }

@@ -162,8 +162,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
-                IOException {
+        public void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException {
             fail("This method should not be called.");
         }
 
@@ -174,7 +173,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+        public void refreshAddressBook() throws IOException, DataConversionException {
             fail("This method should not be called.");
         }
 

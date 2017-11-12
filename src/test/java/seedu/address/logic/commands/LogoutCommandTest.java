@@ -4,11 +4,14 @@ package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
 
+import java.io.IOException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Config;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
@@ -57,8 +60,20 @@ public class LogoutCommandTest {
     @Test
     public void execute_decryptionError() throws Exception {
         ModelStubThrowingError modelStub = new ModelStubThrowingError();
-        CurrentUserDetails.setCurrentUser("test", "", "", "");
+        CurrentUserDetails.setCurrentUser("test", "1111111111111111111", "abc",
+                "abc");
+        modelStub.control = true;
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(LogoutCommand.MESSAGE_ENCRYPTION_ERROR);
 
+        getLogoutCommand(modelStub).execute();
+    }
+
+    @Test
+    public void execute_refreshABError() throws Exception {
+        ModelStubThrowingError modelStub = new ModelStubThrowingError();
+        CurrentUserDetails.setCurrentUser("test", "1111111111111111111", "abc",
+                "abc");
         thrown.expect(CommandException.class);
         thrown.expectMessage(LogoutCommand.MESSAGE_ENCRYPTION_ERROR);
 
@@ -79,9 +94,18 @@ public class LogoutCommandTest {
     }
 
     private class ModelStubThrowingError extends ModelStub {
+        private boolean control = false;
+
         @Override
         public void decrypt(String fileName, String pass) throws Exception {
-            throw new Exception();
+            if (control) {
+                throw new Exception();
+            }
+        }
+
+        @Override
+        public void refreshAddressBook() throws IOException, DataConversionException {
+            throw new IOException();
         }
     }
 }

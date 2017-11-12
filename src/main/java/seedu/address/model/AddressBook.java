@@ -95,6 +95,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * and updates the Tag objects in the person to point to those in {@link #tags}.
      * Group should not be added when adding a person. {@code syncMasterGroupListWith()} is written
      * to assist the JUnit Testing.
+     *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
@@ -103,7 +104,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             persons.add(newPerson);
             syncMasterTagListWith(newPerson);
             syncMasterGroupListWith(newPerson);
-
         } catch (DuplicatePersonException dpe) {
             throw new DuplicatePersonException();
         }
@@ -164,6 +164,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //@@author tingtx
+
     /**
      * Ensures that the group in this person:
      * - exists in the master list {@link #groups}
@@ -180,7 +181,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @see #syncMasterGroupListWith(Person)
      */
     private void syncMasterGroupListWith(UniquePersonList persons) {
-        persons.forEach(this :: syncMasterGroupListWith);
+        persons.forEach(this::syncMasterGroupListWith);
     }
 
     /**

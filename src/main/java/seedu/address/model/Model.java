@@ -64,11 +64,6 @@ public interface Model {
             SAXException, TransformerException;
 
     /**
-     * Returns the Account
-     */
-    ReadOnlyAccount getAccount();
-
-    /**
      * Deletes the given person.
      */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
@@ -209,14 +204,20 @@ public interface Model {
 
     void transferDataWithDefault() throws IOException, DataConversionException;
 
+    //@@author quanle1994
+
+    /**
+     * Returns the Account
+     */
+    ReadOnlyAccount getAccount();
+
     void deleteEncryptedContacts(String substring);
 
-    void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
-            IOException;
+    void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException;
 
     UserPrefs getUserPrefs();
 
-    void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException;
+    void refreshAddressBook() throws IOException, DataConversionException;
 
     void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
             DataConversionException;

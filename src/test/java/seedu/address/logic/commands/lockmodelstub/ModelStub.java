@@ -88,8 +88,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void releaseEncryptedContacts(String fileName) throws DataConversionException, DuplicatePersonException,
-            IOException {
+    public void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException {
     }
 
     @Override
@@ -98,7 +97,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+    public void refreshAddressBook() throws IOException, DataConversionException {
     }
 
     @Override

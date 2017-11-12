@@ -13,6 +13,7 @@ public class TitleTest {
         // invalid title
         assertFalse(Title.isValidTitle("")); // empty string
         assertFalse(Title.isValidTitle(" ")); // spaces only
+        assertFalse(Title.isValidTitle("~!?>")); //Symbols cannot be at the start
 
         // valid title
         assertTrue(Title.isValidTitle("Computing fair")); // alphabets only

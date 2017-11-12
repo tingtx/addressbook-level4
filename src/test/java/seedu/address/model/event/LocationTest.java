@@ -13,6 +13,7 @@ public class LocationTest {
         // invalid location
         assertFalse(Location.isValidLocation("")); // empty string
         assertFalse(Location.isValidLocation(" ")); // spaces only
+        assertFalse(Location.isValidLocation("~!?>")); //Symbols cannot be at the start
 
         // valid location
         assertTrue(Location.isValidLocation("sentosa")); // alphabets only

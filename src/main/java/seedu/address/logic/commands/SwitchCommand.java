@@ -18,6 +18,9 @@ public class SwitchCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Switched to the other tab";
 
+    private static final int ADDRESS_TAB = 0;
+    private static final int EVENTS_TAB = 1;
+
     private final TabPane tabPane;
 
     public SwitchCommand(TabPane tabPane) {
@@ -32,10 +35,10 @@ public class SwitchCommand extends Command {
     public CommandResult execute() throws CommandException {
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         int selectedIndex = selectionModel.getSelectedIndex();
-        if (selectedIndex == 0) {
-            selectedIndex = 1;
+        if (selectedIndex == ADDRESS_TAB) {
+            selectedIndex = EVENTS_TAB;
         } else {
-            selectedIndex = 0;
+            selectedIndex = ADDRESS_TAB;
         }
         selectionModel.select(selectedIndex);
         return new CommandResult(MESSAGE_SUCCESS);

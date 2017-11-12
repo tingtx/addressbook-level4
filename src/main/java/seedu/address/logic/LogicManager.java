@@ -57,11 +57,14 @@ public class LogicManager extends ComponentManager implements Logic {
     }
     //@@author
 
+    //@@author kaiyu92
     @Override
     public void setTabPane(TabPane tabPane) {
         generalBookParser.setTabPane(tabPane);
     }
 
+    //@@author kaiyu92
+    @Override
     public void setCalendarView(CalendarView calendarView) {
         this.calendarViewStateParser = new CalendarViewStateParser(this.userPrefs, this.model, calendarView);
     }
@@ -75,6 +78,7 @@ public class LogicManager extends ComponentManager implements Logic {
             CommandResult result = command.execute();
             undoRedoStack.push(command);
 
+            //If calendarViewStateParser is not null
             //Update the View state of the Calendar
             if (calendarViewStateParser != null) {
                 calendarViewStateParser.updateViewState(commandText);

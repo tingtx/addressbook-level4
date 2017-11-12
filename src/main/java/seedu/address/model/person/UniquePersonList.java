@@ -1,12 +1,9 @@
 package seedu.address.model.person;
 
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsLast;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -95,70 +92,84 @@ public class UniquePersonList implements Iterable<Person> {
      * Order the list.
      */
     public void orderBy(String parameter) throws UnrecognisedParameterException {
-        Comparator<Person> orderByName = (Person a, Person b) -> a.getName().toString()
-                .compareToIgnoreCase(b.getName().toString());
-        Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
-                .compareToIgnoreCase(b.getAddress().toString());
-        Comparator<Person> orderByBirthday = comparing(a -> a.getBirthday().getReformatDate(),
-                nullsLast(naturalOrder()));
-        Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
-                .compareToIgnoreCase(b.getTags().toString());
 
         switch (parameter) {
         case "NAME":
-            internalList.sort(orderByName);
+            internalList.sort(Person.getPersonNameComparator());
             break;
 
         case "ADDRESS":
-            internalList.sort(orderByAddress);
+            internalList.sort(Person.getPersonAddressComparator());
             break;
 
         case "BIRTHDAY":
-            internalList.sort(orderByBirthday);
+            internalList.sort(Person.getPersonBirthdayComparator());
             break;
 
         case "TAG":
-            internalList.sort(orderByTag);
+            internalList.sort(Person.getPersonTagComparator());
+            break;
+
+        case "GROUP":
+            internalList.sort(Person.getPersonGroupComparator());
             break;
 
         case "NAME ADDRESS":
-            internalList.sort(orderByName.thenComparing(orderByAddress));
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonAddressComparator()));
             break;
 
         case "ADDRESS NAME":
-            internalList.sort(orderByName.thenComparing(orderByTag));
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonNameComparator()));
             break;
 
         case "TAG NAME":
-            internalList.sort(orderByTag.thenComparing(orderByName));
+            internalList.sort(Person.getPersonTagComparator().thenComparing(Person.getPersonNameComparator()));
             break;
 
         case "NAME TAG":
-            internalList.sort(orderByName.thenComparing(orderByTag));
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonTagComparator()));
             break;
 
         case "NAME BIRTHDAY":
-            internalList.sort(orderByName.thenComparing(orderByBirthday));
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonBirthdayComparator()));
             break;
 
         case "BIRTHDAY NAME":
-            internalList.sort(orderByBirthday.thenComparing(orderByName));
+            internalList.sort(Person.getPersonBirthdayComparator().thenComparing(Person.getPersonNameComparator()));
             break;
 
         case "ADDRESS BIRTHDAY":
-            internalList.sort(orderByAddress.thenComparing(orderByBirthday));
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonBirthdayComparator()));
             break;
 
         case "BIRTHDAY ADDRESS":
-            internalList.sort(orderByBirthday.thenComparing(orderByAddress));
+            internalList.sort(Person.getPersonBirthdayComparator()
+                    .thenComparing(Person.getPersonAddressComparator()));
             break;
 
         case "BIRTHDAY TAG":
-            internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
+            internalList.sort(nullsLast(Person.getPersonBirthdayComparator()
+                    .thenComparing(Person.getPersonTagComparator())));
             break;
 
         case "TAG BIRTHDAY":
-            internalList.sort(orderByTag.thenComparing(orderByBirthday));
+            internalList.sort(Person.getPersonTagComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP NAME":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonNameComparator()));
+            break;
+
+        case "GROUP BIRTHDAY":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP ADDRESS":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP TAG":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonTagComparator()));
             break;
 
         default:

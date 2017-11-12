@@ -68,7 +68,7 @@ public interface Model {
     ReadOnlyAccount getAccount();
 
     /**
-     * Deletes the given person.
+     * Deletes the given person
      */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
@@ -93,12 +93,12 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     /**
-     * Delete the given tag on every person in the Addressbook
+     * Delete the given tag on every person in the Addressbook.
      */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
     /**
-     * Returns an unmodifiable view of the filtered person list
+     * Returns an unmodifiable view of the filtered person list.
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
@@ -108,7 +108,7 @@ public interface Model {
     ObservableList<Group> getGroupList();
 
     /**
-     * Returns a list of commands.
+     * Returns a list of commands
      */
     ArrayList<ArrayList<String>> getCommands();
 
@@ -128,6 +128,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
     //=====================================================================================================
 
     //==================================EventBook Components=============================================

@@ -7,163 +7,6 @@
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ListCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new ListCommand object
- */
-public class ListCommandParser implements Parser<ListCommand> {
-
-    /**
-     * Returns true if the prefixes contains no empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
-        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an ListCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public ListCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP);
-
-        if (!trimmedArgs.isEmpty() && !isPrefixesPresent(argMultimap, PREFIX_GROUP)) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
-        }
-
-        ContainsKeywordsPredicate.setPredicateType('g');
-        return new ListCommand(trimmedArgs);
-    }
-}
-```
-###### /java/seedu/address/logic/parser/GroupCommandParser.java
-``` java
-
-/**
- * Parses input arguments and creates a new GroupCommand object
- */
-public class GroupCommandParser implements Parser<GroupCommand> {
-
-
-    /**
-     * Returns true the agrs contain only alphabets
-     */
-    private static boolean containsAlphabetOnly(String args) {
-        return args.matches("[a-zA-Z]+");
-    }
-
-    /**
-     * Returns true the prefixes contains no empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
-        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the GroupCommand
-     * and returns an GroupCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public GroupCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        args = args.trim();
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP);
-
-        List<Index> indexes = new ArrayList<>();
-        if (containsAlphabetOnly(args)) {
-            return new GroupCommand(indexes, args);
-        }
-
-        if (!isPrefixesPresent(argMultimap, PREFIX_GROUP) && !containsAlphabetOnly(args)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
-        }
-
-        String preamble;
-        String[] indexStr;
-        try {
-            preamble = argMultimap.getPreamble();
-            indexStr = preamble.split("\\s+");
-            for (String index : indexStr) {
-                indexes.add(ParserUtil.parseIndex(index));
-            }
-
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    GroupCommand.MESSAGE_USAGE));
-        }
-
-        String group = argMultimap.getValue(PREFIX_GROUP).get();
-        return new GroupCommand(indexes, group);
-    }
-}
-```
-###### /java/seedu/address/logic/commands/ListCommand.java
-``` java
-/**
- * Lists all persons in the address book to the user or
- * list a specified group of persons.
- */
-public class ListCommand extends Command {
-
-    public static final String COMMAND_WORD = "list";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": List the Address Book or ONE specified group of contact.\n"
-            + "Parameters: [g/GROUP]\n"
-            + "Example: " + COMMAND_WORD + "\n"
-            + "Example: " + COMMAND_WORD + " g/friends";
-    public static final String MESSAGE_LIST_ALL_SUCCESS = "Listed all persons";
-    public static final String MESSAGE_LIST_GROUP_SUCCESS = "Listed all persons in ";
-    public static final String MESSAGE_LIST_WRONG_PARAMETER = "Group does not exist!";
-
-    private final ContainsKeywordsPredicate predicate;
-    private final String listParameter;
-
-    public ListCommand(String predicate) {
-        this.listParameter = predicate;
-        predicate = predicate.isEmpty() ? predicate : predicate.substring(2).trim();
-        this.predicate = new ContainsKeywordsPredicate(Arrays.asList(predicate));
-
-    }
-
-    public static String getCommandWord() {
-        return COMMAND_WORD;
-    }
-
-    @Override
-    public CommandResult execute() {
-
-        if (listParameter.isEmpty()) {
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
-        }
-
-        model.updateFilteredPersonList(predicate);
-
-        if (model.getFilteredPersonList().size() == 0) {
-            return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
-                    + " " + MESSAGE_LIST_WRONG_PARAMETER);
-        }
-        return new CommandResult(MESSAGE_LIST_GROUP_SUCCESS + listParameter.substring(2).trim());
-
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ListCommand // instanceof handles nulls
-                && this.listParameter.equals(((ListCommand) other).listParameter)); // state check
-    }
-}
-```
 ###### /java/seedu/address/logic/commands/GroupCommand.java
 ``` java
 
@@ -189,8 +32,9 @@ public class GroupCommand extends UndoableCommand {
     public static final String MESSAGE_UNGROUP_PERSON_SUCCESS = "Person(s) removed from group.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String SHOW_ALL_GROUP = "showall";
-    private static final String MESSAGE__WRONG_SHOW_ALL_PARAMETER = "To view existing groups, "
-            + "the parameter must be SHOWALL";
+    public static final String MESSAGE_WRONG_PARAMETER = "To view existing groups, "
+            + "the parameter must be SHOWALL\n" + "To group person(s) : " + COMMAND_WORD + " 1 3 4 "
+            + PREFIX_GROUP + "FAMILY";
 
     private final List<Index> indexes;
     private final String group;
@@ -219,7 +63,7 @@ public class GroupCommand extends UndoableCommand {
         } else if (indexes.size() > 0) {
             commandResult = setGroupToPerson();
         } else {
-            throw new CommandException(MESSAGE__WRONG_SHOW_ALL_PARAMETER);
+            throw new CommandException(MESSAGE_WRONG_PARAMETER);
         }
 
         return commandResult;
@@ -290,41 +134,202 @@ public class GroupCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAdaptedGroup.java
+###### /java/seedu/address/logic/commands/ListCommand.java
 ``` java
 /**
- * JAXB-friendly adapted version of the Group.
+ * Lists all persons in the address book to the user or
+ * list a specified group of persons.
  */
-public class XmlAdaptedGroup {
+public class ListCommand extends Command {
 
-    @XmlValue
-    private String groupName;
+    public static final String COMMAND_WORD = "list";
 
-    /**
-     * Constructs an XmlAdaptedGroup.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdaptedGroup() {
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": List the Address Book or ONE specified group of contact.\n"
+            + "Parameters: [g/GROUP]\n"
+            + "Example: " + COMMAND_WORD + "\n"
+            + "Example: " + COMMAND_WORD + " g/friends";
+    public static final String MESSAGE_LIST_ALL_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_LIST_GROUP_SUCCESS = "Listed all persons in ";
+    public static final String MESSAGE_LIST_WRONG_PARAMETER = "Group does not exist!";
+
+    private final ContainsKeywordsPredicate predicate;
+    private final String listParameter;
+
+    public ListCommand(String predicate) {
+        this.listParameter = predicate;
+        predicate = predicate.isEmpty() ? predicate : predicate.substring(2).trim();
+        this.predicate = new ContainsKeywordsPredicate(Arrays.asList(predicate));
+
     }
 
-    /**
-     * Converts a given Group into this class for JAXB use.
-     *
-     * @param source future changes to this will not affect the created
-     */
-    public XmlAdaptedGroup(Group source) {
-        groupName = source.value;
+    public static String getCommandWord() {
+        return COMMAND_WORD;
     }
 
-    /**
-     * Converts this jaxb-friendly adapted group object into the model's Group object.
-     *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
-     */
-    public Group toModelType() throws IllegalValueException {
-        return new Group(groupName);
+    @Override
+    public CommandResult execute() {
+
+        if (listParameter.isEmpty()) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
+        }
+
+        model.updateFilteredPersonList(predicate);
+
+        if (model.getFilteredPersonList().size() == 0) {
+            return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
+                    + " " + MESSAGE_LIST_WRONG_PARAMETER);
+        }
+        return new CommandResult(MESSAGE_LIST_GROUP_SUCCESS + listParameter.substring(2).trim());
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ListCommand // instanceof handles nulls
+                && this.listParameter.equals(((ListCommand) other).listParameter)); // state check
     }
 }
+```
+###### /java/seedu/address/logic/parser/GroupCommandParser.java
+``` java
+
+/**
+ * Parses input arguments and creates a new GroupCommand object
+ */
+public class GroupCommandParser implements Parser<GroupCommand> {
+
+
+    /**
+     * Returns true the agrs contain only alphabets
+     */
+    private static boolean containsAlphabetOnly(String args) {
+        return args.matches("[a-zA-Z]+");
+    }
+
+    /**
+     * Returns true the prefixes contains no empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
+        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the GroupCommand
+     * and returns an GroupCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public GroupCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        args = args.trim();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP);
+
+        List<Index> indexes = new ArrayList<>();
+        if (containsAlphabetOnly(args)) {
+            return new GroupCommand(indexes, args);
+        }
+
+        if (!isPrefixesPresent(argMultimap, PREFIX_GROUP) && !containsAlphabetOnly(args)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
+        }
+
+        String preamble;
+        String[] indexStr;
+        try {
+            preamble = argMultimap.getPreamble();
+            indexStr = preamble.split("\\s+");
+            for (String index : indexStr) {
+                indexes.add(ParserUtil.parseIndex(index));
+            }
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    GroupCommand.MESSAGE_USAGE));
+        }
+
+        String group = argMultimap.getValue(PREFIX_GROUP).get();
+        return new GroupCommand(indexes, group);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ListCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ListCommand object
+ */
+public class ListCommandParser implements Parser<ListCommand> {
+
+    /**
+     * Returns true if the prefixes contains no empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean isPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
+        return Stream.of(prefix).allMatch(groupPrefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindCommand
+     * and returns an ListCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ListCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP);
+
+        if (!trimmedArgs.isEmpty() && !isPrefixesPresent(argMultimap, PREFIX_GROUP)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+        }
+
+        ContainsKeywordsPredicate.setPredicateType('g');
+        return new ListCommand(trimmedArgs);
+    }
+}
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Ensures that the group in this person:
+     * - exists in the master list {@link #groups}
+     */
+    private void syncMasterGroupListWith(Person person) {
+        Group personGroup = person.getGroup();
+        groups.addIfNew(personGroup);
+    }
+
+    /**
+     * Ensures that every group in these persons:
+     * - exists in the master list {@link #groups}
+     *
+     * @see #syncMasterGroupListWith(Person)
+     */
+    private void syncMasterGroupListWith(UniquePersonList persons) {
+        persons.forEach(this :: syncMasterGroupListWith);
+    }
+
+    /**
+     * Ensures the previous group in this persons:
+     * -is deleted if no other person is in the group
+     */
+    private void updateMasterGroupList(Group prevGroup) {
+        boolean isGroupPresent = false;
+
+        if (!prevGroup.toString().isEmpty()) {
+            for (Person p : persons) {
+                if (p.getGroup().equals(prevGroup)) {
+                    isGroupPresent = true;
+                }
+            }
+            if (!isGroupPresent) {
+                groups.delete(prevGroup);
+            }
+        }
+    }
 ```
 ###### /java/seedu/address/model/group/Group.java
 ``` java
@@ -469,114 +474,6 @@ public class UniqueGroupList implements Iterable<Group> {
 
 }
 ```
-###### /java/seedu/address/model/person/ReadOnlyPerson.java
-``` java
-    ObjectProperty<Birthday> birthdayProperty();
-
-    Birthday getBirthday();
-
-    ObjectProperty<Group> groupProperty();
-
-    Group getGroup();
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
-``` java
-    /**
-     * Order the list.
-     */
-    public void orderBy(String parameter) throws UnrecognisedParameterException {
-        Comparator<Person> orderByName = (Person a, Person b) -> a.getName().toString()
-                .compareToIgnoreCase(b.getName().toString());
-        Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
-                .compareToIgnoreCase(b.getAddress().toString());
-        Comparator<Person> orderByBirthday = comparing(a -> a.getBirthday().getReformatDate(),
-                nullsLast(naturalOrder()));
-        Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
-                .compareToIgnoreCase(b.getTags().toString());
-
-        switch (parameter) {
-        case "NAME":
-            internalList.sort(orderByName);
-            break;
-
-        case "ADDRESS":
-            internalList.sort(orderByAddress);
-            break;
-
-        case "BIRTHDAY":
-            internalList.sort(orderByBirthday);
-            break;
-
-        case "TAG":
-            internalList.sort(orderByTag);
-            break;
-
-        case "NAME ADDRESS":
-            internalList.sort(orderByName.thenComparing(orderByAddress));
-            break;
-
-        case "ADDRESS NAME":
-            internalList.sort(orderByName.thenComparing(orderByTag));
-            break;
-
-        case "TAG NAME":
-            internalList.sort(orderByTag.thenComparing(orderByName));
-            break;
-
-        case "NAME TAG":
-            internalList.sort(orderByName.thenComparing(orderByTag));
-            break;
-
-        case "NAME BIRTHDAY":
-            internalList.sort(orderByName.thenComparing(orderByBirthday));
-            break;
-
-        case "BIRTHDAY NAME":
-            internalList.sort(orderByBirthday.thenComparing(orderByName));
-            break;
-
-        case "ADDRESS BIRTHDAY":
-            internalList.sort(orderByAddress.thenComparing(orderByBirthday));
-            break;
-
-        case "BIRTHDAY ADDRESS":
-            internalList.sort(orderByBirthday.thenComparing(orderByAddress));
-            break;
-
-        case "BIRTHDAY TAG":
-            internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
-            break;
-
-        case "TAG BIRTHDAY":
-            internalList.sort(orderByTag.thenComparing(orderByBirthday));
-            break;
-
-        default:
-            throw new UnrecognisedParameterException();
-        }
-
-    }
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    public void setBirthday(Birthday birthday) {
-        this.birthday.set(requireNonNull(birthday));
-    }
-
-    @Override
-    public ObjectProperty<Group> groupProperty() {
-        return group;
-    }
-
-    @Override
-    public Group getGroup() {
-        return group.get();
-    }
-
-    public void setGroup(Group group) {
-        this.group.set(requireNonNull(group));
-    }
-```
 ###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
@@ -585,7 +482,7 @@ public class UniqueGroupList implements Iterable<Group> {
 public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday can only contain numbers and forward slashes, and in the form dd-mm-yyyy";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
+    public static final String BIRTHDAY_VALIDATION = "dd-mm-yyyy";
     public final String value;
 
     /**
@@ -603,10 +500,22 @@ public class Birthday {
     }
 
     /**
-     * Returns true if a given string is a valid person birthday.
+     * Returns true if a given string is in the correct format and has a valid date.
      */
     public static boolean isValidBirthday(String test) {
-        return test.isEmpty() || test.matches(BIRTHDAY_VALIDATION_REGEX);
+        if (test.isEmpty()) {
+            return true;
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(BIRTHDAY_VALIDATION);
+
+        try {
+            Date date = dateFormat.parse(test);
+            return test.equals(dateFormat.format(date).toString());
+        } catch (ParseException pe) {
+            return false;
+        }
+
     }
 
     public String getReformatDate() {
@@ -637,40 +546,200 @@ public class Birthday {
 }
 
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### /java/seedu/address/model/person/Person.java
+``` java
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Group> groupProperty() {
+        return group;
+    }
+
+    @Override
+    public Group getGroup() {
+        return group.get();
+    }
+
+    public void setGroup(Group group) {
+        this.group.set(requireNonNull(group));
+    }
+```
+###### /java/seedu/address/model/person/Person.java
+``` java
+
+    public static final Comparator<Person> getPersonNameComparator() {
+        return (Person a, Person b) -> a.getName().toString()
+                .compareToIgnoreCase(b.getName().toString());
+    }
+
+    public static final Comparator<Person> getPersonAddressComparator() {
+        return (Person a, Person b) -> a.getAddress().toString()
+                .compareToIgnoreCase(b.getAddress().toString());
+    }
+
+    public static final Comparator<Person> getPersonBirthdayComparator() {
+        return comparing(a -> a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
+    }
+
+    public static final Comparator<Person> getPersonTagComparator() {
+        return (Person a, Person b) -> a.getTags().toString()
+                .compareToIgnoreCase(b.getTags().toString());
+    }
+
+    public static final Comparator<Person> getPersonGroupComparator() {
+        return (a, b) -> {
+            if (a.getGroup().toString().isEmpty()) {
+                return 1;
+            } else if (b.getGroup().toString().isEmpty()) {
+                return -1;
+            } else {
+                return a.getGroup().toString().compareToIgnoreCase(b.getGroup().toString());
+            }
+        };
+    }
+
+
+
+
+```
+###### /java/seedu/address/model/person/ReadOnlyPerson.java
+``` java
+    ObjectProperty<Birthday> birthdayProperty();
+
+    Birthday getBirthday();
+
+    ObjectProperty<Group> groupProperty();
+
+    Group getGroup();
+```
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
-     * Ensures that the group in this person:
-     * - exists in the master list {@link #groups}
+     * Order the list.
      */
-    private void syncMasterGroupListWith(Person person) {
-        Group personGroup = person.getGroup();
-        groups.addIfNew(personGroup);
+    public void orderBy(String parameter) throws UnrecognisedParameterException {
+
+        switch (parameter) {
+        case "NAME":
+            internalList.sort(Person.getPersonNameComparator());
+            break;
+
+        case "ADDRESS":
+            internalList.sort(Person.getPersonAddressComparator());
+            break;
+
+        case "BIRTHDAY":
+            internalList.sort(Person.getPersonBirthdayComparator());
+            break;
+
+        case "TAG":
+            internalList.sort(Person.getPersonTagComparator());
+            break;
+
+        case "GROUP":
+            internalList.sort(Person.getPersonGroupComparator());
+            break;
+
+        case "NAME ADDRESS":
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonAddressComparator()));
+            break;
+
+        case "ADDRESS NAME":
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonNameComparator()));
+            break;
+
+        case "TAG NAME":
+            internalList.sort(Person.getPersonTagComparator().thenComparing(Person.getPersonNameComparator()));
+            break;
+
+        case "NAME TAG":
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonTagComparator()));
+            break;
+
+        case "NAME BIRTHDAY":
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "BIRTHDAY NAME":
+            internalList.sort(Person.getPersonBirthdayComparator().thenComparing(Person.getPersonNameComparator()));
+            break;
+
+        case "ADDRESS BIRTHDAY":
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "BIRTHDAY ADDRESS":
+            internalList.sort(Person.getPersonBirthdayComparator()
+                    .thenComparing(Person.getPersonAddressComparator()));
+            break;
+
+        case "BIRTHDAY TAG":
+            internalList.sort(nullsLast(Person.getPersonBirthdayComparator()
+                    .thenComparing(Person.getPersonTagComparator())));
+            break;
+
+        case "TAG BIRTHDAY":
+            internalList.sort(Person.getPersonTagComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP NAME":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonNameComparator()));
+            break;
+
+        case "GROUP BIRTHDAY":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP ADDRESS":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP TAG":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonTagComparator()));
+            break;
+
+        default:
+            throw new UnrecognisedParameterException();
+        }
+
+    }
+```
+###### /java/seedu/address/storage/XmlAdaptedGroup.java
+``` java
+/**
+ * JAXB-friendly adapted version of the Group.
+ */
+public class XmlAdaptedGroup {
+
+    @XmlValue
+    private String groupName;
+
+    /**
+     * Constructs an XmlAdaptedGroup.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedGroup() {
     }
 
     /**
-     * Ensures that every group in these persons:
-     * - exists in the master list {@link #groups}
+     * Converts a given Group into this class for JAXB use.
      *
-     * @see #syncMasterGroupListWith(Person)
+     * @param source future changes to this will not affect the created
      */
-    private void syncMasterGroupListWith(UniquePersonList persons) {
-        persons.forEach(this :: syncMasterGroupListWith);
+    public XmlAdaptedGroup(Group source) {
+        groupName = source.value;
     }
 
     /**
-     * Ensures the previous group in this persons:
-     * -is deleted if no other person is in the group
+     * Converts this jaxb-friendly adapted group object into the model's Group object.
+     *
+     * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
-    private void updateMasterGroupList(Group prevGroup) {
-        boolean isGroupPresent = false;
-        for (Person p : persons) {
-            if (p.getGroup().value.equals(prevGroup)) {
-                isGroupPresent = true;
-            }
-        }
-        if (!isGroupPresent) {
-            groups.delete(prevGroup);
-        }
+    public Group toModelType() throws IllegalValueException {
+        return new Group(groupName);
     }
+}
 ```

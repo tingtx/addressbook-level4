@@ -28,6 +28,17 @@ public class LoginCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
+    public void execute_loginBeforeLogout() throws Exception {
+        ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(LoginCommand.MESSAGE_LOGIN_ERROR);
+
+        CurrentUserDetails.setUserId("test");
+        getLoginCommand(modelStub).execute();
+    }
+
+    @Test
     public void execute_userNotFoundException() throws Exception {
         ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
         modelStub.control = false;
@@ -44,6 +55,8 @@ public class LoginCommandTest {
         CurrentUserDetails.setCurrentUser("PUBLIC", "", "", "");
         CommandResult commandResult = getLoginCommand(modelStub).execute();
         assertEquals(LoginCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertEquals(CurrentUserDetails.getUserId(), "test");
+        assertEquals(CurrentUserDetails.getPasswordText(), "test");
     }
 
     private LoginCommand getLoginCommand(Model model) {

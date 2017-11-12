@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
-import java.util.Arrays;
-
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.digestutil.HashDigest;
 import seedu.address.commons.util.digestutil.HexCode;
@@ -30,7 +28,7 @@ public class LoginCommand extends Command {
             + PREFIX_PASSWORD + "PASSWORD";
     public static final String MESSAGE_SUCCESS = "Log In Successful";
     public static final String MESSAGE_ERROR_NO_USER = "User does not exist";
-    private static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
+    public static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
     private String userId;
     private String passwordText;
 
@@ -41,10 +39,6 @@ public class LoginCommand extends Command {
 
     public static String getCommandWord() {
         return COMMAND_WORD;
-    }
-
-    private boolean isSameDigest(byte[] digest1, byte[] digest2) {
-        return Arrays.equals(digest1, digest2);
     }
 
     @Override
@@ -81,20 +75,5 @@ public class LoginCommand extends Command {
             e.printStackTrace();
         }
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    public String getPassword() {
-        return passwordText;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    /**
-     * This checks if the userId is existing
-     */
-    public String retrieveSaltFromStorage() throws UserNotFoundException {
-        return model.retrieveSaltFromStorage(userId);
     }
 }

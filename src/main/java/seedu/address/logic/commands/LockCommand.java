@@ -73,15 +73,7 @@ public class LockCommand extends Command {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getPasswordText() {
         return passwordText;
-    }
-
-    public void setPasswordText(String passwordText) {
-        this.passwordText = passwordText;
     }
 }

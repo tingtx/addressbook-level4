@@ -10,7 +10,7 @@ import seedu.address.logic.Logic;
 //@@author kaiyu92
 
 /**
- * The UI component that is responsible containing the CalendarView
+ * The UI component that is responsible for containing the CalendarView
  */
 public class CalendarViewPane extends UiPart<Region> {
 

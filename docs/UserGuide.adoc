@@ -589,10 +589,12 @@ Format: `switch`
 Sync the TunedIn application to your cloud TunedInLive account. +
 Format: `sync`
 //@@author keloysiusmak
+// tag::transfer[]
 === Transfer : `transfer`
 
 Exports your settings, data and configurations into a ZIP file, along with the installation instructions. +
 Format: `transfer`
+// end::transfer[]
 
 // tag::alias[]
 === Viewing aliases : `viewalias` - Since V1.1
@@ -642,6 +644,7 @@ Examples:
 
 * `changepassword pw/SPECIAL1PASS pw/SPECIAL2PASS`
 
+// tag::connect[]
 === Connect with social media : `connect` - Coming in V2.0
 
 Connect with Facebook to sync Facebook contacts into the address book. +
@@ -650,7 +653,8 @@ Format: `connect u/FACEBOOK_EMAIL p/FACEBOOK_PASSWORD`
 Examples:
 
 * `connect u/keloysius@mak.com p/MYFBp4ss`
-
+// end::connect[]
+// tag::customtheme[]
 === Create Theme : `createtheme` - Coming in V2.0
 
 Creates a new theme using a URL. +
@@ -677,13 +681,13 @@ Format: `exporttheme t/THEME_NAME`
 Examples:
 
 * `exporttheme t/favourite`
-
+// end::customtheme[]
+// tag::sync[]
 === Sync : `sync` - Coming in V2.0
 
 Sync the TunedIn application to your cloud TunedInLive account. +
 Format: `sync`
-
-===
+// end::sync[]
 
 == FAQ
 *Q*: How do I transfer my data to another Computer? +

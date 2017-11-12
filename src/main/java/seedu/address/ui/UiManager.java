@@ -64,6 +64,13 @@ public class UiManager extends ComponentManager implements Ui {
         showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
     }
 
+    //@@author keloysiusmak
+    @Override
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+    //@@author
+
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");

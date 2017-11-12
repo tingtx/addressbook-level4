@@ -20,12 +20,14 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.UiManager;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -139,7 +141,11 @@ public class SelectCommandTest {
      */
     private SelectCommand prepareCommand(Index index) {
         SelectCommand selectCommand = new SelectCommand(index);
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         return selectCommand;
     }
 }

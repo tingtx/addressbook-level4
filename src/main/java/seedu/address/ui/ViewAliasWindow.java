@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -31,7 +32,7 @@ public class ViewAliasWindow extends UiPart<Region> {
     private StackPane viewAliasListPanelPlaceholder;
 
 
-    public ViewAliasWindow(ArrayList<ArrayList<String>> c, Logic logic) {
+    public ViewAliasWindow(ArrayList<ArrayList<String>> c, Logic logic, Config config) {
         super(FXML);
 
         viewAliasListPanel = new ViewAliasListPanel(c, logic);
@@ -42,6 +43,8 @@ public class ViewAliasWindow extends UiPart<Region> {
         dialogStage = createDialogStage(TITLE, null, scene);
         dialogStage.setMinHeight(600);
         dialogStage.setMinWidth(400);
+        String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
+        viewAliasListPanelPlaceholder.setStyle("-fx-background-image: url('" + image + "'); ");
 
         FxViewUtil.setStageIcon(dialogStage, ICON);
 

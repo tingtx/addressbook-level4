@@ -19,6 +19,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.ui.UiManager;
 
 
 public class LogicManagerTest {
@@ -26,7 +27,9 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model, new UserPrefs(), new Config());
+    private UserPrefs userPrefs = new UserPrefs();
+    private Config config = new Config();
+    private Logic logic = new LogicManager(model, userPrefs, config, new UiManager(null, config, userPrefs));
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {

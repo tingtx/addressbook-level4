@@ -11,6 +11,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.ui.CalendarView;
+import seedu.address.ui.Ui;
 
 /**
  * API of the Logic component
@@ -60,4 +61,10 @@ public interface Logic {
      * Passing the UI Object Calendar
      */
     void setCalendarView(CalendarView calendarView);
+
+    /**
+     * Passing the UI Object
+     */
+    void setUi(Ui ui);
+
 }

@@ -207,7 +207,7 @@ public interface Model {
 
     void transferData() throws ConfigMissingException;
 
-    void transferDataWithDefault();
+    void transferDataWithDefault() throws IOException, DataConversionException;
 
     void deleteEncryptedContacts(String substring);
 

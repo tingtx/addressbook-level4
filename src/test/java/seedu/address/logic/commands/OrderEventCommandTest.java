@@ -19,12 +19,14 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Account;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.ui.UiManager;
 
 //@@author kaiyu92
 public class OrderEventCommandTest {
@@ -107,9 +109,16 @@ public class OrderEventCommandTest {
 
     }
 
+    /**
+     * Generates a new OrderCommand
+     */
     private OrderEventCommand prepareCommand(String parameter) {
         OrderEventCommand orderEventCommand = new OrderEventCommand(parameter);
-        orderEventCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config());
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        orderEventCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
         return orderEventCommand;
     }
 

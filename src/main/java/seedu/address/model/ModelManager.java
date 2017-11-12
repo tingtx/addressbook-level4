@@ -239,7 +239,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
             IOException, SAXException, TransformerException {
-        userStorage.exportAddressBook();
+
+        try {
+            Optional<ReadOnlyAddressBook> addressBookOptional = userStorage.readAddressBook();
+
+            if (!addressBookOptional.isPresent()) {
+                logger.info("File Created : " + userPref.getAddressBookFilePath());
+                userStorage.saveAddressBook(new AddressBook());
+            }
+        } catch (DataConversionException dce) {
+            logger.info(dce.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        } finally {
+            userStorage.exportAddressBook();
+        }
     }
 
     @Override
@@ -424,7 +438,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void exportEventBook() throws FileNotFoundException, ParserConfigurationException,
             IOException, SAXException, TransformerException {
-        userStorage.exportEventBook();
+
+        try {
+            Optional<ReadOnlyEventBook> addressBookOptional = userStorage.readEventBook();
+
+            if (!addressBookOptional.isPresent()) {
+                logger.info("File Created : " + userPref.getEventBookFilePath());
+                userStorage.saveEventBook(new EventBook());
+            }
+        } catch (DataConversionException dce) {
+            logger.info(dce.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        } finally {
+            userStorage.exportEventBook();
+        }
     }
 
     /**
@@ -528,34 +556,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void transferData() throws ConfigMissingException {
         ArrayList<String> fileList = new ArrayList<String>();
-        fileList.add(userPref.getAddressBookFilePath());
-        fileList.add(userPref.getEventBookFilePath());
-        fileList.add(userPref.getAccountFilePath());
+        fileList.add(userPref.getDataFilePath());
         fileList.add(config.getUserPrefsFilePath());
         fileList.add(config.DEFAULT_CONFIG_FILE);
         fileList.add("help.txt");
-
-        byte[] buffer = new byte[1024];
 
         try {
             FileOutputStream fos = new FileOutputStream("TunedIn.zip");
             ZipOutputStream zos = new ZipOutputStream(fos);
 
-            for (String file : fileList) {
-
-                System.out.println("File Added Into Zip : " + file);
-                ZipEntry ze = new ZipEntry(file);
-                zos.putNextEntry(ze);
-
-                FileInputStream in = new FileInputStream(file);
-
-                int len;
-                while ((len = in.read(buffer)) > 0) {
-                    zos.write(buffer, 0, len);
-                }
-
-                in.close();
-            }
+            addFileIntoZip(zos, fileList);
 
             zos.closeEntry();
             zos.close();
@@ -566,16 +576,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void transferDataWithDefault() {
+    public void transferDataWithDefault() throws IOException {
         ArrayList<String> fileList = new ArrayList<String>();
-        fileList.add(userPref.getAddressBookFilePath());
-        fileList.add(userPref.getEventBookFilePath());
-        fileList.add(userPref.getAccountFilePath());
+        fileList.add(userPref.getDataFilePath());
         fileList.add(config.getUserPrefsFilePath());
         fileList.add(config.DEFAULT_CONFIG_FILE);
         fileList.add("help.txt");
-
-        byte[] buffer = new byte[1024];
 
         try {
             FileOutputStream fos = new FileOutputStream("TunedIn.zip");
@@ -601,27 +607,51 @@ public class ModelManager extends ComponentManager implements Model {
                 System.out.println("File Created : " + fileList.get(1));
                 userStorage.saveEventBook(new EventBook());
             }
-            for (String file : fileList) {
 
-                System.out.println("File Added Into Zip (With Defaults) : " + file);
-                ZipEntry ze = new ZipEntry(file);
-                zos.putNextEntry(ze);
+            addFileIntoZip(zos, fileList);
 
+            zos.closeEntry();
+            zos.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (DataConversionException d) {
+            d.printStackTrace();
+        }
+    }
+
+    /**
+    *Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
+    the ZIP as well.
+     */
+    private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
+
+        byte[] buffer = new byte[1024];
+
+        for (String file : fileList) {
+
+            System.out.println("File Added Into Zip (With Defaults) : " + file);
+            ZipEntry ze = new ZipEntry(file);
+            zos.putNextEntry(ze);
+
+            File thisFile = new File(file);
+
+            if (thisFile.isFile()) {
                 FileInputStream in = new FileInputStream(file);
 
                 int len;
                 while ((len = in.read(buffer)) > 0) {
                     zos.write(buffer, 0, len);
                 }
-
                 in.close();
+            } else if (thisFile.isDirectory()) {
+                String[] newFileList = thisFile.list();
+                ArrayList<String> dirFiles = new ArrayList<String>();
+                for (String filename: newFileList) {
+                    dirFiles.add("data/" + filename);
+                }
+                addFileIntoZip(zos, dirFiles);
             }
-
-            zos.closeEntry();
-            zos.close();
-
-        } catch (Exception e) {
-            ;
         }
     }
 

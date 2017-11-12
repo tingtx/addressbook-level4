@@ -56,11 +56,11 @@ public class LoginCommandTest {
         CurrentUserDetails.setCurrentUser("PUBLIC", "", "", "");
         LoginCommand loginCommand = getLoginCommand(modelStub);
         CommandResult commandResult = loginCommand.execute();
-        assertTrue(loginCommand.isEncryptionSuccessful());
-        assertTrue(loginCommand.isDecryptionSuccessful());
         assertEquals(LoginCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         assertEquals(CurrentUserDetails.getUserId(), "test");
         assertEquals(CurrentUserDetails.getPasswordText(), "test");
+        assertTrue(loginCommand.isEncryptionSuccessful());
+        assertTrue(loginCommand.isDecryptionSuccessful());
     }
 
     private LoginCommand getLoginCommand(Model model) {

@@ -64,16 +64,12 @@ public interface Model {
             SAXException, TransformerException;
 
     /**
-<<<<<<< HEAD
-     * Deletes the given person.
-=======
      * Returns the Account
      */
     ReadOnlyAccount getAccount();
 
     /**
      * Deletes the given person
->>>>>>> master
      */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
@@ -215,11 +211,6 @@ public interface Model {
     void transferDataWithDefault() throws IOException, DataConversionException;
 
     //@@author quanle1994
-
-    /**
-     * Returns the Account
-     */
-    ReadOnlyAccount getAccount();
 
     void deleteEncryptedContacts(String substring);
 

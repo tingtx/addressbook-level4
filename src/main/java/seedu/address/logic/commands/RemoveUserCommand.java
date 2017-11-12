@@ -1,9 +1,10 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.digestutil.HashDigest;
-import seedu.address.logic.commands.digestutil.HexCode;
+//@@author quanle1994
+
+import seedu.address.commons.util.digestutil.HashDigest;
+import seedu.address.commons.util.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
@@ -21,9 +22,9 @@ public class RemoveUserCommand extends Command {
             + "N means the contacts associated to that user will be released to accessible by the public."
             + "Example: " + COMMAND_WORD + " u/lequangquan p/123123 r/Y";
     public static final String MESSAGE_REMOVE_USER_SUCCESS = "Removed user: %1$s";
-    private static final String MESSAGE_USER_NOT_FOUND = "The user credentials provided do not match our "
+    public static final String MESSAGE_USER_NOT_FOUND = "The user credentials provided do not match our "
             + "database.";
-    private static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
+    public static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
     private String userName;
     private String password;
     private boolean cascade;
@@ -53,9 +54,10 @@ public class RemoveUserCommand extends Command {
             if (cascade) {
                 model.deleteEncryptedContacts(userNameHex.substring(0, 10));
             } else {
-                FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + password);
-                model.deleteEncryptedContacts(userNameHex.substring(0, 10));
+                model.decrypt(userNameHex.substring(0, 10), saltText + password);
+                model.releaseEncryptedContacts(userNameHex.substring(0, 10));
             }
+            model.saveToEncryptedFile();
         } catch (UserNotFoundException unfe) {
             throw new CommandException(MESSAGE_USER_NOT_FOUND);
         } catch (Exception e) {

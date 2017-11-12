@@ -48,7 +48,7 @@ public class DeleteCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-
+        model.saveToEncryptedFile();
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 

@@ -12,6 +12,7 @@ import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -209,14 +210,26 @@ public interface Model {
 
     void transferDataWithDefault() throws IOException, DataConversionException;
 
+    //@@author quanle1994
+
     void deleteEncryptedContacts(String substring);
+
+    void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException;
 
     UserPrefs getUserPrefs();
 
-    void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException;
+    void refreshAddressBook() throws IOException, DataConversionException;
 
     void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
             DataConversionException;
 
     ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
+
+    void encrypt(String userId, String pass, boolean emptyFile) throws Exception;
+
+    void decrypt(String fileName, String pass) throws Exception;
+
+    void encryptPublic(boolean isLockCommand) throws CommandException;
+
+    void saveToEncryptedFile();
 }

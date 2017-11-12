@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 //@@author quanle1994
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,8 +39,11 @@ public class LogoutCommandTest {
     public void execute_logoutSuccessful() throws Exception {
         ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
         CurrentUserDetails.setCurrentUser("test", "", "", "");
-        CommandResult commandResult = getLogoutCommand(modelStub).execute();
+        LogoutCommand logoutCommand = getLogoutCommand(modelStub);
+        CommandResult commandResult = logoutCommand.execute();
         assertEquals(LogoutCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+        assertTrue(logoutCommand.isPrivateEncryptionSuccessful());
+        assertTrue(logoutCommand.isPublicEncryptionSuccessful());
     }
 
     private LogoutCommand getLogoutCommand(Model model) {

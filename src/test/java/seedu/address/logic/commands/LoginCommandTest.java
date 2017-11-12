@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 //@@author quanle1994
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,7 +54,10 @@ public class LoginCommandTest {
     public void execute_loginSuccessful() throws Exception {
         ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
         CurrentUserDetails.setCurrentUser("PUBLIC", "", "", "");
-        CommandResult commandResult = getLoginCommand(modelStub).execute();
+        LoginCommand loginCommand = getLoginCommand(modelStub);
+        CommandResult commandResult = loginCommand.execute();
+        assertTrue(loginCommand.isEncryptionSuccessful());
+        assertTrue(loginCommand.isDecryptionSuccessful());
         assertEquals(LoginCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
         assertEquals(CurrentUserDetails.getUserId(), "test");
         assertEquals(CurrentUserDetails.getPasswordText(), "test");

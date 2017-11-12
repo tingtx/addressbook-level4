@@ -16,9 +16,19 @@ public class LogoutCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Logged out successfully!";
     public static final String MESSAGE_LOGOUT_ERROR = "You have not logged in!";
     private CurrentUserDetails currentUser = new CurrentUserDetails();
+    private boolean privateEncryptionSuccessful = false;
+    private boolean publicEncryptionSuccessful = false;
 
     public static String getCommandWord() {
         return COMMAND_WORD;
+    }
+
+    public boolean isPrivateEncryptionSuccessful() {
+        return privateEncryptionSuccessful;
+    }
+
+    public boolean isPublicEncryptionSuccessful() {
+        return publicEncryptionSuccessful;
     }
 
     @Override
@@ -30,12 +40,14 @@ public class LogoutCommand extends Command {
             ObservableList<ReadOnlyPerson> list = model.getListLength();
             FileEncryptor.encryptFile(currentUser.getUserIdHex().substring(0, 10), currentUser.getSaltText()
                     + currentUser.getPasswordText(), true);
+            privateEncryptionSuccessful = true;
             model.emptyPersonList(list);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
+            publicEncryptionSuccessful = true;
             model.refreshAddressBook();
         } catch (Exception e) {
             e.getStackTrace();

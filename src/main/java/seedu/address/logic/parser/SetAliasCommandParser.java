@@ -47,7 +47,12 @@ public class SetAliasCommandParser implements Parser<SetAliasCommand> {
                 || command.equals("exit") || command.equals("find") || command.equals("help")
                 || command.equals("history") || command.equals("list") || command.equals("order")
                 || command.equals("redo") || command.equals("remark") || command.equals("select")
-                || command.equals("undo") || command.equals("viewalias") || command.equals("setalias"))) {
+                || command.equals("undo") || command.equals("viewalias") || command.equals("setalias")
+                || command.equals("settheme") || command.equals("deleteevent") || command.equals("editevent")
+                || command.equals("export") || command.equals("findevent") || command.equals("group")
+                || command.equals("lock") || command.equals("listevent") || command.equals("currentuser")
+                || command.equals("orderevent") || command.equals("selectevent") || command.equals("transfer")
+                || command.equals("switch") || command.equals("remove"))) {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
 
@@ -55,7 +60,11 @@ public class SetAliasCommandParser implements Parser<SetAliasCommand> {
                 || alias.equals("exit") || alias.equals("find") || alias.equals("help") || alias.equals("history")
                 || alias.equals("list") || alias.equals("order") || alias.equals("redo") || alias.equals("remark")
                 || alias.equals("select") || alias.equals("undo") || alias.equals("viewalias")
-                || alias.equals("setalias"))) {
+                || alias.equals("setalias") || command.equals("settheme") || command.equals("editevent")
+                || command.equals("export") || command.equals("findevent") || command.equals("group")
+                || command.equals("lock") || command.equals("listevent") || command.equals("currentuser")
+                || command.equals("orderevent") || command.equals("selectevent") || command.equals("transfer")
+                || command.equals("switch") || command.equals("remove"))) {
             throw new ParseException(MESSAGE_DUPLICATE_ALIAS);
         }
 

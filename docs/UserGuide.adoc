@@ -118,7 +118,12 @@ Examples:
 
 Clears all entries from the address book and event book. +
 Format: `clear`
+// tag::lock[]
+=== Current User Display: `currentuser` - Since V1.5
 
+Displays the current user name. The default user name is `PUBLIC` +
+Format: `currentuser`
+// end::lock[]
 // tag::undoredo[]
 === Deleting a person : `delete` - Since V1.0
 
@@ -365,26 +370,6 @@ Examples:
 
 * `lock u/KELOYSIUS p/SPECIAL1PASS`
 
-=== Remove User : `remove` - Since V1.5
-
-Remove an existing user from the account repository. +
-Format: `remove u/USER_NAME p/PASSWORD r/<Y or N>`
-
-****
-* The `USER_NAME` and `PASSWORD` must match with one of the accounts saved.
-* The `USER_NAME` and `PASSWORD` are case-sensitive.
-* `r/<Y or N>` indicates if the user wants to delete the contacts associated with the user to be removed. Y means the
-contacts will be cleared and N means the contacts will be released to the public.
-* If the user is still logged in before removing an account, regardless of whether the account to be removed is his
-own account or someone else's, the user MUST log out first using the `logout` command.
-****
-
-Examples:
-
-* `remove u/LEQUANGQUAN p/PASSWORD r/N`
-This command will remove the account `LEQUANGQUAN` and release his contacts to the public.
-* `remove u/LEQUANGQUAN p/PASSWORD r/Y`
-This command will remove the account `LEQUANGQUAN` and delete his contacts.
 === Login : `login` - Since V1.5
 
 Logs in to the TunedIn Application. Once you log in with the correct account credentials, your encrypted contacts
@@ -400,11 +385,6 @@ Examples:
 Logs out of the address book. This will encrypt the current list of contacts and clear them. To retrieve them, log in
  using your account credentials +
 Format: `logout`
-
-=== Current User Display: `currentuser` - Since V1.5
-
-Displays the current user name. The default user name is `PUBLIC` +
-Format: `currentuser`
 // end::lock
 
 // tag::order[]
@@ -506,6 +486,29 @@ Edits the remark of the 1st person to be `Likes to swim`.
 * `remark 1 r/` +
 Remove the remark of the 1st person.
 // end::remark[]
+
+// tag::lock[]
+=== Remove User : `remove` - Since V1.5
+
+Remove an existing user from the account repository. +
+Format: `remove u/USER_NAME p/PASSWORD r/<Y or N>`
+
+****
+* The `USER_NAME` and `PASSWORD` must match with one of the accounts saved.
+* The `USER_NAME` and `PASSWORD` are case-sensitive.
+* `r/<Y or N>` indicates if the user wants to delete the contacts associated with the user to be removed. Y means the
+contacts will be cleared and N means the contacts will be released to the public.
+* If the user is still logged in before removing an account, regardless of whether the account to be removed is his
+own account or someone else's, the user MUST log out first using the `logout` command.
+****
+
+Examples:
+
+* `remove u/LEQUANGQUAN p/PASSWORD r/N`
+This command will remove the account `LEQUANGQUAN` and release his contacts to the public.
+* `remove u/LEQUANGQUAN p/PASSWORD r/Y`
+This command will remove the account `LEQUANGQUAN` and delete his contacts.
+// end::lock[]
 
 === Selecting a person : `select` - Since V1.0
 
@@ -682,7 +685,7 @@ Examples:
 // end::customtheme[]
 
 //tag::relationship[]
-=== Relationship Map : 'relationship` - Coming in V2.0
+=== Relationship Map : `relationship` - Coming in V2.0
 
 Allows the user to add relationship among contacts and shows a map of relationships.
 Format: `rela INDEX [MORE_INDEX] r/RELATIONSHIP` +
@@ -694,7 +697,7 @@ Examples:
 //end::relationship[]
 
 //tag::reminder[]
-=== Reminder Map : 'remind` - Coming in V2.0
+=== Reminder Map : `remind` - Coming in V2.0
 
 Allows the user to set reminders to be notified on important dates and events.
 Format: `remind d/DATE t/TIME e/EVENT`

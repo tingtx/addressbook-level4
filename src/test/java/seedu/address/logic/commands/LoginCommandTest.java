@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 //@@author quanle1994
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 
 import org.junit.Rule;
 import org.junit.Test;

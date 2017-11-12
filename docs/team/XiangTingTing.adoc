@@ -129,4 +129,5 @@ include::../UserGuide.adoc[tag=reminder]
 (Pull requests: [https://github.com/CS2103AUG2017-T14-B2/main/pull/71[#71]] )
 * Updated the person card with birthday (Pull requests: [https://github.com/CS2103AUG2017-T14-B2/main/pull/15[#15]])
 * Updated the person card with group ( Pull requests: [https://github.com/CS2103AUG2017-T14-B2/main/pull/143[#143]])
-* Updated the architecture diagram of the Model and Storage component ()
+* Updated the architecture diagram of the Model and Storage component (Pull requests:
+[https://github.com/CS2103AUG2017-T14-B2/main/pull/155/commits/1bd859b9a1cedb17641f6fa0fe1d6e6520d529e8[#155]])

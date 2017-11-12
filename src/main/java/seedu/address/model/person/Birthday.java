@@ -14,7 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday can only contain numbers and forward slashes, and in the form dd-mm-yyyy";
+            "Birthday can only contain numbers and dashes, and in the form dd-mm-yyyy";
     public static final String BIRTHDAY_VALIDATION = "dd-mm-yyyy";
     public final String value;
 

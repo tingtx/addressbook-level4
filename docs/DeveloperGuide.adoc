@@ -380,6 +380,7 @@ attribute is m, the command will find in all text fields.
 
 In the future, this feature can be developed into a best-matched result based on different fields.
 
+//@@author tingtx
 // tag::group[]
 === Group mechanism
 
@@ -390,8 +391,10 @@ The group mechanism also inherit from the `UndoableCommands`.
 
 In order to group persons, a new class `Group` is implemented and has a composition association with `Person`.
 A `Person` consist of the `Group` object.
-Group is optional, person is allow to have empty group. The following class diagram shows the relationship between
+Group is optional, person is allow to have empty group. The following diagram shows the relationship between
 `Person` and `Group`.
+
+image::GroupAndPerson.png[width="400"]
 
 A `UniqueGroupList` is also implemented to keep track of the existing groups.
 It is a list of `Group` that enforces no nulls and uniqueness between its elements and
@@ -472,7 +475,7 @@ Setting the group to person is as shown. It replaces the target person with a re
     }
 
 After a series of function calls, the *model.updatePerson()* method will call the *updateMasterGroupList()* in the `AddressBook`
-and call *setPerson()* method in the `UniquePersonList`.
+, and call *setPerson()* method in the `UniquePersonList`.
 
 [NOTE]
 `UniquePersonList` deals with the list of persons that enforces uniqueness between its elements
@@ -522,7 +525,7 @@ the `UniquePersonList` and `UniqueGroupList` will start storing a list of Person
 Each person will either have a `Group` or an empty `Group`.
 
 To view existing groups : +
-The user executes a `GroupCommand` by calling 'group showall`, to view the existing groups. The name of the
+The user executes a `GroupCommand` by calling `group showall`, to view the existing groups. The name of the
 groups will be displayed in the command feedback box.
 
 To set group to person(s) : +
@@ -568,7 +571,9 @@ delete the person's previous group if it has no member.+
 **Pros:** Easy to determine if the group is empty and easy to update the map of groups. +
 **Cons:** Maybe more tedious to implement.
 // end::group[]
+//@@author
 
+//@@author tingtx
 //tag::list[]
 === List(group) mechanism
 The list group mechanism is an enhanced feature of the original `ListCommand` and `ListCommandParser`.
@@ -647,9 +652,10 @@ image::ListCommand_ActivityDiagram.png[width = "400"]
 **Alternative 2:** Store a separate list of persons per group in xml format +
 **Pros:** Less complex logic, commands performed on this list will be saved and reflected +
 **Cons:** Implementation can be more tedious and duplicated records of persons will take up extra memory.
-
 //end::list[]
+//@@author
 
+//@@author tingtx
 // tag::order[]
 === Order(Sort) mechanism
 The order mechanism is implemented by 'OrderCommand' and `OrderCommandParser` in the Logic component.
@@ -813,13 +819,13 @@ image::OrderCommand_ActivityDiagram.png[width = "400"]
 **Aspect:** Implementation of sorting algorithm +
 **Alternative 1 (current choice):** Sort method inherited from List Interface with specified comparator +
 **Pros:** Easy to implement and has the advantage of mergesort. +
-**Cons:**  +
-**Alternative 2:** Implement the sorting with quicksort algorithm+
+**Alternative 2:** Implement the sorting with quicksort algorithm +
 **Pros:** Able to perform sorting faster than mergesort. +
 **Cons:** Not stable and tedious to implement.
 
 // end::remark[]
 ---
+//@@author
 // end::order[]
 
 // tag::remark[]
@@ -1720,8 +1726,6 @@ seeing them by accident
 |`* *` |user |avoid switching between applications for different functionality |avoid troublesome operations for me
 
 |`* *` |user |add profiles for my friends |store their photos as well
-
-|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |user |have a collage of a person's profile from various social media platforms |snapshot of the person's information
 from various accounts.

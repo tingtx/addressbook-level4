@@ -189,13 +189,16 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     private void updateMasterGroupList(Group prevGroup) {
         boolean isGroupPresent = false;
-        for (Person p : persons) {
-            if (p.getGroup().value.equals(prevGroup)) {
-                isGroupPresent = true;
+
+        if (!prevGroup.toString().isEmpty()) {
+            for (Person p : persons) {
+                if (p.getGroup().equals(prevGroup)) {
+                    isGroupPresent = true;
+                }
             }
-        }
-        if (!isGroupPresent) {
-            groups.delete(prevGroup);
+            if (!isGroupPresent) {
+                groups.delete(prevGroup);
+            }
         }
     }
     //@@author

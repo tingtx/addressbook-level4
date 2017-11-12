@@ -50,10 +50,20 @@ public class GroupCommandParserTest {
     }
 
     @Test
+    public void parse_noIndex_success() {
+        List<Index> index = new ArrayList<>();
+        GroupCommand expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
+        assertParseSuccess(parser, " " + VALID_GROUP_AMY, expectedCommand);
+    }
+
+    @Test
     public void parse_showAllString_success() {
         List<Index> index = new ArrayList<>();
         GroupCommand expectedCommand = new GroupCommand(index, "SHOWALL");
         assertParseSuccess(parser, "SHOWALL", expectedCommand);
+
+        expectedCommand = new GroupCommand(index, "showALL");
+        assertParseSuccess(parser, "showALL", expectedCommand);
     }
 
     @Test

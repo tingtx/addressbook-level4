@@ -409,6 +409,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+
     @Override
     public void resetEventData(ReadOnlyEventBook newData) {
         eventBook.resetData(newData);

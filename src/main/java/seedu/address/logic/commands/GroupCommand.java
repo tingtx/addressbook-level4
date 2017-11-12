@@ -39,8 +39,9 @@ public class GroupCommand extends UndoableCommand {
     public static final String MESSAGE_UNGROUP_PERSON_SUCCESS = "Person(s) removed from group.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String SHOW_ALL_GROUP = "showall";
-    private static final String MESSAGE__WRONG_SHOW_ALL_PARAMETER = "To view existing groups, "
-            + "the parameter must be SHOWALL";
+    public static final String MESSAGE_WRONG_PARAMETER = "To view existing groups, "
+            + "the parameter must be SHOWALL\n" + "To group person(s) : " + COMMAND_WORD + " 1 3 4 "
+            + PREFIX_GROUP + "FAMILY";
 
     private final List<Index> indexes;
     private final String group;
@@ -69,7 +70,7 @@ public class GroupCommand extends UndoableCommand {
         } else if (indexes.size() > 0) {
             commandResult = setGroupToPerson();
         } else {
-            throw new CommandException(MESSAGE__WRONG_SHOW_ALL_PARAMETER);
+            throw new CommandException(MESSAGE_WRONG_PARAMETER);
         }
 
         return commandResult;

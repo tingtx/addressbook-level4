@@ -38,7 +38,7 @@ public class RemoveUserCommandTest {
         thrown.expect(CommandException.class);
         thrown.expectMessage(RemoveUserCommand.MESSAGE_ENCRYPTION_ERROR);
 
-        new RemoveUserCommand("abc","abc",true).execute();
+        new RemoveUserCommand("abc", "abc", true).execute();
     }
 
     @Test
@@ -92,7 +92,7 @@ public class RemoveUserCommandTest {
     public void execute_removeSuccessful() throws Exception {
         ModelStubSuccess modelStub = new ModelStubSuccess();
         CommandResult commandResult = getRemoveUserCommand(modelStub, false).execute();
-        assertEquals(String.format(RemoveUserCommand.MESSAGE_REMOVE_USER_SUCCESS,"abc"), commandResult.feedbackToUser);
+        assertEquals(String.format(RemoveUserCommand.MESSAGE_REMOVE_USER_SUCCESS, "abc"), commandResult.feedbackToUser);
         assertEquals(new ArrayList<>(), modelStub.users);
     }
 
@@ -100,12 +100,12 @@ public class RemoveUserCommandTest {
     public void execute_removeSuccessfulWithCascading() throws Exception {
         ModelStubSuccess modelStub = new ModelStubSuccess();
         CommandResult commandResult = getRemoveUserCommand(modelStub, true).execute();
-        assertEquals(String.format(RemoveUserCommand.MESSAGE_REMOVE_USER_SUCCESS,"abc"), commandResult.feedbackToUser);
+        assertEquals(String.format(RemoveUserCommand.MESSAGE_REMOVE_USER_SUCCESS, "abc"), commandResult.feedbackToUser);
         assertEquals(new ArrayList<>(), modelStub.users);
     }
 
     private RemoveUserCommand getRemoveUserCommand(Model model, boolean cascade) {
-        RemoveUserCommand command = new RemoveUserCommand("abc","abc", cascade);
+        RemoveUserCommand command = new RemoveUserCommand("abc", "abc", cascade);
         UserPrefs userPrefs = new UserPrefs();
         Config config = new Config();
         Logic logic = null;

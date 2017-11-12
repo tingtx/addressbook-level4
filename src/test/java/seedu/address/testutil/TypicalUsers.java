@@ -16,10 +16,10 @@ import seedu.address.model.user.exceptions.DuplicateUserException;
  */
 public class TypicalUsers {
 
-    public static final ReadOnlyUser a = userBuilder("a", "1111111111111111111111", "a");
-    public static final ReadOnlyUser b = userBuilder("b", "2222222222222222222222", "b");
-    public static final ReadOnlyUser c = userBuilder("c", "3333333333333333333333", "c");
-    public static final ReadOnlyUser d = userBuilder("d", "4444444444444444444444", "d");
+    public static final ReadOnlyUser A = userBuilder("a", "1111111111111111111111", "a");
+    public static final ReadOnlyUser B = userBuilder("b", "2222222222222222222222", "b");
+    public static final ReadOnlyUser C = userBuilder("c", "3333333333333333333333", "c");
+    public static final ReadOnlyUser D = userBuilder("d", "4444444444444444444444", "d");
 
     private TypicalUsers() {
     } // prevents instantiation
@@ -39,6 +39,14 @@ public class TypicalUsers {
         return ac;
     }
 
+    /**
+     * Buid a user
+     *
+     * @param userName
+     * @param salt
+     * @param password
+     * @return
+     */
     public static ReadOnlyUser userBuilder(String userName, String salt, String password) {
         userName = new String(new HashDigest().getHashDigest(userName));
         userName = new HexCode().getHexFormat(userName);
@@ -46,6 +54,6 @@ public class TypicalUsers {
     }
 
     public static List<ReadOnlyUser> getTypicalUsers() {
-        return new ArrayList<>(Arrays.asList(a, b, c, d));
+        return new ArrayList<>(Arrays.asList(A, B, C, D));
     }
 }

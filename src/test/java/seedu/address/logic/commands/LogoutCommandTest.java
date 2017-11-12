@@ -70,7 +70,7 @@ public class LogoutCommandTest {
     }
 
     @Test
-    public void execute_refreshABError() throws Exception {
+    public void execute_refreshAbError() throws Exception {
         ModelStubThrowingError modelStub = new ModelStubThrowingError();
         CurrentUserDetails.setCurrentUser("test", "1111111111111111111", "abc",
                 "abc");

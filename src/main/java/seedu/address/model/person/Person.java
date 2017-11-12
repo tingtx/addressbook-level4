@@ -212,10 +212,6 @@ public class Person implements ReadOnlyPerson {
             }
         };
     }
-
-
-
-
     //@@author
 
     @Override

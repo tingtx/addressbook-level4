@@ -572,7 +572,8 @@ delete the person's previous group if it has no member.+
 //tag::list[]
 === List(group) mechanism
 The list group mechanism is an enhanced feature of the original `ListCommand` and `ListCommandParser`.
-It is facilitated by the `ContainsKeywordsPredicate` in the `Person > Model` package and `FilteredList` of `ReadOnlyPerson`, which resides inside the `ModelManager`.
+It is facilitated by the `ContainsKeywordsPredicate` in the `Person > Model` package and
+a `FilteredList` of `ReadOnlyPerson`, which resides inside the `ModelManager`.
 It allows the user to view a list of person in a user specified group.
 
 The constructor of the enhanced `ListCommand` requires a `String` parameter _predicate_ as shown :
@@ -584,10 +585,10 @@ The constructor of the enhanced `ListCommand` requires a `String` parameter _pre
         this.predicate = new ContainsKeywordsPredicate(Arrays.asList(predicate));
     }
 
-As you can see a new `ContainsKeywordsPredicate()` object is instantiated to facilitate the filtering of the
-filtered group list.
+As you can see a new `ContainsKeywordsPredicate()` object is instantiated to facilitate the filtering of the list of
+persons.
 
-`ContainsKeywordsPredicate` implements the `Predicate` interface and test if a person' s group or other fields
+`ContainsKeywordsPredicate` implements the `Predicate` interface and test if a person's group or other fields
 matches any of the keywords passed in. The code snippets follows show how the group keyword is being matched.
 
 [source, java]
@@ -653,8 +654,8 @@ image::ListCommand_ActivityDiagram.png[width = "400"]
 === Order(Sort) mechanism
 The order mechanism is implemented by 'OrderCommand' and `OrderCommandParser` in the Logic component.
 It is facilitated by the `UniquePersonList` which resides in  `Addressbook < ModelManager`.
-It allows the re-ordering of the person list that modifies the initial order of the list.
-This mechanism inherit from the `UndoableCommands`.
+It allows re-ordering of the person list that modifies the initial order of the list.
+This mechanism inherits from the `UndoableCommands`.
 
 The implementation of the `OrderCommand` constructor is as shown :
 
@@ -666,7 +667,7 @@ The implementation of the `OrderCommand` constructor is as shown :
     }
 ----
 
-As you can see from the implementation, the command requires user inputs in the form of `String` as the paramater/s
+As you can see from the implementation, the command requires user inputs in the form of `String` as the parameter/s
 to order. The inputs are restricted by the fields of `Person` that only includes `Name`, `Address`,
 `Tag` and `Birthday`. Before a new instance of `OrderCommand` is being created, the `OrderCommandParser` will ensure that the input from the user
 is not empty string.
@@ -700,71 +701,22 @@ The implementation of the *orderBy()* is shown below:
 [source, java]
 ----
     public void orderBy(String parameter) throws UnrecognisedParameterException {
-        Comparator<Person> orderByName = (Person a, Person b) -> a.getName().toString()
-                .compareToIgnoreCase(b.getName().toString());
-        Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
-                .compareToIgnoreCase(b.getAddress().toString());
-        Comparator<Person> orderByBirthday = comparing(a -> a.getBirthday().getReformatDate(),
-                nullsLast(naturalOrder()));
-        Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
-                .compareToIgnoreCase(b.getTags().toString());
 
         switch (parameter) {
         case "NAME":
-            internalList.sort(orderByName);
+            internalList.sort(Person.getPersonNameComparator());
             break;
-
-        case "ADDRESS":
-            internalList.sort(orderByAddress);
-            break;
-
-        case "BIRTHDAY":
-            internalList.sort(orderByBirthday);
-            break;
-
-        case "TAG":
-            internalList.sort(orderByTag);
-            break;
+        ...
 
         case "NAME ADDRESS":
-            internalList.sort(orderByName.thenComparing(orderByAddress));
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonAddressComparator()));
             break;
 
         case "ADDRESS NAME":
-            internalList.sort(orderByName.thenComparing(orderByTag));
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonNameComparator()));
             break;
 
-        case "TAG NAME":
-            internalList.sort(orderByTag.thenComparing(orderByName));
-            break;
-
-        case "NAME TAG":
-            internalList.sort(orderByName.thenComparing(orderByTag));
-            break;
-
-        case "NAME BIRTHDAY":
-            internalList.sort(orderByName.thenComparing(orderByBirthday));
-            break;
-
-        case "BIRTHDAY NAME":
-            internalList.sort(orderByBirthday.thenComparing(orderByName));
-            break;
-
-        case "ADDRESS BIRTHDAY":
-            internalList.sort(orderByAddress.thenComparing(orderByBirthday));
-            break;
-
-        case "BIRTHDAY ADDRESS":
-            internalList.sort(orderByBirthday.thenComparing(orderByAddress));
-            break;
-
-        case "BIRTHDAY TAG":
-            internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
-            break;
-
-        case "TAG BIRTHDAY":
-            internalList.sort(orderByTag.thenComparing(orderByBirthday));
-            break;
+         ...
 
         default:
             throw new UnrecognisedParameterException();
@@ -773,9 +725,48 @@ The implementation of the *orderBy()* is shown below:
     }
 ----
 
+The comparators are implemented in the `Person` as shown:
+
+[source, java]
+----
+
+    public static final Comparator<Person> getPersonNameComparator() {
+        return (Person a, Person b) -> a.getName().toString()
+                .compareToIgnoreCase(b.getName().toString());
+    }
+
+    public static final Comparator<Person> getPersonAddressComparator() {
+        return (Person a, Person b) -> a.getAddress().toString()
+                .compareToIgnoreCase(b.getAddress().toString());
+    }
+
+    public static final Comparator<Person> getPersonBirthdayComparator() {
+        return comparing(a -> a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
+    }
+
+    public static final Comparator<Person> getPersonTagComparator() {
+        return (Person a, Person b) -> a.getTags().toString()
+                .compareToIgnoreCase(b.getTags().toString());
+    }
+
+    public static final Comparator<Person> getPersonGroupComparator() {
+        return (a, b) -> {
+            if (a.getGroup().toString().isEmpty()) {
+                return 1;
+            } else if (b.getGroup().toString().isEmpty()) {
+                return -1;
+            } else {
+                return a.getGroup().toString().compareToIgnoreCase(b.getGroup().toString());
+            }
+        };
+    }
+
+----
+
 As you can see,
-4 `Comparator` objects are constructed for each valid parameter to compare the list of contacts
-and order according to natural order. The list of person will be re-ordered after the *orderBy()* is executed.+
+5 `Comparator` objects are constructed for each valid parameter to compare the list of contacts
+and order according to natural order and null last.+
 
 _Birthday_ is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format. +
 This is achieved by reformatting the
@@ -823,8 +814,8 @@ image::OrderCommand_ActivityDiagram.png[width = "400"]
 **Alternative 1 (current choice):** Sort method inherited from List Interface with specified comparator +
 **Pros:** Easy to implement and has the advantage of mergesort. +
 **Cons:**  +
-**Alternative 2:** Implement the sorting algorithm with quicksort algorithm+
-**Pros:** Able perform sorting faster than mergesort +
+**Alternative 2:** Implement the sorting with quicksort algorithm+
+**Pros:** Able to perform sorting faster than mergesort. +
 **Cons:** Not stable and tedious to implement.
 
 // end::remark[]

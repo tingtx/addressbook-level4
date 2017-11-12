@@ -13,8 +13,9 @@ public class OrderCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "order";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Order the Address Book based on one/multiple parameter(s).\n"
-            + "Parameters:  NAME, ADDRESS, BIRTHDAY, TAG\n"
+            + ": Order the contacts of Address Book based on one/multiple parameter(s).\n"
+            + "To order GROUP with other parameters, GROUP must be the first parameter. \n"
+            + "Parameters:  NAME, ADDRESS, BIRTHDAY, TAG, GROUP\n"
             + "Example: " + COMMAND_WORD + " BIRTHDAY NAME";
 
     public static final String MESSAGE_ORDER_SUCCESS = "Address Book has been ordered by ";

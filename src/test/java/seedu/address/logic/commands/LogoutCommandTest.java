@@ -37,10 +37,32 @@ public class LogoutCommandTest {
     @Test
     public void execute_logoutSuccessful() throws Exception {
         ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
-        CurrentUserDetails.setCurrentUser("test", "", "", "");
+        CurrentUserDetails.setCurrentUser("test", "1111111111111111111111111111111", "", "");
         LogoutCommand logoutCommand = getLogoutCommand(modelStub);
         CommandResult commandResult = logoutCommand.execute();
         assertEquals(LogoutCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_hexIdIndexOutOfBound() throws Exception {
+        ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
+        CurrentUserDetails.setCurrentUser("test", "", "", "");
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(LogoutCommand.MESSAGE_ENCRYPTION_ERROR);
+
+        getLogoutCommand(modelStub).execute();
+    }
+
+    @Test
+    public void execute_decryptionError() throws Exception {
+        ModelStubThrowingError modelStub = new ModelStubThrowingError();
+        CurrentUserDetails.setCurrentUser("test", "", "", "");
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(LogoutCommand.MESSAGE_ENCRYPTION_ERROR);
+
+        getLogoutCommand(modelStub).execute();
     }
 
     private LogoutCommand getLogoutCommand(Model model) {
@@ -54,5 +76,12 @@ public class LogoutCommandTest {
     }
 
     private class ModelStubAcceptingUserAdded extends ModelStub {
+    }
+
+    private class ModelStubThrowingError extends ModelStub {
+        @Override
+        public void decrypt(String fileName, String pass) throws Exception {
+            throw new Exception();
+        }
     }
 }

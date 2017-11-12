@@ -14,6 +14,7 @@ public class LogoutCommand extends Command {
     public static final String COMMAND_ALIAS = "lgo";
     public static final String MESSAGE_SUCCESS = "Logged out successfully!";
     public static final String MESSAGE_LOGOUT_ERROR = "You have not logged in!";
+    public static final String MESSAGE_ENCRYPTION_ERROR = "Encryption/Decryption Error";
     private CurrentUserDetails currentUser = new CurrentUserDetails();
 
     public static String getCommandWord() {
@@ -31,13 +32,13 @@ public class LogoutCommand extends Command {
                     + currentUser.getPasswordText(), true);
             model.emptyPersonList(list);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
         try {
             model.decrypt("PUBLIC", "PUBLIC");
             model.refreshAddressBook();
         } catch (Exception e) {
-            e.getStackTrace();
+            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
         currentUser.setPublicUser();
         return new CommandResult(MESSAGE_SUCCESS);

@@ -104,6 +104,7 @@ public class ModelStub implements Model {
     @Override
     public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
             DataConversionException {
+        return;
     }
 
     @Override
@@ -245,7 +246,6 @@ public class ModelStub implements Model {
 
     @Override
     public void deleteUser(String userName, String saltedPasswordHex) throws UserNotFoundException {
-        fail("This method should not be called.");
     }
 
     @Override

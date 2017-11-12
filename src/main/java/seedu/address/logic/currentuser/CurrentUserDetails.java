@@ -35,23 +35,11 @@ public class CurrentUserDetails {
         return userIdHex;
     }
 
-    public static void setUserIdHex(String userIdHex) {
-        CurrentUserDetails.userIdHex = userIdHex;
-    }
-
     public static String getSaltText() {
         return saltText;
     }
 
-    public static void setSaltText(String saltText) {
-        CurrentUserDetails.saltText = saltText;
-    }
-
     public static String getPasswordText() {
         return passwordText;
-    }
-
-    public static void setPasswordText(String passwordText) {
-        CurrentUserDetails.passwordText = passwordText;
     }
 }

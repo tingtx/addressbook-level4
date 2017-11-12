@@ -60,6 +60,7 @@ public class CalendarView {
         calendar.setPrefSize(600, 400);
         // Create rows and columns with anchor panes for the calendar
 
+        // This GridPane will represent the dates
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
@@ -69,10 +70,13 @@ public class CalendarView {
                 allCalendarDays.add(ap);
             }
         }
+
         // Days of the week labels
         Text[] dayNames = new Text[]{new Text("SUNDAY"), new Text("MONDAY"), new Text("TUESDAY"),
             new Text("WEDNESDAY"), new Text("THURSDAY"), new Text("FRIDAY"),
             new Text("SATURDAY")};
+
+        // This GridPane will represent the days which will place at the top of calendar GridPane
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         Integer col = 0;
@@ -89,12 +93,16 @@ public class CalendarView {
         calendarTitle = new Text();
         calendarTitle.setFill(Color.WHITE);
         calendarTitle.setStyle("-fx-font-size: 15pt;");
+
         Button previousMonth = new Button("<  PREVIOUS");
         previousMonth.setOnAction(e -> previousMonth());
+
         Button nextMonth = new Button("NEXT  >");
         nextMonth.setOnAction(e -> nextMonth());
+
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         HBox.setMargin(calendarTitle, new Insets(0, 15, 0, 15));
+
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth, null);
@@ -105,7 +113,7 @@ public class CalendarView {
 
     /**
      * Set the days of the calendar to correspond to the appropriate date
-     *
+     * @param targetIndex a specific event
      * @param yearMonth year and month of month to render
      */
     public void populateCalendar(YearMonth yearMonth, Index targetIndex) {
@@ -219,7 +227,7 @@ public class EventCard extends UiPart<Region> {
 ``` java
 
 /**
- * The UI component that is responsible containing the CalendarView
+ * The UI component that is responsible for containing the CalendarView
  */
 public class CalendarViewPane extends UiPart<Region> {
 
@@ -322,14 +330,13 @@ public class EventListPanel extends UiPart<Region> {
 ```
 ###### /java/seedu/address/commons/util/StringUtil.java
 ``` java
-
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.
      * <br>examples:<pre>
      *       containsWordIgnoreCase("ABc def", "abc") == true
      *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
+     *       containsWordIgnoreCase("ABc def", "AB") == true
      *       </pre>
      *
      * @param sentence cannot be null
@@ -347,12 +354,11 @@ public class EventListPanel extends UiPart<Region> {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         for (String wordInSentence : wordsInPreppedSentence) {
+            //As long there is a sequence in the word, it will return true
+            //E.g. pet, ter will return the words with sequence in it like Peter
             if (wordInSentence.toLowerCase().indexOf(preppedWord.toLowerCase()) >= 0) {
                 return true;
             }
-            //if (wordInSentence.equalsIgnoreCase(preppedWord)) {
-            //      return true;
-            //}
         }
         return false;
     }
@@ -402,6 +408,65 @@ public class EventListPanel extends UiPart<Region> {
         fileWriter.write(content.toString());
         fileWriter.flush();
         fileWriter.close();
+    }
+
+```
+###### /java/seedu/address/commons/util/XmlUtil.java
+``` java
+    /**
+     * return the specific child list of the xml root
+     * @param file parsing the file to become a Document
+     * @param nodeName a specific child of the root element
+     * @return
+     * @throws SAXException
+     * @throws IOException
+     * @throws ParserConfigurationException
+     */
+    public static NodeList getNodeListFromFile(File file, String nodeName) throws SAXException,
+            IOException, ParserConfigurationException {
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(file);
+
+        doc.getDocumentElement().normalize();
+
+        return doc.getElementsByTagName(nodeName);
+    }
+
+```
+###### /java/seedu/address/commons/util/XmlUtil.java
+``` java
+    /**
+     * Appending the header to the CSV file
+     * E.g. header: title,age,DOB
+     * @param sb using StringBuilder to append the header
+     * @param header
+     */
+    public static void appendHeader(StringBuilder sb, String header) {
+
+        //Append the header to the CSV file
+        sb.append(header);
+        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+    }
+
+```
+###### /java/seedu/address/commons/util/XmlUtil.java
+``` java
+    /**
+     * Appending the content to the CSV file
+     * @param sb using StringBuilder to append the content
+     * @param element
+     * @param fields using varargs as events book and address book have different number of fields
+     */
+    public static void appendContent(StringBuilder sb, Element element, String ... fields) {
+
+        for (String f: fields) {
+            // need "\"" at the front and back as some fields uses commas in their text
+            // without it "\"", it will treat commas as the separation into different columns
+            sb.append("\"" + element.getElementsByTagName(f).item(0).getTextContent() + "\"");
+            sb.append(XmlUtil.COMMA_DELIMITER);
+        }
     }
 }
 ```
@@ -1015,6 +1080,7 @@ public class EditEventCommand extends UndoableCommand {
 ```
 ###### /java/seedu/address/logic/commands/ExportCommand.java
 ``` java
+
 /**
  * Export data into csv format
  */
@@ -1093,7 +1159,7 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_TITLE + "Halloween Horror Night "
             + PREFIX_DESCRIPTION + "Horrifying night "
             + PREFIX_LOCATION + "Universal Studio "
-            + PREFIX_DATETIME + "13/10/17 2359";
+            + PREFIX_DATETIME + "13-10-17 2359";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event book";
@@ -1304,6 +1370,9 @@ public class SwitchCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Switched to the other tab";
 
+    private static final int ADDRESS_TAB = 0;
+    private static final int EVENTS_TAB = 1;
+
     private final TabPane tabPane;
 
     public SwitchCommand(TabPane tabPane) {
@@ -1318,10 +1387,10 @@ public class SwitchCommand extends Command {
     public CommandResult execute() throws CommandException {
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         int selectedIndex = selectionModel.getSelectedIndex();
-        if (selectedIndex == 0) {
-            selectedIndex = 1;
+        if (selectedIndex == ADDRESS_TAB) {
+            selectedIndex = EVENTS_TAB;
         } else {
-            selectedIndex = 0;
+            selectedIndex = ADDRESS_TAB;
         }
         selectionModel.select(selectedIndex);
         return new CommandResult(MESSAGE_SUCCESS);
@@ -1379,6 +1448,68 @@ public class DeleteEventCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteEventCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteEventCommand) other).targetIndex)); // state check
+    }
+}
+```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+    @Override
+    public void setTabPane(TabPane tabPane) {
+        generalBookParser.setTabPane(tabPane);
+    }
+
+```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+    @Override
+    public void setCalendarView(CalendarView calendarView) {
+        this.calendarViewStateParser = new CalendarViewStateParser(this.userPrefs, this.model, calendarView);
+    }
+
+    @Override
+    public CommandResult execute(String commandText) throws CommandException, ParseException, DuplicateUserException {
+        logger.info("----------------[USER COMMAND][" + commandText + "]");
+        try {
+            Command command = generalBookParser.parseCommand(commandText);
+            command.setData(model, history, undoRedoStack, config, ui);
+            CommandResult result = command.execute();
+            undoRedoStack.push(command);
+
+            //If calendarViewStateParser is not null
+            //Update the View state of the Calendar
+            if (calendarViewStateParser != null) {
+                calendarViewStateParser.updateViewState(commandText);
+            }
+
+            return result;
+        } finally {
+            history.add(commandText);
+        }
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return model.getFilteredEventList();
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> getCommands() {
+        return model.getCommands();
+    }
+
+    @Override
+    public String getAliasForCommand(String commandName) {
+        return model.getAliasForCommand(commandName);
+    }
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        return new ListElementPointer(history.getHistory());
     }
 }
 ```
@@ -1525,32 +1656,35 @@ public interface EventBookStorage {
 ```
 ###### /java/seedu/address/storage/XmlFileStorage.java
 ``` java
+
     /**
      * Export Addressbook XML Data into CSV file
+     * @param source source path of the XML file
+     * @param destination destination path of the CSV file
+     * @param header Header of the CSV file
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
      */
     public static void exportAddressbook(String source, String destination, String header)
-            throws FileNotFoundException, ParserConfigurationException, IOException, SAXException {
+            throws ParserConfigurationException, IOException, SAXException {
 
         File addressbookXmlFile = new File(source);
 
         if (!addressbookXmlFile.exists()) {
+            assert false : "Addressbook Xml file should have exist";
             throw new FileNotFoundException("File not found : " + addressbookXmlFile.getAbsolutePath());
         }
 
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(addressbookXmlFile);
-
-        doc.getDocumentElement().normalize();
-
-        NodeList personList = doc.getElementsByTagName("persons");
+        //Get the nodelist of the persons tag
+        NodeList personList = XmlUtil.getNodeListFromFile(addressbookXmlFile, "persons");
 
         StringBuilder sb = new StringBuilder();
 
         //Append the header to the CSV file
-        sb.append(header);
-        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+        XmlUtil.appendHeader(sb, header);
 
+        //Append individual person data to the CSV file
         for (int i = 0; i < personList.getLength(); i++) {
             Node personNode = personList.item(i);
 
@@ -1558,29 +1692,22 @@ public interface EventBookStorage {
 
                 Element elemPerson = (Element) personNode;
 
-                sb.append("\"" + elemPerson.getElementsByTagName("name").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("phone").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("address").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("birthday").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("email").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("group").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemPerson.getElementsByTagName("remark").item(0).getTextContent() + "\"");
+                XmlUtil.appendContent(sb, elemPerson, "name", "phone", "address", "birthday",
+                    "email", "group", "remark");
 
+                //Append tagged list into the StringBuilder
                 NodeList tagList = elemPerson.getElementsByTagName("tagged");
+
                 for (int j = 0; j < tagList.getLength(); j++) {
                     Node tagNode = tagList.item(j);
                     if (tagNode.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eTag = (Element) tagNode;
+                        Element elemTag = (Element) tagNode;
+
+                        sb.append("\"" + elemTag.getTextContent() + "\"");
                         sb.append(XmlUtil.COMMA_DELIMITER);
-                        sb.append("\"" + eTag.getTextContent() + "\"");
                     }
                 }
+                //Enter a new line in the CSV file
                 sb.append(XmlUtil.NEW_LINE_SEPARATOR);
             }
         }
@@ -1592,44 +1719,41 @@ public interface EventBookStorage {
 ``` java
     /**
      * Export eventbook XML Data into CSV file
+     * @param source source path of the XML file
+     * @param destination destination path of the CSV file
+     * @param header Header of the CSV file
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
      */
     public static void exportEventbook(String source, String destination, String header)
-            throws FileNotFoundException, ParserConfigurationException, IOException, SAXException {
+            throws ParserConfigurationException, IOException, SAXException {
 
         File eventbookXmlFile = new File(source);
 
         if (!eventbookXmlFile.exists()) {
+            assert false : "Eventbook Xml file should have exist";
             throw new FileNotFoundException("File not found : " + eventbookXmlFile.getAbsolutePath());
         }
 
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(eventbookXmlFile);
-
-        doc.getDocumentElement().normalize();
-
-        NodeList eventList = doc.getElementsByTagName("events");
+        //Get the nodelist of the events tag
+        NodeList eventList = XmlUtil.getNodeListFromFile(eventbookXmlFile, "events");
 
         StringBuilder sb = new StringBuilder();
 
         //Append the header to the CSV file
-        sb.append(header);
-        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+        XmlUtil.appendHeader(sb, header);
 
+        //Append individual event data to the CSV file
         for (int i = 0; i < eventList.getLength(); i++) {
             Node eventNode = eventList.item(i);
 
             if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
 
                 Element elemEvent = (Element) eventNode;
+                XmlUtil.appendContent(sb, elemEvent, "title", "description", "location", "datetime");
 
-                sb.append("\"" + elemEvent.getElementsByTagName("title").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemEvent.getElementsByTagName("description").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemEvent.getElementsByTagName("location").item(0).getTextContent() + "\"");
-                sb.append(XmlUtil.COMMA_DELIMITER);
-                sb.append("\"" + elemEvent.getElementsByTagName("datetime").item(0).getTextContent() + "\"");
+                //Enter a new line in the CSV file
                 sb.append(XmlUtil.NEW_LINE_SEPARATOR);
             }
         }
@@ -1866,7 +1990,7 @@ public class Title {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String TITLE_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String TITLE_VALIDATION_REGEX = "[\\w].*";
 
     public final String value;
 
@@ -1974,7 +2098,7 @@ public class Description {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DESCRIPTION_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String DESCRIPTION_VALIDATION_REGEX = "[\\w].*";
 
     public final String value;
 
@@ -2191,7 +2315,7 @@ public class Location {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String LOCATION_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String LOCATION_VALIDATION_REGEX = "[\\w].*";
 
     public final String value;
 

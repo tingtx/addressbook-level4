@@ -21,6 +21,7 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("01-12-199")); // year less than 4 digit
         assertFalse(Birthday.isValidBirthday("01121996")); // missing '-'
         assertFalse(Birthday.isValidBirthday("12/12/1996")); // '/' invalid
+        assertTrue(Birthday.isValidBirthday("29-02-1997")); //invalid date
 
 
         // valid Birthday

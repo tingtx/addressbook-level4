@@ -6,11 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import seedu.address.logic.commands.digestutil.HashDigest;
-import seedu.address.logic.commands.digestutil.HexCode;
+import seedu.address.commons.util.digestutil.HashDigest;
+import seedu.address.commons.util.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
-import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
@@ -26,9 +25,9 @@ public class LockCommand extends Command {
             + "Parameters: "
             + PREFIX_USERID + "USER ID "
             + PREFIX_PASSWORD + "PASSWORD";
-    private static final String MESSAGE_EXISTING_USER = "User already exists";
-    private static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your "
+    public static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your "
             + "password";
+    public static final String MESSAGE_EXISTING_USER = "User already exists";
     private static final int SALT_MIN = 0;
     private static final int SALT_MAX = 1000000;
     private String userId;
@@ -46,10 +45,9 @@ public class LockCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException, DuplicateUserException {
         requireNonNull(model);
+
         byte[] uIdDigest = new HashDigest().getHashDigest(userId);
-
         String saltText = "" + ThreadLocalRandom.current().nextInt(SALT_MIN, SALT_MAX + 1);
-
         byte[] pwDigest = new HashDigest().getHashDigest(saltText + passwordText);
         String hexUidDigest = new HexCode().getHexFormat(new String(uIdDigest));
         String hexSalt = new HexCode().getHexFormat(saltText);
@@ -61,7 +59,8 @@ public class LockCommand extends Command {
         }
 
         try {
-            FileEncryptor.encryptFile(hexUidDigest.substring(0, 10), saltText + passwordText, false);
+            model.encrypt(hexUidDigest.substring(0, 10), saltText + passwordText, false);
+            model.encryptPublic(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,15 +72,7 @@ public class LockCommand extends Command {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getPasswordText() {
         return passwordText;
-    }
-
-    public void setPasswordText(String passwordText) {
-        this.passwordText = passwordText;
     }
 }

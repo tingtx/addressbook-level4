@@ -7,6 +7,13 @@
     }
 }
 ```
+###### /java/seedu/address/logic/parser/AddCommandParser.java
+``` java
+            Email email = arePrefixesPresent(argMultimap, PREFIX_EMAIL)
+                    ? ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get() : new Email("");
+            Birthday birthday = arePrefixesPresent(argMultimap, PREFIX_BIRTHDAY)
+                    ? ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get() : new Birthday("");
+```
 ###### /java/seedu/address/logic/parser/ListCommandParser.java
 ``` java
 /**
@@ -107,6 +114,7 @@ public class GroupCommandParser implements Parser<GroupCommand> {
 ```
 ###### /java/seedu/address/logic/commands/ListCommand.java
 ``` java
+
 /**
  * Lists all persons in the address book to the user or
  * list a specified group of persons.
@@ -189,8 +197,9 @@ public class GroupCommand extends UndoableCommand {
     public static final String MESSAGE_UNGROUP_PERSON_SUCCESS = "Person(s) removed from group.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String SHOW_ALL_GROUP = "showall";
-    private static final String MESSAGE__WRONG_SHOW_ALL_PARAMETER = "To view existing groups, "
-            + "the parameter must be SHOWALL";
+    public static final String MESSAGE_WRONG_PARAMETER = "To view existing groups, "
+            + "the parameter must be SHOWALL\n" + "To group person(s) : " + COMMAND_WORD + " 1 3 4 "
+            + PREFIX_GROUP + "FAMILY";
 
     private final List<Index> indexes;
     private final String group;
@@ -219,7 +228,7 @@ public class GroupCommand extends UndoableCommand {
         } else if (indexes.size() > 0) {
             commandResult = setGroupToPerson();
         } else {
-            throw new CommandException(MESSAGE__WRONG_SHOW_ALL_PARAMETER);
+            throw new CommandException(MESSAGE_WRONG_PARAMETER);
         }
 
         return commandResult;
@@ -247,6 +256,7 @@ public class GroupCommand extends UndoableCommand {
                         personToGroup.getEmail(), personToGroup.getAddress(), personToGroup.getBirthday(),
                         new Group(group), personToGroup.getRemark(), personToGroup.getTags());
                 model.updatePerson(personToGroup, editedPerson);
+                model.saveToEncryptedFile();
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             } catch (IllegalValueException ive) {
@@ -484,71 +494,85 @@ public class UniqueGroupList implements Iterable<Group> {
     /**
      * Order the list.
      */
-    public void orderBy(String parameter) throws UnrecognisedParameterException {
-        Comparator<Person> orderByName = (Person a, Person b) -> a.getName().toString()
-                .compareToIgnoreCase(b.getName().toString());
-        Comparator<Person> orderByAddress = (Person a, Person b) -> a.getAddress().toString()
-                .compareToIgnoreCase(b.getAddress().toString());
-        Comparator<Person> orderByBirthday = comparing(a -> a.getBirthday().getReformatDate(),
-                nullsLast(naturalOrder()));
-        Comparator<Person> orderByTag = (Person a, Person b) -> a.getTags().toString()
-                .compareToIgnoreCase(b.getTags().toString());
+    public void orderPersonList(String parameter) throws UnrecognisedParameterException {
 
         switch (parameter) {
         case "NAME":
-            internalList.sort(orderByName);
+            internalList.sort(Person.getPersonNameComparator());
             break;
 
         case "ADDRESS":
-            internalList.sort(orderByAddress);
+            internalList.sort(Person.getPersonAddressComparator());
             break;
 
         case "BIRTHDAY":
-            internalList.sort(orderByBirthday);
+            internalList.sort(Person.getPersonBirthdayComparator());
             break;
 
         case "TAG":
-            internalList.sort(orderByTag);
+            internalList.sort(Person.getPersonTagComparator());
+            break;
+
+        case "GROUP":
+            internalList.sort(Person.getPersonGroupComparator());
             break;
 
         case "NAME ADDRESS":
-            internalList.sort(orderByName.thenComparing(orderByAddress));
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonAddressComparator()));
             break;
 
         case "ADDRESS NAME":
-            internalList.sort(orderByName.thenComparing(orderByTag));
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonNameComparator()));
             break;
 
         case "TAG NAME":
-            internalList.sort(orderByTag.thenComparing(orderByName));
+            internalList.sort(Person.getPersonTagComparator().thenComparing(Person.getPersonNameComparator()));
             break;
 
         case "NAME TAG":
-            internalList.sort(orderByName.thenComparing(orderByTag));
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonTagComparator()));
             break;
 
         case "NAME BIRTHDAY":
-            internalList.sort(orderByName.thenComparing(orderByBirthday));
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonBirthdayComparator()));
             break;
 
         case "BIRTHDAY NAME":
-            internalList.sort(orderByBirthday.thenComparing(orderByName));
+            internalList.sort(Person.getPersonBirthdayComparator().thenComparing(Person.getPersonNameComparator()));
             break;
 
         case "ADDRESS BIRTHDAY":
-            internalList.sort(orderByAddress.thenComparing(orderByBirthday));
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonBirthdayComparator()));
             break;
 
         case "BIRTHDAY ADDRESS":
-            internalList.sort(orderByBirthday.thenComparing(orderByAddress));
+            internalList.sort(Person.getPersonBirthdayComparator()
+                    .thenComparing(Person.getPersonAddressComparator()));
             break;
 
         case "BIRTHDAY TAG":
-            internalList.sort(nullsLast(orderByBirthday.thenComparing(orderByTag)));
+            internalList.sort(nullsLast(Person.getPersonBirthdayComparator()
+                    .thenComparing(Person.getPersonTagComparator())));
             break;
 
         case "TAG BIRTHDAY":
-            internalList.sort(orderByTag.thenComparing(orderByBirthday));
+            internalList.sort(Person.getPersonTagComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP NAME":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonNameComparator()));
+            break;
+
+        case "GROUP BIRTHDAY":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP ADDRESS":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonBirthdayComparator()));
+            break;
+
+        case "GROUP TAG":
+            internalList.sort(Person.getPersonGroupComparator().thenComparing(Person.getPersonTagComparator()));
             break;
 
         default:
@@ -577,6 +601,41 @@ public class UniqueGroupList implements Iterable<Group> {
         this.group.set(requireNonNull(group));
     }
 ```
+###### /java/seedu/address/model/person/Person.java
+``` java
+
+    public static final Comparator<Person> getPersonNameComparator() {
+        return (Person a, Person b) -> a.getName().toString()
+                .compareToIgnoreCase(b.getName().toString());
+    }
+
+    public static final Comparator<Person> getPersonAddressComparator() {
+        return (Person a, Person b) -> a.getAddress().toString()
+                .compareToIgnoreCase(b.getAddress().toString());
+    }
+
+    public static final Comparator<Person> getPersonBirthdayComparator() {
+        return comparing(a -> a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
+    }
+
+    public static final Comparator<Person> getPersonTagComparator() {
+        return (Person a, Person b) -> a.getTags().toString()
+                .compareToIgnoreCase(b.getTags().toString());
+    }
+
+    public static final Comparator<Person> getPersonGroupComparator() {
+        return (a, b) -> {
+            if (a.getGroup().toString().isEmpty()) {
+                return 1;
+            } else if (b.getGroup().toString().isEmpty()) {
+                return -1;
+            } else {
+                return a.getGroup().toString().compareToIgnoreCase(b.getGroup().toString());
+            }
+        };
+    }
+```
 ###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
@@ -584,8 +643,8 @@ public class UniqueGroupList implements Iterable<Group> {
  */
 public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday can only contain numbers and forward slashes, and in the form dd-mm-yyyy";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
+            "Birthday can only contain numbers and dashes, and in the form dd-mm-yyyy";
+    public static final String BIRTHDAY_VALIDATION = "dd-mm-yyyy";
     public final String value;
 
     /**
@@ -603,10 +662,22 @@ public class Birthday {
     }
 
     /**
-     * Returns true if a given string is a valid person birthday.
+     * Returns true if a given string is in the correct format and has a valid date.
      */
     public static boolean isValidBirthday(String test) {
-        return test.isEmpty() || test.matches(BIRTHDAY_VALIDATION_REGEX);
+        if (test.isEmpty()) {
+            return true;
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(BIRTHDAY_VALIDATION);
+
+        try {
+            Date date = dateFormat.parse(test);
+            return test.equals(dateFormat.format(date).toString());
+        } catch (ParseException pe) {
+            return false;
+        }
+
     }
 
     public String getReformatDate() {
@@ -639,6 +710,7 @@ public class Birthday {
 ```
 ###### /java/seedu/address/model/AddressBook.java
 ``` java
+
     /**
      * Ensures that the group in this person:
      * - exists in the master list {@link #groups}
@@ -655,7 +727,7 @@ public class Birthday {
      * @see #syncMasterGroupListWith(Person)
      */
     private void syncMasterGroupListWith(UniquePersonList persons) {
-        persons.forEach(this :: syncMasterGroupListWith);
+        persons.forEach(this::syncMasterGroupListWith);
     }
 
     /**
@@ -664,13 +736,16 @@ public class Birthday {
      */
     private void updateMasterGroupList(Group prevGroup) {
         boolean isGroupPresent = false;
-        for (Person p : persons) {
-            if (p.getGroup().value.equals(prevGroup)) {
-                isGroupPresent = true;
+
+        if (!prevGroup.toString().isEmpty()) {
+            for (Person p : persons) {
+                if (p.getGroup().equals(prevGroup)) {
+                    isGroupPresent = true;
+                }
             }
-        }
-        if (!isGroupPresent) {
-            groups.delete(prevGroup);
+            if (!isGroupPresent) {
+                groups.delete(prevGroup);
+            }
         }
     }
 ```

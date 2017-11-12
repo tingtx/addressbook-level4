@@ -568,13 +568,18 @@ public class AddEventCommandTest {
         }
 
         @Override
+        public void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public UserPrefs getUserPrefs() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+        public void refreshAddressBook() throws IOException, DataConversionException {
             fail("This method should not be called.");
         }
 
@@ -588,6 +593,26 @@ public class AddEventCommandTest {
         public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void encrypt(String userId, String pass, boolean emptyFile) throws Exception {
+
+        }
+
+        @Override
+        public void decrypt(String fileName, String pass) throws Exception {
+
+        }
+
+        @Override
+        public void encryptPublic(boolean isLockCommand) throws CommandException {
+
+        }
+
+        @Override
+        public void saveToEncryptedFile() {
+
         }
 
         @Override
@@ -1809,6 +1834,7 @@ public class LocationTest {
         // invalid location
         assertFalse(Location.isValidLocation("")); // empty string
         assertFalse(Location.isValidLocation(" ")); // spaces only
+        assertFalse(Location.isValidLocation("~!?>")); //Symbols cannot be at the start
 
         // valid location
         assertTrue(Location.isValidLocation("sentosa")); // alphabets only
@@ -1829,6 +1855,7 @@ public class DescriptionTest {
         // invalid description
         assertFalse(Description.isValidDescription("")); // empty string
         assertFalse(Description.isValidDescription(" ")); // spaces only
+        assertFalse(Description.isValidDescription("~!?>")); //Symbols cannot be at the start
 
         // valid description
         assertTrue(Description.isValidDescription("IT Fair 2017 with many offers")); // alphabets only
@@ -1873,6 +1900,7 @@ public class TitleTest {
         // invalid title
         assertFalse(Title.isValidTitle("")); // empty string
         assertFalse(Title.isValidTitle(" ")); // spaces only
+        assertFalse(Title.isValidTitle("~!?>")); //Symbols cannot be at the start
 
         // valid title
         assertTrue(Title.isValidTitle("Computing fair")); // alphabets only

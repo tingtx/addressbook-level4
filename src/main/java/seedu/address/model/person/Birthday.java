@@ -2,6 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author tingtx
@@ -10,8 +14,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday can only contain numbers and forward slashes, and in the form dd-mm-yyyy";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}";
+            "Birthday can only contain numbers and dashes, and in the form dd-mm-yyyy";
+    public static final String BIRTHDAY_VALIDATION = "dd-mm-yyyy";
     public final String value;
 
     /**
@@ -29,10 +33,22 @@ public class Birthday {
     }
 
     /**
-     * Returns true if a given string is a valid person birthday.
+     * Returns true if a given string is in the correct format and has a valid date.
      */
     public static boolean isValidBirthday(String test) {
-        return test.isEmpty() || test.matches(BIRTHDAY_VALIDATION_REGEX);
+        if (test.isEmpty()) {
+            return true;
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(BIRTHDAY_VALIDATION);
+
+        try {
+            Date date = dateFormat.parse(test);
+            return test.equals(dateFormat.format(date).toString());
+        } catch (ParseException pe) {
+            return false;
+        }
+
     }
 
     public String getReformatDate() {

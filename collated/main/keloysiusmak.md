@@ -467,6 +467,7 @@ public class AliasSettings implements Serializable {
         usedAliases.add(exportCommand);
         this.transferCommand = new Alias(TransferCommand.getCommandWord(), transferCommand);
         usedAliases.add(transferCommand);
+        System.out.println(usedAliases.toString());
     }
 
     public Alias getAddCommand() {
@@ -679,7 +680,7 @@ public class AliasSettings implements Serializable {
                 usedAliases.remove(this.logoutCommand.getAlias());
             }
             usedAliases.add(alias);
-            this.loginCommand = new Alias(LoginCommand.getCommandWord(), alias);
+            this.logoutCommand = new Alias(LogoutCommand.getCommandWord(), alias);
         } else if (command.equals(ListCommand.getCommandWord())) {
             if (!this.listCommand.getAlias().equals("list")) {
                 usedAliases.remove(this.listCommand.getAlias());
@@ -972,7 +973,12 @@ public class SetAliasCommandParser implements Parser<SetAliasCommand> {
                 || command.equals("exit") || command.equals("find") || command.equals("help")
                 || command.equals("history") || command.equals("list") || command.equals("order")
                 || command.equals("redo") || command.equals("remark") || command.equals("select")
-                || command.equals("undo") || command.equals("viewalias") || command.equals("setalias"))) {
+                || command.equals("undo") || command.equals("viewalias") || command.equals("setalias")
+                || command.equals("settheme") || command.equals("deleteevent") || command.equals("editevent")
+                || command.equals("export") || command.equals("findevent") || command.equals("group")
+                || command.equals("lock") || command.equals("listevent") || command.equals("currentuser")
+                || command.equals("orderevent") || command.equals("selectevent") || command.equals("transfer")
+                || command.equals("switch") || command.equals("remove"))) {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
 
@@ -980,7 +986,11 @@ public class SetAliasCommandParser implements Parser<SetAliasCommand> {
                 || alias.equals("exit") || alias.equals("find") || alias.equals("help") || alias.equals("history")
                 || alias.equals("list") || alias.equals("order") || alias.equals("redo") || alias.equals("remark")
                 || alias.equals("select") || alias.equals("undo") || alias.equals("viewalias")
-                || alias.equals("setalias"))) {
+                || alias.equals("setalias") || command.equals("settheme") || command.equals("editevent")
+                || command.equals("export") || command.equals("findevent") || command.equals("group")
+                || command.equals("lock") || command.equals("listevent") || command.equals("currentuser")
+                || command.equals("orderevent") || command.equals("selectevent") || command.equals("transfer")
+                || command.equals("switch") || command.equals("remove"))) {
             throw new ParseException(MESSAGE_DUPLICATE_ALIAS);
         }
 
@@ -1325,6 +1335,174 @@ public class Alias implements Serializable {
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
+        ArrayList<ArrayList<String>> commandList = new ArrayList<ArrayList<String>>();
+
+        //Add Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Add", AddCommand.getCommandWord())));
+
+        //Add Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Add Event", AddEventCommand.getCommandWord())));
+
+        //Clear Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Clear", ClearCommand.getCommandWord())));
+
+        //Delete Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Delete", DeleteCommand.getCommandWord())));
+
+        //Delete Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Delete Event", DeleteEventCommand.getCommandWord())));
+
+        //Edit Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Edit", EditCommand.getCommandWord())));
+
+        //Edit Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Edit Event", EditEventCommand.getCommandWord())));
+
+        //Exit Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Exit", ExitCommand.getCommandWord())));
+
+        //Export Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Export", ExportCommand.getCommandWord())));
+
+        //Find Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Find", FindCommand.getCommandWord())));
+
+        //Find Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Find Event", FindEventCommand.getCommandWord())));
+
+        //Help Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Help", HelpCommand.getCommandWord())));
+
+        //History Command
+        commandList.add(new ArrayList<String>(Arrays.asList("History", HistoryCommand.getCommandWord())));
+
+        //List Command
+        commandList.add(new ArrayList<String>(Arrays.asList("List", ListCommand.getCommandWord())));
+
+        //List Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("List Event", ListEventCommand.getCommandWord())));
+
+        //Lock Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
+
+        //Login Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Log in", LoginCommand.getCommandWord())));
+
+        //Order Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
+
+        //OrderEvent Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Order Event", OrderEventCommand.getCommandWord())));
+
+        //Redo Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Redo", RedoCommand.getCommandWord())));
+
+        //Remark Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Remark", RemarkCommand.getCommandWord())));
+
+        //Select Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
+
+        //Select Event Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Select Event", SelectEventCommand.getCommandWord())));
+
+        //Set Alias Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Set Alias", SetAliasCommand.getCommandWord())));
+
+        //Switch Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Switch", SwitchCommand.getCommandWord())));
+
+        //Transfer Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Transfer", TransferCommand.getCommandWord())));
+
+        //Undo Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Undo", UndoCommand.getCommandWord())));
+
+        //View Alias Command
+        commandList.add(new ArrayList<String>(Arrays.asList("View Alias", ViewAliasCommand.getCommandWord())));
+
+        viewAliases = commandList;
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public String getAliasForCommand(String command) {
+        AliasSettings aliasSettings = userPref.getAliasSettings();
+
+        if (command.equals(AddCommand.getCommandWord())) {
+            return aliasSettings.getAddCommand().getAlias();
+        } else if (command.equals(ClearCommand.getCommandWord())) {
+            return aliasSettings.getClearCommand().getAlias();
+        } else if (command.equals(DeleteCommand.getCommandWord())) {
+            return aliasSettings.getDeleteCommand().getAlias();
+        } else if (command.equals(EditCommand.getCommandWord())) {
+            return aliasSettings.getEditCommand().getAlias();
+        } else if (command.equals(ExitCommand.getCommandWord())) {
+            return aliasSettings.getExitCommand().getAlias();
+        } else if (command.equals(FindCommand.getCommandWord())) {
+            return aliasSettings.getFindCommand().getAlias();
+        } else if (command.equals(HelpCommand.getCommandWord())) {
+            return aliasSettings.getHelpCommand().getAlias();
+        } else if (command.equals(HistoryCommand.getCommandWord())) {
+            return aliasSettings.getHistoryCommand().getAlias();
+        } else if (command.equals(ListCommand.getCommandWord())) {
+            return aliasSettings.getListCommand().getAlias();
+        } else if (command.equals(OrderCommand.getCommandWord())) {
+            return aliasSettings.getOrderCommand().getAlias();
+        } else if (command.equals(RedoCommand.getCommandWord())) {
+            return aliasSettings.getRedoCommand().getAlias();
+        } else if (command.equals(RemarkCommand.getCommandWord())) {
+            return aliasSettings.getRemarkCommand().getAlias();
+        } else if (command.equals(SelectCommand.getCommandWord())) {
+            return aliasSettings.getSelectCommand().getAlias();
+        } else if (command.equals(SetAliasCommand.getCommandWord())) {
+            return aliasSettings.getSetAliasCommand().getAlias();
+        } else if (command.equals(UndoCommand.getCommandWord())) {
+            return aliasSettings.getUndoCommand().getAlias();
+        } else if (command.equals(ViewAliasCommand.getCommandWord())) {
+            return aliasSettings.getViewAliasCommand().getAlias();
+        } else if (command.equals(AddEventCommand.getCommandWord())) {
+            return aliasSettings.getAddEventCommand().getAlias();
+        } else if (command.equals(DeleteEventCommand.getCommandWord())) {
+            return aliasSettings.getDeleteEventCommand().getAlias();
+        } else if (command.equals(EditEventCommand.getCommandWord())) {
+            return aliasSettings.getEditEventCommand().getAlias();
+        } else if (command.equals(ListEventCommand.getCommandWord())) {
+            return aliasSettings.getListEventCommand().getAlias();
+        } else if (command.equals(OrderEventCommand.getCommandWord())) {
+            return aliasSettings.getOrderEventCommand().getAlias();
+        } else if (command.equals(FindEventCommand.getCommandWord())) {
+            return aliasSettings.getFindEventCommand().getAlias();
+        } else if (command.equals(SwitchCommand.getCommandWord())) {
+            return aliasSettings.getSwitchCommand().getAlias();
+        } else if (command.equals(SelectEventCommand.getCommandWord())) {
+            return aliasSettings.getSelectEventCommand().getAlias();
+        } else if (command.equals(ExportCommand.getCommandWord())) {
+            return aliasSettings.getExportCommand().getAlias();
+        } else if (command.equals(TransferCommand.getCommandWord())) {
+            return aliasSettings.getTransferCommand().getAlias();
+        } else if (command.equals(LoginCommand.getCommandWord())) {
+            return aliasSettings.getLoginCommand().getAlias();
+        } else if (command.equals(LockCommand.getCommandWord())) {
+            return aliasSettings.getLockCommand().getAlias();
+        } else {
+            return "Not Set";
+        }
+    }
+
+    @Override
+    public void setAlias(String commandName, String alias) throws DuplicateAliasException, UnknownCommandException {
+        try {
+            this.userPref.setAlias(commandName, alias);
+        } catch (DuplicateAliasException e) {
+            throw e;
+        } catch (UnknownCommandException e) {
+            throw e;
+        }
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
 
     @Override
     public void transferData() throws ConfigMissingException {
@@ -1394,8 +1572,8 @@ public class Alias implements Serializable {
     }
 
     /**
-    *Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
-    the ZIP as well.
+     * Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
+     * the ZIP as well.
      */
     private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
 
@@ -1420,7 +1598,7 @@ public class Alias implements Serializable {
             } else if (thisFile.isDirectory()) {
                 String[] newFileList = thisFile.list();
                 ArrayList<String> dirFiles = new ArrayList<String>();
-                for (String filename: newFileList) {
+                for (String filename : newFileList) {
                     dirFiles.add("data/" + filename);
                 }
                 addFileIntoZip(zos, dirFiles);
@@ -1428,43 +1606,4 @@ public class Alias implements Serializable {
         }
     }
 
-    @Override
-    public void deleteEncryptedContacts(String fileName) {
-        File file = new File("data/" + fileName + ".encrypted");
-        file.delete();
-    }
-
-    @Override
-    public UserPrefs getUserPrefs() {
-        return userPref;
-    }
-
-    @Override
-    public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
-        AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
-                (SampleDataUtil::getSampleAddressBook));
-        for (ReadOnlyPerson p : temp.getPersonList()) {
-            Person newP = new Person(p);
-            addressBook.addPerson(newP);
-        }
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException {
-        for (ReadOnlyPerson p : list) {
-            Person newP = new Person(p);
-            addressBook.removePerson(newP);
-        }
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
-        AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
-                (SampleDataUtil::getSampleAddressBook));
-        return temp.getPersonList();
-    }
-}
 ```

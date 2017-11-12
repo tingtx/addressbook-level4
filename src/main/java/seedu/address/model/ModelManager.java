@@ -35,6 +35,8 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventBookChangedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.encryption.FileEncryptor;
+import seedu.address.commons.util.encryption.SaveToEncryptedFile;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -63,6 +65,7 @@ import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.logic.commands.TransferCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.ViewAliasCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -119,6 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.eventBook.getEventList());
 
+        //@@author keloysiusmak
         ArrayList<ArrayList<String>> commandList = new ArrayList<ArrayList<String>>();
 
         //Add Command
@@ -166,6 +170,12 @@ public class ModelManager extends ComponentManager implements Model {
         //List Event Command
         commandList.add(new ArrayList<String>(Arrays.asList("List Event", ListEventCommand.getCommandWord())));
 
+        //Lock Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
+
+        //Login Command
+        commandList.add(new ArrayList<String>(Arrays.asList("Log in", LoginCommand.getCommandWord())));
+
         //Order Command
         commandList.add(new ArrayList<String>(Arrays.asList("Order", OrderCommand.getCommandWord())));
 
@@ -180,12 +190,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         //Select Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select", SelectCommand.getCommandWord())));
-
-        //Lock Command
-        commandList.add(new ArrayList<String>(Arrays.asList("Lock", LockCommand.getCommandWord())));
-
-        //Login Command
-        commandList.add(new ArrayList<String>(Arrays.asList("Log in", LoginCommand.getCommandWord())));
 
         //Select Event Command
         commandList.add(new ArrayList<String>(Arrays.asList("Select Event", SelectEventCommand.getCommandWord())));
@@ -206,7 +210,7 @@ public class ModelManager extends ComponentManager implements Model {
         commandList.add(new ArrayList<String>(Arrays.asList("View Alias", ViewAliasCommand.getCommandWord())));
 
         viewAliases = commandList;
-
+        //@@author
     }
 
     public ModelManager() {
@@ -237,7 +241,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void exportAddressBook() throws FileNotFoundException, ParserConfigurationException,
+    public void exportAddressBook() throws ParserConfigurationException,
             IOException, SAXException, TransformerException {
 
         try {
@@ -254,11 +258,6 @@ public class ModelManager extends ComponentManager implements Model {
         } finally {
             userStorage.exportAddressBook();
         }
-    }
-
-    @Override
-    public ReadOnlyAccount getAccount() {
-        return account;
     }
 
     /**
@@ -327,6 +326,7 @@ public class ModelManager extends ComponentManager implements Model {
         return viewAliases;
     }
 
+    //@@author keloysiusmak
     @Override
     public String getAliasForCommand(String command) {
         AliasSettings aliasSettings = userPref.getAliasSettings();
@@ -383,6 +383,10 @@ public class ModelManager extends ComponentManager implements Model {
             return aliasSettings.getExportCommand().getAlias();
         } else if (command.equals(TransferCommand.getCommandWord())) {
             return aliasSettings.getTransferCommand().getAlias();
+        } else if (command.equals(LoginCommand.getCommandWord())) {
+            return aliasSettings.getLoginCommand().getAlias();
+        } else if (command.equals(LockCommand.getCommandWord())) {
+            return aliasSettings.getLockCommand().getAlias();
         } else {
             return "Not Set";
         }
@@ -398,6 +402,7 @@ public class ModelManager extends ComponentManager implements Model {
             throw e;
         }
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -624,8 +629,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-    *Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
-    the ZIP as well.
+     * Adds specified files into ZIP, as well as recursively looks through the data folder, and add everything into
+     * the ZIP as well.
      */
     private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
 
@@ -650,12 +655,19 @@ public class ModelManager extends ComponentManager implements Model {
             } else if (thisFile.isDirectory()) {
                 String[] newFileList = thisFile.list();
                 ArrayList<String> dirFiles = new ArrayList<String>();
-                for (String filename: newFileList) {
+                for (String filename : newFileList) {
                     dirFiles.add("data/" + filename);
                 }
                 addFileIntoZip(zos, dirFiles);
             }
         }
+    }
+
+    //@@author quanle1994
+
+    @Override
+    public ReadOnlyAccount getAccount() {
+        return this.account;
     }
 
     @Override
@@ -665,17 +677,28 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException {
+        File file = new File("data/" + fileName + ".encrypted");
+        file.delete();
+        refreshAddressBook();
+    }
+
+    @Override
     public UserPrefs getUserPrefs() {
         return userPref;
     }
 
     @Override
-    public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+    public void refreshAddressBook() throws IOException, DataConversionException {
         AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
                 (SampleDataUtil::getSampleAddressBook));
         for (ReadOnlyPerson p : temp.getPersonList()) {
             Person newP = new Person(p);
-            addressBook.addPerson(newP);
+            try {
+                addressBook.addPerson(newP);
+            } catch (DuplicatePersonException dpe) {
+                dpe.getStackTrace();
+            }
         }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
@@ -695,5 +718,25 @@ public class ModelManager extends ComponentManager implements Model {
         AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
                 (SampleDataUtil::getSampleAddressBook));
         return temp.getPersonList();
+    }
+
+    @Override
+    public void encrypt(String userId, String pass, boolean emptyFile) throws Exception {
+        FileEncryptor.encryptFile(userId, pass, emptyFile);
+    }
+
+    @Override
+    public void decrypt(String fileName, String pass) throws Exception {
+        FileEncryptor.decryptFile(fileName, pass);
+    }
+
+    @Override
+    public void encryptPublic(boolean isLockCommand) throws CommandException {
+        FileEncryptor.encryptPublicFile(isLockCommand);
+    }
+
+    @Override
+    public void saveToEncryptedFile() {
+        SaveToEncryptedFile.save();
     }
 }

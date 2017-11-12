@@ -46,6 +46,7 @@ public class OrderCommandTest {
     private String secondParameter;
     private String thirdParameter;
     private String fourthParameter;
+    private String fifthParameter;
 
     @Before
     public void setUp() {
@@ -53,6 +54,7 @@ public class OrderCommandTest {
         secondParameter = "ADDRESS";
         thirdParameter = "BIRTHDAY";
         fourthParameter = "TAG";
+        fifthParameter = "GROUP";
 
         model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new Account(),
                 new Config());
@@ -110,11 +112,23 @@ public class OrderCommandTest {
     }
 
     @Test
-    public void execute_birthdayTagParameter_orderSuccess() throws CommandException {
+    public void execute_groupParameter_orderSuccess() throws CommandException {
+        OrderCommand command = prepareCommand(fifthParameter);
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + fifthParameter,
+                Arrays.asList(ELLE, FIONA, GEORGE, CARL, DANIEL, BENSON, ALICE));
+    }
+
+    @Test
+    public void execute_mulitiParameters_orderSuccess() throws CommandException {
         OrderCommand command = prepareCommand(thirdParameter.concat(" " + fourthParameter));
         assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + thirdParameter + " "
                         + fourthParameter,
                 Arrays.asList(GEORGE, ALICE, CARL, DANIEL, FIONA, BENSON, ELLE));
+
+        command = prepareCommand(fifthParameter.concat(" " + firstParameter));
+        assertOrderSuccess(command, OrderCommand.MESSAGE_ORDER_SUCCESS + fifthParameter + " "
+                        + firstParameter,
+                Arrays.asList(ELLE, FIONA, GEORGE, CARL, DANIEL, BENSON, ALICE));
     }
 
     @Test

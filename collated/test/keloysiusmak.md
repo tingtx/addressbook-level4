@@ -352,13 +352,18 @@ public class SetAliasCommandTest {
         }
 
         @Override
+        public void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public UserPrefs getUserPrefs() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException {
+        public void refreshAddressBook() throws IOException, DataConversionException {
             fail("This method should not be called.");
         }
 
@@ -372,6 +377,26 @@ public class SetAliasCommandTest {
         public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void encrypt(String userId, String pass, boolean emptyFile) throws Exception {
+
+        }
+
+        @Override
+        public void decrypt(String fileName, String pass) throws Exception {
+
+        }
+
+        @Override
+        public void encryptPublic(boolean isLockCommand) throws CommandException {
+
+        }
+
+        @Override
+        public void saveToEncryptedFile() {
+
         }
 
         @Override

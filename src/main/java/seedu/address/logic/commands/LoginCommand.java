@@ -4,13 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_USERID;
 
-import java.util.Arrays;
-
-import seedu.address.logic.commands.digestutil.HashDigest;
-import seedu.address.logic.commands.digestutil.HexCode;
+import javafx.collections.ObservableList;
+import seedu.address.commons.util.digestutil.HashDigest;
+import seedu.address.commons.util.digestutil.HexCode;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
-import seedu.address.logic.encryption.FileEncryptor;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
 //@@author quanle1994
@@ -27,10 +26,8 @@ public class LoginCommand extends Command {
             + PREFIX_USERID + "USER ID "
             + PREFIX_PASSWORD + "PASSWORD";
     public static final String MESSAGE_SUCCESS = "Log In Successful";
-    private static final String MESSAGE_ERROR_NO_USER = "User does not exist";
-    private static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
-    private static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
-    private byte[] password;
+    public static final String MESSAGE_ERROR_NO_USER = "User does not exist";
+    public static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
     private String userId;
     private String passwordText;
 
@@ -43,56 +40,39 @@ public class LoginCommand extends Command {
         return COMMAND_WORD;
     }
 
-    private boolean isSameDigest(byte[] digest1, byte[] digest2) {
-        return Arrays.equals(digest1, digest2);
-    }
-
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         if (!(new CurrentUserDetails().getUserId().equals("PUBLIC"))) {
             throw new CommandException(MESSAGE_LOGIN_ERROR);
         }
+
         byte[] userNameHash = new HashDigest().getHashDigest(userId);
         String userNameHex = new HexCode().getHexFormat(new String(userNameHash));
-        String saltText;
+        String saltText = "";
         try {
+
             String saltHex = model.retrieveSaltFromStorage(userNameHex);
             saltText = new HexCode().hexStringToByteArray(saltHex);
             byte[] saltedPassword = new HashDigest().getHashDigest(saltText + passwordText);
             String saltedPasswordHex = new HexCode().getHexFormat(new String(saltedPassword));
 
             model.getUserFromIdAndPassword(userNameHex, saltedPasswordHex);
+
+            model.encryptPublic(false);
+
+            ObservableList<ReadOnlyPerson> list = model.getListLength();
+            model.emptyPersonList(list);
+
+            model.decrypt(userNameHex.substring(0, 10), saltText + passwordText);
+            model.refreshAddressBook();
+
+            new CurrentUserDetails().setCurrentUser(userId, userNameHex, saltText, passwordText);
         } catch (UserNotFoundException e) {
             throw new CommandException(MESSAGE_ERROR_NO_USER);
-        }
-
-        try {
-            FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + passwordText);
-            model.refreshAddressBook();
         } catch (Exception e) {
-            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
+            e.printStackTrace();
         }
-        new CurrentUserDetails().setCurrentUser(userId, userNameHex, saltText, passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    private boolean matchedPassword(byte[] digest) {
-        return isSameDigest(password, digest);
-    }
-
-    public byte[] getPassword() {
-        return password;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    /**
-     * This checks if the userId is existing
-     */
-    public String retrieveSaltFromStorage() throws UserNotFoundException {
-        return model.retrieveSaltFromStorage(userId);
     }
 }

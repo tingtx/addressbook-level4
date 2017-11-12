@@ -1,4 +1,4 @@
-package seedu.address.logic.encryption;
+package seedu.address.commons.util.encryption;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +13,8 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+
 /**
  * This provides encryption and decryption utilities
  */
@@ -22,7 +24,8 @@ public class FileEncryptor {
         (byte) 0x5b, (byte) 0xd7, (byte) 0x45, (byte) 0x17
     };
 
-    private static final String addressBookFilePath = "data/addressbook.xml";
+    private static final String MESSAGE_PUBLIC_CONTACTS_ENCRYPTION_ERROR = "Cannot encrypt the public contacts";
+    private static String addressBookFilePath = "data/addressbook.xml";
 
     /**
      * Create a cipher
@@ -110,7 +113,7 @@ public class FileEncryptor {
      * Decrypts one file to a second file using a key derived from a passphrase:
      */
     public static void decryptFile(String fileName, String pass)
-            throws GeneralSecurityException, IOException {
+            throws Exception {
         byte[] encData;
         byte[] decData;
         File inFile = new File("data/" + fileName + ".encrypted");
@@ -141,5 +144,23 @@ public class FileEncryptor {
         FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
         target.write(decData);
         target.close();
+    }
+
+    /**
+     * Encrypt the public list of contacts with file name as PUBLIC and password as PUBLIC.
+     *
+     * @param isLockCommand
+     * @throws CommandException
+     */
+    public static void encryptPublicFile(boolean isLockCommand) throws CommandException {
+        try {
+            if (isLockCommand) {
+                addressBookFilePath = "data/addressbook_empty.xml";
+            }
+            FileEncryptor.encryptFile("PUBLIC", "PUBLIC", false);
+            addressBookFilePath = "data/addressbook.xml";
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_PUBLIC_CONTACTS_ENCRYPTION_ERROR);
+        }
     }
 }

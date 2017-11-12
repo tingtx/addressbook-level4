@@ -12,6 +12,7 @@ import org.xml.sax.SAXException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.ConfigMissingException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.model.alias.exceptions.UnknownCommandException;
@@ -68,7 +69,7 @@ public interface Model {
     ReadOnlyAccount getAccount();
 
     /**
-     * Deletes the given person.
+     * Deletes the given person
      */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
@@ -93,12 +94,12 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     /**
-     * Delete the given tag on every person in the Addressbook
+     * Delete the given tag on every person in the Addressbook.
      */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
     /**
-     * Returns an unmodifiable view of the filtered person list
+     * Returns an unmodifiable view of the filtered person list.
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
@@ -108,7 +109,7 @@ public interface Model {
     ObservableList<Group> getGroupList();
 
     /**
-     * Returns a list of commands.
+     * Returns a list of commands
      */
     ArrayList<ArrayList<String>> getCommands();
 
@@ -128,6 +129,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
     //=====================================================================================================
 
     //==================================EventBook Components=============================================
@@ -208,14 +210,26 @@ public interface Model {
 
     void transferDataWithDefault() throws IOException, DataConversionException;
 
+    //@@author quanle1994
+
     void deleteEncryptedContacts(String substring);
+
+    void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException;
 
     UserPrefs getUserPrefs();
 
-    void refreshAddressBook() throws IOException, DataConversionException, DuplicatePersonException;
+    void refreshAddressBook() throws IOException, DataConversionException;
 
     void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
             DataConversionException;
 
     ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
+
+    void encrypt(String userId, String pass, boolean emptyFile) throws Exception;
+
+    void decrypt(String fileName, String pass) throws Exception;
+
+    void encryptPublic(boolean isLockCommand) throws CommandException;
+
+    void saveToEncryptedFile();
 }

@@ -44,7 +44,6 @@ public class BrowserWindowTest extends GuiUnitTest {
         //postNow(selectionChangedEventStub);
         //URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
         //        + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
-
         //waitUntilBrowserLoaded(browserWindowHandle);
         //assertEquals(expectedPersonUrl, browserWindowHandle.getLoadedUrl());
     }

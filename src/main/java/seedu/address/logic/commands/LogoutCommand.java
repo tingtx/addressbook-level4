@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.currentuser.CurrentUserDetails;
-import seedu.address.logic.encryption.FileEncryptor;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
@@ -13,8 +12,9 @@ import seedu.address.model.user.exceptions.DuplicateUserException;
 public class LogoutCommand extends Command {
     public static final String COMMAND_WORD = "logout";
     public static final String COMMAND_ALIAS = "lgo";
-    private static final String MESSAGE_SUCCESS = "Logged out successfully!";
-    private static final String MESSAGE_LOGOUT_ERROR = "You have not logged in!";
+    public static final String MESSAGE_SUCCESS = "Logged out successfully!";
+    public static final String MESSAGE_LOGOUT_ERROR = "You have not logged in!";
+    public static final String MESSAGE_ENCRYPTION_ERROR = "Encryption/Decryption Error";
     private CurrentUserDetails currentUser = new CurrentUserDetails();
 
     public static String getCommandWord() {
@@ -28,13 +28,19 @@ public class LogoutCommand extends Command {
         }
         try {
             ObservableList<ReadOnlyPerson> list = model.getListLength();
-            FileEncryptor.encryptFile(currentUser.getUserIdHex().substring(0, 10), currentUser.getSaltText()
+            model.encrypt(currentUser.getUserIdHex().substring(0, 10), currentUser.getSaltText()
                     + currentUser.getPasswordText(), true);
             model.emptyPersonList(list);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
-        currentUser.setUserId("PUBLIC");
+        try {
+            model.decrypt("PUBLIC", "PUBLIC");
+            model.refreshAddressBook();
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
+        }
+        currentUser.setPublicUser();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

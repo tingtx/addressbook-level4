@@ -18,6 +18,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.Account;
@@ -68,6 +69,8 @@ public class MainApp extends Application {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
+        decryptPublicFile();
+
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
@@ -93,6 +96,17 @@ public class MainApp extends Application {
         //@@author
 
         initEventsCenter();
+    }
+
+    /**
+     * Decrypt PUBLIC.encrypted file
+     */
+    private void decryptPublicFile() {
+        try {
+            FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
+        } catch (Exception e) {
+            ;
+        }
     }
 
     private String getApplicationParameter(String parameterName) {

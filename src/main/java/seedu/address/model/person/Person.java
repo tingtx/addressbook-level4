@@ -1,9 +1,13 @@
 package seedu.address.model.person;
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.naturalOrder;
+import static java.util.Comparator.nullsLast;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -174,6 +178,41 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
+
+    //@@author tingtx
+
+    public static final Comparator<Person> getPersonNameComparator() {
+        return (Person a, Person b) -> a.getName().toString()
+                .compareToIgnoreCase(b.getName().toString());
+    }
+
+    public static final Comparator<Person> getPersonAddressComparator() {
+        return (Person a, Person b) -> a.getAddress().toString()
+                .compareToIgnoreCase(b.getAddress().toString());
+    }
+
+    public static final Comparator<Person> getPersonBirthdayComparator() {
+        return comparing(a -> a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
+    }
+
+    public static final Comparator<Person> getPersonTagComparator() {
+        return (Person a, Person b) -> a.getTags().toString()
+                .compareToIgnoreCase(b.getTags().toString());
+    }
+
+    public static final Comparator<Person> getPersonGroupComparator() {
+        return (a, b) -> {
+            if (a.getGroup().toString().isEmpty()) {
+                return 1;
+            } else if (b.getGroup().toString().isEmpty()) {
+                return -1;
+            } else {
+                return a.getGroup().toString().compareToIgnoreCase(b.getGroup().toString());
+            }
+        };
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

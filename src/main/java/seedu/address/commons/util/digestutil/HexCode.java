@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.digestutil;
+package seedu.address.commons.util.digestutil;
 
 /**
  * Provide the utilities to obtain hex strings from texts and texts from hex strings

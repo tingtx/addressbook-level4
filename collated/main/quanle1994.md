@@ -1,4 +1,25 @@
 # quanle1994
+###### /java/seedu/address/commons/util/digestutil/HashDigest.java
+``` java
+
+/**
+ * Converts a string to a SHA-256 Hash Digest.
+ */
+public class HashDigest {
+    /**
+     * Return the hash digest of {@code text}. Used for creating accounts and validating log-ins.
+     */
+    public byte[] getHashDigest(String text) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+            return digest.digest(text.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/LoginCommand.java
 ``` java
 
@@ -14,10 +35,8 @@ public class LoginCommand extends Command {
             + PREFIX_USERID + "USER ID "
             + PREFIX_PASSWORD + "PASSWORD";
     public static final String MESSAGE_SUCCESS = "Log In Successful";
-    private static final String MESSAGE_ERROR_NO_USER = "User does not exist";
-    private static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
-    private static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
-    private byte[] password;
+    public static final String MESSAGE_ERROR_NO_USER = "User does not exist";
+    public static final String MESSAGE_LOGIN_ERROR = "Log out first before logging in";
     private String userId;
     private String passwordText;
 
@@ -30,57 +49,40 @@ public class LoginCommand extends Command {
         return COMMAND_WORD;
     }
 
-    private boolean isSameDigest(byte[] digest1, byte[] digest2) {
-        return Arrays.equals(digest1, digest2);
-    }
-
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         if (!(new CurrentUserDetails().getUserId().equals("PUBLIC"))) {
             throw new CommandException(MESSAGE_LOGIN_ERROR);
         }
+
         byte[] userNameHash = new HashDigest().getHashDigest(userId);
         String userNameHex = new HexCode().getHexFormat(new String(userNameHash));
-        String saltText;
+        String saltText = "";
         try {
+
             String saltHex = model.retrieveSaltFromStorage(userNameHex);
             saltText = new HexCode().hexStringToByteArray(saltHex);
             byte[] saltedPassword = new HashDigest().getHashDigest(saltText + passwordText);
             String saltedPasswordHex = new HexCode().getHexFormat(new String(saltedPassword));
 
             model.getUserFromIdAndPassword(userNameHex, saltedPasswordHex);
+
+            model.encryptPublic(false);
+
+            ObservableList<ReadOnlyPerson> list = model.getListLength();
+            model.emptyPersonList(list);
+
+            model.decrypt(userNameHex.substring(0, 10), saltText + passwordText);
+            model.refreshAddressBook();
+
+            new CurrentUserDetails().setCurrentUser(userId, userNameHex, saltText, passwordText);
         } catch (UserNotFoundException e) {
             throw new CommandException(MESSAGE_ERROR_NO_USER);
-        }
-
-        try {
-            FileEncryptor.decryptFile(userNameHex.substring(0, 10), saltText + passwordText);
-            model.refreshAddressBook();
         } catch (Exception e) {
-            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
+            e.printStackTrace();
         }
-        new CurrentUserDetails().setCurrentUser(userId, userNameHex, saltText, passwordText);
         return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    private boolean matchedPassword(byte[] digest) {
-        return isSameDigest(password, digest);
-    }
-
-    public byte[] getPassword() {
-        return password;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    /**
-     * This checks if the userId is existing
-     */
-    public String retrieveSaltFromStorage() throws UserNotFoundException {
-        return model.retrieveSaltFromStorage(userId);
     }
 }
 ```
@@ -95,8 +97,9 @@ public class OrderCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "order";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Order the Address Book based on one/multiple parameter(s).\n"
-            + "Parameters:  NAME, ADDRESS, BIRTHDAY, TAG\n"
+            + ": Order the contacts of Address Book based on one/multiple parameter(s).\n"
+            + "To order GROUP with other parameters, GROUP must be the first parameter. \n"
+            + "Parameters:  NAME, ADDRESS, BIRTHDAY, TAG, GROUP\n"
             + "Example: " + COMMAND_WORD + " BIRTHDAY NAME";
 
     public static final String MESSAGE_ORDER_SUCCESS = "Address Book has been ordered by ";
@@ -144,9 +147,9 @@ public class LockCommand extends Command {
             + "Parameters: "
             + PREFIX_USERID + "USER ID "
             + PREFIX_PASSWORD + "PASSWORD";
-    private static final String MESSAGE_EXISTING_USER = "User already exists";
-    private static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your "
+    public static final String MESSAGE_SUCCESS = "Account is created and your Address Book is locked with your "
             + "password";
+    public static final String MESSAGE_EXISTING_USER = "User already exists";
     private static final int SALT_MIN = 0;
     private static final int SALT_MAX = 1000000;
     private String userId;
@@ -164,10 +167,9 @@ public class LockCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException, DuplicateUserException {
         requireNonNull(model);
+
         byte[] uIdDigest = new HashDigest().getHashDigest(userId);
-
         String saltText = "" + ThreadLocalRandom.current().nextInt(SALT_MIN, SALT_MAX + 1);
-
         byte[] pwDigest = new HashDigest().getHashDigest(saltText + passwordText);
         String hexUidDigest = new HexCode().getHexFormat(new String(uIdDigest));
         String hexSalt = new HexCode().getHexFormat(saltText);
@@ -179,7 +181,8 @@ public class LockCommand extends Command {
         }
 
         try {
-            FileEncryptor.encryptFile(hexUidDigest.substring(0, 10), saltText + passwordText, false);
+            model.encrypt(hexUidDigest.substring(0, 10), saltText + passwordText, false);
+            model.encryptPublic(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,37 +194,76 @@ public class LockCommand extends Command {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getPasswordText() {
         return passwordText;
     }
-
-    public void setPasswordText(String passwordText) {
-        this.passwordText = passwordText;
-    }
 }
 ```
-###### /java/seedu/address/logic/commands/digestUtil/HashDigest.java
+###### /java/seedu/address/logic/commands/RemoveUserCommand.java
 ``` java
 
+import seedu.address.commons.util.digestutil.HashDigest;
+import seedu.address.commons.util.digestutil.HexCode;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.model.user.exceptions.UserNotFoundException;
+
 /**
- * Converts a string to a SHA-256 Hash Digest.
+ * Remove user from Account file
  */
-public class HashDigest {
-    /**
-     * Return the hash digest of {@code text}. Used for creating accounts and validating log-ins.
-     */
-    public byte[] getHashDigest(String text) {
-        MessageDigest digest = null;
+public class RemoveUserCommand extends Command {
+    public static final String COMMAND_WORD = "remove";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Remove the user from the Account storage.\n"
+            + "Parameters: u/USERNAME, p/PASSWORD, r/REMOVE_CONTACT\n"
+            + "USERNAME is a string and is the user id of the account you want to remove\n"
+            + "PASSWORD is a string associated with that user. It must match with the password stored locally\n"
+            + "REMOVE_CONTACT is either a Y or N, Y means the contacts associated to that user will be deleted, and "
+            + "N means the contacts associated to that user will be released to accessible by the public."
+            + "Example: " + COMMAND_WORD + " u/lequangquan p/123123 r/Y";
+    public static final String MESSAGE_REMOVE_USER_SUCCESS = "Removed user: %1$s";
+    public static final String MESSAGE_USER_NOT_FOUND = "The user credentials provided do not match our "
+            + "database.";
+    public static final String MESSAGE_ENCRYPTION_ERROR = "Decryption Failed";
+    private String userName;
+    private String password;
+    private boolean cascade;
+
+    public RemoveUserCommand(String userName, String password, boolean cascade) {
+        this.userName = userName;
+        this.password = password;
+        this.cascade = cascade;
+    }
+
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException, DuplicateUserException {
         try {
-            digest = MessageDigest.getInstance("SHA-256");
-            return digest.digest(text.getBytes(StandardCharsets.UTF_8));
-        } catch (NoSuchAlgorithmException e) {
-            return null;
+            byte[] userNameHash = new HashDigest().getHashDigest(userName);
+            String userNameHex = new HexCode().getHexFormat(new String(userNameHash));
+
+            String saltHex = model.retrieveSaltFromStorage(userNameHex);
+            String saltText = new HexCode().hexStringToByteArray(saltHex);
+            byte[] saltedPassword = new HashDigest().getHashDigest(saltText + password);
+            String saltedPasswordHex = new HexCode().getHexFormat(new String(saltedPassword));
+
+            model.deleteUser(userNameHex, saltedPasswordHex);
+            if (cascade) {
+                model.deleteEncryptedContacts(userNameHex.substring(0, 10));
+            } else {
+                model.decrypt(userNameHex.substring(0, 10), saltText + password);
+                model.releaseEncryptedContacts(userNameHex.substring(0, 10));
+            }
+            model.saveToEncryptedFile();
+        } catch (UserNotFoundException unfe) {
+            throw new CommandException(MESSAGE_USER_NOT_FOUND);
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_ENCRYPTION_ERROR);
         }
+        return new CommandResult(String.format(MESSAGE_REMOVE_USER_SUCCESS, userName));
     }
 }
 ```
@@ -524,6 +566,9 @@ public class User implements ReadOnlyUser {
     private String salt = "";
     private String password = "";
 
+    public User() {
+    }
+
     public User(String userId, String salt, String password) {
         this.userId = userId;
         this.salt = salt;
@@ -554,11 +599,6 @@ public class User implements ReadOnlyUser {
     @Override
     public String getSalt() {
         return salt;
-    }
-
-    @Override
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     @Override
@@ -623,19 +663,9 @@ public interface ReadOnlyUser {
 
     String getSalt();
 
-    void setSalt(String salt);
-
     String getPassword();
 
     void setPassword(String password);
-
-    default boolean isExistingUser(String userId) {
-        return this.getUserId().equals(userId);
-    }
-
-    default boolean isCorrectPassword(String userId, String password) {
-        return this.getUserId().equals(userId) && this.getPassword().equals(password);
-    }
 
     /**
      * Returns true if both have the same username. (interfaces cannot override .equals)
@@ -750,6 +780,85 @@ public class Account implements ReadOnlyAccount {
     }
 }
 ```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+
+    @Override
+    public ReadOnlyAccount getAccount() {
+        return this.account;
+    }
+
+    @Override
+    public void deleteEncryptedContacts(String fileName) {
+        File file = new File("data/" + fileName + ".encrypted");
+        file.delete();
+    }
+
+    @Override
+    public void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException {
+        File file = new File("data/" + fileName + ".encrypted");
+        file.delete();
+        refreshAddressBook();
+    }
+
+    @Override
+    public UserPrefs getUserPrefs() {
+        return userPref;
+    }
+
+    @Override
+    public void refreshAddressBook() throws IOException, DataConversionException {
+        AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
+                (SampleDataUtil::getSampleAddressBook));
+        for (ReadOnlyPerson p : temp.getPersonList()) {
+            Person newP = new Person(p);
+            try {
+                addressBook.addPerson(newP);
+            } catch (DuplicatePersonException dpe) {
+                dpe.getStackTrace();
+            }
+        }
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException {
+        for (ReadOnlyPerson p : list) {
+            Person newP = new Person(p);
+            addressBook.removePerson(newP);
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException {
+        AddressBook temp = new AddressBook(userStorage.readAddressBook().orElseGet
+                (SampleDataUtil::getSampleAddressBook));
+        return temp.getPersonList();
+    }
+
+    @Override
+    public void encrypt(String userId, String pass, boolean emptyFile) throws Exception {
+        FileEncryptor.encryptFile(userId, pass, emptyFile);
+    }
+
+    @Override
+    public void decrypt(String fileName, String pass) throws Exception {
+        FileEncryptor.decryptFile(fileName, pass);
+    }
+
+    @Override
+    public void encryptPublic(boolean isLockCommand) throws CommandException {
+        FileEncryptor.encryptPublicFile(isLockCommand);
+    }
+
+    @Override
+    public void saveToEncryptedFile() {
+        SaveToEncryptedFile.save();
+    }
+}
+```
 ###### /java/seedu/address/model/ReadOnlyAccount.java
 ``` java
 
@@ -764,5 +873,30 @@ public interface ReadOnlyAccount {
      * This list will not contain any duplicate persons.
      */
     ObservableList<ReadOnlyUser> getUserList();
+}
+```
+###### /java/seedu/address/model/Model.java
+``` java
+
+    void deleteEncryptedContacts(String substring);
+
+    void releaseEncryptedContacts(String fileName) throws DataConversionException, IOException;
+
+    UserPrefs getUserPrefs();
+
+    void refreshAddressBook() throws IOException, DataConversionException;
+
+    void emptyPersonList(ObservableList<ReadOnlyPerson> list) throws PersonNotFoundException, IOException,
+            DataConversionException;
+
+    ObservableList<ReadOnlyPerson> getListLength() throws IOException, DataConversionException;
+
+    void encrypt(String userId, String pass, boolean emptyFile) throws Exception;
+
+    void decrypt(String fileName, String pass) throws Exception;
+
+    void encryptPublic(boolean isLockCommand) throws CommandException;
+
+    void saveToEncryptedFile();
 }
 ```

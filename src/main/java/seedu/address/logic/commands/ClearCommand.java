@@ -22,6 +22,7 @@ public class ClearCommand extends UndoableCommand {
         requireNonNull(model);
         model.resetData(new AddressBook());
         model.resetEventData(new EventBook());
+        model.saveToEncryptedFile();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

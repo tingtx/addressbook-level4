@@ -226,7 +226,6 @@ Examples:
 Exports the addressbook into csv format
 // end::export[]
 
-//@@author quanle1994
 // tag::find[]
 === Locating persons by name: `find` - Since V1.0
 
@@ -407,7 +406,6 @@ Displays the current user name. The default user name is `PUBLIC` +
 Format: `currentuser`
 // end::lock
 
-//@@author quanle1994
 // tag::order[]
 === Order contacts in Address Book by parameter(s): `order` - Since V1.0
 

@@ -654,7 +654,6 @@ image::ListCommand_ActivityDiagram.png[width = "400"]
 
 //end::list[]
 
-//@@author quanle1994
 // tag::order[]
 === Order(Sort) mechanism
 The order mechanism is implemented by 'OrderCommand' and `OrderCommandParser` in the Logic component.

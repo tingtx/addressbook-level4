@@ -1,8 +1,12 @@
 # tingtx
-###### /java/seedu/address/logic/parser/GeneralBookParserTest.java
+###### /java/seedu/address/logic/commands/GroupCommandTest.java
 ``` java
+public class GroupCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
+            Account(), new Config());
+
     @Test
-<<<<<<< HEAD
     public void execute_showAllGroups_success() throws Exception {
         List<Index> indexes = new ArrayList<>();
         String showAll = "SHOWALL";
@@ -15,169 +19,209 @@
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
         expectedModel.getGroupList();
-=======
-    public void parseCommand_group() throws Exception {
-        final String group = "TEST";
-        final List<Index> indexes = new ArrayList<>();
+
+        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_groupOnePerson_success() throws Exception {
+        Person groupedPerson = new PersonBuilder(model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
+                .withGroup("JUNITTest").build();
+        List<Index> indexes = new ArrayList<>();
         indexes.add(INDEX_FIRST_PERSON);
-        GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group);
-        Assert.assertEquals(new GroupCommand(indexes, group), command);
->>>>>>> master
 
-        //alias
-        command = (GroupCommand) parser.parseCommand(aliasSettings.getGroupCommand().getAlias()
-                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group);
-        Assert.assertEquals(new GroupCommand(indexes, group), command);
-    }
-```
-###### /java/seedu/address/logic/parser/GeneralBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_order() throws Exception {
-        final String parameter = "NAME";
-        OrderCommand command = (OrderCommand) parser.parseCommand(OrderCommand.COMMAND_WORD + " "
-                + parameter);
-        Assert.assertEquals(new OrderCommand(parameter), command);
+        GroupCommand groupCommand = prepareCommand(indexes, groupedPerson.getGroup().value);
 
-        //alias
-        command = (OrderCommand) parser.parseCommand(aliasSettings.getOrderCommand().getAlias()
-                + " " + parameter);
-        Assert.assertEquals(new OrderCommand(parameter), command);
-    }
-```
-###### /java/seedu/address/logic/parser/OrderCommandParserTest.java
-``` java
-public class OrderCommandParserTest {
+        String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
 
-    private OrderCommandParser parser = new OrderCommandParser();
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
 
-    @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OrderCommand.MESSAGE_USAGE));
+        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void parse_validArgs_returnsOrderCommand() {
+    public void execute_groupMultiPersons_success() throws Exception {
+        Person groupedPersonOne = new PersonBuilder(model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
+                .withGroup("JUNITTest").build();
+        Person groupedPersonTwo = new PersonBuilder(model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_SECOND_PERSON.getZeroBased()))
+                .withGroup("JUNITTest").build();
+        Person groupedPersonThree = new PersonBuilder(model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_THIRD_PERSON.getZeroBased()))
+                .withGroup("JUNITTest").build();
 
-        OrderCommand expectedOrderCommand;
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        indexes.add(INDEX_THIRD_PERSON);
 
-        //one parameter
-        expectedOrderCommand = new OrderCommand("BIRTHDAY");
+        GroupCommand groupCommand = prepareCommand(indexes, groupedPersonOne.getGroup().value);
 
-        assertParseSuccess(parser, "BIRTHDAY", expectedOrderCommand); //same parameter
+        String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
 
-        assertParseSuccess(parser, "birtHDaY", expectedOrderCommand); //case insensitive
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPersonOne);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(1), groupedPersonTwo);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(2), groupedPersonThree);
 
-        //two parameters
-        expectedOrderCommand = new OrderCommand("TAG NAME");
 
-        assertParseSuccess(parser, "TAG NAME", expectedOrderCommand); //same parameter
-
-        assertParseSuccess(parser, "tAG namE", expectedOrderCommand); //case insenstive
-    }
-}
-```
-###### /java/seedu/address/logic/parser/ListCommandParserTest.java
-``` java
-public class ListCommandParserTest {
-
-    private ListCommandParser parser = new ListCommandParser();
-
-    @Test
-    public void parse_noPrefix_throwsParseException() {
-        assertParseFailure(parser, "TEST", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ListCommand.MESSAGE_USAGE));
+        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void parse_emptyArg_returnListCommand() {
-        ListCommand expectedListCommand = new ListCommand("");
-        assertParseSuccess(parser, "     ", expectedListCommand);
+    public void execute_ungroupOnePerson_success() throws Exception {
+        Person groupedPerson = new PersonBuilder(model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
+                .withGroup("").build();
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(INDEX_FIRST_PERSON);
+
+        GroupCommand groupCommand = prepareCommand(indexes, "");
+
+        String expectedMessage = GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS;
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
+
+        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void parse_validArgs_returnsListCommand() {
-        ListCommand expectedListCommand = new ListCommand("g/TEST");
-        assertParseSuccess(parser, " g/TEST", expectedListCommand);
-    }
+    public void execute_ungroupMultiPersons_success() throws Exception {
+        Person groupedPersonOne = new PersonBuilder(model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
+                .withGroup("").build();
+        Person groupedPersonTwo = new PersonBuilder(model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_SECOND_PERSON.getZeroBased()))
+                .withGroup("").build();
+        Person groupedPersonThree = new PersonBuilder(model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_THIRD_PERSON.getZeroBased()))
+                .withGroup("").build();
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(INDEX_FIRST_PERSON);
+        indexes.add(INDEX_SECOND_PERSON);
+        indexes.add(INDEX_THIRD_PERSON);
+
+        GroupCommand groupCommand = prepareCommand(indexes, groupedPersonOne.getGroup().value);
+
+        String expectedMessage = GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS;
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPersonOne);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(1), groupedPersonTwo);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(2), groupedPersonThree);
 
 
-}
-```
-###### /java/seedu/address/logic/parser/GroupCommandParserTest.java
-``` java
-public class GroupCommandParserTest {
-
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE);
-    private GroupCommandParser parser = new GroupCommandParser();
-
-    @Test
-    public void parse_invalidPreamble_failure() {
-
-        //no index
-        assertParseFailure(parser, " " + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // negative index
-        assertParseFailure(parser, "-6" + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // zero index
-        assertParseFailure(parser, "0" + GROUP_DESC_BOB, MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
-
+        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void parse_noPrefix_failure() {
+    public void execute_filteredList_success() throws Exception {
+        showFirstPersonOnly(model);
 
-        assertParseFailure(parser, "1" + VALID_GROUP_AMY, MESSAGE_INVALID_FORMAT);
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList()
+                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased());
+        Person groupedPerson = new PersonBuilder(personInFilteredList).withGroup("JUNITTest").build();
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(INDEX_FIRST_PERSON);
+
+        GroupCommand groupCommand = prepareCommand(indexes, groupedPerson.getGroup().value);
+
+        String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
+
+        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
     }
 
+
     @Test
-    public void parse_showAllString_success() {
-        List<Index> index = new ArrayList<>();
-        GroupCommand expectedCommand = new GroupCommand(index, "SHOWALL");
-        assertParseSuccess(parser, "SHOWALL", expectedCommand);
+    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(outOfBoundIndex);
+
+        GroupCommand groupCommand = prepareCommand(indexes, VALID_GROUP_AMY);
+
+        assertCommandFailure(groupCommand, model,
+                "Index " + outOfBoundIndex.toString() + " is invalid!");
     }
 
+    /**
+     * Edit filtered list where index is larger than size of filtered list,
+     * but smaller than size of address book
+     */
     @Test
-    public void parse_oneIndex_success() throws IllegalValueException {
+    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        Index outOfBoundIndex = TypicalIndexes.INDEX_SECOND_PERSON;
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(outOfBoundIndex);
 
-        List<Index> index = new ArrayList<>();
-        index.add(ParserUtil.parseIndex("1"));
+        //ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        GroupCommand expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
-        assertParseSuccess(parser, "1" + GROUP_DESC_AMY, expectedCommand);
+        GroupCommand groupCommand = prepareCommand(indexes, VALID_GROUP_AMY);
+
+        assertCommandFailure(groupCommand, model,
+                "Index " + outOfBoundIndex.toString() + " is invalid!");
     }
 
+
     @Test
-    public void parse_multipleIndex_success() throws IllegalValueException {
+    public void equals() {
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(INDEX_FIRST_PERSON);
+        final GroupCommand standardCommand = new GroupCommand(indexes, ALICE.getGroup().value);
 
-        List<Index> index = new ArrayList<>();
 
-        //to group a smaller group of 3 person
-        index.add(ParserUtil.parseIndex("1"));
-        index.add(ParserUtil.parseIndex("3"));
-        index.add(ParserUtil.parseIndex("4"));
+        // same values -> returns true
+        GroupCommand commandWithSameValues = new GroupCommand(indexes,  ALICE.getGroup().value);
+        assertTrue(standardCommand.equals(commandWithSameValues));
 
-        GroupCommand expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
-        assertParseSuccess(parser, "1 3 4" + GROUP_DESC_AMY, expectedCommand);
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
 
-        //to group a bigger group of 15 person
-        for (int i = 5; i < 17; i++) {
-            index.add(ParserUtil.parseIndex(Integer.toString(i)));
-        }
-        expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
-        String userInput = "1 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
-        assertParseSuccess(parser, userInput + GROUP_DESC_AMY, expectedCommand);
+        //null -> returns false
+        assertFalse(standardCommand.equals(null));
 
+        // different types -> return false
+        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON,
+                new Remark(VALID_REMARK_AMY))));
+
+        // different index -> returns false
+        List<Index> tempIndexes = new ArrayList<>();
+        tempIndexes.add(INDEX_SECOND_PERSON);
+        GroupCommand commandWithDiffIndex = new GroupCommand(tempIndexes, ALICE.getGroup().value);
+        assertFalse(standardCommand.equals(commandWithDiffIndex));
+
+        // different descriptor -> returns false
+        tempIndexes.remove(INDEX_SECOND_PERSON);
+        tempIndexes.add(INDEX_FIRST_PERSON);
+        GroupCommand commandWithNoDesc = new GroupCommand(tempIndexes, BENSON.getGroup().value);
+        assertFalse(standardCommand.equals(commandWithNoDesc));
+    }
+
+    /**
+     * Returns an {@code GroupCommand} with parameters {@code index} and {@code Group}
+     */
+    private GroupCommand prepareCommand(List<Index> index, String group) {
+        GroupCommand groupCommand = new GroupCommand(index, group);
+        UserPrefs userPrefs = new UserPrefs();
+        Config config = new Config();
+        Logic logic = null;
+        groupCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
+                new UiManager(logic, config, userPrefs));
+        return groupCommand;
     }
 }
 ```
@@ -413,91 +457,72 @@ public class OrderCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/GroupCommandTest.java
+###### /java/seedu/address/logic/parser/GeneralBookParserTest.java
 ``` java
-public class GroupCommandTest {
+    @Test
+    public void parseCommand_group() throws Exception {
+        final String group = "TEST";
+        final List<Index> indexes = new ArrayList<>();
+        indexes.add(INDEX_FIRST_PERSON);
+        GroupCommand command = (GroupCommand) parser.parseCommand(GroupCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group);
+        Assert.assertEquals(new GroupCommand(indexes, group), command);
 
-    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventBook(), new UserPrefs(), new
-            Account(), new Config());
+        //alias
+        command = (GroupCommand) parser.parseCommand(aliasSettings.getGroupCommand().getAlias()
+                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP + group);
+        Assert.assertEquals(new GroupCommand(indexes, group), command);
+    }
+```
+###### /java/seedu/address/logic/parser/GeneralBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_order() throws Exception {
+        final String parameter = "NAME";
+        OrderCommand command = (OrderCommand) parser.parseCommand(OrderCommand.COMMAND_WORD + " "
+                + parameter);
+        Assert.assertEquals(new OrderCommand(parameter), command);
+
+        //alias
+        command = (OrderCommand) parser.parseCommand(aliasSettings.getOrderCommand().getAlias()
+                + " " + parameter);
+        Assert.assertEquals(new OrderCommand(parameter), command);
+    }
+```
+###### /java/seedu/address/logic/parser/GroupCommandParserTest.java
+``` java
+public class GroupCommandParserTest {
+
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE);
+    private GroupCommandParser parser = new GroupCommandParser();
 
     @Test
-    public void execute_showAllGroups_success() throws Exception {
-        List<Index> indexes = new ArrayList<>();
-        String showAll = "SHOWALL";
+    public void parse_invalidPreamble_failure() {
 
-        GroupCommand groupCommand = prepareCommand(indexes, showAll);
+        //no index
+        assertParseFailure(parser, " " + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
-        String expectedMessage = "Groups:  " + model.getGroupList().toString().replaceAll("\\[", "")
-                .replaceAll("\\]", "");
+        // negative index
+        assertParseFailure(parser, "-6" + GROUP_DESC_AMY, MESSAGE_INVALID_FORMAT);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
-        expectedModel.getGroupList();
+        // zero index
+        assertParseFailure(parser, "0" + GROUP_DESC_BOB, MESSAGE_INVALID_FORMAT);
 
-        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
+        // invalid arguments being parsed as preamble
+        assertParseFailure(parser, "some random string", MESSAGE_INVALID_FORMAT);
+
+        // invalid prefix being parsed as preamble
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+
     }
 
     @Test
-    public void execute_groupOnePerson_success() throws Exception {
-        Person groupedPerson = new PersonBuilder(model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
-                .withGroup("JUNITTest").build();
-        List<Index> indexes = new ArrayList<>();
-        indexes.add(INDEX_FIRST_PERSON);
+    public void parse_noPrefix_failure() {
 
-        GroupCommand groupCommand = prepareCommand(indexes, groupedPerson.getGroup().value);
-
-        String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
-
-        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
+        assertParseFailure(parser, "1" + VALID_GROUP_AMY, MESSAGE_INVALID_FORMAT);
     }
 
-    @Test
-    public void execute_groupMultiPersons_success() throws Exception {
-        Person groupedPersonOne = new PersonBuilder(model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
-                .withGroup("JUNITTest").build();
-        Person groupedPersonTwo = new PersonBuilder(model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_SECOND_PERSON.getZeroBased()))
-                .withGroup("JUNITTest").build();
-        Person groupedPersonThree = new PersonBuilder(model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_THIRD_PERSON.getZeroBased()))
-                .withGroup("JUNITTest").build();
-
-        List<Index> indexes = new ArrayList<>();
-        indexes.add(INDEX_FIRST_PERSON);
-        indexes.add(INDEX_SECOND_PERSON);
-        indexes.add(INDEX_THIRD_PERSON);
-
-        GroupCommand groupCommand = prepareCommand(indexes, groupedPersonOne.getGroup().value);
-
-        String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPersonOne);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(1), groupedPersonTwo);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(2), groupedPersonThree);
-
-
-        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_ungroupOnePerson_success() throws Exception {
-        Person groupedPerson = new PersonBuilder(model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
-                .withGroup("").build();
-        List<Index> indexes = new ArrayList<>();
-        indexes.add(INDEX_FIRST_PERSON);
-
-        GroupCommand groupCommand = prepareCommand(indexes, "");
-
-<<<<<<< HEAD
     @Test
     public void parse_noIndex_success() {
         List<Index> index = new ArrayList<>();
@@ -513,110 +538,86 @@ public class GroupCommandTest {
 
         expectedCommand = new GroupCommand(index, "showALL");
         assertParseSuccess(parser, "showALL", expectedCommand);
-=======
-        String expectedMessage = GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS;
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
-
-        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
->>>>>>> master
     }
 
     @Test
-    public void execute_ungroupMultiPersons_success() throws Exception {
-        Person groupedPersonOne = new PersonBuilder(model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
-                .withGroup("").build();
-        Person groupedPersonTwo = new PersonBuilder(model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_SECOND_PERSON.getZeroBased()))
-                .withGroup("").build();
-        Person groupedPersonThree = new PersonBuilder(model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_THIRD_PERSON.getZeroBased()))
-                .withGroup("").build();
-        List<Index> indexes = new ArrayList<>();
-        indexes.add(INDEX_FIRST_PERSON);
-        indexes.add(INDEX_SECOND_PERSON);
-        indexes.add(INDEX_THIRD_PERSON);
+    public void parse_oneIndex_success() throws IllegalValueException {
 
-        GroupCommand groupCommand = prepareCommand(indexes, groupedPersonOne.getGroup().value);
+        List<Index> index = new ArrayList<>();
+        index.add(ParserUtil.parseIndex("1"));
 
-        String expectedMessage = GroupCommand.MESSAGE_UNGROUP_PERSON_SUCCESS;
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPersonOne);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(1), groupedPersonTwo);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(2), groupedPersonThree);
-
-
-        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
+        GroupCommand expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
+        assertParseSuccess(parser, "1" + GROUP_DESC_AMY, expectedCommand);
     }
 
     @Test
-    public void execute_filteredList_success() throws Exception {
-        showFirstPersonOnly(model);
+    public void parse_multipleIndex_success() throws IllegalValueException {
 
-        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList()
-                .get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased());
-        Person groupedPerson = new PersonBuilder(personInFilteredList).withGroup("JUNITTest").build();
-        List<Index> indexes = new ArrayList<>();
-        indexes.add(INDEX_FIRST_PERSON);
+        List<Index> index = new ArrayList<>();
 
-        GroupCommand groupCommand = prepareCommand(indexes, groupedPerson.getGroup().value);
+        //to group a smaller group of 3 person
+        index.add(ParserUtil.parseIndex("1"));
+        index.add(ParserUtil.parseIndex("3"));
+        index.add(ParserUtil.parseIndex("4"));
 
-        String expectedMessage = GroupCommand.MESSAGE_GROUP_PERSON_SUCCESS + "JUNITTest";
+        GroupCommand expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
+        assertParseSuccess(parser, "1 3 4" + GROUP_DESC_AMY, expectedCommand);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new EventBook(model.getEventBook()), new UserPrefs(), new Account(), new Config());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), groupedPerson);
+        //to group a bigger group of 15 person
+        for (int i = 5; i < 17; i++) {
+            index.add(ParserUtil.parseIndex(Integer.toString(i)));
+        }
+        expectedCommand = new GroupCommand(index, VALID_GROUP_AMY);
+        String userInput = "1 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
+        assertParseSuccess(parser, userInput + GROUP_DESC_AMY, expectedCommand);
 
-        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ListCommandParserTest.java
+``` java
+public class ListCommandParserTest {
+
+    private ListCommandParser parser = new ListCommandParser();
+
+    @Test
+    public void parse_noPrefix_throwsParseException() {
+        assertParseFailure(parser, "TEST", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ListCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_emptyArg_returnListCommand() {
+        ListCommand expectedListCommand = new ListCommand("");
+        assertParseSuccess(parser, "     ", expectedListCommand);
+    }
+
+    @Test
+    public void parse_validArgs_returnsListCommand() {
+        ListCommand expectedListCommand = new ListCommand("g/TEST");
+        assertParseSuccess(parser, " g/TEST", expectedListCommand);
     }
 
 
+}
+```
+###### /java/seedu/address/logic/parser/OrderCommandParserTest.java
+``` java
+public class OrderCommandParserTest {
+
+    private OrderCommandParser parser = new OrderCommandParser();
+
     @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        List<Index> indexes = new ArrayList<>();
-        indexes.add(outOfBoundIndex);
-
-        GroupCommand groupCommand = prepareCommand(indexes, VALID_GROUP_AMY);
-
-        assertCommandFailure(groupCommand, model,
-                "Index " + outOfBoundIndex.toString() + " is invalid!");
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OrderCommand.MESSAGE_USAGE));
     }
 
-    /**
-     * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
     @Test
-    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
-        showFirstPersonOnly(model);
-        Index outOfBoundIndex = TypicalIndexes.INDEX_SECOND_PERSON;
-        List<Index> indexes = new ArrayList<>();
-        indexes.add(outOfBoundIndex);
+    public void parse_validArgs_returnsOrderCommand() {
 
-        //ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        OrderCommand expectedOrderCommand;
 
-        GroupCommand groupCommand = prepareCommand(indexes, VALID_GROUP_AMY);
-
-        assertCommandFailure(groupCommand, model,
-                "Index " + outOfBoundIndex.toString() + " is invalid!");
-    }
-
-
-    @Test
-    public void equals() {
-        List<Index> indexes = new ArrayList<>();
-        indexes.add(INDEX_FIRST_PERSON);
-        final GroupCommand standardCommand = new GroupCommand(indexes, ALICE.getGroup().value);
-
-
-<<<<<<< HEAD
         //one parameter
         expectedOrderCommand = new OrderCommand("NAME");
 
@@ -625,19 +626,11 @@ public class GroupCommandTest {
         assertParseSuccess(parser, "nAme", expectedOrderCommand); //case insensitive
 
         expectedOrderCommand = new OrderCommand("BIRTHDAY");
-=======
-        // same values -> returns true
-        GroupCommand commandWithSameValues = new GroupCommand(indexes,  ALICE.getGroup().value);
-        assertTrue(standardCommand.equals(commandWithSameValues));
->>>>>>> master
 
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
+        assertParseSuccess(parser, "BIRTHDAY", expectedOrderCommand); //same parameter
 
-        //null -> returns false
-        assertFalse(standardCommand.equals(null));
+        assertParseSuccess(parser, "birtHDaY", expectedOrderCommand); //case insensitive
 
-<<<<<<< HEAD
         expectedOrderCommand = new OrderCommand("ADDRESS");
 
         assertParseSuccess(parser, "ADDRESS", expectedOrderCommand); //same parameter
@@ -653,19 +646,9 @@ public class GroupCommandTest {
 
         //two parameters
         expectedOrderCommand = new OrderCommand("TAG NAME");
-=======
-        // different types -> return false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON,
-                new Remark(VALID_REMARK_AMY))));
->>>>>>> master
 
-        // different index -> returns false
-        List<Index> tempIndexes = new ArrayList<>();
-        tempIndexes.add(INDEX_SECOND_PERSON);
-        GroupCommand commandWithDiffIndex = new GroupCommand(tempIndexes, ALICE.getGroup().value);
-        assertFalse(standardCommand.equals(commandWithDiffIndex));
+        assertParseSuccess(parser, "TAG NAME", expectedOrderCommand); //same parameter
 
-<<<<<<< HEAD
         assertParseSuccess(parser, "tAG namE", expectedOrderCommand); //case insenstive
 
         expectedOrderCommand = new OrderCommand("GROUP NAME");
@@ -680,26 +663,6 @@ public class GroupCommandTest {
 
         assertParseSuccess(parser, "tAG nAmE", expectedOrderCommand); //case insenstive
 
-=======
-        // different descriptor -> returns false
-        tempIndexes.remove(INDEX_SECOND_PERSON);
-        tempIndexes.add(INDEX_FIRST_PERSON);
-        GroupCommand commandWithNoDesc = new GroupCommand(tempIndexes, BENSON.getGroup().value);
-        assertFalse(standardCommand.equals(commandWithNoDesc));
-    }
-
-    /**
-     * Returns an {@code GroupCommand} with parameters {@code index} and {@code Group}
-     */
-    private GroupCommand prepareCommand(List<Index> index, String group) {
-        GroupCommand groupCommand = new GroupCommand(index, group);
-        UserPrefs userPrefs = new UserPrefs();
-        Config config = new Config();
-        Logic logic = null;
-        groupCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new Config(),
-                new UiManager(logic, config, userPrefs));
-        return groupCommand;
->>>>>>> master
     }
 }
 ```

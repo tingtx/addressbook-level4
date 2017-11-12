@@ -59,6 +59,7 @@ public class CalendarView {
         calendar.setPrefSize(600, 400);
         // Create rows and columns with anchor panes for the calendar
 
+        // This GridPane will represent the dates
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
@@ -68,10 +69,13 @@ public class CalendarView {
                 allCalendarDays.add(ap);
             }
         }
+
         // Days of the week labels
         Text[] dayNames = new Text[]{new Text("SUNDAY"), new Text("MONDAY"), new Text("TUESDAY"),
             new Text("WEDNESDAY"), new Text("THURSDAY"), new Text("FRIDAY"),
             new Text("SATURDAY")};
+
+        // This GridPane will represent the days which will place at the top of calendar GridPane
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         Integer col = 0;
@@ -88,12 +92,16 @@ public class CalendarView {
         calendarTitle = new Text();
         calendarTitle.setFill(Color.WHITE);
         calendarTitle.setStyle("-fx-font-size: 15pt;");
+
         Button previousMonth = new Button("<  PREVIOUS");
         previousMonth.setOnAction(e -> previousMonth());
+
         Button nextMonth = new Button("NEXT  >");
         nextMonth.setOnAction(e -> nextMonth());
+
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
         HBox.setMargin(calendarTitle, new Insets(0, 15, 0, 15));
+
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth, null);
@@ -104,7 +112,7 @@ public class CalendarView {
 
     /**
      * Set the days of the calendar to correspond to the appropriate date
-     *
+     * @param targetIndex a specific event
      * @param yearMonth year and month of month to render
      */
     public void populateCalendar(YearMonth yearMonth, Index targetIndex) {
@@ -152,10 +160,11 @@ public class CalendarView {
             ap.setTopAnchor(txt, 10.0);
             ap.setLeftAnchor(txt, 10.0);
 
+
             if (eventExist) {
                 ap.setOnMouseClicked(ev -> {
                     String commandText = FindEventCommand.getCommandWord()
-                            + " " + PREFIX_DATETIME + getFormartDate(dayValue, monthValue, yearValue);
+                            + " " + PREFIX_DATETIME + getFormatDate(dayValue, monthValue, yearValue);
                     try {
                         CommandResult commandResult = logic.execute(commandText);
                         logger.info("Result: " + commandResult.feedbackToUser);
@@ -195,10 +204,18 @@ public class CalendarView {
         populateCalendar(currentYearMonth, null);
     }
 
+    /**
+     *
+     * @return the selected current YearMonth object
+     */
     public YearMonth getCurrentYearMonth() {
         return currentYearMonth;
     }
 
+    /**
+     * change the current YearMonth object to the newly specified one
+     * @param currentYearMonth
+     */
     public void setCurrentYearMonth(YearMonth currentYearMonth) {
         this.currentYearMonth = currentYearMonth;
     }
@@ -258,7 +275,14 @@ public class CalendarView {
         return event.getDatetime().value.substring(6, 10).equals(yearValue);
     }
 
-    private String getFormartDate(String day, String month, String year) {
+    /**
+     * Format the Date to the desired format
+     * @param day
+     * @param month
+     * @param year
+     * @return
+     */
+    private String getFormatDate(String day, String month, String year) {
         if (day.length() == 1) {
             day = "0" + day;
         }

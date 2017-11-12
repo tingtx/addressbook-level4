@@ -99,9 +99,9 @@ public class XmlUtil {
 
     //@@author kaiyu92
     /**
-     *
-     * @param file
-     * @param nodeName
+     * return the specific child list of the xml root
+     * @param file parsing the file to become a Document
+     * @param nodeName a specific child of the root element
      * @return
      * @throws SAXException
      * @throws IOException
@@ -119,6 +119,13 @@ public class XmlUtil {
         return doc.getElementsByTagName(nodeName);
     }
 
+    //@@author kaiyu92
+    /**
+     * Appending the header to the CSV file
+     * E.g. header: title,age,DOB
+     * @param sb using StringBuilder to append the header
+     * @param header
+     */
     public static void appendHeader(StringBuilder sb, String header) {
 
         //Append the header to the CSV file
@@ -126,9 +133,18 @@ public class XmlUtil {
         sb.append(XmlUtil.NEW_LINE_SEPARATOR);
     }
 
+    //@@author kaiyu92
+    /**
+     * Appending the content to the CSV file
+     * @param sb using StringBuilder to append the content
+     * @param element
+     * @param fields using varargs as events book and address book have different number of fields
+     */
     public static void appendContent(StringBuilder sb, Element element, String ... fields) {
 
         for (String f: fields) {
+            // need "\"" at the front and back as some fields uses commas in their text
+            // without it "\"", it will treat commas as the separation into different columns
             sb.append("\"" + element.getElementsByTagName(f).item(0).getTextContent() + "\"");
             sb.append(XmlUtil.COMMA_DELIMITER);
         }

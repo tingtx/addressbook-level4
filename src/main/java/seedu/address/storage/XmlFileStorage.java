@@ -119,9 +119,9 @@ public class XmlFileStorage {
 
     /**
      * Export Addressbook XML Data into CSV file
-     * @param source
-     * @param destination
-     * @param header
+     * @param source source path of the XML file
+     * @param destination destination path of the CSV file
+     * @param header Header of the CSV file
      * @throws ParserConfigurationException
      * @throws IOException
      * @throws SAXException
@@ -132,9 +132,11 @@ public class XmlFileStorage {
         File addressbookXmlFile = new File(source);
 
         if (!addressbookXmlFile.exists()) {
+            assert false : "Addressbook Xml file should have exist";
             throw new FileNotFoundException("File not found : " + addressbookXmlFile.getAbsolutePath());
         }
 
+        //Get the nodelist of the persons tag
         NodeList personList = XmlUtil.getNodeListFromFile(addressbookXmlFile, "persons");
 
         StringBuilder sb = new StringBuilder();
@@ -142,6 +144,7 @@ public class XmlFileStorage {
         //Append the header to the CSV file
         XmlUtil.appendHeader(sb, header);
 
+        //Append individual person data to the CSV file
         for (int i = 0; i < personList.getLength(); i++) {
             Node personNode = personList.item(i);
 
@@ -174,9 +177,9 @@ public class XmlFileStorage {
     //@@author kaiyu92
     /**
      * Export eventbook XML Data into CSV file
-     * @param source
-     * @param destination
-     * @param header
+     * @param source source path of the XML file
+     * @param destination destination path of the CSV file
+     * @param header Header of the CSV file
      * @throws ParserConfigurationException
      * @throws IOException
      * @throws SAXException
@@ -187,9 +190,11 @@ public class XmlFileStorage {
         File eventbookXmlFile = new File(source);
 
         if (!eventbookXmlFile.exists()) {
+            assert false : "Eventbook Xml file should have exist";
             throw new FileNotFoundException("File not found : " + eventbookXmlFile.getAbsolutePath());
         }
 
+        //Get the nodelist of the events tag
         NodeList eventList = XmlUtil.getNodeListFromFile(eventbookXmlFile, "events");
 
         StringBuilder sb = new StringBuilder();
@@ -197,6 +202,7 @@ public class XmlFileStorage {
         //Append the header to the CSV file
         XmlUtil.appendHeader(sb, header);
 
+        //Append individual event data to the CSV file
         for (int i = 0; i < eventList.getLength(); i++) {
             Node eventNode = eventList.item(i);
 

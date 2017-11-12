@@ -10,15 +10,15 @@ import java.io.StringWriter;
  * Helper functions for handling strings.
  */
 public class StringUtil {
-    //@@author kaiyu92
 
+    //@@author kaiyu92
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
      * Ignores case, but a full word match is required.
      * <br>examples:<pre>
      *       containsWordIgnoreCase("ABc def", "abc") == true
      *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
+     *       containsWordIgnoreCase("ABc def", "AB") == true
      *       </pre>
      *
      * @param sentence cannot be null
@@ -36,12 +36,11 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         for (String wordInSentence : wordsInPreppedSentence) {
+            //As long there is a sequence in the word, it will return true
+            //E.g. pet, ter will return the words with sequence in it like Peter
             if (wordInSentence.toLowerCase().indexOf(preppedWord.toLowerCase()) >= 0) {
                 return true;
             }
-            //if (wordInSentence.equalsIgnoreCase(preppedWord)) {
-            //      return true;
-            //}
         }
         return false;
     }

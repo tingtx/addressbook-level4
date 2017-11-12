@@ -13,6 +13,7 @@ public class DescriptionTest {
         // invalid description
         assertFalse(Description.isValidDescription("")); // empty string
         assertFalse(Description.isValidDescription(" ")); // spaces only
+        assertFalse(Description.isValidDescription("~!?>")); //Symbols cannot be at the start
 
         // valid description
         assertTrue(Description.isValidDescription("IT Fair 2017 with many offers")); // alphabets only

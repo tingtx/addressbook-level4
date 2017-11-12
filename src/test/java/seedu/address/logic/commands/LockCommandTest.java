@@ -61,6 +61,27 @@ public class LockCommandTest {
         getLockCommand("test", "123456", modelStub).execute();
     }
 
+    @Test
+    public void execute_correctUserAndPassword() throws Exception {
+        ModelStubAcceptingUserAdded modelStub = new ModelStubAcceptingUserAdded();
+        LockCommand lockCommand = getLockCommand("test", "123456", modelStub);
+        lockCommand.execute();
+        String userName = lockCommand.getUserId();
+        String passWord = lockCommand.getPasswordText();
+        assertEquals(userName, "test");
+        assertEquals(passWord, "123456");
+
+    }
+
+    @Test
+    public void execute_nullModelException() throws Exception {
+        Model modelStub = null;
+
+        thrown.expect(NullPointerException.class);
+
+        getLockCommand("test", "123456", modelStub).execute();
+    }
+
     /**
      * Generates a new LockCommand with the details of the given event.
      */

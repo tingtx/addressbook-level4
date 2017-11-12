@@ -426,6 +426,7 @@ The following sequence diagram shows how the group operation works: //insert seq
 //To be completed by tingtx
 //end::list[]
 
+//@@author quanle1994
 // tag::order[]
 === Order(Sort) mechanism
 The order mechanism is facilitated by the `orderBy` method, which resides inside the `UniquePersonList > Person > Addressbook`. It supports

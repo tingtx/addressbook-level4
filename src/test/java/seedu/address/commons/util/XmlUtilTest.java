@@ -27,9 +27,11 @@ public class XmlUtilTest {
     private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
     private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
     private static final File VALID_ADDRESSBOOK_FILE = new File(TEST_DATA_FOLDER + "validAddressBook.xml");
-    private static final File TEMP_ADDRESSBOOK_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
+    private static final File TEMP_ADDRESSBOOK_FILE = new File(TestUtil
+            .getFilePathInSandboxFolder("tempAddressBook.xml"));
     private static final File VALID_EVENTBOOK_FILE = new File(TEST_DATA_FOLDER + "validEventBook.xml");
-    private static final File TEMP_EVENTBOOK_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempEventBook.xml"));
+    private static final File TEMP_EVENTBOOK_FILE = new File(TestUtil
+            .getFilePathInSandboxFolder("tempEventBook.xml"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

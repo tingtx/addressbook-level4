@@ -126,12 +126,16 @@ public class StringUtilTest {
         assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
         // No Matching sequences in the sentence
-        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "aba")); // Query does not match any sequence in the sentence
+        // Query does not match any sequence in the sentence
+        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "aba"));
 
         // Matches word sequences in the sentence, different upper/lower case letters
-        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "a")); //Matches the sequence in the sentence (first)
-        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); //Matches the sequence in the sentence (middle)
-        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "ccc")); //Matches the sequence in the sentence (last)
+        //Matches the sequence in the sentence (first)
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "a"));
+        //Matches the sequence in the sentence (middle)
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb"));
+        //Matches the sequence in the sentence (last)
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "ccc"));
         assertTrue(StringUtil.containsWordIgnoreCase("aaa bBb ccc", "Bbb")); // First word (boundary case)
         assertTrue(StringUtil.containsWordIgnoreCase("aaa bBb ccc@1", "CCc@1")); // Last word (boundary case)
         assertTrue(StringUtil.containsWordIgnoreCase("  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces

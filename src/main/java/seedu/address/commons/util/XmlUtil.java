@@ -11,6 +11,14 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Helps with reading from and writing to XML files.
@@ -87,5 +95,58 @@ public class XmlUtil {
         fileWriter.write(content.toString());
         fileWriter.flush();
         fileWriter.close();
+    }
+
+    //@@author kaiyu92
+    /**
+     * return the specific child list of the xml root
+     * @param file parsing the file to become a Document
+     * @param nodeName a specific child of the root element
+     * @return
+     * @throws SAXException
+     * @throws IOException
+     * @throws ParserConfigurationException
+     */
+    public static NodeList getNodeListFromFile(File file, String nodeName) throws SAXException,
+            IOException, ParserConfigurationException {
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(file);
+
+        doc.getDocumentElement().normalize();
+
+        return doc.getElementsByTagName(nodeName);
+    }
+
+    //@@author kaiyu92
+    /**
+     * Appending the header to the CSV file
+     * E.g. header: title,age,DOB
+     * @param sb using StringBuilder to append the header
+     * @param header
+     */
+    public static void appendHeader(StringBuilder sb, String header) {
+
+        //Append the header to the CSV file
+        sb.append(header);
+        sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+    }
+
+    //@@author kaiyu92
+    /**
+     * Appending the content to the CSV file
+     * @param sb using StringBuilder to append the content
+     * @param element
+     * @param fields using varargs as events book and address book have different number of fields
+     */
+    public static void appendContent(StringBuilder sb, Element element, String ... fields) {
+
+        for (String f: fields) {
+            // need "\"" at the front and back as some fields uses commas in their text
+            // without it "\"", it will treat commas as the separation into different columns
+            sb.append("\"" + element.getElementsByTagName(f).item(0).getTextContent() + "\"");
+            sb.append(XmlUtil.COMMA_DELIMITER);
+        }
     }
 }
